@@ -1,0 +1,30 @@
+html, body {
+	text-align: right;
+	color:black; 
+	font-size:0.9em;
+	font-family: "Courier New", Fixed, monospace, Courier;
+}
+
+#entry tr { background: #FFF; }
+
+#userdetail th { text-align: right; padding: 0px 10px 0px 10px; vertical-align: text-top; }
+#userdetail td { text-align: left;  padding: 0px 10px 0px 10px; }
+#userdetail tr:nth-child(odd) { background: #FFF }
+#userdetail tr:nth-child(even) { background: #DDD }
+#userdetail .center { text-align: center; }
+#userdetail tr.hover:hover { background: #BBB }
+
+#groupdetail th { text-align: right;  padding: 0px 10px 0px 10px; vertical-align: text-top; }
+#groupdetail td { text-align: left;   padding: 0px 10px 0px 10px; }
+#groupdetail tr:nth-child(odd) { background: #FFF }
+#groupdetail tr:nth-child(even) { background: #DDD }
+#groupdetail .center { text-align: center; }
+#groupdetail tr.hover:hover { background: #BBB }
+
+#details tr:nth-child(odd) { background: #FFF }
+#details tr:nth-child(even) { background: #DDD }
+#details .left { text-align: left; }
+#details th { padding: 0px 10px 0px 10px; white-space: nowrap; }
+#details td { padding: 0px 10px 0px 10px; white-space: nowrap; }
+#details tr.hover:hover { background: #BBB }
+

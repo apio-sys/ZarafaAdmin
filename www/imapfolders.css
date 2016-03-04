@@ -1,0 +1,31 @@
+body, div, p, link, td, option, li, ol, ul  {color:black; font-size:0.9em; font-family:"Trebuchet MS", Arial, Helvetica, Geneva, Swiss, SunSans-Regular}
+select, input, textarea {color: black; font-size: 0.8em; line-height: 1em; font-family: "Trebuchet MS", Arial, Helvetica, Geneva, Swiss, SunSans-Regular}
+
+html, body
+{
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+}
+
+input.dryrun
+{
+	margin: 0;
+	padding: 0;
+	width: 20px;
+}
+
+input
+{
+	margin: 0;
+	padding: 0;
+	width: 100%;	
+}
+
+select
+{
+	margin: 0;
+	padding: 0;
+	width: 100%;	
+}

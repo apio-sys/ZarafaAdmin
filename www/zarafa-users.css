@@ -1,0 +1,54 @@
+html, body {
+	text-align: right;
+	color:black; 
+	font-size:0.9em;
+	font-family: "Courier New", Fixed, monospace, Courier;
+}
+
+
+
+
+#entry tr { background: #FFF; }
+
+#zarafa-users-div { margin: auto; align: center;}
+
+#zarafa-users { margin: auto; align: center;}
+#zarafa-users th { text-align: right; padding: 0px 10px 0px 10px; vertical-align: text-top; }
+#zarafa-users td { text-align: left;  padding: 0px 10px 0px 10px; }
+#zarafa-users tr:nth-child(odd) { background: #FFF }
+#zarafa-users tr:nth-child(even) { background: #DDD }
+#zarafa-users .center { text-align: center; }
+#zarafa-users tr.hover:hover { background: #BBB }
+
+#zarafa-user { margin: auto; align: center;}
+#zarafa-user table { margin: auto; width: 100%;}
+#zarafa-user th { text-align: right;  padding: 0px 10px 0px 10px; vertical-align: text-top; }
+#zarafa-user td { text-align: left;   padding: 0px 10px 0px 10px; }
+#zarafa-user tr:nth-child(odd) { background: #FFF }
+#zarafa-user tr:nth-child(even) { background: #DDD }
+#zarafa-user .center { text-align: center; }
+#zarafa-user tr.hover:hover { background: #BBB }
+
+#zarafa-user-quota { margin: auto; align: center;}
+#zarafa-user-quota th { text-align: right;  padding: 0px 10px 0px 10px; vertical-align: text-top; }
+#zarafa-user-quota td { text-align: left;   padding: 0px 10px 0px 10px; }
+#zarafa-user-quota tr:nth-child(odd) { background: #FFF }
+#zarafa-user-quota tr:nth-child(even) { background: #DDD }
+#zarafa-user-quota .center { text-align: center; }
+#zarafa-user-quota tr.hover:hover { background: #BBB }
+
+#zarafa-user-groups { margin: auto; align: center;}
+#zarafa-user-groups th { text-align: right;  padding: 0px 10px 0px 10px; vertical-align: text-top; }
+#zarafa-user-groups td { text-align: left;   padding: 0px 10px 0px 10px; }
+#zarafa-user-groups tr:nth-child(odd) { background: #FFF }
+#zarafa-user-groups tr:nth-child(even) { background: #DDD }
+#zarafa-user-groups .center { text-align: center; }
+#zarafa-user-groups tr.hover:hover { background: #BBB }
+
+#zarafa-user-devices { margin: auto; align: center;}
+#zarafa-user-devices th { text-align: right;  padding: 0px 10px 0px 10px; vertical-align: text-top; }
+#zarafa-user-devices td { text-align: left;   padding: 0px 10px 0px 10px; }
+#zarafa-user-devices tr:nth-child(odd) { background: #FFF }
+#zarafa-user-devices tr:nth-child(even) { background: #DDD }
+#zarafa-user-devices .center { text-align: center; }
+#zarafa-user-devices tr.hover:hover { background: #BBB }

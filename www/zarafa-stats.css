@@ -1,0 +1,47 @@
+html, body {
+	text-align: right;
+	color:black; 
+	font-size:0.9em;
+	font-family: "Courier New", Fixed, monospace, Courier;
+}
+
+#entry tr { background: #FFF; }
+
+#userdetail th { text-align: right; padding: 0px 10px 0px 10px; vertical-align: text-top; }
+#userdetail td { text-align: left;  padding: 0px 10px 0px 10px; }
+#userdetail tr:nth-child(odd) { background: #FFF }
+#userdetail tr:nth-child(even) { background: #DDD }
+#userdetail .center { text-align: center; }
+#userdetail tr.hover:hover { background: #BBB }
+
+#groupdetail th { text-align: right;  padding: 0px 10px 0px 10px; vertical-align: text-top; }
+#groupdetail td { text-align: left;   padding: 0px 10px 0px 10px; }
+#groupdetail tr:nth-child(odd) { background: #FFF }
+#groupdetail tr:nth-child(even) { background: #DDD }
+#groupdetail .center { text-align: center; }
+#groupdetail tr.hover:hover { background: #BBB }
+
+#zarafa-stats-system .left { text-align: left; }
+#zarafa-stats-system th { padding: 0px 10px 0px 10px; white-space: nowrap; }
+#zarafa-stats-system td { padding: 0px 10px 0px 10px; white-space: nowrap; }
+#zarafa-stats-system tr.hover:hover { background: #BBB }
+
+#zarafa-stats-session tr:nth-child(odd) { background: #FFF }
+#zarafa-stats-session tr:nth-child(even) { background: #DDD }
+#zarafa-stats-session .left { text-align: left; }
+#zarafa-stats-session th { padding: 0px 10px 0px 10px; white-space: nowrap; }
+#zarafa-stats-session td { padding: 0px 10px 0px 10px; white-space: nowrap; }
+#zarafa-stats-session tr.hover:hover { background: #BBB }
+
+#zarafa-stats-user tr:nth-child(odd) { background: #FFF }
+#zarafa-stats-user tr:nth-child(even) { background: #DDD }
+#zarafa-stats-user th { padding: 0px 10px 0px 10px; white-space: nowrap; }
+#zarafa-stats-user td { padding: 0px 10px 0px 10px; white-space: nowrap; }
+#zarafa-stats-user tr.hover:hover { background: #BBB }
+#zarafa-stats-user .quota { text-align: right; }
+#zarafa-stats-user .size { text-align: right; }
+#zarafa-stats-user .warn { text-align: right; color: orange; font-weight: bold;}
+#zarafa-stats-user .soft { text-align: right; color: red;}
+#zarafa-stats-user .hard { text-align: right; color: red; font-weight: bold;}
+#zarafa-stats-user .date { text-align: left; }
+#zarafa-stats-user .datelong { text-align: left; color: red; font-weight: bold;}

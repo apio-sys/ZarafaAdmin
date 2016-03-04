@@ -1,0 +1,125 @@
+#!/bin/bash
+#
+#     Script for postfix smarthost maps and resyncing Zarafa
+#     Bob Brandt <projects@brandt.ie>
+#     Zentyal <info@zentyal.com>
+#          
+
+ZARAFAHOST="ldaps://i.opw.ie"
+ZARAFABASE="dc=i,dc=opw,dc=ie"
+ZARAFAMAILFILTER="(&(mail=*)(|(objectClass=user)(objectClass=group))(zarafaAccount=1))"
+ZARAFAALIASFILTER="(&(mail=*)(otherMailbox=*)(|(objectClass=user)(objectClass=group))(zarafaAccount=1))"
+ZARAFAMAILFILE="/tmp/zarafa.mail.$$"
+ZARAFAALIASFILE="/tmp/zarafa.alias.$$"
+ZARAFAFILE="/tmp/zarafa.$$"
+
+DOMINOHOST="ldap://dublinnotes.i.opw.ie"
+DOMINOBASE=""
+DOMINOFILTER="(&(mail=*)(!(mailaddress=*@zarafa.opw.ie))(|(objectClass=dominoPerson)(objectClass=dominoGroup)))"
+DOMINOFILE="/tmp/domino.mail.$$"
+
+ZARAFAONLYFILE="/tmp/zarafaonly.mail.$$"
+DOMINOONLYFILE="/tmp/dominoonly.mail.$$"
+DOMINOZARAFAFILE="/tmp/dominozarafa.mail.$$"
+
+POSTFIX_TEMP="/tmp/postfix.$$"
+BCC_TEMP="/tmp/bcc.$$"
+VTRANSPORT="/etc/postfix/vtransport"
+BCC="/etc/postfix/bcc"
+
+
+getdata() {
+	host="$1"
+	base="$2"
+	filter="$3"
+	attr="$4"
+	tmp=$( ldapsearch -LLL -b "$base" -s sub -x -z max -l none -H "$host" "$filter" "$attr" | perl -p0e "s/\n //g" | grep "^$attr:" )
+	if [ -z "$tmp" ]; then
+		logger -s "Error! No Data returned for ($host) ($filter) ($attr)"
+		exit 1
+	fi
+
+	base64=$( echo "$tmp" | sed -n "s|^$attr::\s\+||p" )
+	tmp=$( echo "$tmp" | sed -n "s|^$attr:\s\+||p" )
+	
+	for line in $base64
+	do
+		decodedline=$( echo "$line" | openssl base64 -d | sed "s|\s*||g" )
+		tmp="$tmp\n$decodedline"
+	done
+
+	echo -e "$tmp" | tr "[:upper:]" "[:lower:]" | sort -fub
+}
+
+echo -n "Retrieve All Zarafa Addresses (users & groups accounts) "
+getdata "$ZARAFAHOST" "$ZARAFABASE" "$ZARAFAMAILFILTER" "mail" > "$ZARAFAMAILFILE" && echo "(total of $( cat $ZARAFAMAILFILE | wc -l )) "
+
+echo -n "Retrieve All Zarafa Aliases (users & groups aliases) "
+getdata "$ZARAFAHOST" "$ZARAFABASE" "$ZARAFAALIASFILTER" "otherMailbox" > "$ZARAFAALIASFILE" && echo "(total of $( cat $ZARAFAALIASFILE | wc -l )) "
+
+cat "$ZARAFAMAILFILE" "$ZARAFAALIASFILE" > "$ZARAFAFILE"
+
+echo -n "Retrieve Domino Addresses (users & groups accounts, no aliases exist) "
+getdata "$DOMINOHOST" "$DOMINOBASE" "$DOMINOFILTER" "mail" > "$DOMINOFILE" && echo "(total of $( cat $DOMINOFILE | wc -l )) "
+
+echo -n "Determine Domino Only Addresses "
+diff -iwB "$DOMINOFILE" "$ZARAFAFILE" | sed -n "s|^<\s\+||p" > "$DOMINOONLYFILE" && echo "(total of $( cat $DOMINOONLYFILE | wc -l )) "
+
+echo -n "Determine Zarafa Only Addresses "
+diff -iwB "$DOMINOFILE" "$ZARAFAFILE" | sed -n "s|^>\s\+||p" > "$ZARAFAONLYFILE" && echo "(total of $( cat $ZARAFAONLYFILE | wc -l )) "
+
+echo -n "Determine Common Zarafa and Domino Addresses "
+diff -iwB "$ZARAFAONLYFILE" "$ZARAFAFILE" | sed -n "s|^>\s\+||p" > "$DOMINOZARAFAFILE" && echo "(total of $( cat $DOMINOZARAFAFILE | wc -l )) "
+
+echo -n "Creating virtual transport for Lotus Notes "
+echo "# /etc/postfix/vtransport - Zentyal Postfix virtual transport for Lotus Notes" > "$POSTFIX_TEMP"
+echo "# this file configures virtual transport for Lotus Notes only accounts (users & groups accounts)" >> "$POSTFIX_TEMP"
+echo "# and for Zarafa & Lotus notes accounts (users & groups accounts, no aliases exist)" >> "$POSTFIX_TEMP"
+sed -n "s|\(.*\)@opw.ie|&\t\1@dublinnotes.opw.ie|p" "$DOMINOONLYFILE" >> "$POSTFIX_TEMP"
+sed -n "s|\(.*\)@opw.ie|&\t\1@dublinnotes.opw.ie\t\1@opw.ie|p" "$DOMINOZARAFAFILE" >> "$POSTFIX_TEMP"
+sed "s|.*|&\tarchive@mailmeter.opw.ie|" "$ZARAFAONLYFILE" > "$BCC_TEMP"
+
+RELOAD_POSTFIX=
+if ! cmp "$POSTFIX_TEMP" "$VTRANSPORT" > /dev/null 2>&1
+then
+	mv "$POSTFIX_TEMP" "$VTRANSPORT"
+	/usr/sbin/postmap "$VTRANSPORT"
+	RELOAD_POSTFIX="yes"
+	echo "(done)"
+else
+	echo "(no change)"
+fi
+
+echo -n "Creating BCC Mapping for Zarafa Only users "
+echo "# /etc/postfix/bcc - Zentyal Postfix BCC Mapping for Zarafa Only users" > "$BCC_TEMP"
+sed "s|.*|&\tarchive@mailmeter.opw.ie|" "$ZARAFAONLYFILE" >> "$BCC_TEMP"
+
+
+# Testing for Bob's bmail
+#sed -i "s|bob\.brandt\@opw\.ie.*|bob.brandt@opw.ie\tbob.brandt@bmail.opw.ie|i" "$BCC_TEMP"
+#sed -i "s|fintan\.macmahon\@opw\.ie.*|fintan.macmahon@opw.ie\tarchive@bmail.opw.ie|i" "$BCC_TEMP"
+
+if ! cmp "$BCC_TEMP" "$BCC" > /dev/null 2>&1
+then
+        mv "$BCC_TEMP" "$BCC"
+        /usr/sbin/postmap "$BCC"
+        RELOAD_POSTFIX="yes"
+        echo "(done)"
+		echo "Resynchronize Zarafa users and groups. (done)"
+		/usr/sbin/zarafa-admin --sync
+else
+        echo "(no change)"
+fi
+
+[ -n "$RELOAD_POSTFIX" ] && /usr/sbin/postfix reload 2>/dev/null
+
+rm -f "$ZARAFAMAILFILE"
+rm -f "$ZARAFAALIASFILE"
+rm -f "$ZARAFAFILE"
+rm -f "$DOMINOFILE"
+rm -f "$DOMINOONLYFILE"
+rm -f "$ZARAFAONLYFILE"
+rm -f "$DOMINOZARAFAFILE"
+rm -f "$POSTFIX_TEMP"
+rm -f "$BCC_TEMP"
+

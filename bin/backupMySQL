@@ -1,0 +1,19 @@
+#!/bin/bash
+#
+#     Script for backing up the MySQL Database
+#     Bob Brandt <projects@brandt.ie>
+#     Zentyal <info@zentyal.com>
+#
+
+_backupLocation="/srv/backup/sql-backup/zarafa-mysql-backup.sql"
+_backupLog="$_backupLocation/backup.log"
+_mysqlCredentials="/etc/mysql/debian.cnf"
+
+echo "Backup MySQL Database"
+_start=$( date )
+mysqldump --defaults-file=$_mysqlCredentials --skip-lock-tables --single-transaction --database zarafa > $_backupLocation
+logger -st "backupMySQL" "MySQL Backup (which started at $_start) has completed at $( date )" |& tee "$_backupLog"
+exit 0
+
+
+

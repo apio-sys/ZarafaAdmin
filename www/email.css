@@ -1,0 +1,29 @@
+html, body {
+	text-align: center;
+	color:black; 
+	font-size:0.9em;
+	font-family: "Courier New", Fixed, monospace, Courier;
+}
+
+.frame
+{
+	text-align: center;
+	vertical-align: top;
+	width: 100%;	
+	height: 100%;
+	border: none;
+	padding: 0px 0px 0px 0px;	
+}
+
+td.frame
+{
+	width: 50%;
+}
+
+#entry tr { background: #FFF; }
+
+#details tr:nth-child(odd) { background: #FFF; }
+#details tr:nth-child(even) { background: #DDD; }
+#details th { padding: 0px 10px 0px 10px; white-space: nowrap; }
+#details td { padding: 0px 10px 0px 10px; white-space: nowrap; }
+#details tr.hover:hover { background: #BBB; }
