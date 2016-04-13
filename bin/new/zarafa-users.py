@@ -21,9 +21,7 @@ args['delimiter'] = "\t"
 
 version = 0.3
 encoding = 'utf-8'
-command = '/usr/bin/zarafa-stats --users --dump'
 
-cachefile = '/tmp/zarafa-users.cache'
 
 headers = ['company','username','fullname','emailaddress','active','admin','UNK0x67C1001E','size','quotawarn','quotasoft','quotahard','UNK0x67200040','UNK0x6760000B','logon','logoff']
 #headers['session'] = ['UNK0x67420014','UNK0x674D0014','ip','UNK0x67440003','UNK0x67450003','UNK0x6746000B','username','UNK0x6747101E','UNK0x6749101E','UNK0x674A0005','UNK0x674B0005','UNK0x674C0005','UNK0x674E0003','version','program','UNK0x67510003','UNK0x67480003','UNK0x6753001E','pipe']
@@ -101,8 +99,10 @@ def command_line_args():
   if args['output'] == "csv": args['delimiter'] = ","
 
 
-def get_data(cachefile, command):
+def get_data():
     global args
+    command = '/usr/bin/zarafa-stats --users --dump'
+    cachefile = '/tmp/zarafa-users.cache'    
 
     args['cache'] *= 60
     age = args['cache'] + 1
@@ -147,6 +147,9 @@ def get_data(cachefile, command):
     return out
 
 def zarafa_users(users):
+    global args
+    global encoding
+
     if len(users) != 1:
         if args['output'] != 'xml':
             print args['delimiter'].join(headers)
@@ -176,45 +179,9 @@ def zarafa_users(users):
 
 
 
+
 # Start program
 if __name__ == "__main__":
     command_line_args()
 
-    zarafa_users( get_data(cachefile, command) )
-
-
-        # xml = ElementTree.Element('zarafa-stats')
-        # if args['command'] == 'system':
-        #     cmd = ElementTree.SubElement(xml, "system")
-        #     for line in out.split('\n')[1:]:
-        #         if not line: continue                
-        #         try:
-        #             tag, desc, value = line.split(';')
-        #             child = ElementTree.SubElement(cmd,tag, description=desc)
-        #             child.text = str(value).decode('unicode_escape')
-        #         except:
-        #             pass                
-        # else:
-        #     if args['command'] == 'session':
-        #         cmd = ElementTree.SubElement(xml, "sessions")
-        #     else:
-        #         cmd = ElementTree.SubElement(xml, "users")
-        #     for line in out.split('\n')[1:]:
-        #         if not line: continue
-        #         tmp = line.split(';')
-        #         if args['command'] == 'session':
-        #             subcmd = ElementTree.SubElement(cmd, "session")
-        #         else:
-        #             subcmd = ElementTree.SubElement(cmd, "user")
-        #         for i in range(len(tmp)):
-        #             try:
-        #                 if tmp[i] and headers[args['command']][i] in ['logon','logoff']:
-        #                     today = datetime.datetime.today()
-        #                     date = datetime.datetime.strptime(tmp[i].decode('unicode_escape'),'%a %b %d %H:%M:%S %Y')
-        #                     child = ElementTree.SubElement(subcmd, headers[args['command']][i], lag=str((today - date).days))
-        #                 else:
-        #                     child = ElementTree.SubElement(subcmd, headers[args['command']][i])
-        #                 child.text = tmp[i].decode('unicode_escape')
-        #             except:
-        #                 pass
-
+    zarafa_users( get_data() )
