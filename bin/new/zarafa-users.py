@@ -101,7 +101,7 @@ def command_line_args():
   if args['output'] == "csv": args['delimiter'] = ","
 
 
-def get_data(cachefile, command, filter):
+def get_data(cachefile, command):
     global args
 
     args['cache'] *= 60
