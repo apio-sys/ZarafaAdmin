@@ -141,19 +141,11 @@ if __name__ == "__main__":
                 if not fnmatch.fnmatch(tmp[headers.index("username")].lower(), args['user']): continue
             users[tmp[headers.index("username")].lower()] = line
 
-    print users
-    sys.exit()
-
-
-
-
-    if len(out) != 1:
+    if len(users) != 1:
         if args['output'] != 'xml':
-            out.insert(0, ";".join(headers))
-            if args['output'] == 'csv':
-                print "\n".join(out)
-            else:
-                print "\n".join([ line.replace(";","\t") for line in out ])
+            print args['delimiter'].join(headers)
+            for user in sorted(users.keys()):
+                print users[user].replace(";",args['delimiter'])
             sys.exit()
 
         xml = ElementTree.Element('zarafaadmin')
@@ -173,6 +165,10 @@ if __name__ == "__main__":
                     child.text = tmp[i].decode('unicode_escape')
                 except:
                     pass
+        print '<?xml version="1.0" encoding="' + encoding + '"?>'
+        print ElementTree.tostring(xml, encoding=encoding, method="xml")
+                    
+        sys.exit()
 
 
 
@@ -214,5 +210,3 @@ if __name__ == "__main__":
         #             except:
         #                 pass
 
-        print '<?xml version="1.0" encoding="' + encoding + '"?>'
-        print ElementTree.tostring(xml, encoding=encoding, method="xml")
