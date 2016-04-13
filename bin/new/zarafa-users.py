@@ -62,7 +62,7 @@ class customUsageVersion(argparse.Action):
       options.append(("-v, --version",           "Show program's version number and exit"))
       options.append(("-o, --output OUTPUT",     "Type of output {text | csv | xml}"))
       options.append(("-c, --cache MINUTES",     "Cache time. (in minutes)"))
-      options.append(("user",     "Filter to apply to usernames."))
+      options.append(("username",     "Filter to apply to usernames."))
       length = max( [ len(option[0]) for option in options ] )
       for option in options:
         description =  textwrap.wrap(option[1], (self.__row - length - 5))
@@ -116,12 +116,17 @@ if __name__ == "__main__":
     out = f.read().split('\n')
     f.close()
 
-    if args['output'] != 'xml':
-        if args['output'] == 'csv':
-            print "\n".join(out)
-        else:
-            print "\n".join([ line.replace(";","\t") for line in out ])
-    else:
+    print args['user']
+    sys.exit()
+
+    if len(out) > 2:
+        if args['output'] != 'xml':
+            if args['output'] == 'csv':
+                print "\n".join(out)
+            else:
+                print "\n".join([ line.replace(";","\t") for line in out ])
+            sys.exit()
+
         xml = ElementTree.Element('zarafaadmin')
         cmd = ElementTree.SubElement(xml, "users")
         for line in out[1:]:
