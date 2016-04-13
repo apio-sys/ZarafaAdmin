@@ -102,50 +102,73 @@ if __name__ == "__main__":
         f.close()
 
     f = open(cachefile, 'r')
-    out = f.read()
+    out = f.read().split('\n')[1:]
     f.close()
+    out.insert(0, ";".join(headers))
 
     if args['output'] != 'xml':
-        out = ";".join(headers) + "\n" + out[1:]
         if args['output'] == 'csv':
-            print out
+            print "\n".join(out)
         else:
-            print out.replace(";","\t")
-    # else:
-    #     xml = ElementTree.Element('zarafa-stats')
-    #     if args['command'] == 'system':
-    #         cmd = ElementTree.SubElement(xml, "system")
-    #         for line in out.split('\n')[1:]:
-    #             if not line: continue                
-    #             try:
-    #                 tag, desc, value = line.split(';')
-    #                 child = ElementTree.SubElement(cmd,tag, description=desc)
-    #                 child.text = str(value).decode('unicode_escape')
-    #             except:
-    #                 pass                
-    #     else:
-    #         if args['command'] == 'session':
-    #             cmd = ElementTree.SubElement(xml, "sessions")
-    #         else:
-    #             cmd = ElementTree.SubElement(xml, "users")
-    #         for line in out.split('\n')[1:]:
-    #             if not line: continue
-    #             tmp = line.split(';')
-    #             if args['command'] == 'session':
-    #                 subcmd = ElementTree.SubElement(cmd, "session")
-    #             else:
-    #                 subcmd = ElementTree.SubElement(cmd, "user")
-    #             for i in range(len(tmp)):
-    #                 try:
-    #                     if tmp[i] and headers[args['command']][i] in ['logon','logoff']:
-    #                         today = datetime.datetime.today()
-    #                         date = datetime.datetime.strptime(tmp[i].decode('unicode_escape'),'%a %b %d %H:%M:%S %Y')
-    #                         child = ElementTree.SubElement(subcmd, headers[args['command']][i], lag=str((today - date).days))
-    #                     else:
-    #                         child = ElementTree.SubElement(subcmd, headers[args['command']][i])
-    #                     child.text = tmp[i].decode('unicode_escape')
-    #                 except:
-    #                     pass
+            print "\n".join([ line.replace(";","\t") for line in out ])
+    else:
+        xml = ElementTree.Element('zarafaadmin')
+        cmd = ElementTree.SubElement(xml, "users")
+        for line in out.split('\n')[1:]:
+            if not line: continue
+            tmp = line.split(';')
+            subcmd = ElementTree.SubElement(cmd, "user")
+            for i in range(len(tmp)):
+                try:
+                    if tmp[i] and headers[i] in ['logon','logoff']:
+                        today = datetime.datetime.today()
+                        date = datetime.datetime.strptime(tmp[i].decode('unicode_escape'),'%a %b %d %H:%M:%S %Y')
+                        child = ElementTree.SubElement(subcmd, headers[i], lag=str((today - date).days))
+                    else:
+                        child = ElementTree.SubElement(subcmd, headers[i])
+                    child.text = tmp[i].decode('unicode_escape')
+                except:
+                    pass
 
-    #     print '<?xml version="1.0" encoding="' + encoding + '"?>'
-    #     print ElementTree.tostring(xml, encoding=encoding, method="xml")
+
+
+
+
+
+        # xml = ElementTree.Element('zarafa-stats')
+        # if args['command'] == 'system':
+        #     cmd = ElementTree.SubElement(xml, "system")
+        #     for line in out.split('\n')[1:]:
+        #         if not line: continue                
+        #         try:
+        #             tag, desc, value = line.split(';')
+        #             child = ElementTree.SubElement(cmd,tag, description=desc)
+        #             child.text = str(value).decode('unicode_escape')
+        #         except:
+        #             pass                
+        # else:
+        #     if args['command'] == 'session':
+        #         cmd = ElementTree.SubElement(xml, "sessions")
+        #     else:
+        #         cmd = ElementTree.SubElement(xml, "users")
+        #     for line in out.split('\n')[1:]:
+        #         if not line: continue
+        #         tmp = line.split(';')
+        #         if args['command'] == 'session':
+        #             subcmd = ElementTree.SubElement(cmd, "session")
+        #         else:
+        #             subcmd = ElementTree.SubElement(cmd, "user")
+        #         for i in range(len(tmp)):
+        #             try:
+        #                 if tmp[i] and headers[args['command']][i] in ['logon','logoff']:
+        #                     today = datetime.datetime.today()
+        #                     date = datetime.datetime.strptime(tmp[i].decode('unicode_escape'),'%a %b %d %H:%M:%S %Y')
+        #                     child = ElementTree.SubElement(subcmd, headers[args['command']][i], lag=str((today - date).days))
+        #                 else:
+        #                     child = ElementTree.SubElement(subcmd, headers[args['command']][i])
+        #                 child.text = tmp[i].decode('unicode_escape')
+        #             except:
+        #                 pass
+
+        print '<?xml version="1.0" encoding="' + encoding + '"?>'
+        print ElementTree.tostring(xml, encoding=encoding, method="xml")
