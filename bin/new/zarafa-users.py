@@ -150,9 +150,8 @@ if __name__ == "__main__":
 
         xml = ElementTree.Element('zarafaadmin')
         cmd = ElementTree.SubElement(xml, "users")
-        for line in out[1:]:
-            if not line: continue
-            tmp = line.split(';')
+        for user in sorted(users.keys()):
+            tmp = users[user].split(';')
             subcmd = ElementTree.SubElement(cmd, "user")
             for i in range(len(tmp)):
                 try:
@@ -167,7 +166,7 @@ if __name__ == "__main__":
                     pass
         print '<?xml version="1.0" encoding="' + encoding + '"?>'
         print ElementTree.tostring(xml, encoding=encoding, method="xml")
-                    
+
         sys.exit()
 
 
