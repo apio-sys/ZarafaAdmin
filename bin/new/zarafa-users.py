@@ -93,8 +93,6 @@ if __name__ == "__main__":
         age = (datetime.datetime.now() - datetime.datetime.fromtimestamp(os.stat(cachefile).st_mtime)).seconds
     except:
         pass
-    print age
-
     if age > args['cache']:
         p = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = p.communicate()
@@ -107,13 +105,12 @@ if __name__ == "__main__":
     out = f.read()
     f.close()
 
-    print out
-    
-    # if args['output'] == 'text':
-    #     print out
-    # elif args['output'] == 'csv':
-    #     print ";".join(headers)
-    #     print "\n".join(out.split('\n')[1:])
+    if args['output'] != 'xml':
+        out = ";".join(headers) + "\n" + out[1:]
+        if args['output'] == 'csv':
+            print out
+        else:
+            print out.replace(";","\t")
     # else:
     #     xml = ElementTree.Element('zarafa-stats')
     #     if args['command'] == 'system':
