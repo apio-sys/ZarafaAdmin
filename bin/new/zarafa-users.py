@@ -106,21 +106,40 @@ if __name__ == "__main__":
         out, err = p.communicate()
         if err: raise IOError(err)
 
+        # Remove the default SYSTEM user
         out = out.split('\n')[1:]
-        out.insert(0, ";".join(headers))        
+        for c in reversed(range(len(out))):
+            tmp = out[c].split(";")
+            if tmp[1] == tmp[2] == "SYSTEM": out.pop(c)
+
         f = open(cachefile, 'w')
         f.write("\n".join(out))
         f.close()
+    else:
+        f = open(cachefile, 'r')
+        out = f.read().split('\n')
+        f.close()
 
-    f = open(cachefile, 'r')
-    out = f.read().split('\n')
-    f.close()
+    # users = []
+    # for line in out:
+    #     if line:
+    #         try:
+    #             tmp = 
+    #             users.append(tmp)
+    #         except:
+    #             pass
+            
+    # users = sorted(fnmatch.filter(users, args['user']))
 
-    print args['user']
+    print out
     sys.exit()
 
-    if len(out) > 2:
+
+
+
+    if len(out) != 1:
         if args['output'] != 'xml':
+            out.insert(0, ";".join(headers))
             if args['output'] == 'csv':
                 print "\n".join(out)
             else:
