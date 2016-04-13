@@ -53,7 +53,7 @@ class customUsageVersion(argparse.Action):
       print "\nWritten by Bob Brandt <projects@brandt.ie>."
     else:
       print "Usage: " + self.__prog + " [options] {find | restore} USER"
-      print "Script used to restore items to Zarafa Mailboxes via brick-level-backup.\n"
+      print "Script used to find details about Zarafa users.\n"
       print "Options:"
       options = []
       options.append(("-h, --help",              "Show this help message and exit"))
@@ -87,11 +87,14 @@ def command_line_args():
 if __name__ == "__main__":
     command_line_args()
 
-    st = os.stat(cachefile)
-    # Age=(time.time()-st.st_mtime)
-    print st
-
-
+    args['cache'] *= 60
+    age = args['cache'] + 1
+    try:
+        age = os.stat(cachefile)
+        # age=(time.time()-st.st_mtime)            
+    else:
+        pass
+    print age
 
     # p = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     # out, err = p.communicate()
