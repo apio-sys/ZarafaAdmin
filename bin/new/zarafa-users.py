@@ -120,7 +120,7 @@ if __name__ == "__main__":
         for c in reversed(range(len(out))):
             if out[c]:
                 tmp = out[c].split(";")
-                if tmp[1] == tmp[2] == "SYSTEM": out.pop(c)
+                if tmp[headers.index("username")] == tmp[headers.index("fullname")] == "SYSTEM": out.pop(c)
             else:
                 out.pop(c)
 
@@ -132,18 +132,16 @@ if __name__ == "__main__":
         out = f.read().split('\n')
         f.close()
 
-    # users = []
-    # for line in out:
-    #     if line:
-    #         try:
-    #             tmp = 
-    #             users.append(tmp)
-    #         except:
-    #             pass
-            
-    # users = sorted(fnmatch.filter(users, args['user']))
+    # Apply username filter
+    users = {}
+    for line in out:
+        if line:
+            tmp = line.split(";")
+            if args['user']:
+                if not fnmatch.fnmatch(tmp[headers.index("username")].lower(), args['user']): continue
+            users[tmp[headers.index("username")].lower()] = line
 
-    print out
+    print users
     sys.exit()
 
 
