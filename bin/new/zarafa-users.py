@@ -14,7 +14,7 @@ import brandt
 sys.path.pop()
 
 args = {}
-args['cache'] = 5
+args['cache'] = 15
 args['output'] = 'text'
 version = 0.3
 encoding = 'utf-8'
@@ -97,14 +97,16 @@ if __name__ == "__main__":
         p = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = p.communicate()
         if err: raise IOError(err)
+
+        out = out.split('\n')[1:]
+        out.insert(0, ";".join(headers))        
         f = open(cachefile, 'w')
-        f.write(out)
+        f.write("\n".join(out))
         f.close()
 
     f = open(cachefile, 'r')
-    out = f.read().split('\n')[1:]
+    out = f.read().split('\n')
     f.close()
-    out.insert(0, ";".join(headers))
 
     if args['output'] != 'xml':
         if args['output'] == 'csv':
@@ -114,7 +116,7 @@ if __name__ == "__main__":
     else:
         xml = ElementTree.Element('zarafaadmin')
         cmd = ElementTree.SubElement(xml, "users")
-        for line in out.split('\n')[1:]:
+        for line in out[1:]:
             if not line: continue
             tmp = line.split(';')
             subcmd = ElementTree.SubElement(cmd, "user")
