@@ -172,6 +172,10 @@ def zarafa_users(users):
                     pass
         print '<?xml version="1.0" encoding="' + encoding + '"?>'
         print ElementTree.tostring(xml, encoding=encoding, method="xml")
+    else:
+        print users
+
+
 
 # Start program
 if __name__ == "__main__":
