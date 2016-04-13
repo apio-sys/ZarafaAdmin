@@ -92,7 +92,7 @@ if __name__ == "__main__":
     try:
         age = os.stat(cachefile)
         # age=(time.time()-st.st_mtime)            
-    else:
+    except:
         pass
     print age
 
