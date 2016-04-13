@@ -150,14 +150,13 @@ def zarafa_users(users):
     if len(users) != 1:
         if args['output'] != 'xml':
             print args['delimiter'].join(headers)
-            for user in sorted(users.keys()):
-                print users[user].replace(";",args['delimiter'])
+            print "\n".join( [ user.replace(";",args['delimiter']) for user in users ] )
             sys.exit()
 
         xml = ElementTree.Element('zarafaadmin')
         cmd = ElementTree.SubElement(xml, "users")
-        for user in sorted(users.keys()):
-            tmp = users[user].split(';')
+        for user in users:
+            tmp = user.split(';')
             subcmd = ElementTree.SubElement(cmd, "user")
             for i in range(len(tmp)):
                 try:
@@ -180,7 +179,7 @@ def zarafa_users(users):
 # Start program
 if __name__ == "__main__":
     command_line_args()
-    
+
     zarafa_users( get_data(cachefile, command) )
 
 
