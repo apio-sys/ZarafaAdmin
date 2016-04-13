@@ -110,7 +110,10 @@ if __name__ == "__main__":
         out = out.split('\n')[1:]
         for c in reversed(range(len(out))):
             tmp = out[c].split(";")
-            if tmp[1] == tmp[2] == "SYSTEM": out.pop(c)
+            if tmp[1] == tmp[2] == "SYSTEM":
+                print tmp
+                print len(out), c
+                out.pop(c)
 
         f = open(cachefile, 'w')
         f.write("\n".join(out))
