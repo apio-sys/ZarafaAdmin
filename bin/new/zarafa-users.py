@@ -90,16 +90,25 @@ if __name__ == "__main__":
     args['cache'] *= 60
     age = args['cache'] + 1
     try:
-        age = os.stat(cachefile)
-        # age=(time.time()-st.st_mtime)            
+        age = (datetime.datetime.now() - datetime.datetime.fromtimestamp(os.stat(cachefile).st_mtime)).seconds
     except:
         pass
     print age
 
-    # p = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    # out, err = p.communicate()
-    # if err: raise IOError(err)
+    if age > args['cache']:
+        p = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        out, err = p.communicate()
+        if err: raise IOError(err)
+        f = open(cachefile, 'w')
+        f.write(out)
+        f.close()
 
+    f = open(cachefile, 'r')
+    out = f.read()
+    f.close()
+
+    print out
+    
     # if args['output'] == 'text':
     #     print out
     # elif args['output'] == 'csv':
