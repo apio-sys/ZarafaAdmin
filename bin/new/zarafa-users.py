@@ -16,7 +16,7 @@ sys.path.pop()
 args = {}
 args['cache'] = 5
 args['output'] = 'text'
-args['version'] = 0.3
+version = 0.3
 encoding = 'utf-8'
 command = '/usr/bin/zarafa-stats --users --dump'
 
