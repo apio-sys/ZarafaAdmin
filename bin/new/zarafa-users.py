@@ -2,7 +2,7 @@
 """
 Python wrapper for zarafa-stats --users
 """
-import argparse, re, fnmatch, datetime, time
+import argparse, textwrap, re, fnmatch, datetime, time
 import xml.etree.cElementTree as ElementTree
 import subprocess
 from multiprocessing import Process, Queue
