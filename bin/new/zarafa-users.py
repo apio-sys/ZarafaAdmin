@@ -125,7 +125,7 @@ def get_data(cachefile, command):
                 if tmp[headers.index("username")] == tmp[headers.index("fullname")] == "SYSTEM": out.pop(c)
 
         f = open(cachefile, 'w')
-        f.write("\n".join())
+        f.write("\n".join(out))
         f.close()
     else:
         f = open(cachefile, 'r')
