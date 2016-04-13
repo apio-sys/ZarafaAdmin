@@ -109,11 +109,12 @@ if __name__ == "__main__":
         # Remove the default SYSTEM user
         out = out.split('\n')[1:]
         for c in reversed(range(len(out))):
-            tmp = out[c].split(";")
-            if tmp[1] == tmp[2] == "SYSTEM":
-                print tmp
-                print len(out), c
-                out.pop(c)
+            if out[c]:
+                tmp = out[c].split(";")
+                if tmp[1] == tmp[2] == "SYSTEM":
+                    print tmp
+                    print len(out), c
+                    out.pop(c)
 
         f = open(cachefile, 'w')
         f.write("\n".join(out))
