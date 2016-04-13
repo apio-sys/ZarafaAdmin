@@ -16,6 +16,8 @@ sys.path.pop()
 args = {}
 args['cache'] = 15
 args['output'] = 'text'
+args['user'] = ''
+
 version = 0.3
 encoding = 'utf-8'
 command = '/usr/bin/zarafa-stats --users --dump'
@@ -52,7 +54,7 @@ class customUsageVersion(argparse.Action):
       print textwrap.fill(version, self.__row)
       print "\nWritten by Bob Brandt <projects@brandt.ie>."
     else:
-      print "Usage: " + self.__prog + " [options] {find | restore} USER"
+      print "Usage: " + self.__prog + " [options] [username]"
       print "Script used to find details about Zarafa users.\n"
       print "Options:"
       options = []
@@ -60,6 +62,7 @@ class customUsageVersion(argparse.Action):
       options.append(("-v, --version",           "Show program's version number and exit"))
       options.append(("-o, --output OUTPUT",     "Type of output {text | csv | xml}"))
       options.append(("-c, --cache MINUTES",     "Cache time. (in minutes)"))
+      options.append(("user",     "Filter to apply to usernames."))
       length = max( [ len(option[0]) for option in options ] )
       for option in options:
         description =  textwrap.wrap(option[1], (self.__row - length - 5))
@@ -80,7 +83,12 @@ def command_line_args():
                     required=False,
                     default=args['output'],
                     choices=['text', 'csv', 'xml'],
-                    help="Display output type.")  
+                    help="Display output type.")
+  parser.add_argument('user',
+                    nargs='?',
+                    default= args['user'],
+                    action='store',
+                    help="User to retrieve details about.")  
   args.update(vars(parser.parse_args()))
 
 # Start program
