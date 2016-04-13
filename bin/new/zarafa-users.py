@@ -17,6 +17,7 @@ args = {}
 args['cache'] = 15
 args['output'] = 'text'
 args['user'] = ''
+args['delimiter'] = "\t"
 
 version = 0.3
 encoding = 'utf-8'
@@ -62,6 +63,7 @@ class customUsageVersion(argparse.Action):
       options.append(("-v, --version",           "Show program's version number and exit"))
       options.append(("-o, --output OUTPUT",     "Type of output {text | csv | xml}"))
       options.append(("-c, --cache MINUTES",     "Cache time. (in minutes)"))
+      options.append(("-d, --delimiter DELIM",   "Character to use instead of TAB for field delimiter"))
       options.append(("username",     "Filter to apply to usernames."))
       length = max( [ len(option[0]) for option in options ] )
       for option in options:
@@ -79,6 +81,11 @@ def command_line_args():
                     default=args['cache'],
                     type=int,
                     help="Cache time. (in minutes)")
+  parser.add_argument('-d', '--delimiter',
+                    required=False,
+                    default=args['delimiter'],
+                    type=str,
+                    help="Character to use instead of TAB for field delimiter")
   parser.add_argument('-o', '--output',
                     required=False,
                     default=args['output'],
@@ -88,8 +95,10 @@ def command_line_args():
                     nargs='?',
                     default= args['user'],
                     action='store',
-                    help="User to retrieve details about.")  
+                    help="User to retrieve details about.")
   args.update(vars(parser.parse_args()))
+  args['delimiter'] = args['delimiter'][0]
+  if args['output'] == "csv": args['delimiter'] = ","
 
 # Start program
 if __name__ == "__main__":
@@ -111,10 +120,9 @@ if __name__ == "__main__":
         for c in reversed(range(len(out))):
             if out[c]:
                 tmp = out[c].split(";")
-                if tmp[1] == tmp[2] == "SYSTEM":
-                    print tmp
-                    print len(out), c
-                    out.pop(c)
+                if tmp[1] == tmp[2] == "SYSTEM": out.pop(c)
+            else:
+                out.pop(c)
 
         f = open(cachefile, 'w')
         f.write("\n".join(out))
