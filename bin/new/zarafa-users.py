@@ -180,7 +180,8 @@ def zarafa_users(users):
 # Start program
 if __name__ == "__main__":
     command_line_args()
-    print get_data(cachefile, command)
+    
+    zarafa_users( get_data(cachefile, command) )
 
 
         # xml = ElementTree.Element('zarafa-stats')
