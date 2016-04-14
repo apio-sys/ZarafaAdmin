@@ -87,7 +87,7 @@ def command_line_args():
   args.update(vars(parser.parse_args()))
   args['delimiter'] = args['delimiter'][0]
   if args['delimiter']: args['delimiter'] = args['delimiter'][0]
-  if args['delimiter'] and args['output'] == "csv": args['delimiter'] = ","
+  if not args['delimiter'] and args['output'] == "csv": args['delimiter'] = ","
 
 def get_data():
   global args
