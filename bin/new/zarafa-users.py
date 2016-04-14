@@ -117,7 +117,7 @@ def get_data():
     for c in reversed(range(len(out))):
       if out[c]:
         tmp = out[c].split(";")
-        if headers.index("username") < tmp[headers.index("fullname") < len(tmp): 
+        if headers.index("username") < headers.index("fullname") < len(tmp): 
           if tmp[headers.index("username")] == tmp[headers.index("fullname")] == "SYSTEM": out.pop(c)
       else:
         out.pop(c)
