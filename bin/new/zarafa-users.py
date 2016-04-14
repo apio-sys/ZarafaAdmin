@@ -379,12 +379,13 @@ if __name__ == "__main__":
     except:
       exitcode = -1
       errmsg = str(" ".join(err))
+      
     if args['output'] != 'xml': 
       if exitcode != 0: sys.stderr.write( str(err) +'\n' )
     else:
       xml = ElementTree.Element('zarafaadmin')      
       xmldata = ElementTree.SubElement(xml, 'error', errorcode = str(exitcode) )
-      xmldata.text = str(err[1])
+      xmldata.text = errmsg
       print '<?xml version="1.0" encoding="' + encoding + '"?>'
       print ElementTree.tostring(xml, encoding=encoding, method="xml")
 
