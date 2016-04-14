@@ -363,7 +363,7 @@ if __name__ == "__main__":
     users = get_data()
     if len(users) == 1:
       print "Just one"
-      print users[0][headers.index("username")]
+      print users[0].split(";")[headers.index("username")]
       xmldata = zarafa_user(users[0][headers.index("username")])
     else:
       xmldata = zarafa_users(users)
