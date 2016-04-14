@@ -355,22 +355,30 @@ def zarafa_user(username):
 if __name__ == "__main__":
   command_line_args()
 
+  exitcode = 0
   try:
     users = get_data()
     if len(users) == 1:
       xmldata = zarafa_user(users[0][headers.index("username")])
     else:
       xmldata = zarafa_users(users)
-  except SystemExit as e:
-    sys.exit(e)      
+
+  except SystemExit as err:
+    print err.args
+    exitcode = int(err[0])
+    sys.exit(exitcode)
+
   except Exception as err:
+    exitcode = int(err[0])
     if args['output'] != 'xml': 
       sys.stderr.write( str(err) +'\n' )
-      sys.exit(0)
-    xmldata = ElementTree.Element('error')
-    xmldata.text = str(err)
+      sys.exit(exitcode)
+    xmldata = ElementTree.Element('error', errorcode = str(exitcode) )
+    xmldata.text = str(err[1])
+
   finally:
     xml = ElementTree.Element('zarafaadmin')
     xml.append(xmldata)
     print '<?xml version="1.0" encoding="' + encoding + '"?>'
     print ElementTree.tostring(xml, encoding=encoding, method="xml")
+    sys.exit(exitcode)
