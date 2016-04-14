@@ -153,7 +153,7 @@ def zarafa_users(users):
   if args['output'] != 'xml':
     print args['delimiter'].join(headers)
     print "\n".join( [ user.replace(";",args['delimiter']) for user in users ] )
-    sys.exit()
+    sys.exit(0)
 
   xml = ElementTree.Element('users')
   for user in users:
@@ -361,10 +361,12 @@ if __name__ == "__main__":
       xmldata = zarafa_user(users[0][headers.index("username")])
     else:
       xmldata = zarafa_users(users)
+  except SystemExit as e:
+    sys.exit(e)      
   except Exception as err:
     if args['output'] != 'xml': 
       sys.stderr.write( str(err) +'\n' )
-      sys.exit()
+      sys.exit(0)
     xmldata = ElementTree.Element('error')
     xmldata.text = str(err)
   finally:
