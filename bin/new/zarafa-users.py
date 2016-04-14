@@ -176,15 +176,9 @@ def zarafa_user(username):
   global args, ldapmapping
   command = '/usr/sbin/zarafa-admin --type user --details ' + str(username)
 
-  print command
-
-
   p = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   out, err = p.communicate()
   if err: raise IOError(err)
-
-  print out
-
 
   data = str(out).split("\n")
   groups = []
@@ -229,6 +223,7 @@ def zarafa_user(username):
       data[good] = data[bad]
       del data[bad]
 
+  xml = ElementTree.Element('users')
   if args['output'] == "text":
     maxlen = max([ len(x) + 4 for x in data.keys() ] + [25])
     print "Username:".ljust(maxlen), data.get("username","")
@@ -288,6 +283,8 @@ def zarafa_user(username):
     print "Groups (" + str(len(groups)) + "):"
     print '-' * (maxlen)
     print '\n'.join([ " " + str(x) for x in groups ])
+    sys.exit(0)
+
   elif args['output'] == "csv":
     tmp = data.get("username","")
     tmp += ',' + data.get("fullname","")
@@ -343,15 +340,14 @@ def zarafa_user(username):
     tmp += ',' + data.get("pr_street_address","")
     tmp += ',' + data.get("pr_user_certificate","")
     print tmp
-  else:
-      print '<?xml version="1.0" encoding="' + encoding + '"?>'
-      xml = ElementTree.Element('zarafa-admin')           
-      user = ElementTree.SubElement(xml, 'user', attrib=data)
-      memberof = ElementTree.SubElement(user, 'groups')
-      for group in groups:
-          ElementTree.SubElement(memberof, 'group', attrib={"groupname":group})
-      print ElementTree.tostring(xml, encoding=encoding, method="xml")
+    sys.exit(0)
 
+  else:
+    xmluser = ElementTree.SubElement(xml, 'user', attrib=data)
+    memberof = ElementTree.SubElement(user, 'groups')
+    for group in groups:
+        ElementTree.SubElement(memberof, 'group', attrib={"groupname":group})
+  return xml
 
 
 
