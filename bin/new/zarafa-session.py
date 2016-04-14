@@ -50,7 +50,7 @@ class customUsageVersion(argparse.Action):
       print "\nWritten by Bob Brandt <projects@brandt.ie>."
     else:
       print "Usage: " + self.__prog + " [options] [username]"
-      print "Script used to find details about Zarafa users.\n"
+      print "Script used to find details about Zarafa user sessions.\n"
       print "Options:"
       options = []
       options.append(("-h, --help",              "Show this help message and exit"))
@@ -58,11 +58,11 @@ class customUsageVersion(argparse.Action):
       options.append(("-o, --output OUTPUT",     "Type of output {text | csv | xml}"))
       options.append(("-c, --cache MINUTES",     "Cache time. (in minutes)"))
       options.append(("-d, --delimiter DELIM",   "Character to use instead of TAB for field delimiter"))
-      options.append(("username",     "Filter to apply to usernames."))
+      options.append(("username",                "Filter to apply to usernames."))
       length = max( [ len(option[0]) for option in options ] )
       for option in options:
         description = textwrap.wrap(option[1], (self.__row - length - 5))
-      print "  " + option[0].ljust(length) + "   " + description[0]
+        print "  " + option[0].ljust(length) + "   " + description[0]
       for n in range(1,len(description)): print " " * (length + 5) + description[n]
     exit(self.__exit)
 def command_line_args():
