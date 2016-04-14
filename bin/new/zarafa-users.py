@@ -347,7 +347,6 @@ def zarafa_user(username):
     memberof = ElementTree.SubElement(xmluser, 'groups')
     for group in groups:
         ElementTree.SubElement(memberof, 'group', attrib={"groupname":group})
-  print xml
   return xml
 
 
@@ -356,10 +355,10 @@ def zarafa_user(username):
 
 # Start program
 if __name__ == "__main__":
-  command_line_args()
+    command_line_args()
 
-  exitcode = 0
-  try:
+  # exitcode = 0
+  # try:
     users = get_data()
     if len(users) == 1:
       xmldata = zarafa_user(users[0].split(";")[headers.index("username")])
@@ -369,24 +368,22 @@ if __name__ == "__main__":
     if args['output'] == 'xml': 
       xml = ElementTree.Element('zarafaadmin')
       xml.append(xmldata)
-      print '<?xml version="1.0" encoding="' + encoding + '"?>'
-      print ElementTree.tostring(xml, encoding=encoding, method="xml")
+      print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
 
-  except ( Exception, SystemExit ) as err:
-    try:
-      exitcode = int(err[0])
-      errmsg = str(" ".join(err[1:]))
-    except:
-      exitcode = -1
-      errmsg = str(" ".join(err))
-      
-    if args['output'] != 'xml': 
-      if exitcode != 0: sys.stderr.write( str(err) +'\n' )
-    else:
-      xml = ElementTree.Element('zarafaadmin')      
-      xmldata = ElementTree.SubElement(xml, 'error', errorcode = str(exitcode) )
-      xmldata.text = errmsg
-      print '<?xml version="1.0" encoding="' + encoding + '"?>'
-      print ElementTree.tostring(xml, encoding=encoding, method="xml")
+  # except ( Exception, SystemExit ) as err:
+  #   try:
+  #     exitcode = int(err[0])
+  #     errmsg = str(" ".join(err[1:]))
+  #   except:
+  #     exitcode = -1
+  #     errmsg = str(" ".join(err))
 
-  sys.exit(exitcode)
+  #   if args['output'] != 'xml': 
+  #     if exitcode != 0: sys.stderr.write( str(err) +'\n' )
+  #   else:
+  #     xml = ElementTree.Element('zarafaadmin')      
+  #     xmldata = ElementTree.SubElement(xml, 'error', errorcode = str(exitcode) )
+  #     xmldata.text = errmsg
+  #     print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
+
+  # sys.exit(exitcode)
