@@ -174,9 +174,10 @@ def zarafa_users(users):
     xmluser = ElementTree.SubElement(xml, "user", **attribs)
     if logon:
       child = ElementTree.SubElement(xmluser, "logon", lag=str((today - logon).days))
-      print today, "-", logon, "-", (today - logon).days
+      child.text = logon
     if logoff:
       child = ElementTree.SubElement(xmluser, "logoff", lag=str((today - logoff).days))
+      child.text = logoff      
 
   return xml
 
