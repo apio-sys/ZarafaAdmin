@@ -343,15 +343,11 @@ def zarafa_user(username):
     sys.exit(0)
 
   else:
-    xmluser = ElementTree.SubElement(xml, 'user', attrib=data)
+    xmluser = ElementTree.SubElement(xml, 'user', **data)
     memberof = ElementTree.SubElement(xmluser, 'groups')
     for group in groups:
-        ElementTree.SubElement(memberof, 'group', attrib={"groupname":group})
+        ElementTree.SubElement(memberof, 'group', groupname = group)
   return xml
-
-
-
-
 
 # Start program
 if __name__ == "__main__":
