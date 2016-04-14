@@ -136,7 +136,7 @@ def zarafa_system(data):
       parameter, desc, value = line.split(";")
       if parameter in ['server_start_date','cache_purge_date','config_reload_date','sql_last_fail_time']:
         if value:
-          value = str(datetime.datetime.strptime(tmp[i].decode('unicode_escape'),'%a %b %d %H:%M:%S %Y'))
+          value = str(datetime.datetime.strptime(value.decode('unicode_escape'),'%a %b %d %H:%M:%S %Y'))
       print str(desc).ljust(width) + args['delimiter'] + str(value)
 
 
