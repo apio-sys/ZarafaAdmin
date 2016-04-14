@@ -165,6 +165,7 @@ def zarafa_users(users):
       if tmp[i]:
         if headers[i] == 'logon':
           logon = datetime.datetime.strptime(tmp[i].decode('unicode_escape'),'%a %b %d %H:%M:%S %Y')
+          print tmp[i], logon
         elif headers[i] == 'logoff':
           logoff = datetime.datetime.strptime(tmp[i].decode('unicode_escape'),'%a %b %d %H:%M:%S %Y')
         else:
