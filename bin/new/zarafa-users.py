@@ -158,18 +158,28 @@ def zarafa_users(users):
   xml = ElementTree.Element('users')
   for user in users:
     tmp = user.split(';')
-    xmluser = ElementTree.SubElement(xml, "user")
+    attribs = {}
+    logon = ""
+    logoff = ""
     for i in range(len(tmp)):
-      try:
-        if tmp[i] and headers[i] in ['logon','logoff']:
-          today = datetime.datetime.today()
-          date = datetime.datetime.strptime(tmp[i].decode('unicode_escape'),'%a %b %d %H:%M:%S %Y')
-          child = ElementTree.SubElement(xmluser, headers[i], lag=str((today - date).days))
+      if tmp[i]:
+        if headers[i] == 'logon':
+          logon = tmp[i]
+        elif headers[i] == 'logoff':
+          logoff = tmp[i]          
         else:
-          child = ElementTree.SubElement(xmluser, headers[i])
-        child.text = tmp[i].decode('unicode_escape')
-      except:
-        pass
+          attribs[headers[i]] = tmp[i]
+
+    xmluser = ElementTree.SubElement(xml, "user", **attribs)
+    if logon:
+      today = datetime.datetime.today()
+      date = datetime.datetime.strptime(logon.decode('unicode_escape'),'%a %b %d %H:%M:%S %Y')
+      child = ElementTree.SubElement(xmluser, "logon", lag=str((today - date).days))
+    if logoff:
+      today = datetime.datetime.today()
+      date = datetime.datetime.strptime(logoff.decode('unicode_escape'),'%a %b %d %H:%M:%S %Y')
+      child = ElementTree.SubElement(xmluser, "logoff", lag=str((today - date).days))
+
   return xml
 
 def zarafa_user(username):
