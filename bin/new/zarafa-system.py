@@ -134,7 +134,10 @@ def zarafa_system(data):
     width = max( [ len(line.split(";")[1]) for line in data ] )
     for line in data:
       parameter, desc, value = line.split(";")
-      print parameter, str(desc).ljust(width) + args['delimiter'] + str(value)
+      if parameter in ['server_start_date','cache_purge_date','config_reload_date','sql_last_fail_time']:
+        if value:
+          value = str(datetime.datetime.strptime(tmp[i].decode('unicode_escape'),'%a %b %d %H:%M:%S %Y'))
+      print str(desc).ljust(width) + args['delimiter'] + str(value)
 
 
   # else:
