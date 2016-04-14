@@ -156,6 +156,7 @@ def zarafa_users(users):
     sys.exit(0)
 
   xml = ElementTree.Element('users')
+  today = datetime.datetime.today()
   for user in users:
     tmp = user.split(';')
     attribs = {}
@@ -165,16 +166,15 @@ def zarafa_users(users):
       if tmp[i]:
         if headers[i] == 'logon':
           logon = datetime.datetime.strptime(tmp[i].decode('unicode_escape'),'%a %b %d %H:%M:%S %Y')
-          print tmp[i], logon
         elif headers[i] == 'logoff':
           logoff = datetime.datetime.strptime(tmp[i].decode('unicode_escape'),'%a %b %d %H:%M:%S %Y')
         else:
           attribs[headers[i]] = tmp[i]
 
     xmluser = ElementTree.SubElement(xml, "user", **attribs)
-    today = datetime.datetime.today()
     if logon:
       child = ElementTree.SubElement(xmluser, "logon", lag=str((today - logon).days))
+      print today, "-", logon, "-", (today - logon).days
     if logoff:
       child = ElementTree.SubElement(xmluser, "logoff", lag=str((today - logoff).days))
 
