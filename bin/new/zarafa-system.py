@@ -106,6 +106,11 @@ def get_data():
     if err: raise IOError(err)
 
     out = out.strip().split('\n')[1:]
+    for c in reversed(range(len(out))):
+      if out[c]:
+        tmp = out[c].split(";")
+        if len(tmp) == 3: continue
+      out.pop(c)
 
     f = open(cachefile, 'w')
     f.write("\n".join(out))
@@ -120,23 +125,30 @@ def get_data():
 def zarafa_system(data):
   global args
 
-  if args['output'] != 'xml':
-    if not args['delimiter']: args['delimiter'] = "\t"    
+  if args['output'] == 'csv':
     print args['delimiter'].join(headers)
-    print "\n".join( [ session.replace(";",args['delimiter']) for session in sessions ] )
+    print "\n".join( [ line.replace(";",args['delimiter']) for line in data ] )
     sys.exit(0)
+  elif args['output'] == 'text':
+    if not args['delimiter']: args['delimiter'] = "\t"
+    width = max( [ line.split(";")[1] for line in data ] )
+    for line in data:
+      tmp = line.split(";")[1]
+      print str(tmp[1]).ljust(width) + args['delimiter'] + str(tmp[2])
 
-  xml = ElementTree.Element('sessions')
-  today = datetime.datetime.today()
-  for session in sessions:
-    tmp = session.split(';')
-    attribs = {}
-    for i in range(len(tmp)):
-      if tmp[i]:
-        attribs[headers[i]] = tmp[i]
-    xmlsession = ElementTree.SubElement(xml, "session", **attribs)
 
-  return xml
+  # else:
+  #   xml = ElementTree.Element('system')
+  #   today = datetime.datetime.today()
+  #   for session in sessions:
+  #     tmp = session.split(';')
+  #     attribs = {}
+  #     for i in range(len(tmp)):
+  #       if tmp[i]:
+  #         attribs[headers[i]] = tmp[i]
+  #     xmlsession = ElementTree.SubElement(xml, "session", **attribs)
+
+  # return xml
 
 
 # Start program
