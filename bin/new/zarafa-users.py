@@ -180,6 +180,9 @@ def zarafa_user(username):
   out, err = p.communicate()
   if err: raise IOError(err)
 
+  print out
+
+
   data = str(out).split("\n")
   groups = []
   quotas = []
@@ -360,7 +363,7 @@ if __name__ == "__main__":
     users = get_data()
     if len(users) == 1:
       print "Just one"
-      print users
+      print users[0][headers.index("username")]
       xmldata = zarafa_user(users[0][headers.index("username")])
     else:
       xmldata = zarafa_users(users)
