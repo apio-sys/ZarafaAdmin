@@ -115,11 +115,12 @@ def get_data():
 
     out = out.strip().split('\n')[1:]
     for c in reversed(range(len(out))):
-      if not out[c]:
-        out.pop(c)
-      else:
+      if out[c]:
         tmp = out[c].split(";")
-        if tmp[headers.index("username")] == tmp[headers.index("fullname")] == "SYSTEM": out.pop(c)
+        if headers.index("username") < tmp[headers.index("fullname") < len(tmp): 
+          if tmp[headers.index("username")] == tmp[headers.index("fullname")] == "SYSTEM": out.pop(c)
+      else:
+        out.pop(c)
 
     f = open(cachefile, 'w')
     f.write("\n".join(out))

@@ -146,13 +146,13 @@ def zarafa_sessions(sessions):
 
   if args['output'] != 'xml':
     print args['delimiter'].join(headers)
-    print "\n".join( [ user.replace(";",args['delimiter']) for session in sessions ] )
+    print "\n".join( [ session.replace(";",args['delimiter']) for session in sessions ] )
     sys.exit(0)
 
   xml = ElementTree.Element('sessions')
   today = datetime.datetime.today()
   for session in sessions:
-    tmp = user.split(';')
+    tmp = session.split(';')
     attribs = {}
     for i in range(len(tmp)):
       if tmp[i]:
