@@ -134,6 +134,7 @@ def zarafa_system(data):
     width = max( [ len(line.split(";")[1]) for line in data ] )
     for line in data:
       tmp = line.split(";")[1]
+      print tmp
       print str(tmp[1]).ljust(width) + args['delimiter'] + str(tmp[2])
 
 
