@@ -358,26 +358,29 @@ def zarafa_user(username):
 if __name__ == "__main__":
   command_line_args()
 
+  exitcode = 0
   try:
-    exitcode = 0
     users = get_data()
     if len(users) == 1:
       xmldata = zarafa_user(users[0].split(";")[headers.index("username")])
     else:
       xmldata = zarafa_users(users)
 
-  except ( Exception, SystemExit ) as err:
-    exitcode = int(err[0])
-    if args['output'] != 'xml': 
-      if exitcode != 0: sys.stderr.write( str(err) +'\n' )
-    else:
-      xmldata = ElementTree.Element('error', errorcode = str(exitcode) )
-      xmldata.text = str(err[1])
-
-  finally:
     if args['output'] == 'xml': 
       xml = ElementTree.Element('zarafaadmin')
       xml.append(xmldata)
       print '<?xml version="1.0" encoding="' + encoding + '"?>'
       print ElementTree.tostring(xml, encoding=encoding, method="xml")
-    sys.exit(exitcode)
+
+  except ( Exception, SystemExit ) as err:
+    exitcode = int(err[0])
+    if args['output'] != 'xml': 
+      if exitcode != 0: sys.stderr.write( str(err) +'\n' )
+    else:
+      xml = ElementTree.Element('zarafaadmin')      
+      xmldata = ElementTree.SubElement(xml, 'error', errorcode = str(exitcode) )
+      xmldata.text = str(err[1])
+      print '<?xml version="1.0" encoding="' + encoding + '"?>'
+      print ElementTree.tostring(xml, encoding=encoding, method="xml")
+
+  sys.exit(exitcode)
