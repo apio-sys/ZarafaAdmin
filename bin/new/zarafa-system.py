@@ -129,6 +129,7 @@ def zarafa_system(data):
     print args['delimiter'].join([ line.split(";")[0] for line in data ])
     print args['delimiter'].join([ line.split(";")[2] for line in data ])
     sys.exit(0)
+
   elif args['output'] == 'text':
     if not args['delimiter']: args['delimiter'] = "\t"
     width = max( [ len(line.split(";")[1]) for line in data ] )
@@ -138,20 +139,19 @@ def zarafa_system(data):
         if value:
           value = str(datetime.datetime.strptime(value.decode('unicode_escape'),'%a %b %d %H:%M:%S %Y'))
       print str(desc).ljust(width) + args['delimiter'] + str(value)
+    sys.exit(0)
 
+  attrib = {}
+  for line in data:
+    parameter, desc, value = line.split(";")
+    if parameter in ['server_start_date','cache_purge_date','config_reload_date','sql_last_fail_time']:
+      if value:
+        value = str(datetime.datetime.strptime(value.decode('unicode_escape'),'%a %b %d %H:%M:%S %Y'))
+    attrib[parameter] = value
 
-  # else:
-  #   xml = ElementTree.Element('system')
-  #   today = datetime.datetime.today()
-  #   for session in sessions:
-  #     tmp = session.split(';')
-  #     attribs = {}
-  #     for i in range(len(tmp)):
-  #       if tmp[i]:
-  #         attribs[headers[i]] = tmp[i]
-  #     xmlsession = ElementTree.SubElement(xml, "session", **attribs)
+  xml = ElementTree.Element('system', **attrib)
 
-  # return xml
+  return xml
 
 
 # Start program
