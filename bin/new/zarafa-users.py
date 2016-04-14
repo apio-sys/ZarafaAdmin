@@ -22,12 +22,8 @@ args['delimiter'] = "\t"
 version = 0.3
 encoding = 'utf-8'
 
-
 headers = ['company','username','fullname','emailaddress','active','admin','UNK0x67C1001E','size','quotawarn','quotasoft','quotahard','UNK0x67200040','UNK0x6760000B','logon','logoff']
-#headers['session'] = ['UNK0x67420014','UNK0x674D0014','ip','UNK0x67440003','UNK0x67450003','UNK0x6746000B','username','UNK0x6747101E','UNK0x6749101E','UNK0x674A0005','UNK0x674B0005','UNK0x674C0005','UNK0x674E0003','version','program','UNK0x67510003','UNK0x67480003','UNK0x6753001E','pipe']
-#headers['system'] = ['parameter','description','value']
 ldapmapping = (("pr_ec_enabled_features","0x67b3101e"),("pr_ec_disabled_features","0x67b4101e"),("pr_ec_archive_servers","0x67c4101e"),("pr_ec_archive_couplings","0x67c5101e"),("pr_ec_exchange_dn","0x678001e"),("pr_business_telephone_number","0x3a08001e"),("pr_business2_telephone_number","0x3a1b101e"),("pr_business_fax_number","0x3a24001e"),("pr_mobile_telephone_number","0x3a1c001e"),("pr_home_telephone_number","0x3a09001e"),("pr_home2_telephone_number","0x3a2f101e"),("pr_primary_fax_number","0x3a23001e"),("pr_pager_telephone_number","0x3a21001e"),("pr_comment","0x3004001e"),("pr_department_name","0x3a18001e"),("pr_office_location","0x3a19001e"),("pr_given_name","0x3a06001e"),("pr_surname","0x3a11001e"),("pr_childrens_names","0x3a58101e"),("pr_business_ddress_city","0x3a27001e"),("pr_title","0x3a17001e"),("pr_user_certificate","0x3a220102"),("pr_initials","0x3a0a001e"),("pr_language","0x3a0c001e"),("pr_organizational_id_number","0x3a10001e"),("pr_postal_address","0x3a15001e"),("pr_company_name","0x3a16001e"),("pr_country","0x3a26001e"),("pr_state_or_province","0x3a28001e"),("pr_street_address","0x3a29001e"),("pr_postal_code","0x3a2a001e"),("pr_post_office_box","0x3a2b001e"),("pr_assistant","0x3a30001e"),("pr_ems_ab_www_home_page","0x8175101e"),("pr_business_home_page","0x3a51001e"),("pr_ems_ab_is_member_of_dl","0x80081102"),("pr_ems_ab_reports","0x800e1102"),("pr_manager_name","0x8005001e"),("pr_ems_ab_owner","0x800c001e"))
-
 
 class customUsageVersion(argparse.Action):
   def __init__(self, option_strings, dest, **kwargs):
