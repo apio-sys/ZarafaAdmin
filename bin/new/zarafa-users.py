@@ -222,6 +222,10 @@ def zarafa_user(username):
   if data.has_key("softlevel"): data["softlevel"] = data.get("softlevel","").split(" ")[0]
   if data.has_key("hardlevel"): data["hardlevel"] = data.get("hardlevel","").split(" ")[0]
   if data.has_key("currentstoresize"): data["currentstoresize"] = data.get("currentstoresize","").split(" ")[0]
+  if data.has_key("lastlogon"):
+    data["lastlogon"] = str(datetime.datetime.strptime(data.get("lastlogon").decode('unicode_escape'),'%y/%m/%d %H:%M:%S'))
+  if data.has_key("lastlogoff"):
+    data["lastlogoff"] = str(datetime.datetime.strptime(data.get("lastlogoff").decode('unicode_escape'),'%y/%m/%d %H:%M:%S'))
 
   for good,bad in ldapmapping:
     if data.has_key(bad):
