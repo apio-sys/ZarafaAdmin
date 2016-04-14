@@ -359,12 +359,11 @@ if __name__ == "__main__":
     exitcode = 0
     users = get_data()
     if len(users) == 1:
+      print "Just one"
+      print users
       xmldata = zarafa_user(users[0][headers.index("username")])
     else:
       xmldata = zarafa_users(users)
-
-  # except SystemExit as err:
-  #   exitcode = int(err[0])
 
   except ( Exception, SystemExit ) as err:
     exitcode = int(err[0])
