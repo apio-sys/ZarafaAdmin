@@ -118,9 +118,9 @@ def get_data():
       if out[c]:
         tmp = out[c].split(";")
         if headers.index("username") < headers.index("fullname") < len(tmp): 
-          if tmp[headers.index("username")] == tmp[headers.index("fullname")] == "SYSTEM": out.pop(c)
-      else:
-        out.pop(c)
+          if tmp[headers.index("username")] != "SYSTEM":
+            if tmp[headers.index("fullname")] != "SYSTEM": continue
+      out.pop(c)
 
     f = open(cachefile, 'w')
     f.write("\n".join(out))
