@@ -176,6 +176,9 @@ def zarafa_user(username):
   global args, ldapmapping
   command = '/usr/sbin/zarafa-admin --type user --details ' + str(username)
 
+  print command
+
+
   p = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   out, err = p.communicate()
   if err: raise IOError(err)
@@ -362,8 +365,6 @@ if __name__ == "__main__":
     exitcode = 0
     users = get_data()
     if len(users) == 1:
-      print "Just one"
-      print users[0].split(";")[headers.index("username")]
       xmldata = zarafa_user(users[0][headers.index("username")])
     else:
       xmldata = zarafa_users(users)
