@@ -126,8 +126,8 @@ def zarafa_system(data):
   global args
 
   if args['output'] == 'csv':
-    print args['delimiter'].join(headers)
-    print "\n".join( [ line.replace(";",args['delimiter']) for line in data ] )
+    print args['delimiter'].join([ line.split(";")[0] for line in data ])
+    print args['delimiter'].join([ line.split(";")[2] for line in data ])
     sys.exit(0)
   elif args['output'] == 'text':
     if not args['delimiter']: args['delimiter'] = "\t"
