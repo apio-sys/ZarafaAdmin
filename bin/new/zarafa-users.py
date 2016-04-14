@@ -347,6 +347,7 @@ def zarafa_user(username):
     memberof = ElementTree.SubElement(user, 'groups')
     for group in groups:
         ElementTree.SubElement(memberof, 'group', attrib={"groupname":group})
+  print xml
   return xml
 
 
