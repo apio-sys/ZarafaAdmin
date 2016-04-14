@@ -85,7 +85,6 @@ def command_line_args():
           choices=['text', 'csv', 'xml'],
           help="Display output type.")
   args.update(vars(parser.parse_args()))
-  args['delimiter'] = args['delimiter'][0]
   if args['delimiter']: args['delimiter'] = args['delimiter'][0]
   if not args['delimiter'] and args['output'] == "csv": args['delimiter'] = ","
 
