@@ -344,7 +344,7 @@ def zarafa_user(username):
 
   else:
     xmluser = ElementTree.SubElement(xml, 'user', attrib=data)
-    memberof = ElementTree.SubElement(user, 'groups')
+    memberof = ElementTree.SubElement(xmluser, 'groups')
     for group in groups:
         ElementTree.SubElement(memberof, 'group', attrib={"groupname":group})
   print xml
@@ -373,7 +373,12 @@ if __name__ == "__main__":
       print ElementTree.tostring(xml, encoding=encoding, method="xml")
 
   except ( Exception, SystemExit ) as err:
-    exitcode = int(err[0])
+    try:
+      exitcode = int(err[0])
+      errmsg = str(" ".join(err[1:]))
+    except:
+      exitcode = -1
+      errmsg = str(" ".join(err))
     if args['output'] != 'xml': 
       if exitcode != 0: sys.stderr.write( str(err) +'\n' )
     else:
