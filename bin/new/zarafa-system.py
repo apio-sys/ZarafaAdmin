@@ -131,7 +131,7 @@ def zarafa_system(data):
     sys.exit(0)
   elif args['output'] == 'text':
     if not args['delimiter']: args['delimiter'] = "\t"
-    width = max( [ line.split(";")[1] for line in data ] )
+    width = max( [ len(line.split(";")[1]) for line in data ] )
     for line in data:
       tmp = line.split(";")[1]
       print str(tmp[1]).ljust(width) + args['delimiter'] + str(tmp[2])
