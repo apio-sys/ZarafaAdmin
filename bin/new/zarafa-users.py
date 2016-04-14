@@ -17,7 +17,7 @@ args = {}
 args['cache'] = 15
 args['output'] = 'text'
 args['user'] = ''
-args['delimiter'] = "\t"
+args['delimiter'] = ""
 
 version = 0.3
 encoding = 'utf-8'
@@ -148,6 +148,7 @@ def zarafa_users(users):
   global args
 
   if args['output'] != 'xml':
+    if not args['delimiter']: args['delimiter'] = "\t"
     print args['delimiter'].join(headers)
     print "\n".join( [ user.replace(";",args['delimiter']) for user in users ] )
     sys.exit(0)
@@ -235,6 +236,7 @@ def zarafa_user(username):
 
   xml = ElementTree.Element('users')
   if args['output'] == "text":
+    if not args['delimiter']: args['delimiter'] = "\t"
     maxlen = max([ len(x) + 4 for x in data.keys() ] + [25])
     print "Username:".ljust(maxlen), data.get("username","")
     print "Fullname:".ljust(maxlen), data.get("fullname","")

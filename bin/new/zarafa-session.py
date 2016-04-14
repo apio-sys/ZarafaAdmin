@@ -17,7 +17,7 @@ args = {}
 args['cache'] = 15
 args['output'] = 'text'
 args['user'] = ''
-args['delimiter'] = "\t"
+args['delimiter'] = ""
 
 version = 0.3
 encoding = 'utf-8'
@@ -143,6 +143,7 @@ def zarafa_sessions(sessions):
   global args
 
   if args['output'] != 'xml':
+    if not args['delimiter']: args['delimiter'] = "\t"    
     print args['delimiter'].join(headers)
     print "\n".join( [ session.replace(";",args['delimiter']) for session in sessions ] )
     sys.exit(0)
