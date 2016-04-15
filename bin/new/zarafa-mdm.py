@@ -174,33 +174,19 @@ def zarafa_devices(devices):
   if args['output'] != 'xml':
     if not args['delimiter']: args['delimiter'] = "\t"
     print args['delimiter'].join(headers)
-    print "\n".join( [ user.replace(";",args['delimiter']) for user in users ] )
+    for device in devices:
+      deviceID, username, lastSync = device.split(';')
+      lastSync = str(datetime.datetime.strptime(lastSync.decode('unicode_escape'),'%a %b %d %H:%M:%S %Y'))
+      print args['delimiter'].join([deviceID, username, lastSync])
     sys.exit(0)
 
-  xml = ElementTree.Element('users')
+  xml = ElementTree.Element('devices')
   today = datetime.datetime.today()
-  for user in users:
-    tmp = user.split(';')
-    attribs = {}
-    logon = None
-    logoff = None
-    for i in range(len(tmp)):
-      if tmp[i]:
-        if headers[i] == 'logon':
-          logon = datetime.datetime.strptime(tmp[i].decode('unicode_escape'),'%a %b %d %H:%M:%S %Y')
-        elif headers[i] == 'logoff':
-          logoff = datetime.datetime.strptime(tmp[i].decode('unicode_escape'),'%a %b %d %H:%M:%S %Y')
-        else:
-          attribs[headers[i]] = tmp[i]
-
-    xmluser = ElementTree.SubElement(xml, "user", **attribs)
-    if logon:
-      child = ElementTree.SubElement(xmluser, "logon", lag=str((today - logon).days))
-      child.text = str(logon)
-    if logoff:
-      child = ElementTree.SubElement(xmluser, "logoff", lag=str((today - logoff).days))
-      child.text = str(logoff)
-
+  for device in devices:
+    deviceID, username, lastSync = device.split(';')
+    lastSync = datetime.datetime.strptime(lastSync.decode('unicode_escape'),'%a %b %d %H:%M:%S %Y')
+    xmldevice = ElementTree.SubElement(xml, "device", deviceid=deviceID, username=username)
+    child = ElementTree.SubElement(xmldevice, "lastsync", lag=str((today - lastSync).days) + '.' + str((today - lastSync).hours))
   return xml
 
 
