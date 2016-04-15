@@ -184,9 +184,9 @@ def zarafa_devices(devices):
   for device in devices:
     deviceID, username, lastSync = device.split(';')
     xmldevice = ElementTree.SubElement(xml, "device", deviceid=deviceID, username=username)
-    print lastSync
     lastSync = datetime.datetime.strptime(lastSync.decode('unicode_escape'),'%Y-%m-%d %H:%M')
-    child = ElementTree.SubElement(xmldevice, "lastsync", lag=str((today - lastSync).days) + '.' + str((today - lastSync).hours))
+    print (today - lastSync).seconds
+    child = ElementTree.SubElement(xmldevice, "lastsync", lag=str((today - lastSync).days) + '.' + str((today - lastSync).seconds))
   return xml
 
 
