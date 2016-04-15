@@ -193,6 +193,17 @@ def zarafa_devices(devices):
   return xml
 
 
+def zarafa_device(deviceID, username):
+  global args
+  command = '/usr/share/z-push/z-push-admin.php -a list -d ' + deviceID + ' -u ' + username
+
+  p = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+  out, err = p.communicate()
+  if err: raise IOError(err)
+
+  print out
+
+
 # Start program
 if __name__ == "__main__":
     command_line_args()
@@ -201,10 +212,10 @@ if __name__ == "__main__":
   # try:
     devices = get_data()
     if len(devices) == 1:
-      xmldata = zarafa_device(devices[0].split(";")[headers.index("username")])
+      deviceID, username, lastSync = devices[0].split(";")
+      xmldata = zarafa_device(deviceID, username)
     else:
       xmldata = zarafa_devices(devices)
-
 
     if args['output'] == 'xml': 
       xml = ElementTree.Element('zarafaadmin')
