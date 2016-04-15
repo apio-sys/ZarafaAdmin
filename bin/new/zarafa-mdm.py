@@ -197,7 +197,7 @@ if __name__ == "__main__":
     exitcode = 0
   # try:
     devices = get_data()
-    if len(users) == 1:
+    if len(devices) == 1:
       xmldata = zarafa_device(devices[0].split(";")[headers.index("username")])
     else:
       xmldata = zarafa_devices(devices)
