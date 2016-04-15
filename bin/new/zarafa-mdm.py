@@ -205,7 +205,7 @@ def zarafa_device(deviceID, username):
   for c in reversed(range(len(out))):
     line = out[c].lstrip("-")
     if line and line[:17] == 'Attention needed:':
-      error = data[c+1:]
+      error = out[c+1:]
       del out[c+1:]
 
 
