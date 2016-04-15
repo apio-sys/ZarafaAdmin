@@ -14,7 +14,7 @@ import brandt
 sys.path.pop()
 
 args = {}
-args['cache'] = 15
+args['cache'] = 120
 args['output'] = 'text'
 args['filter'] = ''
 args['user'] = ''
@@ -203,10 +203,10 @@ def zarafa_device(deviceID, username):
   error = []
 
   for c in reversed(range(len(out))):
-    line = out[i].lstrip("-")
+    line = out[c].lstrip("-")
     if line and line[:17] == 'Attention needed:':
-      error = data[i+1:]
-      del out[i+1:]
+      error = data[c+1:]
+      del out[c+1:]
 
 
 
