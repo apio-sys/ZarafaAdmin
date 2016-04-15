@@ -176,7 +176,7 @@ def zarafa_devices(devices):
     print args['delimiter'].join(headers)
     for device in devices:
       deviceID, username, lastSync = device.split(';')
-      lastSync = str(datetime.datetime.strptime(lastSync.decode('unicode_escape'),'%a %b %d %H:%M:%S %Y'))
+      lastSync = str(datetime.datetime.strptime(lastSync.decode('unicode_escape')))
       print args['delimiter'].join([deviceID, username, lastSync])
     sys.exit(0)
 
