@@ -176,7 +176,6 @@ def zarafa_devices(devices):
     print args['delimiter'].join(headers)
     for device in devices:
       deviceID, username, lastSync = device.split(';')
-      lastSync = str(datetime.datetime.strptime(lastSync.decode('unicode_escape')),'%Y-%m-%d %H:%M ')
       print args['delimiter'].join([deviceID, username, lastSync])
     sys.exit(0)
 
@@ -184,8 +183,8 @@ def zarafa_devices(devices):
   today = datetime.datetime.today()
   for device in devices:
     deviceID, username, lastSync = device.split(';')
-    lastSync = datetime.datetime.strptime(lastSync.decode('unicode_escape'),'%Y-%m-%d %H:%M ')
     xmldevice = ElementTree.SubElement(xml, "device", deviceid=deviceID, username=username)
+    lastSync = datetime.datetime.strptime(lastSync.decode('unicode_escape'),'%Y-%m-%d %H:%M ')
     child = ElementTree.SubElement(xmldevice, "lastsync", lag=str((today - lastSync).days) + '.' + str((today - lastSync).hours))
   return xml
 
