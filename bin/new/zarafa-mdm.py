@@ -188,7 +188,7 @@ def zarafa_devices(devices):
       lastSync = datetime.datetime.strptime(lastSyncText.decode('unicode_escape'),'%Y-%m-%d %H:%M')
     except:
       lastSync = datetime.datetime.strptime("0000-01-01 00:00".decode('unicode_escape'),'%Y-%m-%d %H:%M')
-    child = ElementTree.SubElement(xmldevice, "lastsync", lag=str((today - lastSync).days) + '.' + str((today - lastSync).seconds)/60)
+    child = ElementTree.SubElement(xmldevice, "lastsync", lag=str((today - lastSync).days) + '.' + str((today - lastSync).seconds/60) )
     child.text = lastSyncText
   return xml
 
