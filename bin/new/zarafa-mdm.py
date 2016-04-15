@@ -192,7 +192,6 @@ def zarafa_devices(devices):
     child.text = lastSyncText
   return xml
 
-
 def zarafa_device(deviceID, username):
   global args
   command = '/usr/share/z-push/z-push-admin.php -a list -d ' + deviceID + ' -u ' + username
@@ -200,7 +199,18 @@ def zarafa_device(deviceID, username):
   p = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   out, err = p.communicate()
   if err: raise IOError(err)
+  out = out.strip().split("\n")
+  error = []
 
+  for c in reversed(range(len(out))):
+    line = out[i].lstrip("-")
+    if line and line[:17] == 'Attention needed:':
+      error = data[i+1:]
+      del out[i+1:]
+
+
+
+  print "error", error
   print out
 
 
