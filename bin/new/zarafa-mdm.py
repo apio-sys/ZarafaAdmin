@@ -17,9 +17,9 @@ args = {}
 args['cache'] = 15
 args['output'] = 'text'
 args['filter'] = ''
-args['user'] = False
-args['deviceid'] = False
-args['delimiter'] = ""
+args['user'] = ''
+args['device'] = ''
+args['delimiter'] = ''
 
 version = 0.3
 encoding = 'utf-8'
@@ -52,7 +52,7 @@ class customUsageVersion(argparse.Action):
       print textwrap.fill(version, self.__row)
       print "\nWritten by Bob Brandt <projects@brandt.ie>."
     else:
-      print "Usage: " + self.__prog + " [options] [FILTER]"
+      print "Usage: " + self.__prog + " [options] [-d|-u] [FILTER]"
       print "Script used to find details about Zarafa users.\n"
       print "Options:"
       options = []
@@ -61,8 +61,8 @@ class customUsageVersion(argparse.Action):
       options.append(("-o, --output OUTPUT",     "Type of output {text | csv | xml}"))
       options.append(("-c, --cache MINUTES",     "Cache time. (in minutes)"))
       options.append(("    --delimiter DELIM",   "Character to use instead of TAB for field delimiter"))
-      options.append(("-d, --device",            "Apply filter to Device IDs only"))
-      options.append(("-u, --user",              "Apply filter to Usernames only"))
+      options.append(("-d, --device FILTER",     "Apply filter to Device IDs only"))
+      options.append(("-u, --user FILTER",       "Apply filter to Usernames only"))
       options.append(("FILTER",                  "Filter to apply to Usernames or Device IDs."))
       length = max( [ len(option[0]) for option in options ] )
       for option in options:
@@ -93,21 +93,22 @@ def command_line_args():
   parser.add_argument('-d', '--device',
           required=False,
           default=args['device'],
-          action='store_true',
+          type=str,
           help="Apply filter to Device IDs only")
   parser.add_argument('-u', '--user',
           required=False,
           default=args['user'],
-          action='store_true',
+          type=str,
           help="Apply filter to Usernames only")            
   parser.add_argument('filter',
           nargs='?',
-          default= args['filter'],
+          default=args['filter'],
           action='store',
-          help="Filter to apply to Usernames or Device IDs.")
+          help="Filter to apply to Usernames and Device IDs.")
   args.update(vars(parser.parse_args()))
   if args['delimiter']: args['delimiter'] = args['delimiter'][0]
   if not args['delimiter'] and args['output'] == "csv": args['delimiter'] = ","
+  if args['filter']: args['user'] = args['device'] = args['filter']
 
 def get_data():
   global args
@@ -126,7 +127,7 @@ def get_data():
     out, err = p.communicate()
     if err: raise IOError(err)
 
-    #out = out.split('\n')[5:]
+    out = out.split('\n')[5:]
     tmp =[]
     for c in reversed(range(len(out))):
       if out[c]:
@@ -134,7 +135,8 @@ def get_data():
           deviceID, username = out[c].split(" ",1)
           username, lastSync = username.strip().split(" ",1)
           lastSync = lastSync.strip()
-          tmp.append(";".join([deviceID, username, lastSync]))
+          if deviceID and username and lastSync:
+            tmp.append(";".join([deviceID, username, lastSync]))
         except:
           pass     
     out = tmp[:]
@@ -148,12 +150,22 @@ def get_data():
     f.close()
 
   # Apply username filter
-  if args['user']:
+  if args['device'] or args['user']:
     for c in reversed(range(len(out))):
       if out[c]:
         deviceID, username, lastSync = out[c].split(";")
-        if fnmatch.fnmatch(deviceID.lower(), args['user']): continue
-        if fnmatch.fnmatch(username.lower(), args['user']): continue
+        if args['device'] and not args['user']:
+          if fnmatch.fnmatch(deviceID.lower(), args['device']): continue
+        if not args['device'] and args['user']:
+          if fnmatch.fnmatch(username.lower(), args['user']): continue
+        if args['device'] and args['user']:
+          if args['device'] == args['user']:
+            if fnmatch.fnmatch(deviceID.lower(), args['device']): continue
+            if fnmatch.fnmatch(username.lower(), args['user']): continue
+          else:
+            if fnmatch.fnmatch(username.lower(), args['device']) and
+               fnmatch.fnmatch(username.lower(), args['user']): continue
+
       out.pop(c)
 
   return out
