@@ -192,6 +192,18 @@ def zarafa_devices(devices):
     child.text = lastSyncText
   return xml
 
+def parseData(data):
+  tmp = {}
+  for line in data:
+    line = line.lstrip("-")
+    if line and ":" in line:
+      tag, value = line.split(":",1)
+      tag = tag.strip().lower().replace(" ","").replace("/","")
+      tmp[tag] = value.strip()
+  return tmp
+
+
+
 def zarafa_device(deviceID, username):
   global args
   command = '/usr/share/z-push/z-push-admin.php -a list -d ' + deviceID + ' -u ' + username
@@ -207,6 +219,7 @@ def zarafa_device(deviceID, username):
     if line and line[:17] == 'Attention needed:':
       error = out[c+1:]
       del out[c+1:]
+      break
 
 
 
