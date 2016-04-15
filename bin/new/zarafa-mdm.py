@@ -163,9 +163,7 @@ def get_data():
             if fnmatch.fnmatch(deviceID.lower(), args['device']): continue
             if fnmatch.fnmatch(username.lower(), args['user']): continue
           else:
-            if fnmatch.fnmatch(username.lower(), args['device']) and
-               fnmatch.fnmatch(username.lower(), args['user']): continue
-
+            if fnmatch.fnmatch(username.lower(), args['device']) and fnmatch.fnmatch(username.lower(), args['user']): continue
       out.pop(c)
 
   return out
