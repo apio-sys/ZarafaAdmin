@@ -257,6 +257,13 @@ def zarafa_device(deviceID, username):
   elif args['output'] == 'csv':
     print args['delimiter'].join( [ i[1] for i in fieldmapping ] )
     print args['delimiter'].join( [ data.get(i[0],"") for i in fieldmapping ] )
+    sys.exit(0)
+
+  xml = ElementTree.Element('devices')
+  device = ElementTree.SubElement(xml, 'device', **data)
+  for error in errors:
+    ElementTree.SubElement(device, 'error', **error)
+  return xml
 
 
 # Start program
