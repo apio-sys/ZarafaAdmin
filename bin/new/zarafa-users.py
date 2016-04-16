@@ -284,7 +284,7 @@ def zarafa_user(username):
   sendas = [ str(x).split("\t") for x in str(out).split("\n")[3:] if x ]
 
 
-  command = 'zarafa-mailbox-permissions --list-permissions ' + str(username)
+  command = '/usr/sbin/zarafa-mailbox-permissions --list-permissions ' + str(username)
   p = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   out, err = p.communicate()
   if err: raise IOError(err)
