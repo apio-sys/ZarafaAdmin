@@ -251,11 +251,12 @@ def zarafa_device(deviceID, username):
       for error in errors:
         for key, text in errormapping:
           if error.has_key(key):
-            print (text + ":").rjust(width), "  ", error[key]
+            print (text + ":").rjust(width), " ", error[key]
         print
     sys.exit(0)
-
-
+  elif args['output'] == 'csv':
+    print args['delimiter'].join( [ i[1] for i in fieldmapping ] )
+    print args['delimiter'].join( [ data.get(i[0],"") for i in fieldmapping ] )
 
 
 # Start program
