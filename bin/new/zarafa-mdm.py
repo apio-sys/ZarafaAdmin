@@ -211,8 +211,10 @@ def zarafa_device(deviceID, username):
   p = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   out, err = p.communicate()
   if err: raise IOError(err)
+
   out = out.strip().split("\n")
   error = []
+  errors = []
 
   for c in reversed(range(len(out))):
     line = out[c].lstrip("-")
@@ -221,10 +223,19 @@ def zarafa_device(deviceID, username):
       del out[c+1:]
       break
 
+  data = ParseData(out)
+  for i in reversed(range(len(error))):
+    if not error[i]:
+      errors.append( ParseData(error[i:]) )
+      del error[i:]
+  if error:
+      errors.append( ParseData(error[i:]) )
 
 
-  print "error", error
-  print out
+
+
+  print "error", errors
+  print data
 
 
 # Start program
