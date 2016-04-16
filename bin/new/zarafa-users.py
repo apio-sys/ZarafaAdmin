@@ -299,7 +299,7 @@ def zarafa_user(username):
 
   elif args['output'] == "csv":
     print args['delimiter'].join([ f[1] for f in (fieldmappings + quotafieldmappings) ] + ["Groups (" + str(len(groups)) + ")"])
-    print args['delimiter'].join([ data.get(f[0],"") for f in (fieldmappings + quotafieldmappings ) ] + [';'.join(groups)] )
+    print args['delimiter'].join([ data.get(f[0],"") for f in (fieldmappings + quotafieldmappings ) ] + groups )
     sys.exit(0)
 
   else:
