@@ -280,7 +280,7 @@ def zarafa_user(username):
 
   if args['output'] == "text":
     maxlen = max([ len(f[1]) for f in fieldmappings ] + [ len(f[1]) for f in quotafieldmappings ] + [ len(f[1]) for f in ldapfieldmappings if data.has_key(f[0]) ] )
-    maxlen += 3
+    maxlen += 2
     for key,text in fieldmappings:
       print (text + ":").ljust(maxlen), data.get(key,"")
 
@@ -294,7 +294,7 @@ def zarafa_user(username):
       print (text + ":").ljust(maxlen), data.get(key,"")
 
     print "Groups (" + str(len(groups)) + "):"
-    print '-' * (maxlen)
+    print '-' * (maxlen + 10)
     print '\n'.join([ " " + str(x) for x in groups ])
     sys.exit(0)
 
