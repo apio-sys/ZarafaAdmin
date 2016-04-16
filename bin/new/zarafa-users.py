@@ -277,15 +277,23 @@ def zarafa_user(username):
       data[good] = data[bad]
       del data[bad]
 
-
   command = '/usr/sbin/zarafa-admin --list-sendas ' + str(username)
-
   p = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   out, err = p.communicate()
   if err: raise IOError(err)
   sendas = [ str(x).split("\t") for x in str(out).split("\n")[3:] if x ]
 
-  print sendas
+
+  command = 'zarafa-mailbox-permissions --list-permissions ' + str(username)
+  p = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+  out, err = p.communicate()
+  if err: raise IOError(err)
+  permissions = [ str(x) for x in str(out).split("\n") if x ]
+
+  print permissions
+
+
+
 
   sys.exit(0)
   return 0
