@@ -242,7 +242,7 @@ def zarafa_device(deviceID, username):
       errors.append( parseData(error[i:]) )
 
   if args['output'] == 'text':
-    width = max( [ len i[1] for i in fieldmapping ] ) + 3
+    width = max( [ len(i[1]) for i in fieldmapping ] ) + 3
     for key, text in fieldmapping:
       if data.has_key(key):
         print (text + ": ").rjust(width), data[key]
