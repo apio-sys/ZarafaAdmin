@@ -223,13 +223,13 @@ def zarafa_device(deviceID, username):
       del out[c+1:]
       break
 
-  data = ParseData(out)
+  data = parseData(out)
   for i in reversed(range(len(error))):
     if not error[i]:
-      errors.append( ParseData(error[i:]) )
+      errors.append( parseData(error[i:]) )
       del error[i:]
   if error:
-      errors.append( ParseData(error[i:]) )
+      errors.append( parseData(error[i:]) )
 
 
 
