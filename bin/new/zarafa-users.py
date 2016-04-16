@@ -290,7 +290,7 @@ def zarafa_user(username):
   if err: raise IOError(err)
   permissions = [ str(x) for x in str(out).split("\n") if x ]
 
-  print permissions
+  print "\n".join(permissions)
 
 
 
