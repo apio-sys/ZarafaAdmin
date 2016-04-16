@@ -24,9 +24,6 @@ encoding = 'utf-8'
 
 headers = ['company','username','fullname','emailaddress','active','admin','UNK0x67C1001E','size','quotawarn','quotasoft','quotahard','UNK0x67200040','UNK0x6760000B','logon','logoff']
 
-
-
-
 ldapmapping = (("pr_ec_enabled_features","0x67b3101e"),("pr_ec_disabled_features","0x67b4101e"),
                ("pr_ec_archive_servers","0x67c4101e"),("pr_ec_archive_couplings","0x67c5101e"),
                ("pr_ec_exchange_dn","0x678001e"),("pr_business_telephone_number","0x3a08001e"),
@@ -46,7 +43,32 @@ ldapmapping = (("pr_ec_enabled_features","0x67b3101e"),("pr_ec_disabled_features
                ("pr_business_home_page","0x3a51001e"),("pr_ems_ab_is_member_of_dl","0x80081102"),
                ("pr_ems_ab_reports","0x800e1102"),("pr_manager_name","0x8005001e"),("pr_ems_ab_owner","0x800c001e"))
 
+fieldmappings = (("username","Username"),("fullname","Fullname"),("emailaddress","Email Address"),
+                 ("active","Active"),("administrator","Administrator"),("addressbook","Address Book"),
+                 ("autoacceptmeetingreq","Auto-Accept Meeting Req"),("lastlogon","Last Logon"),("lastlogoff","Last Logoff"))
 
+ldapfieldmappings = (("pr_given_name","Given Name"),("pr_initials","Initials"),("pr_surname","Surname"),
+                     ("pr_company_name","Company Name"),("pr_title","Title"),("pr_department_name","Department Name"),
+                     ("pr_office_location","Office Location"),("pr_business_telephone_number","Business Telephone Number"),
+                     ("pr_business2_telephone_number","Business 2 Telephone Number"),("pr_home_telephone_number","Home Telephone Number"),
+                     ("pr_home2_telephone_number","Home 2 Telephone Number"),("pr_pager_telephone_number","Pager Telephone Number"),
+                     ("pr_primary_fax_number","Primary Fax Number"),("pr_business_fax_number","Business Fax Number"),
+                     ("pr_country","Country"),("pr_state_or_province","State or Province"),
+                     ("pr_ems_ab_is_member_of_dl","Distribution Lists"),("pr_ec_enabled_features","Enabled Features"),
+                     ("pr_ec_disabled_features","Disabled Features"),("pr_assistant","Assistant"),
+                     ("pr_business_address_city","Business Address City"),("pr_business_home_page","Business Homepage"),
+                     ("pr_childrens_names","Children's Names"),("pr_comment","Comment"),
+                     ("pr_company_name","Company Name"),("pr_ec_exchange_dn","Exchange DN"),
+                     ("pr_ems_ab_owner","Distribution List Owner"),("pr_ems_ab_reports","Reports"),
+                     ("pr_ems_ab_www_home_page","Homepage"),("pr_language","Language"),
+                     ("pr_manager_name","Manager"),("pr_mobile_telephone_number","Mobile Telephone Number"),
+                     ("pr_organizational_id_number","Organizational ID Number"),("pr_post_office_box","Post Office Box"),
+                     ("pr_postal_address","Postal Address"),("pr_postal_code","Postal Code"),
+                     ("pr_street_address","Street Address"),("pr_user_certificate","User Certificate"))
+
+quotafieldmappings = (("quotaoverrides"," Quota overrides"),("warninglevel"," Warning level (MB)"),
+                      ("softlevel"," Soft level (MB)"),("hardlevel"," Hard level (MB)"),
+                      ("currentstoresize","Current store size (MB)"))
 
 class customUsageVersion(argparse.Action):
   def __init__(self, option_strings, dest, **kwargs):
@@ -256,64 +278,20 @@ def zarafa_user(username):
       data[good] = data[bad]
       del data[bad]
 
-  xml = ElementTree.Element('users')
   if args['output'] == "text":
-    if not args['delimiter']: args['delimiter'] = "\t"
-    maxlen = max([ len(x) + 4 for x in data.keys() ] + [25])
-    print "Username:".ljust(maxlen), data.get("username","")
-    print "Fullname:".ljust(maxlen), data.get("fullname","")
-    print "Emailaddress:".ljust(maxlen), data.get("emailaddress","")
-    print "Active:".ljust(maxlen), data.get("active","")
-    print "Administrator:".ljust(maxlen), data.get("administrator","")
-    print "Address book:".ljust(maxlen), data.get("addressbook","")
-    print "Auto-accept meeting req:".ljust(maxlen), data.get("autoacceptmeetingreq","")
-    print "Last logon:".ljust(maxlen), data.get("lastlogon","")
-    print "Last logoff:".ljust(maxlen), data.get("lastlogoff","")
+    maxlen = max([ len(f) for f in data.keys() ] + [25])   
+    for key,text in fieldmappings:
+      print (text + ":").ljust(maxlen), data.get(key,"")
+
     print "Mapped properties:"
-    print " PR_GIVEN_NAME:".ljust(maxlen), data.get("pr_given_name","")
-    print " PR_INITIALS:".ljust(maxlen), data.get("pr_initials","")
-    print " PR_SURNAME:".ljust(maxlen), data.get("pr_surname","")
-    print " PR_COMPANY_NAME:".ljust(maxlen), data.get("pr_company_name","")
-    print " PR_TITLE:".ljust(maxlen), data.get("pr_title","")
-    print " PR_DEPARTMENT_NAME:".ljust(maxlen), data.get("pr_department_name","")
-    print " PR_OFFICE_LOCATION:".ljust(maxlen), data.get("pr_office_location","")
-    print " PR_BUSINESS_TELEPHONE_NUMBER:".ljust(maxlen), data.get("pr_business_telephone_number","")
-    print " PR_HOME_TELEPHONE_NUMBER:".ljust(maxlen), data.get("pr_home_telephone_number","")      
-    print " PR_PAGER_TELEPHONE_NUMBER:".ljust(maxlen), data.get("pr_pager_telephone_number","")
-    print " PR_PRIMARY_FAX_NUMBER:".ljust(maxlen), data.get("pr_primary_fax_number","")
-    print " PR_BUSINESS_FAX_NUMBER:".ljust(maxlen), data.get("pr_business_fax_number","")
-    print " PR_COUNTRY:".ljust(maxlen), data.get("pr_country","")
-    print " PR_STATE_OR_PROVINCE:".ljust(maxlen), data.get("pr_state_or_province","")
-    print " PR_EMS_AB_IS_MEMBER_OF_DL:".ljust(maxlen), data.get("pr_ems_ab_is_member_of_dl","")
-    print " PR_EC_ENABLED_FEATURES:".ljust(maxlen), data.get("pr_ec_enabled_features","")
-    print " PR_EC_DISABLED_FEATURES:".ljust(maxlen), data.get("pr_ec_disabled_features","")
-    if data.has_key("pr_assistant"): print " PR_ASSISTANT:".ljust(maxlen), data.get("pr_assistant","")
-    if data.has_key("pr_business2_telephone_number"): print " PR_BUSINESS2_TELEPHONE_NUMBER:".ljust(maxlen), data.get("pr_business2_telephone_number","")
-    if data.has_key("pr_business_address_city"): print " PR_BUSINESS_ADDRESS_CITY:".ljust(maxlen), data.get("pr_business_address_city","")
-    if data.has_key("pr_business_home_page"): print " PR_BUSINESS_HOME_PAGE:".ljust(maxlen), data.get("pr_business_home_page","")
-    if data.has_key("pr_childrens_names"): print " PR_CHILDRENS_NAMES:".ljust(maxlen), data.get("pr_childrens_names","")
-    if data.has_key("pr_comment"): print " PR_COMMENT:".ljust(maxlen), data.get("pr_comment","")
-    if data.has_key("pr_company_name"): print " PR_COMPANY_NAME:".ljust(maxlen), data.get("pr_company_name","")
-    if data.has_key("pr_ec_exchange_dn"): print " PR_EC_EXCHANGE_DN:".ljust(maxlen), data.get("pr_ec_exchange_dn","")
-    if data.has_key("pr_ems_ab_owner"): print " PR_EMS_AB_OWNER:".ljust(maxlen), data.get("pr_ems_ab_owner","")
-    if data.has_key("pr_ems_ab_reports"): print " PR_EMS_AB_REPORTS:".ljust(maxlen), data.get("pr_ems_ab_reports","")
-    if data.has_key("pr_ems_ab_www_home_page"): print " PR_EMS_AB_WWW_HOME_PAGE:".ljust(maxlen), data.get("pr_ems_ab_www_home_page","")
-    if data.has_key("pr_home2_telephone_number"): print " PR_HOME2_TELEPHONE_NUMBER:".ljust(maxlen), data.get("pr_home2_telephone_number","")
-    if data.has_key("pr_language"): print " PR_LANGUAGE:".ljust(maxlen), data.get("pr_language","")
-    if data.has_key("pr_manager_name"): print " PR_MANAGER_NAME:".ljust(maxlen), data.get("pr_manager_name","")
-    if data.has_key("pr_mobile_telephone_number"): print " PR_MOBILE_TELEPHONE_NUMBER:".ljust(maxlen), data.get("pr_mobile_telephone_number","")
-    if data.has_key("pr_organizational_id_number"): print " PR_ORGANIZATIONAL_ID_NUMBER:".ljust(maxlen), data.get("pr_organizational_id_number","")
-    if data.has_key("pr_post_office_box"): print " PR_POST_OFFICE_BOX:".ljust(maxlen), data.get("pr_post_office_box","")
-    if data.has_key("pr_postal_address"): print " PR_POSTAL_ADDRESS:".ljust(maxlen), data.get("pr_postal_address","")
-    if data.has_key("pr_postal_code"): print " PR_POSTAL_CODE:".ljust(maxlen), data.get("pr_postal_code","")
-    if data.has_key("pr_street_address"): print " PR_STREET_ADDRESS:".ljust(maxlen), data.get("pr_street_address","")
-    if data.has_key("pr_user_certificate"): print " PR_USER_CERTIFICATE:".ljust(maxlen), data.get("pr_user_certificate","")
+    for key,text in ldapfieldmappings:
+      if data.has_key(key):
+        print (" " + text + ":").ljust(maxlen), data[key]
+
     print "Current user store quota settings:"
-    print " Quota overrides:".ljust(maxlen), data.get("quotaoverrides","")
-    print " Warning level (MB):".ljust(maxlen), data.get("warninglevel","")
-    print " Soft level (MB):".ljust(maxlen), data.get("softlevel","")
-    print " Hard level (MB):".ljust(maxlen), data.get("hardlevel","")
-    print "Current store size (MB):".ljust(maxlen), data.get("currentstoresize","")
+    for key,text in quotafieldmappings:
+      print (text + ":").ljust(maxlen), data.get(key,"")
+
     print "Groups (" + str(len(groups)) + "):"
     print '-' * (maxlen)
     print '\n'.join([ " " + str(x) for x in groups ])
@@ -377,6 +355,7 @@ def zarafa_user(username):
     sys.exit(0)
 
   else:
+    xml = ElementTree.Element('users')
     xmluser = ElementTree.SubElement(xml, 'user', **data)
     memberof = ElementTree.SubElement(xmluser, 'groups')
     for group in groups:
