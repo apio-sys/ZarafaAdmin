@@ -279,7 +279,8 @@ def zarafa_user(username):
       del data[bad]
 
   if args['output'] == "text":
-    maxlen = max([ len(f) for f in data.keys() ] + [25])   
+    maxlen = max([ len(f[1]) for f in fieldmappings ] + [ len(f[1]) for f in quotafieldmappings ] + [ len(f[1]) for f in ldapfieldmappings if data.has_key(f[0]) ] )
+    maxlen += 3
     for key,text in fieldmappings:
       print (text + ":").ljust(maxlen), data.get(key,"")
 
