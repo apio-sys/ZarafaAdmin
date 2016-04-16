@@ -283,8 +283,7 @@ def zarafa_user(username):
   p = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   out, err = p.communicate()
   if err: raise IOError(err)
-  sendas = str(out).split("\n")[3:]
-  sendas = [ str(x).strip() for x in sendas if x ]
+  sendas = [ str(x).split("\t") for x in str(out).split("\n")[3:] if x ]
 
   print sendas
 
