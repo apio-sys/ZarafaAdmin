@@ -57,8 +57,7 @@ ldapfieldmappings = (("pr_given_name","Given Name"),("pr_initials","Initials"),(
                      ("pr_ems_ab_is_member_of_dl","Distribution Lists"),("pr_ec_enabled_features","Enabled Features"),
                      ("pr_ec_disabled_features","Disabled Features"),("pr_assistant","Assistant"),
                      ("pr_business_address_city","Business Address City"),("pr_business_home_page","Business Homepage"),
-                     ("pr_childrens_names","Children's Names"),("pr_comment","Comment"),
-                     ("pr_company_name","Company Name"),("pr_ec_exchange_dn","Exchange DN"),
+                     ("pr_childrens_names","Children's Names"),("pr_comment","Comment"),("pr_ec_exchange_dn","Exchange DN"),
                      ("pr_ems_ab_owner","Distribution List Owner"),("pr_ems_ab_reports","Reports"),
                      ("pr_ems_ab_www_home_page","Homepage"),("pr_language","Language"),
                      ("pr_manager_name","Manager"),("pr_mobile_telephone_number","Mobile Telephone Number"),
@@ -299,60 +298,8 @@ def zarafa_user(username):
     sys.exit(0)
 
   elif args['output'] == "csv":
-    tmp = data.get("username","")
-    tmp += ',' + data.get("fullname","")
-    tmp += ',' + data.get("emailaddress","")
-    tmp += ',' + data.get("active","")
-    tmp += ',' + data.get("administrator","")
-    tmp += ',' + data.get("addressbook","")
-    tmp += ',' + data.get("autoacceptmeetingreq","")
-    tmp += ',' + data.get("lastlogon","")
-    tmp += ',' + data.get("lastlogoff","")
-    tmp += ',' + data.get("quotaoverrides","")
-    tmp += ',' + data.get("warninglevel","")
-    tmp += ',' + data.get("softlevel","")
-    tmp += ',' + data.get("hardlevel","")
-    tmp += ',' + data.get("currentstoresize","")
-    tmp += ',' + ';'.join(groups)
-    tmp += ',' + data.get("pr_given_name","")
-    tmp += ',' + data.get("pr_initials","")
-    tmp += ',' + data.get("pr_surname","")
-    tmp += ',' + data.get("pr_company_name","")
-    tmp += ',' + data.get("pr_title","")
-    tmp += ',' + data.get("pr_department_name","")
-    tmp += ',' + data.get("pr_business_telephone_number","")
-    tmp += ',' + data.get("pr_home_telephone_number","")
-    tmp += ',' + data.get("pr_pager_telephone_number","")
-    tmp += ',' + data.get("pr_primary_fax_number","")
-    tmp += ',' + data.get("pr_business_fax_number","")
-    tmp += ',' + data.get("pr_country","")
-    tmp += ',' + data.get("pr_state_or_province","")
-    tmp += ',' + data.get("pr_ems_ab_is_member_of_dl","")
-    tmp += ',' + data.get("pr_ec_enabled_features","")
-    tmp += ',' + data.get("pr_ec_disabled_features","")
-    tmp += ',' + data.get("pr_assistant","")
-    tmp += ',' + data.get("pr_business2_telephone_number","")
-    tmp += ',' + data.get("pr_business_address_city","")
-    tmp += ',' + data.get("pr_business_home_page","")
-    tmp += ',' + data.get("pr_childrens_names","")
-    tmp += ',' + data.get("pr_comment","")
-    tmp += ',' + data.get("pr_company_name","")
-    tmp += ',' + data.get("pr_ec_exchange_dn","")
-    tmp += ',' + data.get("pr_ems_ab_owner","")
-    tmp += ',' + data.get("pr_ems_ab_reports","")
-    tmp += ',' + data.get("pr_ems_ab_www_home_page","")
-    tmp += ',' + data.get("pr_home2_telephone_number","")
-    tmp += ',' + data.get("pr_language","")
-    tmp += ',' + data.get("pr_manager_name","")
-    tmp += ',' + data.get("pr_mobile_telephone_number","")
-    tmp += ',' + data.get("pr_office_location","")
-    tmp += ',' + data.get("pr_organizational_id_number","")
-    tmp += ',' + data.get("pr_post_office_box","")
-    tmp += ',' + data.get("pr_postal_address","")
-    tmp += ',' + data.get("pr_postal_code","")
-    tmp += ',' + data.get("pr_street_address","")
-    tmp += ',' + data.get("pr_user_certificate","")
-    print tmp
+    print args['delimiter'].join([ f[1] for f in (fieldmappings + quotafieldmappings) ] + ["Groups (" + str(len(groups)) + ")"])
+    print args['delimiter'].join([ data.get(f[0],"") for f in (fieldmappings + quotafieldmappings ) ] + [';'.join(groups)] )
     sys.exit(0)
 
   else:
