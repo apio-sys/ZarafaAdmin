@@ -242,17 +242,16 @@ def zarafa_device(deviceID, username):
       errors.append( parseData(error[i:]) )
 
   if args['output'] == 'text':
-    width = max( [ len(i[1]) for i in fieldmapping ] ) + 3
+    width = max( [ len(i[1]) for i in fieldmapping ] ) + 2
     for key, text in fieldmapping:
       if data.has_key(key):
-        print (text + ": ").rjust(width), data[key]
+        print (text + ":").rjust(width), data[key]
         if key == "synchronizedbyuser": print "-" * 55
     if errors:
-      width += 2
       for error in errors:
         for key, text in errormapping:
           if error.has_key(key):
-            print (text + ": ").rjust(width), error[key]
+            print (text + ":").rjust(width), "  ", error[key]
 
     sys.exit(0)
 
