@@ -252,7 +252,7 @@ def zarafa_device(deviceID, username):
         for key, text in errormapping:
           if error.has_key(key):
             print (text + ":").rjust(width), "  ", error[key]
-
+        print
     sys.exit(0)
 
 
