@@ -199,14 +199,14 @@ def zarafa_group(groupname):
 
   if args['output'] == "text":
     if not args['delimiter']: args['delimiter'] = "\t" 
-    width = 20   
+    width = max( [ len(x[1]) for x in fieldmappings ] + [ len(x[1]) for x in ldapfieldmappings ] ) 
     for key, text in fieldmappings:
       print str(text + ":").ljust(width) + args['delimiter'] + data.get(key,'')
     print "Mapped properties:"
     for key, text in ldapfieldmappings:
       print str( "  " + text + ":").ljust(width) + args['delimiter'] + data.get(key,'')
     print "Users (" + str(len(users)) + "):"
-    widths = [8,20,30]
+    widths = [ max([ len(x[0]) for x in users ]), max([ len(x[1]) for x in users ]), max([ len(x[2]) for x in users ]) ] 
     print "  " + "Username".ljust(widths[0]) + args['delimiter'] + "Full Name".ljust(widths[1]) + args['delimiter'] + "Home Server"
     print "-" * sum(widths)
     for user in users:
