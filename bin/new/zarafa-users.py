@@ -230,8 +230,20 @@ def print_table(items, columns):
       if i + j < len(items): 
         tmp[-1].append(items[i + j])
       else:
-        break
-  print tmp
+        tmp[-1].append('')
+  
+  widths=[]
+  for i in range(columns):
+    widths.append(max([len(x[i]) for x in tmp]))
+
+  for i in range(0,len(items),columns):
+    line = ""
+    for j in range(columns):
+      line += tmp[i][j].ljust(widths[j])
+    print line.strip()
+
+  
+
 
 
 def zarafa_user(username):
