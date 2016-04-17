@@ -176,10 +176,7 @@ def get_data():
   # Apply groupname filter
   if args['group']:  
     for c in reversed(range(len(out))):
-      print out[c]
-      if out[c]:
-        if fnmatch.fnmatch(out[c].lower(), args['group'].lower()):
-          continue
+      if out[c] and fnmatch.fnmatch(out[c].lower(), args['group'].lower()): continue
       out.pop(c)
 
   return out
@@ -235,7 +232,6 @@ def zarafa_group(groupname):
 
   data["groupname"] = data.get("groupname","").lower()
   data["emailaddress"] = data.get("emailaddress","").lower()
-
 
   print data
 
