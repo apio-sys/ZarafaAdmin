@@ -198,7 +198,7 @@ def zarafa_group(groupname):
   sendas = [ str(x).split("\t") for x in str(out).split("\n")[3:] if x ]
 
   if args['output'] == "text":
-    if not args['delimiter']: args['delimiter'] = "\t" 
+    if not args['delimiter']: args['delimiter'] = "*" 
     width = max( [ len(x[1]) for x in fieldmappings ] + [ len(x[1]) for x in ldapfieldmappings ] ) 
     for key, text in fieldmappings:
       print str(text + ":").ljust(width) + args['delimiter'] + data.get(key,'')
@@ -208,7 +208,7 @@ def zarafa_group(groupname):
     print "Users (" + str(len(users)) + "):"
     widths = [ max([ len(x[0]) for x in users ]), max([ len(x[1]) for x in users ]), max([ len(x[2]) for x in users ]) ] 
     print "  " + "Username".ljust(widths[0]) + args['delimiter'] + "Full Name".ljust(widths[1]) + args['delimiter'] + "Home Server"
-    print "-" * sum(widths)
+    print "-" * (sum(widths) + 5)
     for user in users:
       print "  " + user[0].ljust(widths[0]) + args['delimiter'] + user[1].ljust(widths[1]) + args['delimiter'] + user[2].ljust(widths[2])
 
