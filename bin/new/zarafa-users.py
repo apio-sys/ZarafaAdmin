@@ -225,10 +225,10 @@ def zarafa_users(users):
 def print_table(items, columns):
   tmp = []
   for i in range(0,len(items),columns):
+    tmp.append([])
     for j in range(columns):
-      tmp.append([])
-      if c < len(items): 
-        tmp[-1].append(items[c])
+      if i + j < len(items): 
+        tmp[-1].append(items[i + j])
       else:
         break
   print tmp
