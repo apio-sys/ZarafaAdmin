@@ -196,7 +196,6 @@ def zarafa_users(users):
     print "\n".join( [ user.replace(";",args['delimiter']) for user in users ] )
     sys.exit(0)
 
-  xml = ElementTree.Element('users')
   today = datetime.datetime.today()
   for user in users:
     tmp = user.split(';')
@@ -212,15 +211,15 @@ def zarafa_users(users):
         else:
           attribs[headers[i]] = tmp[i]
 
-    xmluser = ElementTree.SubElement(xml, "user", **attribs)
+    xml = ElementTree.Element("user", **attribs)
     if logon:
-      child = ElementTree.SubElement(xmluser, "logon", lag=str((today - logon).days))
+      child = ElementTree.SubElement(xml, "logon", lag=str((today - logon).days))
       child.text = str(logon)
     if logoff:
-      child = ElementTree.SubElement(xmluser, "logoff", lag=str((today - logoff).days))
+      child = ElementTree.SubElement(xml, "logoff", lag=str((today - logoff).days))
       child.text = str(logoff)
 
-  return xml
+    return xml
 
 
 
@@ -336,7 +335,7 @@ def zarafa_user(username):
       ElementTree.SubElement(xml, 'sendas', username = send[1], fullname = send[2])
     for group in groups:
       ElementTree.SubElement(xml, 'group', groupname = group)
-  return xml
+    return xml
 
 # Start program
 if __name__ == "__main__":
