@@ -283,29 +283,6 @@ def zarafa_user(username):
   if err: raise IOError(err)
   sendas = [ str(x).split("\t") for x in str(out).split("\n")[3:] if x ]
 
-
-  command = '/usr/sbin/zarafa-mailbox-permissions --list-permissions ' + str(username)
-  p = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-  out, err = p.communicate()
-  if err: raise IOError(err)
-  permissions = [ str(x) for x in str(out).split("\n") if x ]
-
-  print "\n".join(permissions)
-
-
-
-
-  sys.exit(0)
-  return 0
-
-
-
-
-
-
-
-
-
   if args['output'] == "text":
     maxlen = max([ len(f[1]) for f in fieldmappings ] + [ len(f[1]) for f in quotafieldmappings ] + [ len(f[1]) for f in ldapfieldmappings if data.has_key(f[0]) ] )
     maxlen += 2
