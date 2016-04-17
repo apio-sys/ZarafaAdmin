@@ -238,7 +238,7 @@ def print_table(items, columns, separator="\t"):
 
   for i in range(len(tmp)):
     for j in range(columns):
-      tmp[i][j] += tmp[i][j].ljust(widths[j])
+      tmp[i][j] = tmp[i][j].ljust(widths[j])
     print separator.join(tmp[i])
 
   
