@@ -187,8 +187,8 @@ def zarafa_group(groupname):
   data = { x[0]:x[1] for x in out }
   data.update(props)
 
-  data["groupname"] = data.get("groupname","").lower()
-  data["emailaddress"] = data.get("emailaddress","").lower()
+  # data["groupname"] = data.get("groupname","").lower()
+  # data["emailaddress"] = data.get("emailaddress","").lower()
 
   command = '/usr/sbin/zarafa-admin --type group --list-sendas ' + str(groupname)
 
@@ -208,11 +208,12 @@ def zarafa_group(groupname):
     print "Users (" + str(len(users)) + "):"
     widths = [ max([ len(x[0]) for x in users ]) + 2, max([ len(x[1]) for x in users ]) ] 
     print "  " + "Username".ljust(widths[0]) + args['delimiter'] + "Full Name".ljust(widths[1])
-    print "-" * (sum(widths) + 5)
+    print "  " + "-" * (sum(widths) + 5)
     for user in users:
       print "  " + user[0].ljust(widths[0]) + args['delimiter'] + user[1].ljust(widths[1])
   elif args['output'] == "csv":
     print args['delimiter'].join([x[1] for x in fieldmappings] + [x[1] for x in ldapfieldmappings] + ['Users'])
+    print args['delimiter'].join([data.get(x[0],"") for x in fieldmappings] + [x[0] fro x in users])
 
 # Start program
 if __name__ == "__main__":
