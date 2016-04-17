@@ -206,11 +206,11 @@ def zarafa_group(groupname):
     for key, text in ldapfieldmappings:
       print str( "  " + text + ":").ljust(width) + args['delimiter'] + data.get(key,'')
     print "Users (" + str(len(users)) + "):"
-    widths = [ max([ len(x[0]) for x in users ]), max([ len(x[1]) for x in users ]), max([ len(x[2]) for x in users ]) ] 
-    print "  " + "Username".ljust(widths[0]) + args['delimiter'] + "Full Name".ljust(widths[1]) + args['delimiter'] + "Home Server"
+    widths = [ max([ len(x[0]) for x in users ]), max([ len(x[1]) for x in users ]) ] 
+    print "  " + "Username".ljust(widths[0]) + args['delimiter'] + "Full Name".ljust(widths[1])
     print "-" * (sum(widths) + 5)
     for user in users:
-      print "  " + user[0].ljust(widths[0]) + args['delimiter'] + user[1].ljust(widths[1]) + args['delimiter'] + user[2].ljust(widths[2])
+      print "  " + user[0].ljust(widths[0]) + args['delimiter'] + user[1].ljust(widths[1])
 
 # Start program
 if __name__ == "__main__":
