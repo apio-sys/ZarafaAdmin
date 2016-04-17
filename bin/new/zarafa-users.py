@@ -303,20 +303,31 @@ def zarafa_user(username):
 
     if sendas:
       tmp = [ x[1] + "(" + x[2] + ")" for x in sendas ]
-      print "Send As Rights (" + str(len(sendas)) + "):"
+      print "\nSend As Rights (" + str(len(sendas)) + "):"
       print '-' * (maxlen + 10)
       brandt.printTable(sorted(tmp),2)
       
     if groups:
-      print "Groups (" + str(len(groups)) + "):"
+      print "\nGroups (" + str(len(groups)) + "):"
       print '-' * (maxlen + 10)
       brandt.printTable(sorted(groups),2)
 
     sys.exit(0)
 
   elif args['output'] == "csv":
-    print args['delimiter'].join([ f[1] for f in (fieldmappings + quotafieldmappings) ] + ["Groups (" + str(len(groups)) + ")"])
-    print args['delimiter'].join([ data.get(f[0],"") for f in (fieldmappings + quotafieldmappings ) ] + groups )
+    tmp = []
+    if sendas:
+      tmp.append(["Send As Rights"])
+      for i in range(1,len(sendas)): tmp.append([])
+    if groups:
+      tmp.append(["Groups"])
+      for i in range(1,len(groups)): tmp.append([])
+    print args['delimiter'].join([ f[1] for f in (fieldmappings + quotafieldmappings) ] + tmp)
+
+    tmp = []
+    if sendas: tmp.append(sorted([ x[1] + "(" + x[2] + ")" for x in sendas ]))
+    if groups: tmp.append(sorted(groups))
+    print args['delimiter'].join([ data.get(f[0],"") for f in (fieldmappings + quotafieldmappings ) ] + tmp )
     sys.exit(0)
 
   else:
