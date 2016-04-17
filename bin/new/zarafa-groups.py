@@ -171,6 +171,8 @@ def get_data():
     out = f.read().split('\n')
     f.close()
 
+  print args['group']
+
   # Apply groupname filter
   if args['group']:  
     for c in reversed(range(len(out))):
