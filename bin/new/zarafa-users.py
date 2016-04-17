@@ -317,18 +317,18 @@ def zarafa_user(username):
   elif args['output'] == "csv":
     tmp = []
     if sendas:
-      tmp.append(["Send As Rights"])
-      for i in range(1,len(sendas)): tmp.append([])
+      tmp.append("Send As Rights")
+      for i in range(1,len(sendas)): tmp.append('')
     if groups:
-      tmp.append(["Groups"])
-      for i in range(1,len(groups)): tmp.append([])
+      tmp.append("Groups")
+      for i in range(1,len(groups)): tmp.append('')
 
     print [ f[1] for f in (fieldmappings + quotafieldmappings) ] + tmp
     # print args['delimiter'].join([ f[1] for f in (fieldmappings + quotafieldmappings) ] + tmp)
 
     tmp = []
-    if sendas: tmp.append(sorted([ x[1] + "(" + x[2] + ")" for x in sendas ]))
-    if groups: tmp.append(sorted(groups))
+    if sendas: tmp += sorted([ x[1] + "(" + x[2] + ")" for x in sendas ])
+    if groups: tmp += sorted(groups)
     print [ data.get(f[0],"") for f in (fieldmappings + quotafieldmappings ) ] + tmp
     # print args['delimiter'].join([ data.get(f[0],"") for f in (fieldmappings + quotafieldmappings ) ] + tmp )
     sys.exit(0)
