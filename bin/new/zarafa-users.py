@@ -236,6 +236,9 @@ def print_table(items, columns):
   for i in range(columns):
     widths.append(max([len(x[i]) for x in tmp]))
 
+  print tmp
+  print widths
+
   for i in range(0,len(items),columns):
     line = ""
     for j in range(columns):
