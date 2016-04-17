@@ -213,12 +213,8 @@ def zarafa_users(users):
           attribs[headers[i]] = tmp[i]
 
     xmluser = ElementTree.SubElement(xml, "user", **attribs)
-    if logon:
-      child = ElementTree.SubElement(xmluser, "logon", lag=str((today - logon).days))
-      child.text = str(logon)
-    if logoff:
-      child = ElementTree.SubElement(xmluser, "logoff", lag=str((today - logoff).days))
-      child.text = str(logoff)
+    if logon:  child = ElementTree.SubElement(xmluser, "logon", lag=str((today - logon).days), date=str(logon))
+    if logoff: child = ElementTree.SubElement(xmluser, "logoff", lag=str((today - logoff).days), date=str(logoff))
 
   return xml
 
@@ -270,10 +266,16 @@ def zarafa_user(username):
   if data.has_key("softlevel"): data["softlevel"] = data.get("softlevel","").split(" ")[0]
   if data.has_key("hardlevel"): data["hardlevel"] = data.get("hardlevel","").split(" ")[0]
   if data.has_key("currentstoresize"): data["currentstoresize"] = data.get("currentstoresize","").split(" ")[0]
+  logon = None
   if data.has_key("lastlogon"):
-    data["lastlogon"] = str(datetime.datetime.strptime(data.get("lastlogon").decode('unicode_escape'),'%m/%d/%y %H:%M:%S'))
+    logon = datetime.datetime.strptime(data.get("lastlogon").decode('unicode_escape'),'%m/%d/%y %H:%M:%S')
+    data["lastlogon"] = str(logon)
+    # data["lastlogon"] = str(datetime.datetime.strptime(data.get("lastlogon").decode('unicode_escape'),'%m/%d/%y %H:%M:%S'))
+  logoff = None
   if data.has_key("lastlogoff"):
-    data["lastlogoff"] = str(datetime.datetime.strptime(data.get("lastlogoff").decode('unicode_escape'),'%m/%d/%y %H:%M:%S'))
+    logoff = datetime.datetime.strptime(data.get("lastlogoff").decode('unicode_escape'),'%m/%d/%y %H:%M:%S')
+    data["lastlogoff"] = str(logoff)
+    # data["lastlogoff"] = str(datetime.datetime.strptime(data.get("lastlogoff").decode('unicode_escape'),'%m/%d/%y %H:%M:%S'))
 
   for good,bad in ldapmapping:
     if data.has_key(bad):
@@ -286,7 +288,8 @@ def zarafa_user(username):
   if err: raise IOError(err)
   sendas = [ str(x).split("\t") for x in str(out).split("\n")[3:] if x ]
 
-  xml = ElementTree.Element('user')
+  xml = ElementTree.Element('users')
+  today = datetime.datetime.today()  
   if args['output'] == "text":
     maxlen = max([ len(f[1]) for f in fieldmappings ] + [ len(f[1]) for f in quotafieldmappings ] + [ len(f[1]) for f in ldapfieldmappings if data.has_key(f[0]) ] )
     maxlen += 2
@@ -329,7 +332,11 @@ def zarafa_user(username):
     print args['delimiter'].join([ data.get(f[0],"") for f in (fieldmappings + quotafieldmappings ) ] + tmp )
 
   else:
+    del data["lastlogon"]
+    del data["lastlogoff"]
     xmluser = ElementTree.SubElement(xml, "user", **data)
+    if logon:  child = ElementTree.SubElement(xmluser, "logon", lag=str((today - logon).days), date=str(logon))
+    if logoff: child = ElementTree.SubElement(xmluser, "logoff", lag=str((today - logoff).days), date=str(logoff))
     for send in sendas:
       ElementTree.SubElement(xmluser, 'sendas', username = send[1], fullname = send[2])
     for group in groups:
