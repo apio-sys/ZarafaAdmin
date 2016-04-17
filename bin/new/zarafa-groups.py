@@ -177,7 +177,7 @@ def zarafa_group(groupname):
               props = out[i:]
               del out[i:]
   del users[0:3]
-    users = [(str(str(x).split('\t')[1]), ''.join(str(x).split('\t')[2:])) for x in users]
+  users = [(str(str(x).split('\t')[1]), ''.join(str(x).split('\t')[2:])) for x in users]
 
   del props[0]
   props = [(str(str(x).split('\t')[1]).lower(), ''.join(str(x).split('\t')[2:])) for x in props]
