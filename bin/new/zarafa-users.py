@@ -196,6 +196,7 @@ def zarafa_users(users):
     print "\n".join( [ user.replace(";",args['delimiter']) for user in users ] )
     sys.exit(0)
 
+  xml = ElementTree.Element('users')
   today = datetime.datetime.today()
   for user in users:
     tmp = user.split(';')
@@ -211,15 +212,15 @@ def zarafa_users(users):
         else:
           attribs[headers[i]] = tmp[i]
 
-    xml = ElementTree.Element("user", **attribs)
+    xmluser = ElementTree.SubElement(xml, "user", **attribs)
     if logon:
-      child = ElementTree.SubElement(xml, "logon", lag=str((today - logon).days))
+      child = ElementTree.SubElement(xmluser, "logon", lag=str((today - logon).days))
       child.text = str(logon)
     if logoff:
-      child = ElementTree.SubElement(xml, "logoff", lag=str((today - logoff).days))
+      child = ElementTree.SubElement(xmluser, "logoff", lag=str((today - logoff).days))
       child.text = str(logoff)
 
-    return xml
+  return xml
 
 
 
@@ -285,6 +286,7 @@ def zarafa_user(username):
   if err: raise IOError(err)
   sendas = [ str(x).split("\t") for x in str(out).split("\n")[3:] if x ]
 
+  xml = ElementTree.Element('user')
   if args['output'] == "text":
     maxlen = max([ len(f[1]) for f in fieldmappings ] + [ len(f[1]) for f in quotafieldmappings ] + [ len(f[1]) for f in ldapfieldmappings if data.has_key(f[0]) ] )
     maxlen += 2
@@ -311,8 +313,6 @@ def zarafa_user(username):
       print '-' * (maxlen + 10)
       brandt.printTable(sorted(groups),2)
 
-    sys.exit(0)
-
   elif args['output'] == "csv":
     tmp = []
     if sendas:
@@ -327,15 +327,14 @@ def zarafa_user(username):
     if sendas: tmp += sorted([ x[1] + "(" + x[2] + ")" for x in sendas ])
     if groups: tmp += sorted(groups)
     print args['delimiter'].join([ data.get(f[0],"") for f in (fieldmappings + quotafieldmappings ) ] + tmp )
-    sys.exit(0)
 
   else:
-    xml = ElementTree.Element('user', **data)
+    xmluser = ElementTree.SubElement(xml, "user", **data)
     for send in sendas:
-      ElementTree.SubElement(xml, 'sendas', username = send[1], fullname = send[2])
+      ElementTree.SubElement(xmluser, 'sendas', username = send[1], fullname = send[2])
     for group in groups:
-      ElementTree.SubElement(xml, 'group', groupname = group)
-    return xml
+      ElementTree.SubElement(xmluser, 'group', groupname = group)
+  return xml
 
 # Start program
 if __name__ == "__main__":
