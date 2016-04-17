@@ -222,7 +222,7 @@ def zarafa_users(users):
 
   return xml
 
-def print_table(items, columns):
+def print_table(items, columns, separator="\t"):
   tmp = []
   for i in range(0,len(items),columns):
     tmp.append([])
@@ -236,14 +236,10 @@ def print_table(items, columns):
   for i in range(columns):
     widths.append(max([len(x[i]) for x in tmp]))
 
-  print tmp
-  print widths
-
   for i in range(len(tmp)):
-    line = ""
     for j in range(columns):
-      line += tmp[i][j].ljust(widths[j])
-    print line.strip()
+      tmp[i][j] += tmp[i][j].ljust(widths[j])
+    print separator.join(tmp[i])
 
   
 
