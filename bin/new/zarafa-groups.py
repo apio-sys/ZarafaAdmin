@@ -183,11 +183,13 @@ def get_data():
 def zarafa_groups(groups):
   global args
 
-  if args['output'] != 'xml':
-    print "Zarafa Groups"
-    if args['output'] == 'text': print "-" * 25
+  if args['output'] == 'text':
+    print "Zarafa Groups (" + str(len(groups)) + ")"
+    print "-" * max([len(x) for x in groups] + [13])
     print "\n".join( groups )
-
+  elif args['output'] == 'csv':
+    print "Zarafa Groups"
+    print "\n".join( groups )
   else:
     xml = ElementTree.Element('groups')
     for group in groups:
