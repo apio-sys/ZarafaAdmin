@@ -176,7 +176,10 @@ def get_data():
   # Apply groupname filter
   if args['group']:  
     for c in reversed(range(len(out))):
-      if out[c] and not fnmatch.fnmatch(out[c].lower(), args['group'].lower()): continue
+      print out[c]
+      if out[c]:
+        if not fnmatch.fnmatch(out[c].lower(), args['group'].lower()):
+          continue
       out.pop(c)
 
   return out
