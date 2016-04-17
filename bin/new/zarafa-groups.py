@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Python wrapper for zarafa-stats --users and zarafa-admin --details user
+Python wrapper for zarafa-admin --type group --details group
 """
 import argparse, textwrap, fnmatch, datetime
 import xml.etree.cElementTree as ElementTree
@@ -16,13 +16,12 @@ sys.path.pop()
 args = {}
 args['cache'] = 15
 args['output'] = 'text'
-args['user'] = ''
+args['group'] = ''
 args['delimiter'] = ""
 
 version = 0.3
 encoding = 'utf-8'
 
-headers = ['company','username','fullname','emailaddress','active','admin','UNK0x67C1001E','size','quotawarn','quotasoft','quotahard','UNK0x67200040','UNK0x6760000B','logon','logoff']
 
 ldapmapping = (("pr_ec_enabled_features","0x67b3101e"),("pr_ec_disabled_features","0x67b4101e"),
                ("pr_ec_archive_servers","0x67c4101e"),("pr_ec_archive_couplings","0x67c5101e"),
@@ -94,8 +93,8 @@ class customUsageVersion(argparse.Action):
       print textwrap.fill(version, self.__row)
       print "\nWritten by Bob Brandt <projects@brandt.ie>."
     else:
-      print "Usage: " + self.__prog + " [options] [username]"
-      print "Script used to find details about Zarafa users.\n"
+      print "Usage: " + self.__prog + " [options] [groupname]"
+      print "Script used to find details about Zarafa groups.\n"
       print "Options:"
       options = []
       options.append(("-h, --help",              "Show this help message and exit"))
@@ -103,7 +102,7 @@ class customUsageVersion(argparse.Action):
       options.append(("-o, --output OUTPUT",     "Type of output {text | csv | xml}"))
       options.append(("-c, --cache MINUTES",     "Cache time. (in minutes)"))
       options.append(("-d, --delimiter DELIM",   "Character to use instead of TAB for field delimiter"))
-      options.append(("username",                "Filter to apply to usernames."))
+      options.append(("groupname",               "Filter to apply to groupnames."))
       length = max( [ len(option[0]) for option in options ] )
       for option in options:
         description = textwrap.wrap(option[1], (self.__row - length - 5))
@@ -130,19 +129,19 @@ def command_line_args():
           default=args['output'],
           choices=['text', 'csv', 'xml'],
           help="Display output type.")
-  parser.add_argument('user',
+  parser.add_argument('group',
           nargs='?',
-          default= args['user'],
+          default= args['group'],
           action='store',
-          help="User to retrieve details about.")
+          help="Group to retrieve details about.")
   args.update(vars(parser.parse_args()))
   if args['delimiter']: args['delimiter'] = args['delimiter'][0]
   if not args['delimiter'] and args['output'] == "csv": args['delimiter'] = ","
 
 def get_data():
   global args
-  command = '/usr/bin/zarafa-stats --users --dump'
-  cachefile = '/tmp/zarafa-users.cache'    
+  command = '/usr/sbin/zarafa-admin -L'
+  cachefile = '/tmp/zarafa-groups.cache'    
 
   args['cache'] *= 60
   age = args['cache'] + 1
@@ -156,14 +155,13 @@ def get_data():
     out, err = p.communicate()
     if err: raise IOError(err)
 
-    out = out.strip().split('\n')[1:]
+    out = out.strip().split('\n')[3:]
     for c in reversed(range(len(out))):
       if out[c]:
-        tmp = out[c].split(";")
-        if headers.index("username") < headers.index("fullname") < len(tmp): 
-          if tmp[headers.index("username")] != "SYSTEM":
-            if tmp[headers.index("fullname")] != "SYSTEM": continue
+        out[c] = out[c].strip()
+        if out[c] != "Everyone": continue
       out.pop(c)
+    out = sorted(out, key=lambda s: s.lower())
 
     f = open(cachefile, 'w')
     f.write("\n".join(out))
@@ -173,203 +171,71 @@ def get_data():
     out = f.read().split('\n')
     f.close()
 
-  # Apply username filter    
-  users = {}
-  for line in out:
-    if line:
-      tmp = line.split(";")
-      if args['user']:
-        if not fnmatch.fnmatch(tmp[headers.index("username")].lower(), args['user'].lower()): continue
-      users[tmp[headers.index("username")].lower()] = line
-  out = []
-  for user in sorted(users.keys()):
-    out.append(users[user])
+  # Apply groupname filter
+  for c in reversed(range(len(out))):
+    if out[c]:
+      if args['group']:
+        if not fnmatch.fnmatch(out[c].lower(), args['group'].lower()): continue
+    out.pop(c)
 
   return out
 
-def zarafa_users(users):
+
+def zarafa_groups(groups):
   global args
 
   if args['output'] != 'xml':
-    if not args['delimiter']: args['delimiter'] = "\t"
-    print args['delimiter'].join(headers)
-    print "\n".join( [ user.replace(";",args['delimiter']) for user in users ] )
+    print "Zarafa Groups"
+    if args['output'] == 'text' print "-" * 25
+    print "\n".join( groups )
+
   else:
-    xml = ElementTree.Element('users')
-    today = datetime.datetime.today()
-    for user in users:
-      tmp = user.split(';')
-      attribs = {}
-      logon = None
-      logoff = None
-      for i in range(len(tmp)):
-        if tmp[i]:
-          if headers[i] == 'logon':
-            logon = datetime.datetime.strptime(tmp[i].decode('unicode_escape'),'%a %b %d %H:%M:%S %Y')
-          elif headers[i] == 'logoff':
-            logoff = datetime.datetime.strptime(tmp[i].decode('unicode_escape'),'%a %b %d %H:%M:%S %Y')
-          else:
-            attribs[headers[i]] = tmp[i]
-
-      xmluser = ElementTree.SubElement(xml, "user", **attribs)
-      if logon:  child = ElementTree.SubElement(xmluser, "logon", lag=str((today - logon).days), date=str(logon))
-      if logoff: child = ElementTree.SubElement(xmluser, "logoff", lag=str((today - logoff).days), date=str(logoff))
-
+    xml = ElementTree.Element('groups')
+    for group in groups:
+      xmluser = ElementTree.SubElement(xml, "group", groupname = group)
     return xml
 
-def zarafa_user(username):
-  global args, ldapmapping
-  command = '/usr/sbin/zarafa-admin --type user --details ' + str(username)
 
-  p = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-  out, err = p.communicate()
-  if err: raise IOError(err)
 
-  data = str(out).split("\n")
-  groups = []
-  quotas = []
-  props = []
-  for i in reversed(range(len(data))):
-    if not data[i]: 
-      del data[i]
-    else:
-      if data[i][:8] == "Groups (":
-        groups = data[i:]
-        del data[i:]
-      elif data[i] == "Current user store quota settings:":
-        quotas = data[i:]
-        del data[i:]
-      elif data[i] == "Mapped properties:":
-        props = data[i:]
-        del data[i:]
 
-  del groups[0]
-  groups = [ str(x).lower().strip() for x in groups ]
-  groups.remove("everyone")
 
-  props = [ (str(str(x).split('\t')[1]).lower(), ''.join(str(x).split('\t')[2:])) for x in props[1:] ]
-  props = { x[0]:x[1] for x in props }
 
-  data += quotas[1:]
-  data = [ str(x).replace(":",":\t",1) for x in data ]
-  data = [ ( str(str(x).split('\t')[0]).lower().replace(" ","").replace(":","").replace("-",""), ''.join(str(x).split('\t')[1:]) ) for x in data ]
-  data = { x[0]:x[1] for x in data }
-  data.update(props)
 
-  data["username"] = data.get("username","").lower()
-  data["emailaddress"] = data.get("emailaddress","").lower()
-  if data.has_key("warninglevel"): data["warninglevel"] = data.get("warninglevel","").split(" ")[0]
-  if data.has_key("softlevel"): data["softlevel"] = data.get("softlevel","").split(" ")[0]
-  if data.has_key("hardlevel"): data["hardlevel"] = data.get("hardlevel","").split(" ")[0]
-  if data.has_key("currentstoresize"): data["currentstoresize"] = data.get("currentstoresize","").split(" ")[0]
-  logon = None
-  if data.has_key("lastlogon"):
-    logon = datetime.datetime.strptime(data.get("lastlogon").decode('unicode_escape'),'%m/%d/%y %H:%M:%S')
-    data["lastlogon"] = str(logon)
-    # data["lastlogon"] = str(datetime.datetime.strptime(data.get("lastlogon").decode('unicode_escape'),'%m/%d/%y %H:%M:%S'))
-  logoff = None
-  if data.has_key("lastlogoff"):
-    logoff = datetime.datetime.strptime(data.get("lastlogoff").decode('unicode_escape'),'%m/%d/%y %H:%M:%S')
-    data["lastlogoff"] = str(logoff)
-    # data["lastlogoff"] = str(datetime.datetime.strptime(data.get("lastlogoff").decode('unicode_escape'),'%m/%d/%y %H:%M:%S'))
 
-  for good,bad in ldapmapping:
-    if data.has_key(bad):
-      data[good] = data[bad]
-      del data[bad]
 
-  command = '/usr/sbin/zarafa-admin --type user --list-sendas ' + str(username)
-  p = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-  out, err = p.communicate()
-  if err: raise IOError(err)
-  sendas = [ str(x).split("\t") for x in str(out).split("\n")[3:] if x ]
 
-  xml = ElementTree.Element('users')
-  today = datetime.datetime.today()  
-  if args['output'] == "text":
-    maxlen = max([ len(f[1]) for f in fieldmappings ] + [ len(f[1]) for f in quotafieldmappings ] + [ len(f[1]) for f in ldapfieldmappings if data.has_key(f[0]) ] )
-    maxlen += 2
-    for key,text in fieldmappings:
-      print (text + ":").ljust(maxlen), data.get(key,"")
-
-    print "Mapped properties:"
-    for key,text in ldapfieldmappings:
-      if data.has_key(key):
-        print (" " + text + ":").ljust(maxlen), data[key]
-
-    print "Current user store quota settings:"
-    for key,text in quotafieldmappings:
-      print (text + ":").ljust(maxlen), data.get(key,"")
-
-    if sendas:
-      tmp = [ x[1] + "(" + x[2] + ")" for x in sendas ]
-      print "\nSend As Rights (" + str(len(sendas)) + "):"
-      print '-' * (maxlen + 10)
-      brandt.printTable(sorted(tmp),2)
-      
-    if groups:
-      print "\nGroups (" + str(len(groups)) + "):"
-      print '-' * (maxlen + 10)
-      brandt.printTable(sorted(groups),2)
-
-  elif args['output'] == "csv":
-    tmp = []
-    if sendas:
-      tmp.append("Send As Rights")
-      for i in range(1,len(sendas)): tmp.append('')
-    if groups:
-      tmp.append("Groups")
-      for i in range(1,len(groups)): tmp.append('')
-    print args['delimiter'].join([ f[1] for f in (fieldmappings + quotafieldmappings) ] + tmp)
-
-    tmp = []
-    if sendas: tmp += sorted([ x[1] + "(" + x[2] + ")" for x in sendas ])
-    if groups: tmp += sorted(groups)
-    print args['delimiter'].join([ data.get(f[0],"") for f in (fieldmappings + quotafieldmappings ) ] + tmp )
-
-  else:
-    del data["lastlogon"]
-    del data["lastlogoff"]
-    xmluser = ElementTree.SubElement(xml, "user", **data)
-    if logon:  child = ElementTree.SubElement(xmluser, "logon", lag=str((today - logon).days), date=str(logon))
-    if logoff: child = ElementTree.SubElement(xmluser, "logoff", lag=str((today - logoff).days), date=str(logoff))
-    for send in sendas:
-      ElementTree.SubElement(xmluser, 'sendas', username = send[1], fullname = send[2])
-    for group in groups:
-      ElementTree.SubElement(xmluser, 'group', groupname = group)
-  return xml
 
 # Start program
 if __name__ == "__main__":
-  command_line_args()
+    command_line_args()
 
-  exitcode = 0
-  try:
-    users = get_data()
-    if len(users) == 1:
-      xmldata = zarafa_user(users[0].split(";")[headers.index("username")])
+    exitcode = 0
+  # try:
+    groups = get_data()
+    if len(groups) == 1:
+      xmldata = zarafa_group(groups[0])
     else:
-      xmldata = zarafa_users(users)
+      xmldata = zarafa_groups(groups)
 
     if args['output'] == 'xml': 
       xml = ElementTree.Element('zarafaadmin')
       xml.append(xmldata)
       print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
 
-  except ( Exception, SystemExit ) as err:
-    try:
-      exitcode = int(err[0])
-      errmsg = str(" ".join(err[1:]))
-    except:
-      exitcode = -1
-      errmsg = str(" ".join(err))
+  # except ( Exception, SystemExit ) as err:
+  #   try:
+  #     exitcode = int(err[0])
+  #     errmsg = str(" ".join(err[1:]))
+  #   except:
+  #     exitcode = -1
+  #     errmsg = str(" ".join(err))
 
-    if args['output'] != 'xml': 
-      if exitcode != 0: sys.stderr.write( str(err) +'\n' )
-    else:
-      xml = ElementTree.Element('zarafaadmin')      
-      xmldata = ElementTree.SubElement(xml, 'error', errorcode = str(exitcode) )
-      xmldata.text = errmsg
-      print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
+  #   if args['output'] != 'xml': 
+  #     if exitcode != 0: sys.stderr.write( str(err) +'\n' )
+  #   else:
+  #     xml = ElementTree.Element('zarafaadmin')      
+  #     xmldata = ElementTree.SubElement(xml, 'error', errorcode = str(exitcode) )
+  #     xmldata.text = errmsg
+  #     print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
 
-  sys.exit(exitcode)
+  # sys.exit(exitcode)

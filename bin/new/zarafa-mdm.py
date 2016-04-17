@@ -167,15 +167,15 @@ def get_data():
       if out[c]:
         deviceID, username, lastSync = out[c].split(";")
         if args['device'] and not args['user']:
-          if fnmatch.fnmatch(deviceID.lower(), args['device']): continue
+          if fnmatch.fnmatch(deviceID.lower(), args['device'].lower()): continue
         if not args['device'] and args['user']:
-          if fnmatch.fnmatch(username.lower(), args['user']): continue
+          if fnmatch.fnmatch(username.lower(), args['user'].lower()): continue
         if args['device'] and args['user']:
           if args['device'] == args['user']:
-            if fnmatch.fnmatch(deviceID.lower(), args['device']): continue
-            if fnmatch.fnmatch(username.lower(), args['user']): continue
+            if fnmatch.fnmatch(deviceID.lower(), args['device'].lower()): continue
+            if fnmatch.fnmatch(username.lower(), args['user'].lower()): continue
           else:
-            if fnmatch.fnmatch(deviceID.lower(), args['device']) and fnmatch.fnmatch(username.lower(), args['user']): continue
+            if fnmatch.fnmatch(deviceID.lower(), args['device'].lower()) and fnmatch.fnmatch(username.lower(), args['user'].lower()): continue
       out.pop(c)
 
   return out

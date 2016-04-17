@@ -132,7 +132,7 @@ def get_data():
     for c in reversed(range(len(out))):
       if out[c]:
         tmp = out[c].split(";")
-        if not fnmatch.fnmatch(tmp[headers.index("username")].lower(), args['user']): out.pop(c)
+        if not fnmatch.fnmatch(tmp[headers.index("username")].lower(), args['user'].lower()): out.pop(c)
       else:
         out.pop(c)
 
