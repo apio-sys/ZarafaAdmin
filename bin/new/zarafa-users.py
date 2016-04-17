@@ -222,6 +222,18 @@ def zarafa_users(users):
 
   return xml
 
+def print_table(items, columns):
+  tmp = []
+  for i in range(0,len(items),columns):
+    for j in range(columns):
+      tmp.append([])
+      if c < len(items): 
+        tmp[-1].append(items[c])
+      else:
+        break
+  print tmp
+
+
 def zarafa_user(username):
   global args, ldapmapping
   command = '/usr/sbin/zarafa-admin --type user --details ' + str(username)
@@ -282,6 +294,15 @@ def zarafa_user(username):
   out, err = p.communicate()
   if err: raise IOError(err)
   sendas = [ str(x).split("\t") for x in str(out).split("\n")[3:] if x ]
+
+  print_table(groups,2)
+
+  sys.exit(0)
+
+
+
+
+
 
   if args['output'] == "text":
     maxlen = max([ len(f[1]) for f in fieldmappings ] + [ len(f[1]) for f in quotafieldmappings ] + [ len(f[1]) for f in ldapfieldmappings if data.has_key(f[0]) ] )
