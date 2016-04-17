@@ -178,7 +178,7 @@ def get_data():
     for c in reversed(range(len(out))):
       print out[c]
       if out[c]:
-        if not fnmatch.fnmatch(out[c].lower(), args['group'].lower()):
+        if fnmatch.fnmatch(out[c].lower(), args['group'].lower()):
           continue
       out.pop(c)
 
