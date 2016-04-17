@@ -203,19 +203,19 @@ def zarafa_group(groupname):
   out, err = p.communicate()
   if err: raise IOError(err)
 
-  data = str(out).split("\n")
+  out = str(out).split("\n")
   users = []
   props = []
-  for i in range(len(data))[::-1]:
-      if not data[i]: 
-          del data[i]
+  for i in reversed(range(len(out))):
+      if not out[i]: 
+          del out[i]
       else:
-          if data[i][:7] == "Users (":
-              users = data[i:]
-              del data[i:]
-          elif data[i] == "Mapped properties:":
-              props = data[i:]
-              del data[i:]
+          if out[i][:7] == "Users (":
+              users = out[i:]
+              del out[i:]
+          elif out[i] == "Mapped properties:":
+              props = out[i:]
+              del out[i:]
   del users[0:3]
   users = [(str(str(x).split('\t')[1]).lower(), ''.join(str(x).split('\t')[2:])) for x in users]
 
@@ -223,15 +223,14 @@ def zarafa_group(groupname):
   props = [(str(str(x).split('\t')[1]).lower(), ''.join(str(x).split('\t')[2:])) for x in props]
   props = { x[0]:x[1] for x in props }
 
-  data = [ ( str(str(x).split('\t')[0]).lower().replace(" ","").replace(":",""), ''.join(str(x).split('\t')[1:]) ) for x in data ]
-  data = { x[0]:x[1] for x in data }
+  out = [ ( str(str(x).split('\t')[0]).lower().replace(" ","").replace(":",""), ''.join(str(x).split('\t')[1:]) ) for x in out ]
+  data = { x[0]:x[1] for x in out }
   data.update(props)
 
   data["groupname"] = data.get("groupname","").lower()
   data["emailaddress"] = data.get("emailaddress","").lower()
 
   print data
-  print props
   print users
 
 
