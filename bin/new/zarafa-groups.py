@@ -177,7 +177,7 @@ def zarafa_group(groupname):
               props = out[i:]
               del out[i:]
   del users[0:3]
-  users = [(str(str(x).split('\t')[1]).lower(), ''.join(str(x).split('\t')[2:])) for x in users]
+  users = [ str(x).split('\t') for x in users ]
 
   del props[0]
   props = [(str(str(x).split('\t')[1]).lower(), ''.join(str(x).split('\t')[2:])) for x in props]
@@ -201,10 +201,10 @@ def zarafa_group(groupname):
     if not args['delimiter']: args['delimiter'] = "\t" 
     width = 20   
     for key, text in fieldmappings:
-      print text.ljust(width), data.get(key,'')
+      print str(text + ":").ljust(width), data.get(key,'')
     print "Mapped properties:"
     for key, text in ldapfieldmappings:
-      print text.ljust(width), data.get(key,'')
+      print str( "  " + text + ":").ljust(width), data.get(key,'')
     print "Users (" + str(len(users)) + "):"
     print users
 
