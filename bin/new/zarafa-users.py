@@ -322,12 +322,15 @@ def zarafa_user(username):
     if groups:
       tmp.append(["Groups"])
       for i in range(1,len(groups)): tmp.append([])
-    print args['delimiter'].join([ f[1] for f in (fieldmappings + quotafieldmappings) ] + tmp)
+
+    print [ f[1] for f in (fieldmappings + quotafieldmappings) ] + tmp
+    # print args['delimiter'].join([ f[1] for f in (fieldmappings + quotafieldmappings) ] + tmp)
 
     tmp = []
     if sendas: tmp.append(sorted([ x[1] + "(" + x[2] + ")" for x in sendas ]))
     if groups: tmp.append(sorted(groups))
-    print args['delimiter'].join([ data.get(f[0],"") for f in (fieldmappings + quotafieldmappings ) ] + tmp )
+    print [ data.get(f[0],"") for f in (fieldmappings + quotafieldmappings ) ] + tmp
+    # print args['delimiter'].join([ data.get(f[0],"") for f in (fieldmappings + quotafieldmappings ) ] + tmp )
     sys.exit(0)
 
   else:
