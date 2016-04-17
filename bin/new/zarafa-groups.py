@@ -213,7 +213,7 @@ def zarafa_group(groupname):
       print "  " + user[0].ljust(widths[0]) + args['delimiter'] + user[1].ljust(widths[1])
   elif args['output'] == "csv":
     print args['delimiter'].join([x[1] for x in fieldmappings] + [x[1] for x in ldapfieldmappings] + ['Users'])
-    print args['delimiter'].join([data.get(x[0],"") for x in fieldmappings] + [x[0] fro x in users])
+    print args['delimiter'].join([data.get(x[0],"") for x in fieldmappings] + [x[0] for x in users])
 
 # Start program
 if __name__ == "__main__":
