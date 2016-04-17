@@ -286,15 +286,6 @@ def zarafa_user(username):
   if err: raise IOError(err)
   sendas = [ str(x).split("\t") for x in str(out).split("\n")[3:] if x ]
 
-  brandt.printTable(sorted(groups),3)
-
-  sys.exit(0)
-
-
-
-
-
-
   if args['output'] == "text":
     maxlen = max([ len(f[1]) for f in fieldmappings ] + [ len(f[1]) for f in quotafieldmappings ] + [ len(f[1]) for f in ldapfieldmappings if data.has_key(f[0]) ] )
     maxlen += 2
@@ -310,9 +301,16 @@ def zarafa_user(username):
     for key,text in quotafieldmappings:
       print (text + ":").ljust(maxlen), data.get(key,"")
 
-    print "Groups (" + str(len(groups)) + "):"
-    print '-' * (maxlen + 10)
-    print '\n'.join([ " " + str(x) for x in groups ])
+    if sendas:
+      print "Send As Rights (" + str(len(sendas)) + "):"
+      print '-' * (maxlen + 10)
+      brandt.printTable(sendas,2)
+      
+    if groups:
+      print "Groups (" + str(len(groups)) + "):"
+      print '-' * (maxlen + 10)
+      brandt.printTable(sorted(groups),2)
+
     sys.exit(0)
 
   elif args['output'] == "csv":
