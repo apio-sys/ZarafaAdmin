@@ -222,26 +222,6 @@ def zarafa_users(users):
 
   return xml
 
-def print_table(items, columns, separator="\t"):
-  tmp = []
-  for i in range(0,len(items),columns):
-    tmp.append([])
-    for j in range(columns):
-      if i + j < len(items): 
-        tmp[-1].append(items[i + j])
-      else:
-        tmp[-1].append('')
-  
-  widths=[]
-  for i in range(columns):
-    widths.append(max([len(x[i]) for x in tmp]))
-
-  for i in range(len(tmp)):
-    for j in range(columns):
-      tmp[i][j] = tmp[i][j].ljust(widths[j])
-    print separator.join(tmp[i])
-
-  
 
 
 
@@ -306,7 +286,7 @@ def zarafa_user(username):
   if err: raise IOError(err)
   sendas = [ str(x).split("\t") for x in str(out).split("\n")[3:] if x ]
 
-  print_table(sorted(groups),3)
+  brandt.printTable(sorted(groups),3)
 
   sys.exit(0)
 
