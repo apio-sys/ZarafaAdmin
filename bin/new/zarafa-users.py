@@ -239,7 +239,7 @@ def print_table(items, columns):
   print tmp
   print widths
 
-  for i in range(0,len(items),columns):
+  for i in range(len(tmp)):
     line = ""
     for j in range(columns):
       line += tmp[i][j].ljust(widths[j])
