@@ -186,7 +186,7 @@ def zarafa_groups(groups):
 
   if args['output'] != 'xml':
     print "Zarafa Groups"
-    if args['output'] == 'text' print "-" * 25
+    if args['output'] == 'text': print "-" * 25
     print "\n".join( groups )
 
   else:
