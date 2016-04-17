@@ -171,8 +171,6 @@ def get_data():
     out = f.read().split('\n')
     f.close()
 
-  print args['group']
-
   # Apply groupname filter
   if args['group']:  
     for c in reversed(range(len(out))):
@@ -180,7 +178,6 @@ def get_data():
       out.pop(c)
 
   return out
-
 
 def zarafa_groups(groups):
   global args
@@ -234,7 +231,8 @@ def zarafa_group(groupname):
   data["emailaddress"] = data.get("emailaddress","").lower()
 
   print data
-
+  print props
+  print users
 
 
 
