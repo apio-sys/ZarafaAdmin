@@ -331,7 +331,7 @@ def zarafa_user(username):
     sys.exit(0)
 
   else:
-    xml = ElementTree.SubElement(xml, 'user', **data)
+    xml = ElementTree.Element('user', **data)
     for send in sendas:
       ElementTree.SubElement(xml, 'sendas', username = send[1], fullname = send[2])
     for group in groups:
