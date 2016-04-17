@@ -201,13 +201,16 @@ def zarafa_group(groupname):
     if not args['delimiter']: args['delimiter'] = "\t" 
     width = 20   
     for key, text in fieldmappings:
-      print str(text + ":").ljust(width), data.get(key,'')
+      print str(text + ":").ljust(width) + args['delimiter'] + data.get(key,'')
     print "Mapped properties:"
     for key, text in ldapfieldmappings:
-      print str( "  " + text + ":").ljust(width), data.get(key,'')
+      print str( "  " + text + ":").ljust(width) + args['delimiter'] + data.get(key,'')
     print "Users (" + str(len(users)) + "):"
-    print users
-
+    widths = [8,20,30]
+    print "  " + "Username".ljust(widths[0]) + args['delimiter'] + "Full Name".ljust(widths[1]) + args['delimiter'] + "Home Server"
+    print "-" * sum(widths)
+    for user in users:
+      print "  " + user[0].ljust(widths[0]) + args['delimiter'] + user[1].ljust(widths[1]) + args['delimiter'] + user[2].ljust(widths[2])
 
 # Start program
 if __name__ == "__main__":
