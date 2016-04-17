@@ -302,9 +302,10 @@ def zarafa_user(username):
       print (text + ":").ljust(maxlen), data.get(key,"")
 
     if sendas:
+      tmp = [ x[1] + "(" + x[2] + ")" for x in sendas ]
       print "Send As Rights (" + str(len(sendas)) + "):"
       print '-' * (maxlen + 10)
-      brandt.printTable(sendas,2)
+      brandt.printTable(sorted(tmp),2)
       
     if groups:
       print "Groups (" + str(len(groups)) + "):"
