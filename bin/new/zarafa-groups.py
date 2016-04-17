@@ -187,11 +187,7 @@ def zarafa_group(groupname):
   data = { x[0]:x[1] for x in out }
   data.update(props)
 
-  # data["groupname"] = data.get("groupname","").lower()
-  # data["emailaddress"] = data.get("emailaddress","").lower()
-
   command = '/usr/sbin/zarafa-admin --type group --list-sendas ' + str(groupname)
-
   p = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   out, err = p.communicate()
   if err: raise IOError(err)
@@ -205,15 +201,39 @@ def zarafa_group(groupname):
     print "Mapped properties:"
     for key, text in ldapfieldmappings:
       print str( "  " + text + ":").ljust(width) + args['delimiter'] + data.get(key,'')
-    print "Users (" + str(len(users)) + "):"
-    widths = [ max([ len(x[0]) for x in users ]) + 2, max([ len(x[1]) for x in users ]) ] 
-    print "  " + "Username".ljust(widths[0]) + args['delimiter'] + "Full Name".ljust(widths[1])
-    print "  " + "-" * (sum(widths) + 5)
-    for user in users:
-      print "  " + user[0].ljust(widths[0]) + args['delimiter'] + user[1].ljust(widths[1])
+    if sendas:
+      tmp = [ x[1] + "(" + x[2] + ")" for x in sendas ]
+      print "\nSend As Rights (" + str(len(sendas)) + "):"
+      print '-' * (width + 10)
+      brandt.printTable(sorted(tmp),2)
+    if users:        
+      print "Users (" + str(len(users)) + "):"
+      widths = [ max([ len(x[0]) for x in users ]) + 2, max([ len(x[1]) for x in users ]) ] 
+      print "  " + "Username".ljust(widths[0]) + args['delimiter'] + "Full Name".ljust(widths[1])
+      print "  " + "-" * (sum(widths) + 5)
+      for user in users:
+        print "  " + user[0].ljust(widths[0]) + args['delimiter'] + user[1].ljust(widths[1])
   elif args['output'] == "csv":
-    print args['delimiter'].join([x[1] for x in fieldmappings] + [x[1] for x in ldapfieldmappings] + ['Users'])
-    print args['delimiter'].join([data.get(x[0],"") for x in fieldmappings] + [x[0] for x in users])
+    tmp = []
+    if sendas:
+      tmp.append("Send As Rights")
+      for i in range(1,len(sendas)): tmp.append('')
+    if users:
+      tmp.append("Users")
+      for i in range(1,len(groups)): tmp.append('')    
+    print args['delimiter'].join([x[1] for x in fieldmappings] + tmp)
+    tmp = []
+    if sendas: tmp += sorted([ x[1] + "(" + x[2] + ")" for x in sendas ])
+    if groups: tmp += sorted(groups)    
+    print args['delimiter'].join([data.get(x[0],"") for x in fieldmappings] + tmp)
+  else:
+    xml = ElementTree.Element('groups')
+    xmlgroup = ElementTree.SubElement(xml, "group", **data)
+    for send in sendas:
+      ElementTree.SubElement(xmlgroup, 'sendas', username=send[1], fullname=send[2])   
+    for user in users:
+      ElementTree.SubElement(xmlgroup, 'user', username=user[0], fullname=user[1])
+    return xml
 
 # Start program
 if __name__ == "__main__":
