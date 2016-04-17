@@ -295,7 +295,7 @@ def zarafa_user(username):
   if err: raise IOError(err)
   sendas = [ str(x).split("\t") for x in str(out).split("\n")[3:] if x ]
 
-  print_table(groups,2)
+  print_table(sorted(groups),2)
 
   sys.exit(0)
 
