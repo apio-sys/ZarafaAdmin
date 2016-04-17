@@ -196,12 +196,43 @@ def zarafa_groups(groups):
       xmluser = ElementTree.SubElement(xml, "group", groupname = group)
     return xml
 
+def zarafa_group(groupname):
+  global args, ldapmapping
+  command = '/usr/sbin/zarafa-admin --type group --details ' + str(groupname)
+
+  p = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+  out, err = p.communicate()
+  if err: raise IOError(err)
+
+  data = str(out).split("\n")
+  users = []
+  props = []
+  for i in range(len(data))[::-1]:
+      if not data[i]: 
+          del data[i]
+      else:
+          if data[i][:7] == "Users (":
+              users = data[i:]
+              del data[i:]
+          elif data[i] == "Mapped properties:":
+              props = data[i:]
+              del data[i:]
+  del users[0:3]
+  users = [(str(str(x).split('\t')[1]).lower(), ''.join(str(x).split('\t')[2:])) for x in users]
+
+  del props[0]
+  props = [(str(str(x).split('\t')[1]).lower(), ''.join(str(x).split('\t')[2:])) for x in props]
+  props = { x[0]:x[1] for x in props }
+
+  data = [ ( str(str(x).split('\t')[0]).lower().replace(" ","").replace(":",""), ''.join(str(x).split('\t')[1:]) ) for x in data ]
+  data = { x[0]:x[1] for x in data }
+  data.update(props)
+
+  data["groupname"] = data.get("groupname","").lower()
+  data["emailaddress"] = data.get("emailaddress","").lower()
 
 
-
-
-
-
+  print data
 
 
 
