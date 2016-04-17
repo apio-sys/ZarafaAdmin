@@ -171,16 +171,11 @@ def get_data():
     out = f.read().split('\n')
     f.close()
 
-  print out
-
   # Apply groupname filter
-  for c in reversed(range(len(out))):
-    if out[c]:
-      if args['group']:
-        if not fnmatch.fnmatch(out[c].lower(), args['group'].lower()): continue
-    out.pop(c)
-
-  print out
+  if args['group']:  
+    for c in reversed(range(len(out))):
+      if out[c] and not fnmatch.fnmatch(out[c].lower(), args['group'].lower()): continue
+      out.pop(c)
 
   return out
 
@@ -216,9 +211,6 @@ if __name__ == "__main__":
     exitcode = 0
   # try:
     groups = get_data()
-
-    print groups
-
     if len(groups) == 1:
       xmldata = zarafa_group(groups[0])
     else:
