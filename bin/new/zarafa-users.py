@@ -322,23 +322,20 @@ def zarafa_user(username):
     if groups:
       tmp.append("Groups")
       for i in range(1,len(groups)): tmp.append('')
-
-    print [ f[1] for f in (fieldmappings + quotafieldmappings) ] + tmp
-    # print args['delimiter'].join([ f[1] for f in (fieldmappings + quotafieldmappings) ] + tmp)
+    print args['delimiter'].join([ f[1] for f in (fieldmappings + quotafieldmappings) ] + tmp)
 
     tmp = []
     if sendas: tmp += sorted([ x[1] + "(" + x[2] + ")" for x in sendas ])
     if groups: tmp += sorted(groups)
-    print [ data.get(f[0],"") for f in (fieldmappings + quotafieldmappings ) ] + tmp
-    # print args['delimiter'].join([ data.get(f[0],"") for f in (fieldmappings + quotafieldmappings ) ] + tmp )
+    print args['delimiter'].join([ data.get(f[0],"") for f in (fieldmappings + quotafieldmappings ) ] + tmp )
     sys.exit(0)
 
   else:
-    xml = ElementTree.Element('users')
-    xmluser = ElementTree.SubElement(xml, 'user', **data)
-    memberof = ElementTree.SubElement(xmluser, 'groups')
+    xml = ElementTree.SubElement(xml, 'user', **data)
+    for send in sendas:
+      ElementTree.SubElement(xml, 'sendas', username = send[1], fullname = send[2])
     for group in groups:
-        ElementTree.SubElement(memberof, 'group', groupname = group)
+      ElementTree.SubElement(xml, 'group', groupname = group)
   return xml
 
 # Start program
