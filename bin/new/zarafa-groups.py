@@ -22,51 +22,11 @@ args['delimiter'] = ""
 version = 0.3
 encoding = 'utf-8'
 
+fieldmappings = (("groupname","Group Name"),("fullname","Fullname"),
+                 ("emailaddress","Email Address"),("addressbook","Address Book"))
 
-ldapmapping = (("pr_ec_enabled_features","0x67b3101e"),("pr_ec_disabled_features","0x67b4101e"),
-               ("pr_ec_archive_servers","0x67c4101e"),("pr_ec_archive_couplings","0x67c5101e"),
-               ("pr_ec_exchange_dn","0x678001e"),("pr_business_telephone_number","0x3a08001e"),
-               ("pr_business2_telephone_number","0x3a1b101e"),("pr_business_fax_number","0x3a24001e"),
-               ("pr_mobile_telephone_number","0x3a1c001e"),("pr_home_telephone_number","0x3a09001e"),
-               ("pr_home2_telephone_number","0x3a2f101e"),("pr_primary_fax_number","0x3a23001e"),
-               ("pr_pager_telephone_number","0x3a21001e"),("pr_comment","0x3004001e"),
-               ("pr_department_name","0x3a18001e"),("pr_office_location","0x3a19001e"),
-               ("pr_given_name","0x3a06001e"),("pr_surname","0x3a11001e"),
-               ("pr_childrens_names","0x3a58101e"),("pr_business_ddress_city","0x3a27001e"),
-               ("pr_title","0x3a17001e"),("pr_user_certificate","0x3a220102"),("pr_initials","0x3a0a001e"),
-               ("pr_language","0x3a0c001e"),("pr_organizational_id_number","0x3a10001e"),
-               ("pr_postal_address","0x3a15001e"),("pr_company_name","0x3a16001e"),
-               ("pr_country","0x3a26001e"),("pr_state_or_province","0x3a28001e"),("pr_street_address","0x3a29001e"),
-               ("pr_postal_code","0x3a2a001e"),("pr_post_office_box","0x3a2b001e"),
-               ("pr_assistant","0x3a30001e"),("pr_ems_ab_www_home_page","0x8175101e"),
-               ("pr_business_home_page","0x3a51001e"),("pr_ems_ab_is_member_of_dl","0x80081102"),
-               ("pr_ems_ab_reports","0x800e1102"),("pr_manager_name","0x8005001e"),("pr_ems_ab_owner","0x800c001e"))
+ldapfieldmappings = (("pr_ec_enabled_features","Enabled Features"),("pr_ec_disabled_features","Disabled Features"))
 
-fieldmappings = (("username","Username"),("fullname","Fullname"),("emailaddress","Email Address"),
-                 ("active","Active"),("administrator","Administrator"),("addressbook","Address Book"),
-                 ("autoacceptmeetingreq","Auto-Accept Meeting Req"),("lastlogon","Last Logon"),("lastlogoff","Last Logoff"))
-
-ldapfieldmappings = (("pr_given_name","Given Name"),("pr_initials","Initials"),("pr_surname","Surname"),
-                     ("pr_company_name","Company Name"),("pr_title","Title"),("pr_department_name","Department Name"),
-                     ("pr_office_location","Office Location"),("pr_business_telephone_number","Business Telephone Number"),
-                     ("pr_business2_telephone_number","Business 2 Telephone Number"),("pr_home_telephone_number","Home Telephone Number"),
-                     ("pr_home2_telephone_number","Home 2 Telephone Number"),("pr_pager_telephone_number","Pager Telephone Number"),
-                     ("pr_primary_fax_number","Primary Fax Number"),("pr_business_fax_number","Business Fax Number"),
-                     ("pr_country","Country"),("pr_state_or_province","State or Province"),
-                     ("pr_ems_ab_is_member_of_dl","Distribution Lists"),("pr_ec_enabled_features","Enabled Features"),
-                     ("pr_ec_disabled_features","Disabled Features"),("pr_assistant","Assistant"),
-                     ("pr_business_address_city","Business Address City"),("pr_business_home_page","Business Homepage"),
-                     ("pr_childrens_names","Children's Names"),("pr_comment","Comment"),("pr_ec_exchange_dn","Exchange DN"),
-                     ("pr_ems_ab_owner","Distribution List Owner"),("pr_ems_ab_reports","Reports"),
-                     ("pr_ems_ab_www_home_page","Homepage"),("pr_language","Language"),
-                     ("pr_manager_name","Manager"),("pr_mobile_telephone_number","Mobile Telephone Number"),
-                     ("pr_organizational_id_number","Organizational ID Number"),("pr_post_office_box","Post Office Box"),
-                     ("pr_postal_address","Postal Address"),("pr_postal_code","Postal Code"),
-                     ("pr_street_address","Street Address"),("pr_user_certificate","User Certificate"))
-
-quotafieldmappings = (("quotaoverrides"," Quota overrides"),("warninglevel"," Warning level (MB)"),
-                      ("softlevel"," Soft level (MB)"),("hardlevel"," Hard level (MB)"),
-                      ("currentstoresize","Current store size (MB)"))
 
 class customUsageVersion(argparse.Action):
   def __init__(self, option_strings, dest, **kwargs):
@@ -230,9 +190,23 @@ def zarafa_group(groupname):
   data["groupname"] = data.get("groupname","").lower()
   data["emailaddress"] = data.get("emailaddress","").lower()
 
-  print data
-  print users
+  command = '/usr/sbin/zarafa-admin --type group --list-sendas ' + str(groupname)
 
+  p = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+  out, err = p.communicate()
+  if err: raise IOError(err)
+  sendas = [ str(x).split("\t") for x in str(out).split("\n")[3:] if x ]
+
+  if args['output'] == "text":
+    if not args['delimiter']: args['delimiter'] = "\t" 
+    width = 20   
+    for key, text in fieldmappings:
+      print text.ljust(width), data.get(key,'')
+    print "Mapped properties:"
+    for key, text in ldapfieldmappings:
+      print text.ljust(width), data.get(key,'')
+    print "Users (" + str(len(users)) + "):"
+    print users
 
 
 # Start program
