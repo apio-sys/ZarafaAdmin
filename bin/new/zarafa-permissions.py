@@ -132,7 +132,7 @@ def get_data():
         delegate = out[c:]
         del out[c:]
       else:
-      out.pop(c)
+        out.pop(c)
 
   print delegate
   print SendMeetingRequest
