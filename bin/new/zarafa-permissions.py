@@ -134,12 +134,16 @@ def get_data():
     else:
       out.pop(c)
 
+  delegate = delegate[3:-1]
+
+
+
   print delegate
-  print SendMeetingRequest
-  print permissions
+  # print SendMeetingRequest
+  # print permissions
 
 
-  print out
+  # print out
 
 
 
