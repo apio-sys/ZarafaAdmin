@@ -131,8 +131,8 @@ def get_data():
       elif out[c] == "Delegate information:":
         delegate = out[c:]
         del out[c:]
-      else:
-        out.pop(c)
+    else:
+      out.pop(c)
 
   print delegate
   print SendMeetingRequest
