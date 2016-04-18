@@ -134,7 +134,7 @@ def get_data():
     else:
       out.pop(c)
 
-  delegate = delegate[3:-1]
+  delegate = delegate[4:-1]
 
 
 
