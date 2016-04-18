@@ -117,12 +117,29 @@ def get_data():
 
   out = out.split("\n")
 
+  permissions = []
+  SendMeetingRequest = ""
+  delegate = []
   for c in reversed(range(len(out))):
-    print out[c]
+    if out[c]:
+      if out[c] == "Folder permissions:":
+        permissions = out[c:]
+        del out[c:]
+      elif out[c][:83] == "Send meeting requests and response only to the delegator, not to the mailbox owner.":
+        SendMeetingRequest = out[c]
+        out.pop(c)
+      elif out[c] == "Delegate information:":
+        delegate = out[c:]
+        del out[c:]
+      else:
+      out.pop(c)
+
+  print delegate
+  print SendMeetingRequest
+  print permissions
 
 
-
-  # print out
+  print out
 
 
 
