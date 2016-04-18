@@ -135,12 +135,12 @@ def get_data():
       out.pop(c)
 
   delegate = delegate[4:-1]
+  permissions = permissions[4:-1]
 
 
-
-  print delegate
-  # print SendMeetingRequest
-  # print permissions
+  print "\n".join(delegate)
+  print SendMeetingRequest
+  print "\n".join(permissions)
 
 
   # print out
