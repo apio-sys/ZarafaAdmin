@@ -115,7 +115,32 @@ def get_data():
     out, err = p.communicate()
     if err: raise IOError(err)
 
-    print out
+  out = out.split("\n")
+
+  for c in reversed(range(len(out))):
+    print out[c]
+
+
+
+  # print out
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   #   out = out.strip().split('\n')[3:]
   #   for c in reversed(range(len(out))):
