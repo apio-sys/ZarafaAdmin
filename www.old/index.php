@@ -17,26 +17,28 @@
 			<tr>
 				<td class="ColumnHead" nowrap="nowrap" align="left">&nbsp;&nbsp;Commands</td>
  				<td class="ColumnHead" nowrap="nowrap" align="right">&nbsp;Logged in as <?=strtolower( $_SERVER['PHP_AUTH_USER'] )?>&nbsp;
-				<a href="https://logout:logout@<?=$_SERVER['HTTP_HOST']?>/">Logout</a>&nbsp;</td>
+				<a href="https://logout:logout@zarafadmin/admin/">Logout</a>&nbsp;</td>
 			</tr>
 			<tr>
 				<td class="Commands">
 					<p></p>
-					<p>&nbsp;Zarafa Management
+					<p>&nbsp;Zarafa Statistics
+					<ul>
+						<li><a href="./zarafa-stats.php?cmd=users" target="cmdiframe">Zarafa Users</a></li>
+						<li><a href="./zarafa-stats.php?cmd=system" target="cmdiframe">Zarafa System</a></li>
+						<li><a href="./zarafa-stats.php?cmd=session" target="cmdiframe">Zarafa Session</a></li>
+					</ul></p>
+					<p><a href="./zarafa-logins.php" target="cmdiframe">&nbsp;Zarafa Login Errors</a></p>
+					<p>&nbsp;Zarafa Objects
 					<ul>
 						<li><a href="./zarafa-users.php" target="cmdiframe">Zarafa Users</a></li>
 						<li><a href="./zarafa-groups.php" target="cmdiframe">Zarafa Groups</a></li>
-						<li><a href="./zarafa-mdm.php" target="cmdiframe">Zarafa Devices</a></li>						
-						<li><a href="./zarafa-system.php" target="cmdiframe">Zarafa System</a></li>
-						<li><a href="./zarafa-session.php" target="cmdiframe">Zarafa Session</a></li>
+						<li><a href="./z-push-details.php" target="cmdiframe">Z-Push Devices</a></li>
 					</ul></p>
-					<p>&nbsp;Zarafa Logs
-					<ul>
-						<li><a href="./zarafa-logins.php" target="cmdiframe">Login Errors</a></li>
-						<li><a href="./zarafa-errors.php" target="cmdiframe">System Errors</a></li>
-						<li><a href="./zarafa-errors.php" target="cmdiframe">MySQL Errors</a></li>	
-					</ul></p>
-				</td>
+					<p><a href="./zarafa-caldav.php" target="cmdiframe">&nbsp;Zarafa CalDAV</a></p>
+					<p><a href="./imapfolders.php" target="cmdiframe">&nbsp;IMAP Folder Migration</a></p>
+					<p><a href="./email-frame.html" target="cmdiframe">&nbsp;Email Address Compare</a></p>
+					</td>
 				<td class="Results">
 					<iframe class="iFrameResult" src="blank.html" name="cmdiframe">Browser not compatible.</iframe>
 				</td>

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Python wrapper for zarafa-admin --type group --details group
+Python wrapper for zarafa-stats --session
 """
 import argparse, textwrap, fnmatch, datetime
 import xml.etree.cElementTree as ElementTree
@@ -16,17 +16,13 @@ sys.path.pop()
 args = {}
 args['cache'] = 15
 args['output'] = 'text'
-args['group'] = ''
+args['user'] = ''
 args['delimiter'] = ""
 
 version = 0.3
 encoding = 'utf-8'
 
-fieldmappings = (("groupname","Group Name"),("fullname","Fullname"),
-                 ("emailaddress","Email Address"),("addressbook","Address Book"))
-
-ldapfieldmappings = (("pr_ec_enabled_features","Enabled Features"),("pr_ec_disabled_features","Disabled Features"))
-
+headers = ['UNK0x67420014','UNK0x674D0014','ip','UNK0x67440003','UNK0x67450003','UNK0x6746000B','username','UNK0x6747101E','UNK0x6749101E','UNK0x674A0005','UNK0x674B0005','UNK0x674C0005','UNK0x674E0003','version','program','UNK0x67510003','UNK0x67480003','UNK0x6753001E','pipe']
 
 class customUsageVersion(argparse.Action):
   def __init__(self, option_strings, dest, **kwargs):
@@ -54,7 +50,7 @@ class customUsageVersion(argparse.Action):
       print "\nWritten by Bob Brandt <projects@brandt.ie>."
     else:
       print "Usage: " + self.__prog + " [options] [username]"
-      print "Script used to find details about Zarafa user perissions.\n"
+      print "Script used to find details about Zarafa user sessions.\n"
       print "Options:"
       options = []
       options.append(("-h, --help",              "Show this help message and exit"))
@@ -89,19 +85,19 @@ def command_line_args():
           default=args['output'],
           choices=['text', 'csv', 'xml'],
           help="Display output type.")
-  parser.add_argument('group',
+  parser.add_argument('user',
           nargs='?',
-          default= args['group'],
+          default= args['user'],
           action='store',
-          help="Group to retrieve details about.")
+          help="User to retrieve details about.")
   args.update(vars(parser.parse_args()))
   if args['delimiter']: args['delimiter'] = args['delimiter'][0]
   if not args['delimiter'] and args['output'] == "csv": args['delimiter'] = ","
 
 def get_data():
   global args
-  command = 'zarafa-mailbox-permissions --list-permissions-per-folder brandtb'
-  cachefile = '/tmp/zarafa-mailbox-permissions.cache'    
+  command = '/usr/bin/zarafa-stats --session --dump'
+  cachefile = '/tmp/zarafa-session.cache'    
 
   args['cache'] *= 60
   age = args['cache'] + 1
@@ -115,114 +111,82 @@ def get_data():
     out, err = p.communicate()
     if err: raise IOError(err)
 
-  out = out.split("\n")
-
-  permissions = []
-  SendMeetingRequest = ""
-  delegate = []
-  for c in reversed(range(len(out))):
-    if out[c]:
-      if out[c] == "Folder permissions:":
-        permissions = out[c:]
-        del out[c:]
-      elif out[c][:83] == "Send meeting requests and response only to the delegator, not to the mailbox owner.":
-        SendMeetingRequest = out[c]
-        out.pop(c)
-      elif out[c] == "Delegate information:":
-        delegate = out[c:]
-        del out[c:]
-    else:
+    out = out.strip().split('\n')[1:]
+    for c in reversed(range(len(out))):
+      if out[c]:
+        tmp = out[c].split(";")
+        if headers.index("username") < len(tmp):
+          if tmp[headers.index("username")] != "SYSTEM": continue
       out.pop(c)
 
-  delegate = delegate[4:-1]
-  permissions = permissions[4:-1]
+    f = open(cachefile, 'w')
+    f.write("\n".join(out))
+    f.close()
+  else:
+    f = open(cachefile, 'r')
+    out = f.read().split('\n')
+    f.close()
 
-
-  print "\n".join(delegate)
-  print SendMeetingRequest
-  print "\n".join(permissions)
-
-
-  # print out
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  #   out = out.strip().split('\n')[3:]
-  #   for c in reversed(range(len(out))):
-  #     if out[c]:
-  #       out[c] = out[c].strip()
-  #       if out[c] != "Everyone": continue
-  #     out.pop(c)
-  #   out = sorted(out, key=lambda s: s.lower())
-
-  #   f = open(cachefile, 'w')
-  #   f.write("\n".join(out))
-  #   f.close()
-  # else:
-  #   f = open(cachefile, 'r')
-  #   out = f.read().split('\n')
-  #   f.close()
-
-  # # Apply groupname filter
-  # if args['group']:  
-  #   for c in reversed(range(len(out))):
-  #     if out[c] and fnmatch.fnmatch(out[c].lower(), args['group'].lower()): continue
-  #     out.pop(c)
+  # Apply username filter
+  if args['user']:
+    for c in reversed(range(len(out))):
+      if out[c]:
+        tmp = out[c].split(";")
+        if not fnmatch.fnmatch(tmp[headers.index("username")].lower(), args['user'].lower()): out.pop(c)
+      else:
+        out.pop(c)
 
   return out
 
+def zarafa_sessions(sessions):
+  global args
 
+  if args['output'] != 'xml':
+    if not args['delimiter']: args['delimiter'] = "\t"    
+    print args['delimiter'].join(headers)
+    print "\n".join( [ session.replace(";",args['delimiter']) for session in sessions ] )
+    sys.exit(0)
 
+  xml = ElementTree.Element('sessions')
+  today = datetime.datetime.today()
+  for session in sessions:
+    tmp = session.split(';')
+    attribs = {}
+    for i in range(len(tmp)):
+      if tmp[i]:
+        attribs[headers[i]] = tmp[i]
+    xmlsession = ElementTree.SubElement(xml, "session", **attribs)
 
+  return xml
 
 
 # Start program
 if __name__ == "__main__":
-    command_line_args()
+  command_line_args()
 
-    exitcode = 0
-  # try:
-    permissions = get_data()
-    # if len(groups) == 1:
-    #   xmldata = zarafa_group(groups[0])
-    # else:
-    #   xmldata = zarafa_groups(groups)
+  exitcode = 0
+  try:
+    xmldata = zarafa_sessions(get_data())
 
-    # if args['output'] == 'xml': 
-    #   xml = ElementTree.Element('zarafaadmin')
-    #   xml.append(xmldata)
-    #   print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
+    if args['output'] == 'xml': 
+      xml = ElementTree.Element('zarafaadmin')
+      xml.append(xmldata)
+      print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
 
-  # except ( Exception, SystemExit ) as err:
-  #   try:
-  #     exitcode = int(err[0])
-  #     errmsg = str(" ".join(err[1:]))
-  #   except:
-  #     exitcode = -1
-  #     errmsg = str(" ".join(err))
+  except ( Exception, SystemExit ) as err:
+    try:
+      exitcode = int(err[0])
+      errmsg = str(" ".join(err[1:]))
+    except:
+      exitcode = -1
+      errmsg = str(" ".join(err))
 
-  #   if args['output'] != 'xml': 
-  #     if exitcode != 0: sys.stderr.write( str(err) +'\n' )
-  #   else:
-  #     xml = ElementTree.Element('zarafaadmin')      
-  #     xmldata = ElementTree.SubElement(xml, 'error', errorcode = str(exitcode) )
-  #     xmldata.text = errmsg
-  #     print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
+    if args['output'] != 'xml': 
+      if exitcode != 0: sys.stderr.write( str(err) +'\n' )
+    else:
+      xml = ElementTree.Element('zarafaadmin')      
+      xmldata = ElementTree.SubElement(xml, 'error', errorcode = str(exitcode) )
+      xmldata.text = errmsg
+      print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
 
-  # sys.exit(exitcode)
+  sys.exit(exitcode)
