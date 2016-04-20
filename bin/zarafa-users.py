@@ -41,7 +41,10 @@ ldapmapping = (("pr_ec_enabled_features","0x67b3101e"),("pr_ec_disabled_features
                ("pr_postal_code","0x3a2a001e"),("pr_post_office_box","0x3a2b001e"),
                ("pr_assistant","0x3a30001e"),("pr_ems_ab_www_home_page","0x8175101e"),
                ("pr_business_home_page","0x3a51001e"),("pr_ems_ab_is_member_of_dl","0x80081102"),
-               ("pr_ems_ab_reports","0x800e1102"),("pr_manager_name","0x8005001e"),("pr_ems_ab_owner","0x800c001e"))
+               ("pr_ems_ab_reports","0x800e1102"),("pr_manager_name","0x8005001e"),
+               ("pr_ems_ab_owner","0x800c001e"),("size","currentstoresize"),
+               ("quotahard","hardlevel"),("quotasoft","softlevel"),("quotawarn","warninglevel"))
+
 
 fieldmappings = (("username","Username"),("fullname","Fullname"),("emailaddress","Email Address"),
                  ("active","Active"),("administrator","Administrator"),("addressbook","Address Book"),
