@@ -35,59 +35,34 @@ header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
-$user = "";
-if (isset($_GET['user']))    $user = $_GET['user'];
-if (isset($_POST['user']))   $user = $_POST['user'];
+$sort = "";
+if (isset($_GET['sort']))    $sort = $_GET['sort'];
+if (isset($_POST['sort']))   $sort = $_POST['sort'];
 
 echo '<html><head>';
 echo '<meta http-equiv="content-type" content="text/html; charset=UTF-8">';
 echo '<meta http-equiv="Content-Type" charset="utf-8">';
 echo '<link rel="stylesheet" href="zarafaadmin.css">';
-echo '<title>Zarafa User Details</title>';
+echo '<title>Zarafa Users Result Page</title>';
 echo '</head><body>';
 
-echo '<form method="get">';
-echo '<table align="center" valign="middle" id="entry">';
-echo '<tr class="entry">';
-echo '<th class="entry">Username</th>';
-echo '<td class="entry"><input type="text" name="user" value="',$user,'"/></td>';
-echo '<td class="entry"><input type="submit" name="submit" value="Filter Names"/></td>';
-echo '</tr>';
-echo '</table>';
-echo '<p align="center"><sub>Note: Use LDAP Search format (i.e. bra*)</sub></p>';
-echo '</form>';
+// XML
+$output = shell_exec("sudo /opt/brandt/ZarafaAdmin/bin/zarafa-users.py --output xml");
+$outputxml = new DOMDocument();
+$outputxml->loadXML( $output );
 
-if ( $user !== "")  {
-	// User XML
-	$output = shell_exec("sudo /opt/brandt/ZarafaAdmin/bin/zarafa-users.py --output xml '$user'");
-	$outputxml = new DOMDocument();
-	$outputxml->loadXML( $output );
+// XSL
+$xsl = new DOMDocument();
+$xsl->load('zarafa-users.xslt');
 
-	// Device XML
-	$devices = shell_exec("sudo /opt/opw/z-push-details.py --output xml --list -u '$user'");
-	$devicesxml = new DOMDocument();
-	$devicesxml->loadXML( $devices );
+// Proc
+$proc = new XSLTProcessor();
+$proc->importStylesheet($xsl);
+if ( $sort !== "" ) $proc->setParameter( '', 'sort', $sort);    
 
-	// User XSL 
-	$xsl = new DOMDocument();
-    $xsl->load('zarafa-users.xslt');
+$output = $proc->transformToDoc($outputxml)->saveXML();
 
-	// Device XSL 
-	$devicexsl = new DOMDocument();
-    $devicexsl->load('zarafa-users-devices.xslt');
-		
-	// Proc
-	$proc = new XSLTProcessor();
-	$proc->importStylesheet($xsl);
-	$output = $proc->transformToDoc($outputxml)->saveXML(); 
-	echo '<div id="zarafa-users-div"><pre>';
-	echo "$output";
-
-	$proc->importStylesheet($devicexsl);
-	$proc->setParameter( '', 'sort', 'sync');
-	$output = $proc->transformToDoc($devicesxml)->saveXML(); 
-	echo "$output</pre></div>";
-}
+echo "<pre>$output</pre>";
 
 echo '</body></html>';
 ?>
