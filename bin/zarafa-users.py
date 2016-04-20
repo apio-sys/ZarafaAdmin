@@ -261,10 +261,10 @@ def zarafa_user(username):
 
   data["username"] = data.get("username","").lower()
   data["emailaddress"] = data.get("emailaddress","").lower()
-  if data.has_key("warninglevel"): data["warninglevel"] = int(float(data.get("warninglevel","").split(" ")[0]) * 1024)
-  if data.has_key("softlevel"): data["softlevel"] = int(float(data.get("softlevel","").split(" ")[0]) * 1024)
-  if data.has_key("hardlevel"): data["hardlevel"] = int(float(data.get("hardlevel","").split(" ")[0]) * 1024)
-  if data.has_key("currentstoresize"): data["currentstoresize"] = int(float(data.get("currentstoresize","").split(" ")[0]) * 1024)
+  if data.has_key("warninglevel"): data["warninglevel"] = "{:.0f}".format(float(data.get("warninglevel","").split(" ")[0]) * 1024)
+  if data.has_key("softlevel"): data["softlevel"] = "{:.0f}".format(float(data.get("softlevel","").split(" ")[0]) * 1024)
+  if data.has_key("hardlevel"): data["hardlevel"] = "{:.0f}".format(float(data.get("hardlevel","").split(" ")[0]) * 1024)
+  if data.has_key("currentstoresize"): data["currentstoresize"] = "{:.0f}".format(float(data.get("currentstoresize","").split(" ")[0]) * 1024)
   logon = None
   if data.has_key("lastlogon"):
     logon = datetime.datetime.strptime(data.get("lastlogon").decode('unicode_escape'),'%m/%d/%y %H:%M:%S')
