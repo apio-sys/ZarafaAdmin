@@ -56,7 +56,7 @@ echo '</script>';
 echo '</head><body>';
 
 // XML
-$output = shell_exec("sudo /opt/opw/zarafa-logins.py --output xml");
+$output = shell_exec("sudo /opt/brandt/ZarafaAdmin/bin/zarafa-logins.py --output xml");
 $outputxml = new DOMDocument();
 $outputxml->loadXML( $output );
 
