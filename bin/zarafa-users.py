@@ -264,7 +264,7 @@ def zarafa_user(username):
   if data.has_key("warninglevel"): data["warninglevel"] = "{:.0f}".format(float(data.get("warninglevel","").split(" ")[0]) * 1024)
   if data.has_key("softlevel"): data["softlevel"] = "{:.0f}".format(float(data.get("softlevel","").split(" ")[0]) * 1024)
   if data.has_key("hardlevel"): data["hardlevel"] = "{:.0f}".format(float(data.get("hardlevel","").split(" ")[0]) * 1024)
-  if data.has_key("currentstoresize"): data["currentstoresize"] = "{:.0f}".format(float(data.get("currentstoresize","").split(" ")[0]) * 1024)
+  if data.has_key("currentstoresize"): data["currentstoresize"] = "{:.0f}".format(float(data.get("currentstoresize","").split(" ")[0]) * 1048576)
   logon = None
   if data.has_key("lastlogon"):
     logon = datetime.datetime.strptime(data.get("lastlogon").decode('unicode_escape'),'%m/%d/%y %H:%M:%S')
