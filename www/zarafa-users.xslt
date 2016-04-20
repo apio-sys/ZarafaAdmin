@@ -80,29 +80,29 @@
 
 <xsl:template match="user">
   <tr class="hover">
-  <td><a href="./zarafa-users.php?user={username}"><xsl:value-of select="username"/></a></td>
-  <td><xsl:value-of select="fullname"/></td>
-  <td><xsl:value-of select="emailaddress"/></td>
-  <td class="quota"><xsl:value-of select="format-number(quotawarn div 1024,'###,###,##0')"/></td>
-  <td class="quota"><xsl:value-of select="format-number(quotasoft div 1024,'###,###,##0')"/></td>
-  <td class="quota"><xsl:value-of select="format-number(quotahard div 1024,'###,###,##0')"/></td>
+  <td><a href="./zarafa-users.php?user={@username}"><xsl:value-of select="@username"/></a></td>
+  <td><xsl:value-of select="@fullname"/></td>
+  <td><xsl:value-of select="@emailaddress"/></td>
+  <td class="quota"><xsl:value-of select="format-number(@quotawarn div 1024,'###,###,##0')"/></td>
+  <td class="quota"><xsl:value-of select="format-number(@quotasoft div 1024,'###,###,##0')"/></td>
+  <td class="quota"><xsl:value-of select="format-number(@quotahard div 1024,'###,###,##0')"/></td>
 
   <td>
   <xsl:choose>
-  <xsl:when test="number(size div 1024) &gt;= number(quotahard)">
+  <xsl:when test="number(@size div 1024) &gt;= number(@quotahard)">
   <xsl:attribute name="class">hard</xsl:attribute>
   </xsl:when>
-  <xsl:when test="number(size div 1024) &gt;= number(quotasoft)">
+  <xsl:when test="number(@size div 1024) &gt;= number(@quotasoft)">
   <xsl:attribute name="class">soft</xsl:attribute>
   </xsl:when>
-  <xsl:when test="number(size div 1024) &gt;= number(quotawarn)">
+  <xsl:when test="number(@size div 1024) &gt;= number(@quotawarn)">
   <xsl:attribute name="class">warn</xsl:attribute>
   </xsl:when>
   <xsl:otherwise>
   <xsl:attribute name="class">size</xsl:attribute>
   </xsl:otherwise>
   </xsl:choose>
-  <xsl:value-of select="format-number(size div 1048576,'###,###,##0.00')"/></td>
+  <xsl:value-of select="format-number(@size div 1048576,'###,###,##0.00')"/></td>
 
   <td>
   <xsl:choose>
