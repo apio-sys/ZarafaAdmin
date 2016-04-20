@@ -37,7 +37,7 @@ if (isset($_POST['sort']))   $sort = $_POST['sort'];
 echo '<html><head>';
 echo '<meta http-equiv="content-type" content="text/html; charset=UTF-8">';
 echo '<meta http-equiv="Content-Type" charset="utf-8">';
-echo '<link rel="stylesheet" href="zarafa-logins.css">';
+echo '<link rel="stylesheet" href="zarafaadmin.css">';
 echo '<title>Zarafa Login Errors Result Page</title>';
 echo '<script>';
 echo 'function toggle(obj) {';
