@@ -8,14 +8,14 @@
     <xsl:when test="count(user) &gt; 0"> -->
       <table id="zarafa-users">
       <tr>
-          <th><a href="./zarafa-stats.php?sort=username">Username</a></th>
-          <th><a href="./zarafa-stats.php?sort=fullname">Full Name</a></th>
-          <th><a href="./zarafa-stats.php?sort=emailaddress">Email Address</a></th>
-          <th><a href="./zarafa-stats.php?sort=quotawarn">Warning</a></th>
-          <th><a href="./zarafa-stats.php?sort=quotasoft">Soft</a></th>
-          <th><a href="./zarafa-stats.php?sort=quotahard">Hard</a></th>
-          <th><a href="./zarafa-stats.php?sort=size">Size (MB)</a></th>
-          <th><a href="./zarafa-stats.php?sort=logon">Last Logon</a></th>
+          <th><a href="./zarafa-users.php?sort=username">Username</a></th>
+          <th><a href="./zarafa-users.php?sort=fullname">Full Name</a></th>
+          <th><a href="./zarafa-users.php?sort=emailaddress">Email Address</a></th>
+          <th><a href="./zarafa-users.php?sort=quotawarn">Warning</a></th>
+          <th><a href="./zarafa-users.php?sort=quotasoft">Soft</a></th>
+          <th><a href="./zarafa-users.php?sort=quotahard">Hard</a></th>
+          <th><a href="./zarafa-users.php?sort=size">Size (MB)</a></th>
+          <th><a href="./zarafa-users.php?sort=logon">Last Logon</a></th>
       </tr>
       <xsl:choose>
       <xsl:when test="$sort = 'fullname'">
