@@ -178,3 +178,13 @@ a:active {
 
 .hide { display: none; }
 .show { display: table-row; }
+
+
+# Users
+
+#userdetail th { text-align: right; padding: 0px 10px 0px 10px; vertical-align: text-top; }
+#userdetail td { text-align: left;  padding: 0px 10px 0px 10px; }
+#userdetail tr:nth-child(odd) { background: #FFF }
+#userdetail tr:nth-child(even) { background: #DDD }
+#userdetail .center { text-align: center; }
+#userdetail tr.hover:hover { background: #BBB }
