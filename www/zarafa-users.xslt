@@ -113,7 +113,7 @@
   <xsl:attribute name="class">date</xsl:attribute>
   </xsl:otherwise>
   </xsl:choose>
-  <xsl:value-of select="logon"/></td>
+  <xsl:value-of select="logon/@date"/></td>
   </tr>
 </xsl:template>
 

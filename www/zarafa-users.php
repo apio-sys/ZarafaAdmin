@@ -39,6 +39,10 @@ $sort = "";
 if (isset($_GET['sort']))    $sort = $_GET['sort'];
 if (isset($_POST['sort']))   $sort = $_POST['sort'];
 
+$user = "*";
+if (isset($_GET['user']))    $user = $_GET['user'];
+if (isset($_POST['user']))   $user = $_POST['user'];
+
 echo '<html><head>';
 echo '<meta http-equiv="content-type" content="text/html; charset=UTF-8">';
 echo '<meta http-equiv="Content-Type" charset="utf-8">';
@@ -47,7 +51,7 @@ echo '<title>Zarafa Users Result Page</title>';
 echo '</head><body>';
 
 // XML
-$output = shell_exec("sudo /opt/brandt/ZarafaAdmin/bin/zarafa-users.py --output xml");
+$output = shell_exec("sudo /opt/brandt/ZarafaAdmin/bin/zarafa-users.py --output xml '$user'");
 $outputxml = new DOMDocument();
 $outputxml->loadXML( $output );
 
