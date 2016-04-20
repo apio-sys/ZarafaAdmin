@@ -19,28 +19,28 @@
       </tr>
       <xsl:choose>
       <xsl:when test="$sort = 'fullname'">
-          <xsl:apply-templates select="user"><xsl:sort select="translate(fullname, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" /></xsl:apply-templates>
+          <xsl:apply-templates select="user"><xsl:sort select="translate(@fullname, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" /></xsl:apply-templates>
       </xsl:when>
       <xsl:when test="$sort = 'emailaddress'">
-          <xsl:apply-templates select="user"><xsl:sort select="translate(emailaddress, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" /></xsl:apply-templates>
+          <xsl:apply-templates select="user"><xsl:sort select="translate(@emailaddress, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" /></xsl:apply-templates>
       </xsl:when>
       <xsl:when test="$sort = 'quotawarn'">
-          <xsl:apply-templates select="user"><xsl:sort select="quotawarn" order="descending" data-type="number"/></xsl:apply-templates>
+          <xsl:apply-templates select="user"><xsl:sort select="@quotawarn" order="descending" data-type="number"/></xsl:apply-templates>
       </xsl:when>
       <xsl:when test="$sort = 'quotasoft'">
-          <xsl:apply-templates select="user"><xsl:sort select="quotasoft" order="descending" data-type="number"/></xsl:apply-templates>
+          <xsl:apply-templates select="user"><xsl:sort select="@quotasoft" order="descending" data-type="number"/></xsl:apply-templates>
       </xsl:when>
       <xsl:when test="$sort = 'quotahard'">
-          <xsl:apply-templates select="user"><xsl:sort select="quotahard" order="descending" data-type="number"/></xsl:apply-templates>
+          <xsl:apply-templates select="user"><xsl:sort select="@quotahard" order="descending" data-type="number"/></xsl:apply-templates>
       </xsl:when>
       <xsl:when test="$sort = 'size'">
-          <xsl:apply-templates select="user"><xsl:sort select="size" order="descending" data-type="number"/></xsl:apply-templates>
+          <xsl:apply-templates select="user"><xsl:sort select="@size" order="descending" data-type="number"/></xsl:apply-templates>
       </xsl:when>
       <xsl:when test="$sort = 'logon'">
           <xsl:apply-templates select="user"><xsl:sort select="logon/@lag" order="descending" data-type="number"/></xsl:apply-templates>
       </xsl:when>
       <xsl:otherwise>
-          <xsl:apply-templates select="user"><xsl:sort select="translate(username, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" /></xsl:apply-templates>
+          <xsl:apply-templates select="user"><xsl:sort select="translate(@username, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" /></xsl:apply-templates>
       </xsl:otherwise>
       </xsl:choose>
       </table>
