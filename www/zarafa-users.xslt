@@ -3,6 +3,7 @@
 <xsl:param name="sort" select="'username'"/>
 
 <xsl:template match="/zarafaadmin/users">
+  Hello
   <xsl:choose>
     <xsl:when test="count(user) &gt; 0">
       <table id="zarafa-users">
@@ -44,9 +45,8 @@
       </xsl:choose>
       </table>
     </xsl:when>
+
     <xsl:otherwise>
-
-
       <table id="zarafa-user">
       <tr><th colspan="4" class="center">User Detail for <xsl:value-of select="user/@username"/></th></tr>
       <tr><th colspan="2" class="center">Zarafa Details</th><th colspan="2" class="center">LDAP Details</th></tr>
@@ -74,52 +74,47 @@
       </td></tr>
       </table>
 
-
-
-
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
 
-  <xsl:template match="user">
-    <xsl:if test="boolean(username) and not(username='SYSTEM')">
-    <tr class="hover">
-    <td><a href="./zarafa-users.php?user={username}"><xsl:value-of select="username"/></a></td>
-    <td><xsl:value-of select="fullname"/></td>
-    <td><xsl:value-of select="emailaddress"/></td>
-    <td class="quota"><xsl:value-of select="format-number(quotawarn div 1024,'###,###,##0')"/></td>
-    <td class="quota"><xsl:value-of select="format-number(quotasoft div 1024,'###,###,##0')"/></td>
-    <td class="quota"><xsl:value-of select="format-number(quotahard div 1024,'###,###,##0')"/></td>
+<xsl:template match="user">
+  <tr class="hover">
+  <td><a href="./zarafa-users.php?user={username}"><xsl:value-of select="username"/></a></td>
+  <td><xsl:value-of select="fullname"/></td>
+  <td><xsl:value-of select="emailaddress"/></td>
+  <td class="quota"><xsl:value-of select="format-number(quotawarn div 1024,'###,###,##0')"/></td>
+  <td class="quota"><xsl:value-of select="format-number(quotasoft div 1024,'###,###,##0')"/></td>
+  <td class="quota"><xsl:value-of select="format-number(quotahard div 1024,'###,###,##0')"/></td>
 
-    <td>
-    <xsl:choose>
-    <xsl:when test="number(size div 1024) &gt;= number(quotahard)">
-    <xsl:attribute name="class">hard</xsl:attribute>
-    </xsl:when>
-    <xsl:when test="number(size div 1024) &gt;= number(quotasoft)">
-    <xsl:attribute name="class">soft</xsl:attribute>
-    </xsl:when>
-    <xsl:when test="number(size div 1024) &gt;= number(quotawarn)">
-    <xsl:attribute name="class">warn</xsl:attribute>
-    </xsl:when>
-    <xsl:otherwise>
-    <xsl:attribute name="class">size</xsl:attribute>
-    </xsl:otherwise>
-    </xsl:choose>
-    <xsl:value-of select="format-number(size div 1048576,'###,###,##0.00')"/></td>
+  <td>
+  <xsl:choose>
+  <xsl:when test="number(size div 1024) &gt;= number(quotahard)">
+  <xsl:attribute name="class">hard</xsl:attribute>
+  </xsl:when>
+  <xsl:when test="number(size div 1024) &gt;= number(quotasoft)">
+  <xsl:attribute name="class">soft</xsl:attribute>
+  </xsl:when>
+  <xsl:when test="number(size div 1024) &gt;= number(quotawarn)">
+  <xsl:attribute name="class">warn</xsl:attribute>
+  </xsl:when>
+  <xsl:otherwise>
+  <xsl:attribute name="class">size</xsl:attribute>
+  </xsl:otherwise>
+  </xsl:choose>
+  <xsl:value-of select="format-number(size div 1048576,'###,###,##0.00')"/></td>
 
-    <td>
-    <xsl:choose>
-    <xsl:when test="logon/@lag &gt;= 30">
-    <xsl:attribute name="class">datelong</xsl:attribute>
-    </xsl:when>
-    <xsl:otherwise>
-    <xsl:attribute name="class">date</xsl:attribute>
-    </xsl:otherwise>
-    </xsl:choose>
-    <xsl:value-of select="logon"/></td>
-    </tr>
-    </xsl:if>
-  </xsl:template>
+  <td>
+  <xsl:choose>
+  <xsl:when test="logon/@lag &gt;= 30">
+  <xsl:attribute name="class">datelong</xsl:attribute>
+  </xsl:when>
+  <xsl:otherwise>
+  <xsl:attribute name="class">date</xsl:attribute>
+  </xsl:otherwise>
+  </xsl:choose>
+  <xsl:value-of select="logon"/></td>
+  </tr>
+</xsl:template>
 
 </xsl:stylesheet>
