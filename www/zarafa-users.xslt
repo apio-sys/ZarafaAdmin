@@ -4,7 +4,7 @@
 
 <xsl:template match="/zarafaadmin/users">
   Hello
-  <xsl:choose>
+<!--   <xsl:choose>
     <xsl:when test="count(user) &gt; 0">
       <table id="zarafa-users">
       <tr>
@@ -76,7 +76,7 @@
 
     </xsl:otherwise>
   </xsl:choose>
-</xsl:template>
+ --></xsl:template>
 
 <xsl:template match="user">
   <tr class="hover">
