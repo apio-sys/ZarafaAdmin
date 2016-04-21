@@ -35,10 +35,6 @@ header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
-$usr = "";
-if (isset($_GET['user']))   $user = $_GET['user'];
-if (isset($_POST['user']))  $user = $_POST['user'];
-
 echo '<html><head>';
 echo '<meta http-equiv="content-type" content="text/html; charset=UTF-8">';
 echo '<meta http-equiv="Content-Type" charset="utf-8">';
@@ -47,13 +43,13 @@ echo '<title>Zarafa Session Details</title>';
 echo '</head><body>';
 
 // XML
-$output = shell_exec("sudo /opt/brandt/ZarafaAdmin/bin/zarafa-session.py --output xml '$user'");
+$output = shell_exec("sudo /opt/brandt/ZarafaAdmin/bin/zarafa-system.py --output xml");
 $outputxml = new DOMDocument();
 $outputxml->loadXML( $output );
 
 // XSL
 $xsl = new DOMDocument();
-$xsl->load('zarafa-session.xslt');
+$xsl->load('zarafa-system.xslt');
 	
 // Proc
 $proc = new XSLTProcessor();
