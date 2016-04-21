@@ -154,6 +154,7 @@ def zarafa_sessions(sessions):
     attribs = {}
     for i in range(len(tmp)):
       if tmp[i]:
+        print i, tmp[i]
         attribs[headers[i]] = tmp[i]
     xmlsession = ElementTree.SubElement(xml, "session", **attribs)
 
