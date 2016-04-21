@@ -53,7 +53,7 @@ $outputxml->loadXML( $output );
 
 // XSL
 $xsl = new DOMDocument();
-  $xsl->load('zarafa-groups.xslt');
+$xsl->load('zarafa-groups.xslt');
 	
 // Proc
 $proc = new XSLTProcessor();
