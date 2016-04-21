@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-<xsl:template match="/zarafa-admin/groups">
+<xsl:template match="/zarafaadmin/groups">
 <p>1</p>
   <xsl:choose>
     <xsl:when test="count(group) = 1">
