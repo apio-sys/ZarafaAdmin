@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-
+<p>1</p>
 <xsl:template match="/zarafa-admin/groups">
+<p>2</p>
   <xsl:choose>
     <xsl:when test="count(group) = 1">
       <table id="zarafa-group">
@@ -20,6 +21,8 @@
     </xsl:when>
 
     <xsl:otherwise>
+<p>3</p>
+
       <table id="zarafa-groups">
       <tr><th>Group Name</th></tr>
       <xsl:for-each select="group"><xsl:sort select="translate(@groupname, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
