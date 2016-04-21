@@ -65,13 +65,14 @@
       <tr class="hover"><th>Hard Level</th><td><xsl:value-of select="user/@hardlevel"/></td><th>Current Size</th><td><xsl:value-of select="user/@currentstoresize"/></td></tr>
       </table>
       <xsl:if test="count(user/groups/group) &gt; 0">
-      <table id="zarafa-user-groups">
-      <tr><th colspan="2">Groups</th><td colspan="2">
-      <xsl:for-each select="user/groups/group"><xsl:sort select="translate(@groupname, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
-      <a href="./zarafa-groups.php?group={@groupname}"><xsl:value-of select="@groupname"/></a><br/>
-      </xsl:for-each>
-      </td></tr>
-      </table>
+        <table id="zarafa-user-groups">
+        <tr><th colspan="2">Groups</th><td colspan="2">
+        <xsl:for-each select="user/groups/group"><xsl:sort select="translate(@groupname, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
+        <a href="./zarafa-groups.php?group={@groupname}"><xsl:value-of select="@groupname"/></a><br/>
+        </xsl:for-each>
+        </td></tr>
+        </table>
+      </xsl:if>
 
     </xsl:otherwise>
   </xsl:choose>
