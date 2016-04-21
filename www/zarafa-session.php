@@ -1,6 +1,6 @@
 <?php
 /*
- *    Zarafa Group Details
+ *    Zarafa Session Details
  *
  *    Created by: Bob Brandt (http://brandt.ie)
  *    Created on: 2016-04-23
@@ -35,25 +35,25 @@ header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
-$group = "";
-if (isset($_GET['group']))   $group = $_GET['group'];
-if (isset($_POST['group']))  $group = $_POST['group'];
+$usr = "";
+if (isset($_GET['user']))   $user = $_GET['user'];
+if (isset($_POST['user']))  $user = $_POST['user'];
 
 echo '<html><head>';
 echo '<meta http-equiv="content-type" content="text/html; charset=UTF-8">';
 echo '<meta http-equiv="Content-Type" charset="utf-8">';
 echo '<link rel="stylesheet" href="zarafaadmin.css">';
-echo '<title>Zarafa Group Details</title>';
+echo '<title>Zarafa Session Details</title>';
 echo '</head><body>';
 
 // XML
-$output = shell_exec("sudo /opt/brandt/ZarafaAdmin/bin/zarafa-groups.py --output xml '$group'");
+$output = shell_exec("sudo /opt/brandt/ZarafaAdmin/bin/zarafa-session.py --output xml '$user'");
 $outputxml = new DOMDocument();
 $outputxml->loadXML( $output );
 
 // XSL
 $xsl = new DOMDocument();
-$xsl->load('zarafa-groups.xslt');
+$xsl->load('zarafa-session.xslt');
 	
 // Proc
 $proc = new XSLTProcessor();
