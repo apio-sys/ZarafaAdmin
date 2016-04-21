@@ -43,11 +43,6 @@
       </xsl:if>
     </xsl:when>
 
-
-
-
-
-
     <xsl:otherwise>
       <table id="zarafa-users">
       <tr>
