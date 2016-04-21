@@ -22,7 +22,7 @@ args['delimiter'] = ""
 version = 0.3
 encoding = 'utf-8'
 
-headers = ['UNK0x67420014','UNK0x674D0014','ip','UNK0x67440003','UNK0x67450003','UNK0x6746000B','username','UNK0x6747101E','UNK0x6749101E','UNK0x674A0005','UNK0x674B0005','UNK0x674C0005','UNK0x674E0003','version','program','UNK0x67510003','UNK0x67480003','UNK0x6753001E','pipe']
+headers = ['UNK0x67420014','UNK0x674D0014','ip','UNK0x67440003','UNK0x67450003','UNK0x6746000B','username','UNK0x6747101E','UNK0x6749101E','UNK0x674A0005','UNK0x674B0005','UNK0x674C0005','UNK0x674E0003','version','program','UNK0x67510003','UNK0x67480003','UNK0x6753001E','pipe', 'UNK0x6754001E', 'UNK0x6755001E']
 
 class customUsageVersion(argparse.Action):
   def __init__(self, option_strings, dest, **kwargs):
