@@ -115,11 +115,11 @@
   <tr class="hover"><td>Cache cell maximum size</td><td><xsl:value-of select="@cache_cell_maxsz"/></td></tr>
   <tr class="hover"><td>Cache cell requests</td><td><xsl:value-of select="@cache_cell_req"/></td></tr>
   <tr class="hover"><td>Cache cell hits</td><td><xsl:value-of select="@cache_cell_hit"/></td></tr>
-  <tr class="hover"><td>Cache index  <tr class="hover"><td>items </td><td><xsl:value-of select="@cache_index1_items"/></td></tr>
-  <tr class="hover"><td>Cache index  <tr class="hover"><td>size</td><td><xsl:value-of select="@cache_index1_size"/></td></tr>
-  <tr class="hover"><td>Cache index  <tr class="hover"><td>maximum size</td><td><xsl:value-of select="@cache_index1_maxsz"/></td></tr>
-  <tr class="hover"><td>Cache index  <tr class="hover"><td>requests</td><td><xsl:value-of select="@cache_index1_req"/></td></tr>
-  <tr class="hover"><td>Cache index  <tr class="hover"><td>hits</td><td><xsl:value-of select="@cache_index1_hit"/></td></tr>
+  <tr class="hover"><td>Cache index1 items </td><td><xsl:value-of select="@cache_index1_items"/></td></tr>
+  <tr class="hover"><td>Cache index1 size</td><td><xsl:value-of select="@cache_index1_size"/></td></tr>
+  <tr class="hover"><td>Cache index1 maximum size</td><td><xsl:value-of select="@cache_index1_maxsz"/></td></tr>
+  <tr class="hover"><td>Cache index1 requests</td><td><xsl:value-of select="@cache_index1_req"/></td></tr>
+  <tr class="hover"><td>Cache index1 hits</td><td><xsl:value-of select="@cache_index1_hit"/></td></tr>
   <tr class="hover"><td>Cache index2 items </td><td><xsl:value-of select="@cache_index2_items"/></td></tr>
   <tr class="hover"><td>Cache index2 size</td><td><xsl:value-of select="@cache_index2_size"/></td></tr>
   <tr class="hover"><td>Cache index2 maximum size</td><td><xsl:value-of select="@cache_index2_maxsz"/></td></tr>
