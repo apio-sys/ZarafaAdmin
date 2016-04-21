@@ -22,8 +22,8 @@
     <xsl:otherwise>
       <table id="zarafa-groups">
       <tr><th>Group Name</th></tr>
-      <xsl:for-each select="group"><xsl:sort select="translate(@groupname=, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
-      <tr><td class="hover"><a href="./zarafa-groups.php?group={@groupname=}"><xsl:value-of select="@groupname="/></a></td></tr>
+      <xsl:for-each select="group"><xsl:sort select="translate(@groupname, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
+      <tr><td class="hover"><a href="./zarafa-groups.php?group={@groupname}"><xsl:value-of select="@groupname"/></a></td></tr>
       </xsl:for-each>
       </table>
     </xsl:otherwise>
