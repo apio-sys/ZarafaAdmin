@@ -45,7 +45,6 @@ ldapmapping = (("pr_ec_enabled_features","0x67b3101e"),("pr_ec_disabled_features
                ("pr_ems_ab_owner","0x800c001e"),("size","currentstoresize"),
                ("quotahard","hardlevel"),("quotasoft","softlevel"),("quotawarn","warninglevel"))
 
-
 fieldmappings = (("username","Username"),("fullname","Fullname"),("emailaddress","Email Address"),
                  ("active","Active"),("administrator","Administrator"),("addressbook","Address Book"),
                  ("autoacceptmeetingreq","Auto-Accept Meeting Req"),("lastlogon","Last Logon"),("lastlogoff","Last Logoff"))

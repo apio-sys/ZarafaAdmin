@@ -3,9 +3,8 @@
 <xsl:param name="sort" select="'username'"/>
 
 <xsl:template match="/zarafaadmin/users">
-<!--   Hello
   <xsl:choose>
-    <xsl:when test="count(user) &gt; 0"> -->
+    <xsl:when test="count(user) &gt; 0">
       <table id="zarafa-users">
       <tr>
           <th><a href="./zarafa-users.php?sort=username">Username</a></th>
@@ -44,7 +43,7 @@
       </xsl:otherwise>
       </xsl:choose>
       </table>
-<!--     </xsl:when>
+    </xsl:when>
 
     <xsl:otherwise>
       <table id="zarafa-user">
@@ -75,7 +74,7 @@
       </table>
 
     </xsl:otherwise>
-  </xsl:choose> -->
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template match="user">
