@@ -114,9 +114,12 @@ def process_logs(logdata):
   global args
   for f in args['filters']:
     print f, len(logdata)
-    f = str("*" + f + "*").replace("**","*")
     print "\n".join(logdata[:30])
+
+    f = str("*" + f + "*").replace("**","*")
     logdata = fnmatch.filter(logdata, f)
+
+    print f, len(logdata)
     print "\n".join(logdata[:10])
 
   if args['output'] == "text":
