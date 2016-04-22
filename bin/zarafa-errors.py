@@ -18,6 +18,7 @@ args['output'] = 'text'
 args['count'] = 100
 args['log'] = 'system'
 args['filters'] = ''
+args['sort'] = True
 
 version = 0.3
 encoding = 'utf-8'
@@ -65,6 +66,8 @@ class customUsageVersion(argparse.Action):
       options.append(("-o, --output OUTPUT",     "Type of output {text | xml}"))
       options.append(("-c, --count COUNT",       "Max Number of lines to return (Default: " + str(args['count']) + ")"))      
       options.append(("-l, --log LOG",           "Log to analyse {" + " | ".join(sorted(logDefaults.keys())) + "}"))
+      options.append(("    --ascending",         "Sort by ascending order"))
+      options.append(("    --descending",        "Sort by descending order"))
       options.append(("filters",                 "Filters to apply to log."))
       length = max( [ len(option[0]) for option in options ] )
       for option in options:
@@ -92,12 +95,24 @@ def command_line_args():
           default=args['log'],
           choices=sorted(logDefaults.keys()),
           help="Log to analyse.")
+  parser.add_argument('--ascending',
+          required=False,
+          default=args['sort'],
+          action='store_true',
+          dest='sort',
+          help="Sort by ascending order.")
+  parser.add_argument('--descending',
+          required=False,
+          default=args['sort'],
+          action='store_false',
+          dest='sort',          
+          help="Sort by descending order.")            
   parser.add_argument('filters',
           nargs='*',
           default= args['filters'],
           type=str,          
           action='store',
-          help="Filters to apply to log.")
+          help="Filters to apply to log.")  
   args.update(vars(parser.parse_args()))
   args['count'] = abs(args['count'])
   tmp = []
@@ -126,14 +141,6 @@ def get_data():
 def process_logs(logdata):
   global args
 
-  # if args['filters']:
-  #   print args['filters']
-  #   tmp = []
-  #   for l in logdata:
-  #     for f in args['filters'].split():
-  #       if f and f in l.lower(): tmp.append(l)
-  #   logdata = tmp
-
   for f in args['filters'].split():
     if f:
       if f[0] == "-":
@@ -160,6 +167,9 @@ def process_logs(logdata):
 # Start program
 if __name__ == "__main__":
     command_line_args()
+
+    print args
+    sys.exit(0)
 
     exitcode = 0
   # try:
