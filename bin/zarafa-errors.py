@@ -114,7 +114,8 @@ def process_logs(logdata):
   global args
   for f in args['filters']:
     print f, len(logdata)
-    print logdata[:30]
+    f = str("*" + f + "*").replace("**","*")
+    print "\n".join(logdata[:30])
     logdata = fnmatch.filter(logdata, f)
     print "\n".join(logdata[:10])
 
