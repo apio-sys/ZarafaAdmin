@@ -162,7 +162,7 @@ def process_logs(logdata):
   logdata = logdata[:-args['count']]
   if not args['sort']: logdata = logdata[::-1]
 
-  print len(logdata)
+  print args['count'], len(logdata)
   sys.exit(0)
 
 
