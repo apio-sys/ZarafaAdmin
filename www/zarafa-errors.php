@@ -66,8 +66,11 @@ $formxsl->load('zarafa-errors.xslt');
 // Proc
 $formproc = new XSLTProcessor();
 $formproc->importStylesheet($formxsl);
-$form = $proc->transformToDoc($formxml)->saveXML(); 
+if ( $log !== "" )    $formproc->setParameter( '', 'log', $log);
+if ( $sort !== "" )   $formproc->setParameter( '', 'sort', $sort);
+if ( $filter !== "" ) $formproc->setParameter( '', 'filter', $filter);
 
+$form = $formproc->transformToDoc($formxml)->saveXML(); 
 echo "$form";
 
 // echo '<form method="get">';

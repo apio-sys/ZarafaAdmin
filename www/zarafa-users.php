@@ -62,7 +62,7 @@ $xsl->load('zarafa-users.xslt');
 // Proc
 $proc = new XSLTProcessor();
 $proc->importStylesheet($xsl);
-if ( $sort !== "" ) $proc->setParameter( '', 'sort', $sort);    
+if ( $sort !== "" ) $proc->setParameter( '', 'sort', $sort);
 
 $output = $proc->transformToDoc($outputxml)->saveXML();
 
