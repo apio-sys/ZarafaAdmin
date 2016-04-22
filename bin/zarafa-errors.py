@@ -109,7 +109,6 @@ def get_data():
 
   return data
 
-
 def process_logs(logdata):
   global args
   for f in args['filters']:
@@ -117,7 +116,8 @@ def process_logs(logdata):
     logdata = fnmatch.filter(logdata, f)
 
   logdata = logdata[:-100]
-
+  logdata = logdata[::-1]
+  
   if args['output'] == "text":
     print "\n".join(logdata)
     sys.exit(0)
@@ -130,10 +130,10 @@ def process_logs(logdata):
 
 # Start program
 if __name__ == "__main__":
-    command_line_args()
+  command_line_args()
 
-    exitcode = 0
-  # try:
+  exitcode = 0
+  try:
     logdata = get_data()
     xmldata = process_logs(logdata)
 
@@ -142,20 +142,20 @@ if __name__ == "__main__":
       xml.append(xmldata)
       print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
 
-  # except ( Exception, SystemExit ) as err:
-  #   try:
-  #     exitcode = int(err[0])
-  #     errmsg = str(" ".join(err[1:]))
-  #   except:
-  #     exitcode = -1
-  #     errmsg = str(" ".join(err))
+  except ( Exception, SystemExit ) as err:
+    try:
+      exitcode = int(err[0])
+      errmsg = str(" ".join(err[1:]))
+    except:
+      exitcode = -1
+      errmsg = str(" ".join(err))
 
-  #   if args['output'] != 'xml': 
-  #     if exitcode != 0: sys.stderr.write( str(err) +'\n' )
-  #   else:
-  #     xml = ElementTree.Element('zarafaadmin')      
-  #     xmldata = ElementTree.SubElement(xml, 'error', errorcode = str(exitcode) )
-  #     xmldata.text = errmsg
-  #     print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
+    if args['output'] != 'xml': 
+      if exitcode != 0: sys.stderr.write( str(err) +'\n' )
+    else:
+      xml = ElementTree.Element('zarafaadmin')      
+      xmldata = ElementTree.SubElement(xml, 'error', errorcode = str(exitcode) )
+      xmldata.text = errmsg
+      print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
 
-  # sys.exit(exitcode)
+  sys.exit(exitcode)
