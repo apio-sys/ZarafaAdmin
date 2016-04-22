@@ -159,7 +159,7 @@ def process_logs(logdata):
         f = str("*" + f + "*").replace("**","*")
         logdata = fnmatch.filter(logdata, f)
 
-  logdata = logdata[:-args['count']]
+  logdata = logdata[-args['count']:]
   if not args['sort']: logdata = logdata[::-1]
 
   print args['count'], len(logdata)
