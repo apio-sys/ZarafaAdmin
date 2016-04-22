@@ -112,8 +112,8 @@ def get_data():
 
 def process_logs(logdata):
   global args
-  if args['filters']:
-    print args['filters']
+  for filter in args['filters']:
+    print filter
     print len(logdata)
     # logdata = fnmatch.filter(logdata, args['filter'])
 
