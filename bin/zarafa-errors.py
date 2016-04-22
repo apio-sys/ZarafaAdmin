@@ -15,7 +15,7 @@ sys.path.pop()
 
 args = {}
 args['output'] = 'text'
-args['count'] = 10000
+args['count'] = 100
 args['log'] = 'system'
 args['filters'] = ''
 
@@ -99,6 +99,7 @@ def command_line_args():
           help="Filters to apply to log.")
   args.update(vars(parser.parse_args()))
   args['count'] = abs(args['count'])
+  args['filters'] = str(" ".join(args['filters'])).lower().split(" ")
 
 def get_data():
   global args
@@ -119,9 +120,19 @@ def get_data():
 
 def process_logs(logdata):
   global args
-  for f in args['filters']:
-    f = str("*" + f + "*").replace("**","*")
-    logdata = fnmatch.filter(logdata, f)
+
+  if args['filters']:
+    tmp = []
+    for l in logdata:
+      for f in args['filters']:
+        if f and f in l.lower():
+          tmp.append(l)
+    logdata = tmp
+
+  # for f in args['filters']:
+  #   if f:
+  #     f = str("*" + f + "*").replace("**","*")
+  #     logdata = fnmatch.filter(logdata, f)
 
   logdata = logdata[:-args['count']:-1]
 
