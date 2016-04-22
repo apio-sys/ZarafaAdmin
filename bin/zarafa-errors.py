@@ -131,8 +131,14 @@ def process_logs(logdata):
 
   for f in args['filters'].split():
     if f:
-      f = str("*" + f + "*").replace("**","*")
-      logdata = fnmatch.filter(logdata, f)
+      if f[0] == "-":
+        for l in reversed(len(logdata)):
+          if f[1:].lower() in str(logdata[l]).lower():
+            del logdata[l]
+      else:
+        if f[0] == "+": f = f[1:]
+        f = str("*" + f + "*").replace("**","*")
+        logdata = fnmatch.filter(logdata, f)
 
   logdata = logdata[:-args['count']:-1]
 
