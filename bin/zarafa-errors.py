@@ -18,7 +18,7 @@ args['output'] = 'text'
 args['count'] = 100
 args['log'] = 'system'
 args['filters'] = ''
-args['sort'] = True
+args['sort'] = False
 args['list'] = False
 
 version = 0.3
