@@ -15,6 +15,7 @@ sys.path.pop()
 
 args = {}
 args['output'] = 'text'
+args['count'] = 100
 args['log'] = 'system'
 args['filters'] = ''
 
@@ -55,13 +56,14 @@ class customUsageVersion(argparse.Action):
       print textwrap.fill(version, self.__row)
       print "\nWritten by Bob Brandt <projects@brandt.ie>."
     else:
-      print "Usage: " + self.__prog + " [options] [filter]"
-      print "Script used to find details about Zarafa groups.\n"
+      print "Usage: " + self.__prog + " [options] [filters]"
+      print "Script used to analyzing at zarafa logs.\n"
       print "Options:"
       options = []
       options.append(("-h, --help",              "Show this help message and exit"))
       options.append(("-v, --version",           "Show program's version number and exit"))
       options.append(("-o, --output OUTPUT",     "Type of output {text | xml}"))
+      options.append(("-c, --count COUNT",       "Max Number of lines to return (Default: " + str(args['count']) + ")"))      
       options.append(("-l, --log LOG",           "Log to analyse {" + " | ".join(sorted(logDefaults.keys())) + "}"))
       options.append(("filters",                 "Filters to apply to log."))
       length = max( [ len(option[0]) for option in options ] )
@@ -80,6 +82,11 @@ def command_line_args():
           default=args['output'],
           choices=['text', 'xml'],
           help="Display output type.")
+  parser.add_argument('-c', '--count',
+          required=False,
+          default=args['count'],
+          type=int,
+          help="Max Number of lines to return.")  
   parser.add_argument('-l', '--log',
           required=False,
           default=args['log'],
@@ -91,6 +98,7 @@ def command_line_args():
           action='store',
           help="Filters to apply to log.")
   args.update(vars(parser.parse_args()))
+  args['count'] = abs(args['count'])
 
 def get_data():
   global args
@@ -115,9 +123,8 @@ def process_logs(logdata):
     f = str("*" + f + "*").replace("**","*")
     logdata = fnmatch.filter(logdata, f)
 
-  logdata = logdata[:-100]
-  logdata = logdata[::-1]
-  
+  logdata = logdata[:-args['count']:-1]
+
   if args['output'] == "text":
     print "\n".join(logdata)
     sys.exit(0)
