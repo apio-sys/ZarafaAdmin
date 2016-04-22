@@ -117,13 +117,16 @@ def process_logs(logdata):
     logdata = fnmatch.filter(logdata, f)
 
   logdata = logdata[:-100]
-  
+
   if args['output'] == "text":
     print "\n".join(logdata)
     sys.exit(0)
 
-  print "make XML"
-
+  xml = ElementTree.Element('log', log=args['log'], filters=" ".join(args['filters']))
+  for line in logdata:
+    xmldata = ElementTree.SubElement(xml, "line")
+    xmldata.text = line
+  return xml
 
 # Start program
 if __name__ == "__main__":
@@ -134,8 +137,6 @@ if __name__ == "__main__":
     logdata = get_data()
     xmldata = process_logs(logdata)
 
-
-    sys.exit(0)
     if args['output'] == 'xml': 
       xml = ElementTree.Element('zarafaadmin')
       xml.append(xmldata)
