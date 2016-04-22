@@ -28,7 +28,7 @@
   
         <xsl:for-each select="device/error">
           <tr><td>&#xA0;</td><td>
-            <table id="z-push-errors">
+            <table id="zarafa-device-errors">
             <tr class="hover"><th style="width: 100;">Object</th><td><xsl:value-of select="@brokenobject"/></td></tr>
             <tr class="hover"><th>Information</th><td><xsl:value-of select="@information"/></td></tr>
             <tr class="hover"><th>Reason</th><td><xsl:value-of select="@reason"/></td></tr>
