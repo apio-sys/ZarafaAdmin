@@ -121,18 +121,18 @@ def get_data():
 def process_logs(logdata):
   global args
 
-  if args['filters']:
-    print args['filters']
-    tmp = []
-    for l in logdata:
-      for f in args['filters'].split():
-        if f and f in l.lower(): tmp.append(l)
-    logdata = tmp
+  # if args['filters']:
+  #   print args['filters']
+  #   tmp = []
+  #   for l in logdata:
+  #     for f in args['filters'].split():
+  #       if f and f in l.lower(): tmp.append(l)
+  #   logdata = tmp
 
-  # for f in args['filters'].split():
-  #   if f:
-  #     f = str("*" + f + "*").replace("**","*")
-  #     logdata = fnmatch.filter(logdata, f)
+  for f in args['filters'].split():
+    if f:
+      f = str("*" + f + "*").replace("**","*")
+      logdata = fnmatch.filter(logdata, f)
 
   logdata = logdata[:-args['count']:-1]
 
