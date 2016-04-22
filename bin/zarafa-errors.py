@@ -112,10 +112,10 @@ def get_data():
 
 def process_logs(logdata):
   global args
-  for filter in args['filters']:
-    print filter
+  for f in args['filters']:
+    print f, len(logdata)
+    logdata = fnmatch.filter(str(logdata).lower(), str(f).lower())
     print len(logdata)
-    # logdata = fnmatch.filter(logdata, args['filter'])
 
   if args['output'] == "text":
     sys.exit(0)
