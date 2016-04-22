@@ -102,8 +102,10 @@ def command_line_args():
   args['count'] = abs(args['count'])
   tmp = []
   for f in args['filters']:
+    print f
     for t  in f.strip():
-      if t: tmp.append(f.lower())
+      print t
+      if t: tmp.append(t.lower())
   args['filters'] = tmp
 
 def get_data():
