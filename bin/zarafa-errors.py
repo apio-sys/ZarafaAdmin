@@ -173,7 +173,10 @@ def process_logs(logdata):
 
 # Start program
 if __name__ == "__main__":
-    command_line_args()
+  # try:
+    exitcode = 0
+    command_line_args()  
+    
     if args['list']:
       if args['output'] == 'text':
         print "\n".join([ str(k) + ", " + str(logDefaults[k]['logfile']) for k in logDefaults.keys() ])
@@ -186,11 +189,6 @@ if __name__ == "__main__":
         print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
       sys.exit(0)
 
-    print args
-    sys.exit(0)
-
-    exitcode = 0
-  # try:
     logdata = get_data()
     xmldata = process_logs(logdata)
 
