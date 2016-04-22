@@ -95,17 +95,17 @@ def command_line_args():
 def get_data():
   global args
 
-  size = os.stat(logDefaults[args['log']][logfile]).st_size
-  print logDefaults[args['log']][logfile], size
+  size = os.stat(logDefaults[args['log']]['logfile']).st_size
+  print logDefaults[args['log']]['logfile'], size
 
   data = []
   if size < logSizeLimit:
-    if os.path.isfile(logDefaults[args['log']][oldlogfile]):
-      f = open(logDefaults[args['log']][oldlogfile], 'r')
+    if os.path.isfile(logDefaults[args['log']]['oldlogfile']):
+      f = open(logDefaults[args['log']]['oldlogfile'], 'r')
       data = f.read().split('\n')
       f.close()
 
-  f = open(logDefaults[args['log']][logfile], 'r')
+  f = open(logDefaults[args['log']]['logfile'], 'r')
   data += f.read().split('\n')
   f.close()
 
