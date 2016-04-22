@@ -75,7 +75,7 @@ echo "$form";
 
 // User XML
 $command = "sudo /opt/brandt/ZarafaAdmin/bin/zarafa-errors.py --output xml";
-$command = "$command --log 'system'";
+$command = "$command --log '$log'";
 if ( $sort == "descending" ) {
 	$command = "$command --descending";
 } else {

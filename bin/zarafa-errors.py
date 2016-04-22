@@ -145,6 +145,10 @@ def get_data():
 
   return data
 
+def proper(string):
+  string=str(string).lower().replace("mysql","MySQL")
+  return string.title()
+
 def process_logs(logdata):
   global args
 
@@ -168,7 +172,7 @@ def process_logs(logdata):
     print "\n".join(logdata)
     sys.exit(0)
 
-  xml = ElementTree.Element('log', log=str(args['log']).title(), filters=args['filters'])
+  xml = ElementTree.Element('log', log=proper(args['log']), filters=args['filters'])
   for line in logdata:
     xmldata = ElementTree.SubElement(xml, "line")
     xmldata.text = line
@@ -186,7 +190,7 @@ if __name__ == "__main__":
       else:
         xmldata = ElementTree.Element('logs')
         for k in logDefaults.keys():
-          ElementTree.SubElement(xmldata, "log", name=k, display=str(k).title(), location=logDefaults[k]['logfile'])
+          ElementTree.SubElement(xmldata, "log", name=k, display=proper(k), location=logDefaults[k]['logfile'])
         xml = ElementTree.Element('zarafaadmin')
         xml.append(xmldata)
         print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
