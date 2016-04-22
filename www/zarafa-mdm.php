@@ -44,8 +44,8 @@ if (isset($_GET['user']))    $user = $_GET['user'];
 if (isset($_POST['user']))   $user = $_POST['user'];
 
 $device = "";
-if (isset($_GET['device']))    $user = $_GET['device'];
-if (isset($_POST['device']))   $user = $_POST['device'];
+if (isset($_GET['device']))    $device = $_GET['device'];
+if (isset($_POST['device']))   $device = $_POST['device'];
 
 echo '<html><head>';
 echo '<meta http-equiv="content-type" content="text/html; charset=UTF-8">';
