@@ -96,8 +96,6 @@ def get_data():
   global args
 
   size = os.stat(logDefaults[args['log']]['logfile']).st_size
-  print logDefaults[args['log']]['logfile'], size
-
   data = []
   if size < logSizeLimit:
     if os.path.isfile(logDefaults[args['log']]['oldlogfile']):
@@ -112,6 +110,19 @@ def get_data():
   return data
 
 
+def process_logs(logdata):
+  global args
+  if args['filter']:
+    print args['filter']
+
+
+  if args['output'] == "text"
+    print "Log file data"
+    sys.exit(0)
+
+  print "make XML"
+
+
 # Start program
 if __name__ == "__main__":
     command_line_args()
@@ -119,20 +130,14 @@ if __name__ == "__main__":
     exitcode = 0
   # try:
     logdata = get_data()
-    #print logdata
+    xmldata = process_logs(logdata)
 
 
-
-
-    # if len(groups) == 1:
-    #   xmldata = zarafa_group(groups[0])
-    # else:
-    #   xmldata = zarafa_groups(groups)
-
-    # if args['output'] == 'xml': 
-    #   xml = ElementTree.Element('zarafaadmin')
-    #   xml.append(xmldata)
-    #   print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
+    sys.exit(0)
+    if args['output'] == 'xml': 
+      xml = ElementTree.Element('zarafaadmin')
+      xml.append(xmldata)
+      print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
 
   # except ( Exception, SystemExit ) as err:
   #   try:
