@@ -101,9 +101,9 @@ def get_data():
   data = []
   if size < logSizeLimit:
     if os.path.isfile(logDefaults[args['log']][oldlogfile]):
-    f = open(logDefaults[args['log']][oldlogfile], 'r')
-    data = f.read().split('\n')
-    f.close()
+      f = open(logDefaults[args['log']][oldlogfile], 'r')
+      data = f.read().split('\n')
+      f.close()
 
   f = open(logDefaults[args['log']][logfile], 'r')
   data += f.read().split('\n')
