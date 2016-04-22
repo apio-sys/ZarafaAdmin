@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:param name="sort" select="'username'"/>
-<xsl:param name="device" select=""/>
-<xsl:param name="user" select=""/>
+<xsl:param name="device"/>
+<xsl:param name="user"/>
 
 <xsl:template match="/zarafaadmin/devices">
   <p>1</p>
