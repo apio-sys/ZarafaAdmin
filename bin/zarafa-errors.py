@@ -119,7 +119,7 @@ if __name__ == "__main__":
     exitcode = 0
   # try:
     logdata = get_data()
-    print logdata
+    #print logdata
 
 
 
