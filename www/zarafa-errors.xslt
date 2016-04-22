@@ -46,7 +46,9 @@
 </xsl:template>
 
 <xsl:template match="line">
-  <tr><td><xsl:value-of select="."/></td></tr>
+  <tr><td>
+  	<xsl:value-of select="."/>
+ 	</td></tr>
 </xsl:template>
 
 </xsl:stylesheet>

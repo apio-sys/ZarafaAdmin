@@ -159,7 +159,8 @@ def process_logs(logdata):
         f = str("*" + f + "*").replace("**","*")
         logdata = fnmatch.filter(logdata, f)
 
-  logdata = logdata[:-args['count']:-1]
+  logdata = logdata[:-args['count']]
+  if args['sort']: logdata = logdata[::-1]
 
   if args['output'] == "text":
     print "\n".join(logdata)
@@ -176,7 +177,7 @@ if __name__ == "__main__":
   # try:
     exitcode = 0
     command_line_args()  
-    
+
     if args['list']:
       if args['output'] == 'text':
         print "\n".join([ str(k) + ", " + str(logDefaults[k]['logfile']) for k in logDefaults.keys() ])

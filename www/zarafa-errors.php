@@ -73,17 +73,16 @@ if ( $filter !== "" ) $formproc->setParameter( '', 'filter', $filter);
 $form = $formproc->transformToDoc($formxml)->saveXML(); 
 echo "$form";
 
-// echo '<form method="get">';
-// echo '<table align="center" valign="middle" id="entry">';
-// echo '<tr class="entry">';
-// echo '<td class="entry"><input type="text" name="filter" value="',$filter,'"/></td>';
-// echo '<td class="entry"><input type="submit" name="submit" value="Filter Log"/></td>';
-// echo '</tr>';
-// echo '</table>';
-// echo '</form>';
-
 // User XML
-$output = shell_exec("sudo /opt/brandt/ZarafaAdmin/bin/zarafa-errors.py --output xml --log $log $filter");
+$command = "sudo /opt/brandt/ZarafaAdmin/bin/zarafa-errors.py --output xml";
+$command = "$command --log 'system'";
+if ( $sort == "descending" ) {
+	$command = "$command --descending";
+} else {
+	$command = "$command --ascending";
+}
+if ( $filter !== "" ) $command = "$command '$filter'";
+$output = shell_exec($command);
 $outputxml = new DOMDocument();
 $outputxml->loadXML( $output );
 
