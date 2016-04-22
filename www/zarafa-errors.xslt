@@ -31,8 +31,8 @@
 					  </option>					  
 					</select>
 				</td>			
-				<td class="entry"><input name="filter" type="text" value="{$filter}"></td>
-				<td class="entry"><input name="submit" value="Filter Log" type="submit"></td>
+				<td class="entry"><input name="filter" type="text" value="{$filter}"/></td>
+				<td class="entry"><input name="submit" value="Filter Log" type="submit"/></td>
 			</tr>	
 		</table>
 	</form>
