@@ -114,9 +114,9 @@ def process_logs(logdata):
   global args
   for f in args['filters']:
     print f, len(logdata)
-    print "\n".join(logdata[:20])
-    print fnmatch.filter(logdata, f)
-    print len(logdata)
+    print logdata[:30]
+    logdata = fnmatch.filter(logdata, f)
+    print "\n".join(logdata[:10])
 
   if args['output'] == "text":
     sys.exit(0)
