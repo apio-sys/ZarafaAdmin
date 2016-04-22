@@ -136,9 +136,6 @@ def process_logs(logdata):
   #       if f and f in l.lower(): tmp.append(l)
   #   logdata = tmp
 
-  print args['filters']
-  return 0
-
   for f in args['filters'].split():
     if f:
       if f[0] == "-":
