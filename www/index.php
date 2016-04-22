@@ -33,8 +33,9 @@
 					<p>&nbsp;Zarafa Logs
 					<ul>
 						<li><a href="./zarafa-logins.php" target="cmdiframe">Login Errors</a></li>
-						<li><a href="./zarafa-errors.php" target="cmdiframe">System Errors</a></li>
-						<li><a href="./zarafa-errors.php" target="cmdiframe">MySQL Errors</a></li>	
+						<li><a href="./zarafa-errors.php?log=system" target="cmdiframe">System Errors</a></li>
+						<li><a href="./zarafa-errors.php?log=mysql" target="cmdiframe">MySQL Errors</a></li>
+						<li><a href="./zarafa-errors.php?log=z-push" target="cmdiframe">Z-Push Errors</a></li>						
 					</ul></p>
 				</td>
 				<td class="Results">
