@@ -122,6 +122,7 @@ def process_logs(logdata):
   global args
 
   if args['filters']:
+    print args['filters']
     tmp = []
     for l in logdata:
       for f in args['filters']:
