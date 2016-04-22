@@ -53,7 +53,6 @@ echo '</head><body>';
 echo '<form method="get">';
 echo '<table align="center" valign="middle" id="entry">';
 echo '<tr class="entry">';
-echo '<th class="entry">Username</th>';
 echo '<td class="entry"><input type="text" name="filter" value="',$filter,'"/></td>';
 echo '<td class="entry"><input type="submit" name="submit" value="Filter Log"/></td>';
 echo '</tr>';
