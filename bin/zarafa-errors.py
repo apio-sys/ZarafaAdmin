@@ -15,7 +15,7 @@ sys.path.pop()
 
 args = {}
 args['output'] = 'text'
-args['count'] = 100
+args['count'] = 10000
 args['log'] = 'system'
 args['filters'] = ''
 
