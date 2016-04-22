@@ -16,7 +16,7 @@ sys.path.pop()
 args = {}
 args['output'] = 'text'
 args['log'] = 'system'
-args['filter'] = ''
+args['filters'] = ''
 
 version = 0.3
 encoding = 'utf-8'
@@ -63,7 +63,7 @@ class customUsageVersion(argparse.Action):
       options.append(("-v, --version",           "Show program's version number and exit"))
       options.append(("-o, --output OUTPUT",     "Type of output {text | xml}"))
       options.append(("-l, --log LOG",           "Log to analyse {" + " | ".join(sorted(logDefaults.keys())) + "}"))
-      options.append(("filter",                  "Filter to apply to log."))
+      options.append(("filters",                 "Filters to apply to log."))
       length = max( [ len(option[0]) for option in options ] )
       for option in options:
         description = textwrap.wrap(option[1], (self.__row - length - 5))
@@ -85,11 +85,11 @@ def command_line_args():
           default=args['log'],
           choices=sorted(logDefaults.keys()),
           help="Log to analyse.")
-  parser.add_argument('filter',
-          nargs='?',
-          default= args['filter'],
+  parser.add_argument('filters',
+          nargs='*',
+          default= args['filters'],
           action='store',
-          help="Filter to apply to log.")
+          help="Filters to apply to log.")
   args.update(vars(parser.parse_args()))
 
 def get_data():
@@ -112,12 +112,12 @@ def get_data():
 
 def process_logs(logdata):
   global args
-  if args['filter']:
-    print args['filter']
-
+  if args['filters']:
+    print args['filters']
+    print len(logdata)
+    # logdata = fnmatch.filter(logdata, args['filter'])
 
   if args['output'] == "text":
-    print "Log file data"
     sys.exit(0)
 
   print "make XML"
