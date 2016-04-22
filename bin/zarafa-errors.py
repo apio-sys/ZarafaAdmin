@@ -104,7 +104,7 @@ def get_data():
       f.close()
 
   f = open(logDefaults[args['log']]['logfile'], 'r')
-  data += f.read().split('\n')
+  data += f.read().split('\n')[:-1]
   f.close()
 
   return data
@@ -114,6 +114,7 @@ def process_logs(logdata):
   global args
   for f in args['filters']:
     print f, len(logdata)
+    print "\n".join(logdata[:20])
     print fnmatch.filter(logdata, f)
     print len(logdata)
 
