@@ -3,7 +3,7 @@
 <xsl:template match="/zarafaadmin/log">
 
   <table id="zarafa-logs">
-    <tr><th>Log entries for <xsl:value-of select="@log"/> using filter(s) <xsl:value-of select="@filter"/></th></tr>
+    <tr><th>Log entries for <xsl:value-of select="@log"/> using filter(s) <xsl:value-of select="@filters"/></th></tr>
     <xsl:apply-templates select="line"/>
   </table>
 </xsl:template>
