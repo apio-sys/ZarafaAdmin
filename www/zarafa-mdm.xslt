@@ -5,11 +5,8 @@
 <xsl:param name="user"/>
 
 <xsl:template match="/zarafaadmin/devices">
-  <p>1</p>
   <xsl:choose>
     <xsl:when test="count(device) = 1">
-  <p>2</p>
-
       <table id="zarafa-device">
         <tr><th colspan="2" class="center">Device Information</th><th colspan="2" class="center">Wipe Information</th></tr>
         <tr class="hover"><th>User</th><td><a href="./zarafa-users.php?user={device/@synchronizedbyuser}"><xsl:value-of select="device/@synchronizedbyuser"/></a></td><th>Request On</th><td><xsl:value-of select="wipe/@wiperequeston"/></td></tr>
@@ -32,8 +29,6 @@
     </xsl:when>
 
     <xsl:otherwise>
-  <p>3</p>
-
       <table id="zarafa-devices">
         <tr>
           <th><a href="./zarafa-mdm.php?user={$user}&amp;device={@device}&amp;sort=username">Username</a></th>
