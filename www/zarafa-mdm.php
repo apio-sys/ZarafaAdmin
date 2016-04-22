@@ -55,9 +55,9 @@ echo '<title>Zarafa Mobile Device Page</title>';
 echo '</head><body>';
 
 // XML
-$command = "sudo /opt/brandt/ZarafaAdmin/bin/zarafa-mdm.py --output xml"
-if ( $user !== "" )   $command = "$command -u '$user'"
-if ( $device !== "" ) $command = "$command -d '$device'"
+$command = "sudo /opt/brandt/ZarafaAdmin/bin/zarafa-mdm.py --output xml";
+if ( $user !== "" ) $command = "$command -u '$user'";
+if ( $device !== "" ) $command = "$command -d '$device'";
 $output = shell_exec($command);
 $outputxml = new DOMDocument();
 $outputxml->loadXML( $output );
