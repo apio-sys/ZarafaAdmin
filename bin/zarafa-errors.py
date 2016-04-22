@@ -103,7 +103,7 @@ def command_line_args():
   tmp = []
   for f in args['filters']:
     print f
-    for t  in f.strip():
+    for t  in f.split():
       print t
       if t: tmp.append(t.lower())
   args['filters'] = tmp
