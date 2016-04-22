@@ -1,6 +1,6 @@
 <?php
 /*
- *    Zarafa User Details
+ *    Zarafa Mobile Device Details
  *
  *    Created by: Bob Brandt (http://brandt.ie)
  *    Created on: 2016-04-23
@@ -43,15 +43,22 @@ $user = "";
 if (isset($_GET['user']))    $user = $_GET['user'];
 if (isset($_POST['user']))   $user = $_POST['user'];
 
+$device = "";
+if (isset($_GET['device']))    $user = $_GET['device'];
+if (isset($_POST['device']))   $user = $_POST['device'];
+
 echo '<html><head>';
 echo '<meta http-equiv="content-type" content="text/html; charset=UTF-8">';
 echo '<meta http-equiv="Content-Type" charset="utf-8">';
 echo '<link rel="stylesheet" href="zarafaadmin.css">';
-echo '<title>Zarafa Users Result Page</title>';
+echo '<title>Zarafa Mobile Device Page</title>';
 echo '</head><body>';
 
 // XML
-$output = shell_exec("sudo /opt/brandt/ZarafaAdmin/bin/zarafa-users.py --output xml '$user'");
+$command = "sudo /opt/brandt/ZarafaAdmin/bin/zarafa-mdm.py --output xml"
+if ( $user !== "" )   $command = "$command -u '$user'"
+if ( $device !== "" ) $command = "$command -d '$device'"
+$output = shell_exec($command);
 $outputxml = new DOMDocument();
 $outputxml->loadXML( $output );
 
@@ -62,7 +69,9 @@ $xsl->load('zarafa-users.xslt');
 // Proc
 $proc = new XSLTProcessor();
 $proc->importStylesheet($xsl);
-if ( $sort !== "" ) $proc->setParameter( '', 'sort', $sort);    
+if ( $sort !== "" ) $proc->setParameter( '', 'sort', $sort);
+if ( $user !== "" ) $proc->setParameter( '', 'user', $user);
+if ( $device !== "" ) $proc->setParameter( '', 'device', $device);
 
 $output = $proc->transformToDoc($outputxml)->saveXML();
 

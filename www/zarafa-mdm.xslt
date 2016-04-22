@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:param name="sort" select="'username'"/>
+<xsl:param name="device" select=""/>
+<xsl:param name="user" select=""/>
+
+<xsl:template match="/zarafaadmin/devices">
+  <xsl:choose>
+    <xsl:when test="count(device) = 1">
+      <table id="zarafa-device">
+        <tr><th colspan="2" class="center">Device Information</th><th colspan="2" class="center">Wipe Information</th></tr>
+        <tr class="hover"><th>User</th><td><a href="./zarafa-users.php?user={device/@synchronizedbyuser}"><xsl:value-of select="device/@synchronizedbyuser"/></a></td><th>Request On</th><td><xsl:value-of select="wipe/@wiperequeston"/></td></tr>
+        <tr class="hover"><th>Device ID</th><td><a href="./zarafa-mdm.php?device={device/@deviceid}"><xsl:value-of select="device/@deviceid"/></a></td><th>Request By</th><td><xsl:value-of select="wipe/@wiperequestby"/></td></tr>
+        <tr class="hover"><th>Device Type</th><td><xsl:value-of select="device/@devicetype"/></td><th>Wiped On</th><td><xsl:value-of select="wipe/@wipedon"/></td></tr>
+        <tr class="hover"><th>User Agent</th><td><xsl:value-of select="device/@useragent"/></td><td colspan="2"></td></tr>
+        <tr class="hover"><th>Device Model</th><td><xsl:value-of select="device/@devicemodel"/></td><th colspan="2" class="center">Folder Information</th></tr>
+        <tr class="hover"><th>Device IMEI</th><td><xsl:value-of select="device/@deviceimei"/></td><th>First Sync</th><td><xsl:value-of select="device/@firstsync"/></td></tr>
+        <tr class="hover"><th>Device Name</th><td><xsl:value-of select="device/@devicefriendlyname"/></td><th>Last Sync</th><td><xsl:value-of select="device/@lastsync"/></td></tr>
+        <tr class="hover"><th>Device OS</th><td><xsl:value-of select="device/@deviceos"/></td><th>Total Folders</th><td><xsl:value-of select="device/@totalfolders"/></td></tr>
+        <tr class="hover"><th>Device Language</th><td><xsl:value-of select="device/@deviceoslanguage"/></td><td colspan="2">&#xA0;</td></tr>
+        <tr class="hover"><th>Status</th><td><xsl:value-of select="device/@status"/></td><td colspan="2">&#xA0;</td></tr>
+        <tr class="hover"><th>Outbound SMS</th><td><xsl:value-of select="device/@deviceoutboundsms"/></td><td colspan="2">&#xA0;</td></tr>
+
+        <tr class="hover"><th>Device Operator</th><td><xsl:value-of select="device/@deviceoperator"/></td><th colspan="2" class="center">Synced Folders (<xsl:value-of select="device/@synchronizedfolders"/>)</th></tr>
+        <tr class="hover"><th>Version</th><td><xsl:value-of select="device/@activesyncversion"/></td>
+        <td colspan="2" class="center"><xsl:value-of select="device/@synchronizeddata"/>&#xA0;</td></tr>
+        <tr class="hover"><th>Errors</th><td colspan="3"><xsl:value-of select="device/@attentionneeded"/></td></tr>
+      </table>
+    </xsl:when>
+
+    <xsl:otherwise>
+      <table id="zarafa-devices">
+        <tr>
+          <th><a href="./zarafa-mdm.php?user={$user}&amp;device={@device}&amp;sort=username">Username</a></th>
+          <th><a href="./zarafa-mdm.php?user={$user}&amp;device={@device}&amp;sort=device">Device ID</a></th>
+          <th><a href="./zarafa-mdm.php?user={$user}&amp;device={@device}&amp;sort=sync">Last Sync</a></th>
+        </tr>
+        <xsl:choose>
+        <xsl:when test="$sort = 'device'">
+          <xsl:apply-templates select="device"><xsl:sort select="translate(@deviceid, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" /></xsl:apply-templates>
+        </xsl:when>
+        <xsl:when test="$sort = 'sync'">
+          <xsl:apply-templates select="device"><xsl:sort select="@lag" order="descending" data-type="number"/></xsl:apply-templates>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates select="device"><xsl:sort select="translate(@username, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" /></xsl:apply-templates>
+        </xsl:otherwise>
+        </xsl:choose>
+      </table>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+<xsl:template match="device">
+  <tr>
+    <td class="hover"><a href="./zarafa-users.php?user={@username}"><xsl:value-of select="@username"/></a></td>
+    <td class="hover"><a href="./zarafa-mdm.php?user={@username}&amp;device={@deviceid}"><xsl:value-of select="@deviceid"/></a></td>
+    <td class="hover"><a href="./zarafa-mdm.php?user={@username}&amp;device={@deviceid}"><xsl:value-of select="lastsync"/></a></td>
+  </tr>
+</xsl:template>
+
+</xsl:stylesheet>
+
+
+
+
+<zarafaadmin><devices><device deviceid="sec1d67e4af525dc" username="brandtb"><lastsync lag="-1.1400">2016-04-22 10:20</lastsync></device><device deviceid="sec18809e977ac3c" username="brandtb"><lastsync lag="736075.580">never</lastsync></device><device deviceid="sec101f9407a7166" username="brandtb"><lastsync lag="513.1193">2014-11-25 13:47</lastsync></device><device deviceid="androidc259148960" username="brandtb"><lastsync lag="518.1132">2014-11-20 14:48</lastsync></device></devices></zarafaadmin>
