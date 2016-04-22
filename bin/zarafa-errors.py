@@ -129,7 +129,7 @@ def process_logs(logdata):
     print "\n".join(logdata)
     sys.exit(0)
 
-  xml = ElementTree.Element('log', log=args['log'], filters=" ".join(args['filters']))
+  xml = ElementTree.Element('log', log=str(args['log']).title(), filters=" ".join(args['filters']))
   for line in logdata:
     xmldata = ElementTree.SubElement(xml, "line")
     xmldata.text = line
