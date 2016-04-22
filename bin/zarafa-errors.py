@@ -18,7 +18,7 @@ args['output'] = 'text'
 args['count'] = 100
 args['log'] = 'system'
 args['filters'] = ''
-args['sort'] = False
+args['sort'] = True
 args['list'] = False
 
 version = 0.3
@@ -160,7 +160,7 @@ def process_logs(logdata):
         logdata = fnmatch.filter(logdata, f)
 
   logdata = logdata[:-args['count']]
-  if args['sort']: logdata = logdata[::-1]
+  if not args['sort']: logdata = logdata[::-1]
 
   if args['output'] == "text":
     print "\n".join(logdata)
