@@ -137,7 +137,7 @@ def process_logs(logdata):
   for f in args['filters'].split():
     if f:
       if f[0] == "-":
-        for l in reversed(len(logdata)):
+        for l in reversed(range(len(logdata))):
           if f[1:].lower() in str(logdata[l]).lower():
             del logdata[l]
       else:
