@@ -36,12 +36,16 @@ header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
 $filter = "";
-if (isset($_GET['filter']))    $filter = $_GET['filter'];
-if (isset($_POST['filter']))   $filter = $_POST['filter'];
+if (isset($_GET['filter']))  $filter = $_GET['filter'];
+if (isset($_POST['filter'])) $filter = $_POST['filter'];
 
 $log = "system";
-if (isset($_GET['log']))    $log = $_GET['log'];
-if (isset($_POST['log']))   $log = $_POST['log'];
+if (isset($_GET['log']))     $log = $_GET['log'];
+if (isset($_POST['log']))    $log = $_POST['log'];
+
+$sort = "descending";
+if (isset($_GET['sort']))    $sort = $_GET['sort'];
+if (isset($_POST['sort']))   $sort = $_POST['sort'];
 
 echo '<html><head>';
 echo '<meta http-equiv="content-type" content="text/html; charset=UTF-8">';
@@ -50,14 +54,30 @@ echo '<link rel="stylesheet" href="zarafaadmin.css">';
 echo '<title>Zarafa Log Viewer</title>';
 echo '</head><body>';
 
-echo '<form method="get">';
-echo '<table align="center" valign="middle" id="entry">';
-echo '<tr class="entry">';
-echo '<td class="entry"><input type="text" name="filter" value="',$filter,'"/></td>';
-echo '<td class="entry"><input type="submit" name="submit" value="Filter Log"/></td>';
-echo '</tr>';
-echo '</table>';
-echo '</form>';
+// User XML
+$form = shell_exec("sudo /opt/brandt/ZarafaAdmin/bin/zarafa-errors.py --list --output xml");
+$formxml = new DOMDocument();
+$formxml->loadXML( $form );
+
+// User XSL 
+$formxsl = new DOMDocument();
+$formxsl->load('zarafa-errors.xslt');
+
+// Proc
+$formproc = new XSLTProcessor();
+$formproc->importStylesheet($formxsl);
+$form = $proc->transformToDoc($formxml)->saveXML(); 
+
+echo "$form";
+
+// echo '<form method="get">';
+// echo '<table align="center" valign="middle" id="entry">';
+// echo '<tr class="entry">';
+// echo '<td class="entry"><input type="text" name="filter" value="',$filter,'"/></td>';
+// echo '<td class="entry"><input type="submit" name="submit" value="Filter Log"/></td>';
+// echo '</tr>';
+// echo '</table>';
+// echo '</form>';
 
 // User XML
 $output = shell_exec("sudo /opt/brandt/ZarafaAdmin/bin/zarafa-errors.py --output xml --log $log $filter");
