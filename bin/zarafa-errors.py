@@ -100,7 +100,7 @@ def get_data():
 
   data = []
   if size < logSizeLimit:
-    if os.path.isfile(logDefaults[args['log']][oldlogfile])
+    if os.path.isfile(logDefaults[args['log']][oldlogfile]):
     f = open(logDefaults[args['log']][oldlogfile], 'r')
     data = f.read().split('\n')
     f.close()
@@ -110,22 +110,6 @@ def get_data():
   f.close()
 
   return data
-
-def zarafa_groups(groups):
-  global args
-
-  if args['output'] == 'text':
-    print "Zarafa Groups (" + str(len(groups)) + ")"
-    print "-" * max([len(x) for x in groups] + [13])
-    print "\n".join( groups )
-  elif args['output'] == 'csv':
-    print "Zarafa Groups"
-    print "\n".join( groups )
-  else:
-    xml = ElementTree.Element('groups')
-    for group in groups:
-      xmluser = ElementTree.SubElement(xml, "group", groupname = group)
-    return xml
 
 
 # Start program
