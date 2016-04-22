@@ -99,7 +99,7 @@ def command_line_args():
           help="Filters to apply to log.")
   args.update(vars(parser.parse_args()))
   args['count'] = abs(args['count'])
-  args['filters'] = str(" ".join(args['filters'])).lower().split(" ")
+  args['filters'] = str(" ".join(args['filters'])).lower()
 
 def get_data():
   global args
@@ -125,12 +125,11 @@ def process_logs(logdata):
     print args['filters']
     tmp = []
     for l in logdata:
-      for f in args['filters']:
-        if f and f in l.lower():
-          tmp.append(l)
+      for f in args['filters'].split():
+        if f and f in l.lower(): tmp.append(l)
     logdata = tmp
 
-  # for f in args['filters']:
+  # for f in args['filters'].split():
   #   if f:
   #     f = str("*" + f + "*").replace("**","*")
   #     logdata = fnmatch.filter(logdata, f)
@@ -141,7 +140,7 @@ def process_logs(logdata):
     print "\n".join(logdata)
     sys.exit(0)
 
-  xml = ElementTree.Element('log', log=str(args['log']).title(), filters=" ".join(args['filters']))
+  xml = ElementTree.Element('log', log=str(args['log']).title(), filters=args['filters'])
   for line in logdata:
     xmldata = ElementTree.SubElement(xml, "line")
     xmldata.text = line
