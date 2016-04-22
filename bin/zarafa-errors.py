@@ -15,7 +15,7 @@ sys.path.pop()
 
 args = {}
 args['output'] = 'text'
-args['count'] = 100
+args['count'] = 10000
 args['log'] = 'system'
 args['filters'] = ''
 args['sort'] = True
@@ -150,7 +150,7 @@ def process_logs(logdata):
 
   for f in args['filters'].split():
     if f:
-      if f[:6].lower() == "count:":
+      if f[:6].lower() == "count:" or f[:6].lower() == "count=":
          args['count'] = abs(int(f[6:]))
       elif f[0] == "-":
         for l in reversed(range(len(logdata))):
