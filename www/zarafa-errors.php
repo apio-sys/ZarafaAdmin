@@ -40,8 +40,8 @@ if (isset($_GET['filter']))    $filter = $_GET['filter'];
 if (isset($_POST['filter']))   $filter = $_POST['filter'];
 
 $log = "system";
-if (isset($_GET['log']))    $filter = $_GET['log'];
-if (isset($_POST['log']))   $filter = $_POST['log'];
+if (isset($_GET['log']))    $log = $_GET['log'];
+if (isset($_POST['log']))   $log = $_POST['log'];
 
 echo '<html><head>';
 echo '<meta http-equiv="content-type" content="text/html; charset=UTF-8">';
