@@ -104,7 +104,7 @@ def command_line_args():
   for f in args['filters']:
     for t  in f.split():
       if t: tmp.append(t.lower())
-  args['filters'] = tmp
+  args['filters'] = " ".join(tmp)
 
 def get_data():
   global args
