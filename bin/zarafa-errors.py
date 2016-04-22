@@ -116,7 +116,7 @@ def process_logs(logdata):
     print args['filter']
 
 
-  if args['output'] == "text"
+  if args['output'] == "text":
     print "Log file data"
     sys.exit(0)
 
