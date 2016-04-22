@@ -114,7 +114,7 @@ def process_logs(logdata):
   global args
   for f in args['filters']:
     print f, len(logdata)
-    logdata = fnmatch.filter(logdata, f)
+    print fnmatch.filter(logdata, f)
     print len(logdata)
 
   if args['output'] == "text":
