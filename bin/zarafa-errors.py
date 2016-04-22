@@ -19,6 +19,7 @@ args['count'] = 100
 args['log'] = 'system'
 args['filters'] = ''
 args['sort'] = True
+args['list'] = False
 
 version = 0.3
 encoding = 'utf-8'
@@ -66,8 +67,9 @@ class customUsageVersion(argparse.Action):
       options.append(("-o, --output OUTPUT",     "Type of output {text | xml}"))
       options.append(("-c, --count COUNT",       "Max Number of lines to return (Default: " + str(args['count']) + ")"))      
       options.append(("-l, --log LOG",           "Log to analyse {" + " | ".join(sorted(logDefaults.keys())) + "}"))
-      options.append(("    --ascending",         "Sort by ascending order"))
-      options.append(("    --descending",        "Sort by descending order"))
+      options.append(("    --ascending",         "Sort by ascending order."))
+      options.append(("    --descending",        "Sort by descending order."))
+      options.append(("    --list",              "List the logs available."))
       options.append(("filters",                 "Filters to apply to log."))
       length = max( [ len(option[0]) for option in options ] )
       for option in options:
@@ -106,7 +108,12 @@ def command_line_args():
           default=args['sort'],
           action='store_false',
           dest='sort',          
-          help="Sort by descending order.")            
+          help="Sort by descending order.")
+  parser.add_argument('--list',
+          required=False,
+          default=args['list'],
+          action='store_true',
+          help="List the logs available.")  
   parser.add_argument('filters',
           nargs='*',
           default= args['filters'],
@@ -167,6 +174,17 @@ def process_logs(logdata):
 # Start program
 if __name__ == "__main__":
     command_line_args()
+    if args['list']:
+      if args['output'] == 'text':
+        print "\n".join([ str(k) + ", " + str(logDefaults[k]['logfile']) for k in logDefaults.keys() ])
+      else:
+        xmldata = ElementTree.Element('logs')
+        for k in logDefaults.keys():
+          ElementTree.SubElement(xmldata, "log", name=k, display=str(k).title(), location=logDefaults[k]['logfile'])
+        xml = ElementTree.Element('zarafaadmin')
+        xml.append(xmldata)
+        print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
+      sys.exit(0)
 
     print args
     sys.exit(0)
