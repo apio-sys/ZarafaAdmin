@@ -64,7 +64,7 @@ $outputxml->loadXML( $output );
 
 // XSL
 $xsl = new DOMDocument();
-$xsl->load('zarafa-users.xslt');
+$xsl->load('zarafa-mdm.xslt');
 
 // Proc
 $proc = new XSLTProcessor();
