@@ -5,8 +5,11 @@
 <xsl:param name="user" select=""/>
 
 <xsl:template match="/zarafaadmin/devices">
+  <p>1</p>
   <xsl:choose>
     <xsl:when test="count(device) = 1">
+  <p>2</p>
+
       <table id="zarafa-device">
         <tr><th colspan="2" class="center">Device Information</th><th colspan="2" class="center">Wipe Information</th></tr>
         <tr class="hover"><th>User</th><td><a href="./zarafa-users.php?user={device/@synchronizedbyuser}"><xsl:value-of select="device/@synchronizedbyuser"/></a></td><th>Request On</th><td><xsl:value-of select="wipe/@wiperequeston"/></td></tr>
@@ -29,6 +32,8 @@
     </xsl:when>
 
     <xsl:otherwise>
+  <p>3</p>
+
       <table id="zarafa-devices">
         <tr>
           <th><a href="./zarafa-mdm.php?user={$user}&amp;device={@device}&amp;sort=username">Username</a></th>
@@ -40,7 +45,7 @@
           <xsl:apply-templates select="device"><xsl:sort select="translate(@deviceid, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" /></xsl:apply-templates>
         </xsl:when>
         <xsl:when test="$sort = 'sync'">
-          <xsl:apply-templates select="device"><xsl:sort select="@lag" order="descending" data-type="number"/></xsl:apply-templates>
+          <xsl:apply-templates select="device"><xsl:sort select="lastsync/@lag" order="descending" data-type="number"/></xsl:apply-templates>
         </xsl:when>
         <xsl:otherwise>
           <xsl:apply-templates select="device"><xsl:sort select="translate(@username, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" /></xsl:apply-templates>
@@ -61,7 +66,3 @@
 
 </xsl:stylesheet>
 
-
-
-
-<zarafaadmin><devices><device deviceid="sec1d67e4af525dc" username="brandtb"><lastsync lag="-1.1400">2016-04-22 10:20</lastsync></device><device deviceid="sec18809e977ac3c" username="brandtb"><lastsync lag="736075.580">never</lastsync></device><device deviceid="sec101f9407a7166" username="brandtb"><lastsync lag="513.1193">2014-11-25 13:47</lastsync></device><device deviceid="androidc259148960" username="brandtb"><lastsync lag="518.1132">2014-11-20 14:48</lastsync></device></devices></zarafaadmin>
