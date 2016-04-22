@@ -57,7 +57,6 @@ echo '<td class="entry"><input type="text" name="filter" value="',$filter,'"/></
 echo '<td class="entry"><input type="submit" name="submit" value="Filter Log"/></td>';
 echo '</tr>';
 echo '</table>';
-echo '<p align="center"><sub>Note: Use LDAP Search format (i.e. bra*)</sub></p>';
 echo '</form>';
 
 // User XML
