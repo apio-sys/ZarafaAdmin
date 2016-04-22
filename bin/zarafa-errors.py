@@ -95,11 +95,16 @@ def command_line_args():
   parser.add_argument('filters',
           nargs='*',
           default= args['filters'],
+          type=str,          
           action='store',
           help="Filters to apply to log.")
   args.update(vars(parser.parse_args()))
   args['count'] = abs(args['count'])
-  args['filters'] = str(" ".join(args['filters'])).lower()
+  tmp = []
+  for f in args['filters']:
+    for t  in f.strip():
+      if t: tmp.append(f.lower())
+  args['filters'] = tmp
 
 def get_data():
   global args
@@ -131,7 +136,7 @@ def process_logs(logdata):
 
   print args['filters']
   return 0
-  
+
   for f in args['filters'].split():
     if f:
       if f[0] == "-":
