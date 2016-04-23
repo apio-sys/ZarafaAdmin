@@ -212,14 +212,20 @@ if __name__ == "__main__":
       exitcode = -1
       errmsg = str(err)
 
-    if args['output'] != 'xml': 
-      if exitcode != 0: 
+    if exitcode != 0: 
+      if args['output'] != 'xml': 
         sys.stderr.write( str(err) + "\nCommand: " + " ".join(sys.argv) + '\n' )
-    else:
-      xml = ElementTree.Element('zarafaadmin')      
-      xmldata = ElementTree.SubElement(xml, 'error', code=str(exitcode), 
-                                                     msg=str(errmsg), 
-                                                     cmd=" ".join(sys.argv))
-      print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
+      else:
+        xml = ElementTree.Element('zarafaadmin')      
+        xmldata = ElementTree.SubElement(xml, 'error', code=str(exitcode), 
+                                                       msg=str(errmsg), 
+                                                       cmd=" ".join(sys.argv))
+        print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
 
   sys.exit(exitcode)
+
+
+  <?xml version="1.0" encoding="utf-8"?>
+<zarafaadmin><logs><log display="Mysql-Error" location="/var/log/mysql/error.log" name="mysql-error" /><log display="System" location="/var/log/syslog" name="system" /><log display="Zarafa" location="/var/log/zarafa/server.log" name="zarafa" /><log display="Z-Push-Error" location="/var/log/z-push/z-push-error.log" name="z-push-error" /><log display="Z-Push" location="/var/log/z-push/z-push.log" name="z-push" /><log display="Mysql" location="/var/log/mysql/mysql.log" name="mysql" /></logs></zarafaadmin>
+<?xml version="1.0" encoding="utf-8"?>
+<zarafaadmin><error cmd="/opt/brandt/ZarafaAdmin/bin/zarafa-errors.py --list --output xml" code="0" msg="" /></zarafaadmin>
