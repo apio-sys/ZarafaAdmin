@@ -180,7 +180,7 @@ def process_logs(logdata):
 
 # Start program
 if __name__ == "__main__":
-  # try:
+  try:
     exitcode = 0
     command_line_args()  
 
@@ -204,20 +204,22 @@ if __name__ == "__main__":
       xml.append(xmldata)
       print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
 
-  # except ( Exception, SystemExit ) as err:
-  #   try:
-  #     exitcode = int(err[0])
-  #     errmsg = str(" ".join(err[1:]))
-  #   except:
-  #     exitcode = -1
-  #     errmsg = str(" ".join(err))
+  except ( Exception, SystemExit ) as err:
+    try:
+      exitcode = int(err[0])
+      errmsg = str(" ".join(err[1:]))
+    except:
+      exitcode = -1
+      errmsg = str(" ".join(err))
 
-  #   if args['output'] != 'xml': 
-  #     if exitcode != 0: sys.stderr.write( str(err) +'\n' )
-  #   else:
-  #     xml = ElementTree.Element('zarafaadmin')      
-  #     xmldata = ElementTree.SubElement(xml, 'error', errorcode = str(exitcode) )
-  #     xmldata.text = errmsg
-  #     print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
+    if args['output'] != 'xml': 
+      if exitcode != 0: 
+        sys.stderr.write( str(err) + "\nCommand: " + " ".join(sys.argv) + '\n' )
+    else:
+      xml = ElementTree.Element('zarafaadmin')      
+      xmldata = ElementTree.SubElement(xml, 'error', code=str(exitcode), 
+                                                     msg=str(errmsg), 
+                                                     cmd=" ".join(sys.argv))
+      print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
 
-  # sys.exit(exitcode)
+  sys.exit(exitcode)

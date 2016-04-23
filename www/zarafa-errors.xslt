@@ -5,6 +5,24 @@
 <xsl:param name="sort" select="'descending'"/>
 <xsl:param name="filter"/>
 
+<xsl:template match="/zarafaadmin/error">
+	<table align="center">
+		<caption style="color:red">An Error occurred, Please contact your System Administrator</caption>
+		<tr>
+			<td align="right" style="color:red">Error Number:</td>
+			<td align="left"><xsl:value-of select="@code"/></td>
+		</tr>
+		<tr>
+			<td align="right" style="color:red">Error Message:</td>
+			<td align="left"><xsl:value-of select="@msg"/></td>
+		</tr>
+		<tr>
+			<td align="right" style="color:red">Original Command:</td>
+			<td align="left"><xsl:value-of select="@cmd"/></td>
+		</tr>
+	</table>
+</xsl:template>
+
 <xsl:template match="/zarafaadmin/logs">
 	<form method="get">
 		<table valign="middle" id="entry" align="center">
