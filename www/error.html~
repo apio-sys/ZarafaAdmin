@@ -1,20 +1,16 @@
 <body>
-
-<table align="center">
-<caption style="color:red">An Error occurred, Please contact your System Administrator</caption>
-<tr>
-<th align="right" style="color:red">Error Number:</th>
-<td align="left">2</td>
-</tr>
-<tr>
-<th align="right" style="color:red">Error Message:</th>
-<td align="left">No such file or directory</td>
-</tr>
-<tr>
-<th align="right" style="color:red">Original Command:</th>
-<td align="left">ZarafaAdmin/bin/zarafa-errors.py -l zarafa --ascending -o xml</td>
-</tr>
-</table>
-
+<style>
+#loading-div {
+	display:block; 
+	left: 0px; 
+	top: 0px; 
+	width: 100%; 
+	height: 100%; 
+	z-index: 9999;
+	background-image: url('loading.svg') 50% 50% no-repeat rgb(249,249,249);
+}
+</style>
+<div id="loading-div"></div>
 
 </body>
+

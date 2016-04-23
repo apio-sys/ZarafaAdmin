@@ -167,8 +167,23 @@ a:active {
     text-decoration: underline;
 }
 
+/* General */
+#loading-div {
+	width: 120px; 
+	height: 20px; 
+	z-index: 9999;
+    display: block;
 
-# Login Errors
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -10px;
+  margin-left: -60px;
+}
+
+
+
+/* Login Errors */
 #entry tr { background: #FFF; }
 
 #zarafa-login-errors th { padding: 0px 10px 0px 10px; white-space: nowrap; }
@@ -180,8 +195,7 @@ a:active {
 .show { display: table-row; }
 
 
-# Users
-
+/* Users */
 #userdetail th { text-align: right; padding: 0px 10px 0px 10px; vertical-align: text-top; }
 #userdetail td { text-align: left;  padding: 0px 10px 0px 10px; }
 #userdetail tr:nth-child(odd) { background: #FFF }

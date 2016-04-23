@@ -53,6 +53,7 @@ echo '<meta http-equiv="Content-Type" charset="utf-8">';
 echo '<link rel="stylesheet" href="zarafaadmin.css">';
 echo '<title>Zarafa Log Viewer</title>';
 echo '</head><body>';
+echo '<div id="loading-div"><img src="loading.gif"\> Loading...</div>';
 
 // User XML
 $form = shell_exec("sudo /opt/brandt/ZarafaAdmin/bin/zarafa-errors.py --list --output xml");
