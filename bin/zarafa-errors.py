@@ -210,8 +210,7 @@ if __name__ == "__main__":
       errmsg = str(" ".join(err[1:]))
     except:
       exitcode = -1
-      print err
-      errmsg = str(" ".join(err))
+      errmsg = str(err)
 
     if args['output'] != 'xml': 
       if exitcode != 0: 
