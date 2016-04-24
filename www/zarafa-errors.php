@@ -61,7 +61,7 @@ echo '<script src="loading.js"></script>';
 echo '</head><body onload="hide_loading();">';
 echo str_pad('',$buffer)."\n"; ob_flush();
 
-echo '<div id="loading"><img src="loading.gif"\> Loading...</div>';
+echo '<div id="loading"><img src="loading.gif"/> Loading...</div>';
 echo str_pad('',$buffer)."\n"; ob_flush();
 
 // User XML

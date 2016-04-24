@@ -1,4 +1,5 @@
 function hide_loading() {
-  alert('loading');
-  document.getElementById('loading').style.display = none;
+	var div = document.getElementById('loading');
+	div.style.display = 'none';
+	div.style.visibility = 'hidden';  
 }
