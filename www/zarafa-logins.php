@@ -29,6 +29,16 @@
 //error_reporting(0);
 // Report all PHP errors
 error_reporting(-1);
+header("Expires: Tue, 01 Jan 2000 00:00:00 GMT");
+header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+// The following is needed to display loading screen using Progressive Rendering
+ob_start(); // not needed if output_buffering is on in php.ini
+ob_implicit_flush(); // implicitly calls flush() after every ob_flush()
+$buffer = ini_get('output_buffering'); // retrive the buffer size from the php.ini file
+if (!is_numeric($buffer)) $buffer = 8192;
 
 $sort = "";
 if (isset($_GET['sort']))    $sort = $_GET['sort'];
@@ -53,7 +63,12 @@ echo '        row.className = "hide";';
 echo '    }';
 echo '}';
 echo '</script>';
-echo '</head><body>';
+echo '<script src="loading.js"></script>';
+echo '</head><body onload="hide_loading();">';
+echo str_pad('',$buffer)."\n"; ob_flush();
+
+echo '<div id="loading"><img src="loading.gif"/> Loading...</div>';
+echo str_pad('',$buffer)."\n"; ob_flush();
 
 // XML
 $output = shell_exec("sudo /opt/brandt/ZarafaAdmin/bin/zarafa-logins.py --output xml");

@@ -34,13 +34,23 @@ header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
+// The following is needed to display loading screen using Progressive Rendering
+ob_start(); // not needed if output_buffering is on in php.ini
+ob_implicit_flush(); // implicitly calls flush() after every ob_flush()
+$buffer = ini_get('output_buffering'); // retrive the buffer size from the php.ini file
+if (!is_numeric($buffer)) $buffer = 8192;
 
 echo '<html><head>';
 echo '<meta http-equiv="content-type" content="text/html; charset=UTF-8">';
 echo '<meta http-equiv="Content-Type" charset="utf-8">';
 echo '<link rel="stylesheet" href="zarafaadmin.css">';
 echo '<title>Zarafa System Details</title>';
-echo '</head><body>';
+echo '<script src="loading.js"></script>';
+echo '</head><body onload="hide_loading();">';
+echo str_pad('',$buffer)."\n"; ob_flush();
+
+echo '<div id="loading"><img src="loading.gif"/> Loading...</div>';
+echo str_pad('',$buffer)."\n"; ob_flush();
 
 // XML
 $output = shell_exec("sudo /opt/brandt/ZarafaAdmin/bin/zarafa-system.py --output xml");
@@ -61,12 +71,3 @@ echo "<pre>$output</pre>";
 
 echo '</body></html>';
 ?>
-
-
-<!-- 
-<?xml version="1.0" encoding="utf-8"?>
-<zarafaadmin><error errorcode="-1">list index out of range</error></zarafaadmin>
-
- -->
-
-
