@@ -168,17 +168,16 @@ a:active {
 }
 
 /* General */
-#loading-div {
+#loading {
+    display: block;	
 	width: 120px; 
 	height: 20px; 
 	z-index: 9999;
-    display: block;
-
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  margin-top: -10px;
-  margin-left: -60px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin-top: -10px;
+	margin-left: -60px;
 }
 
 
