@@ -1,19 +1,14 @@
-<body>
-<style>
-#loading-div {
-	width: 120px; 
-	height: 20px; 
-	z-index: 9999;
-    display: block;
+<?php
+  ob_start(); // not needed if output_buffering is on in php.ini
+  ob_implicit_flush(); // implicitly calls flush() after every ob_flush()
 
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  margin-top: -10px;
-  margin-left: -60px;
-}
-</style>
-<div id="loading-div"><img src="loading.gif"\> Loading...</div>
+  echo "This output is buffered.\n";
+  echo "As is this.\n";
 
-</body>
-
+  for ($i = 0; $i < 10; $i++)
+  {
+    echo "$i\n";
+    ob_flush();
+    sleep(1);
+  }
+?>
