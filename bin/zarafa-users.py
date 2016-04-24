@@ -355,6 +355,7 @@ if __name__ == "__main__":
       xmldata = zarafa_user(users[0].split(";")[headers.index("username")])
     else:
       xmldata = zarafa_users(users)
+      print xmldata
 
   except SystemExit as err:
     pass
