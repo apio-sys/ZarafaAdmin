@@ -216,7 +216,7 @@ def parseData(data):
 
 def zarafa_device(deviceID, username):
   global args
-  command = '/usr/share/z-push/z-push-admin.php -a list -d "' + deviceID + '"" -u "' + username + '"'
+  command = '/usr/share/z-push/z-push-admin.php -a list -d "' + deviceID + '" -u "' + username + '"'
 
   p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   out, err = p.communicate()
