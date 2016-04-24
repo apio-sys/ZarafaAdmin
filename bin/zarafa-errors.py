@@ -24,8 +24,6 @@ args['list'] = False
 version = 0.3
 encoding = 'utf-8'
 
-allowedASCII = tuple([9,10,13] + range(32,127))
-
 # Logs have roughly 135 (89-165) Bytes per line.
 logSizeLimit = 20000 * 135
 logDefaults = {'system':{"logfile":"/var/log/syslog","oldlogfile":"/var/log/syslog.1"},
@@ -151,12 +149,10 @@ def proper(string):
   string=str(string).lower().replace("mysql","MySQL")
   return string.title()
 
-def safestr(string):
+allowedASCII = tuple([9,10,13] + range(32,127))
+def strXML(string):
   global allowedASCII
-  tmp = ''
-  for s in str(string):
-    if ord(s) in allowedASCII: tmp +=s
-  return tmp
+  return ''.join([ s for s in string if ord(s) in allowedASCII ])
 
 def process_logs(logdata):
   global args
