@@ -185,23 +185,20 @@ if __name__ == "__main__":
     command_line_args()  
 
     if args['list']:
-      if args['output'] == 'text':
-        print "\n".join([ str(k) + ", " + str(logDefaults[k]['logfile']) for k in logDefaults.keys() ])
+      if args['output'] != 'xml':
+        output = "\n".join([ str(k) + ", " + str(logDefaults[k]['logfile']) for k in logDefaults.keys() ])
       else:
         xmldata = ElementTree.Element('logs')
         for k in logDefaults.keys():
-          ElementTree.SubElement(xmldata, "log", name=k, display=proper(k), location=logDefaults[k]['logfile'])
-        xml = ElementTree.Element('zarafaadmin')
-        xml.append(xmldata)
-        print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
-      sys.exit(0)
-
-    logdata = get_data()
-    xmldata = process_logs(logdata)
+          ElementTree.SubElement(xmldata, "log", name=brandt.strXML(k), 
+                                                 display=brandt.proper(k), 
+                                                 location=brandt.strXML(logDefaults[k]['logfile']))
+    else:
+      logdata = get_data()
+      xmldata = process_logs(logdata)
 
   except SystemExit as err:
-    print "Testing", err
-    # pass
+    pass
   except Exception as err:
     try:
       exitcode = int(err[0])
@@ -214,8 +211,8 @@ if __name__ == "__main__":
       error = "(" + str(exitcode) + ") " + str(errmsg) + "\nCommand: " + " ".join(sys.argv)
     else:
       xmldata = ElementTree.Element('error', code=brandt.strXML(exitcode), 
-                                                       msg=brandt.strXML(errmsg), 
-                                                       cmd=brandt.strXML(" ".join(sys.argv)))
+                                             msg=brandt.strXML(errmsg), 
+                                             cmd=brandt.strXML(" ".join(sys.argv)))
   finally:
     if args['output'] != 'xml': 
       if output: print str(output)
