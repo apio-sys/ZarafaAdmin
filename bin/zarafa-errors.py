@@ -149,6 +149,12 @@ def proper(string):
   string=str(string).lower().replace("mysql","MySQL")
   return string.title()
 
+def safestr(string):
+  tmp = ''
+  for s in str(string):
+    if 0 < ord(s) < 127: tmp +=s
+  return tmp
+
 def process_logs(logdata):
   global args
 
@@ -177,7 +183,7 @@ def process_logs(logdata):
     xmldata = ElementTree.SubElement(xml, "line")
     # xmldata.text = str(line).decode('unicode_escape','ignore').encode(encoding,'ignore')
     # xmldata.text = str(unicode(line, errors='ignore'))  
-    xmldata.text = str(line).decode('ascii','ignore')    
+    xmldata.text = safestr(line)
   return xml
 
 # Start program
