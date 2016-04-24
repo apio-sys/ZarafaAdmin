@@ -177,12 +177,10 @@ def process_logs(logdata):
     print "\n".join(logdata)
     sys.exit(0)
 
-  xml = ElementTree.Element('log', log=proper(args['log']), filters=args['filters'])
+  xml = ElementTree.Element('log', log=strXML(proper(args['log'])), filters=strXML(args['filters']))
   for line in logdata:
     xmldata = ElementTree.SubElement(xml, "line")
-    # xmldata.text = str(line).decode('unicode_escape','ignore').encode(encoding,'ignore')
-    # xmldata.text = str(unicode(line, errors='ignore'))  
-    xmldata.text = safestr(line)
+    xmldata.text = strXML(line)
   return xml
 
 # Start program
