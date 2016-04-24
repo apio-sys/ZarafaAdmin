@@ -24,6 +24,8 @@ args['list'] = False
 version = 0.3
 encoding = 'utf-8'
 
+allowedASCII = tuple([10,13] + range(32,127))
+
 # Logs have roughly 135 (89-165) Bytes per line.
 logSizeLimit = 20000 * 135
 logDefaults = {'system':{"logfile":"/var/log/syslog","oldlogfile":"/var/log/syslog.1"},
@@ -150,9 +152,10 @@ def proper(string):
   return string.title()
 
 def safestr(string):
+  global allowedASCII
   tmp = ''
   for s in str(string):
-    if 0 < ord(s) < 127: tmp +=s
+    if ord(s) in allowedASCII: tmp +=s
   return tmp
 
 def process_logs(logdata):
