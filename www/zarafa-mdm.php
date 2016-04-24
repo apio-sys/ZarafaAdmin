@@ -66,8 +66,8 @@ echo str_pad('',$buffer)."\n"; ob_flush();
 
 // XML
 $command = "sudo /opt/brandt/ZarafaAdmin/bin/zarafa-mdm.py --output xml";
-if ( $user !== "" ) $command = "$command -u '$user'";
-if ( $device !== "" ) $command = "$command -d '$device'";
+if ( $user !== "" ) $command = "$command -u ".escapeshellarg($user);
+if ( $device !== "" ) $command = "$command -d ".escapeshellarg($device);
 $output = shell_exec($command);
 $outputxml = new DOMDocument();
 $outputxml->loadXML( $output );

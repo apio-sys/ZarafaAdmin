@@ -86,13 +86,14 @@ echo str_pad('',$buffer)."\n"; ob_flush();
 
 // User XML
 $command = "sudo /opt/brandt/ZarafaAdmin/bin/zarafa-errors.py --output xml";
-$command = "$command --log '$log'";
+$command = "$command --log ".escapeshellarg($log);
+
 if ( $sort == "descending" ) {
 	$command = "$command --descending";
 } else {
 	$command = "$command --ascending";
 }
-if ( $filter !== "" ) $command = "$command '$filter'";
+if ( $filter !== "" ) $command = "$command ".escapeshellarg($filter);
 $output = shell_exec($command);
 $outputxml = new DOMDocument();
 $outputxml->loadXML( $output );
