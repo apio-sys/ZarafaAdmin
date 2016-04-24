@@ -99,7 +99,7 @@ def command_line_args():
 
 def get_data():
   global args
-  command = '/usr/sbin/zarafa-admin -L'
+  command = ['/usr/sbin/zarafa-admin','-L']
   cachefile = '/tmp/zarafa-groups.cache'    
 
   args['cache'] *= 60
@@ -110,7 +110,7 @@ def get_data():
     pass
 
   if age > args['cache']:
-    p = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = p.communicate()
     if err: raise IOError(err)
 
@@ -156,9 +156,9 @@ def zarafa_groups(groups):
 
 def zarafa_group(groupname):
   global args, ldapmapping
-  command = '/usr/sbin/zarafa-admin --type group --details "' + str(groupname) + '"'
+  command = ['/usr/sbin/zarafa-admin','--type group','--details',str(groupname)]
 
-  p = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+  p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   out, err = p.communicate()
   if err: raise IOError(err)
 
