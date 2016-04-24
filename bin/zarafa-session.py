@@ -106,7 +106,7 @@ def get_data():
     pass
 
   if age > args['cache']:
-    p = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = p.communicate()
     if err: raise IOError(err)
 

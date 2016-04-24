@@ -153,7 +153,7 @@ def get_data():
     pass
 
   if age > args['cache']:
-    p = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = p.communicate()
     if err: raise IOError(err)
 
@@ -220,9 +220,9 @@ def zarafa_users(users):
 
 def zarafa_user(username):
   global args, ldapmapping
-  command = '/usr/sbin/zarafa-admin --type user --details ' + str(username)
+  command = '/usr/sbin/zarafa-admin --type user --details "' + str(username) + '"'
 
-  p = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+  p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   out, err = p.communicate()
   if err: raise IOError(err)
 
@@ -279,8 +279,8 @@ def zarafa_user(username):
       data[good] = data[bad]
       del data[bad]
 
-  command = '/usr/sbin/zarafa-admin --type user --list-sendas ' + str(username)
-  p = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+  command = '/usr/sbin/zarafa-admin --type user --list-sendas "' + str(username) + '"'
+  p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   out, err = p.communicate()
   if err: raise IOError(err)
   sendas = [ str(x).split("\t") for x in str(out).split("\n")[3:] if x ]
