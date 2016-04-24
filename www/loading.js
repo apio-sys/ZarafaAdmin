@@ -1,4 +1,4 @@
-function hide_element(id) {
-	alert(id);
-  document.getElementById(id).style.display = none;
+function hide_loading() {
+  alert('loading');
+  document.getElementById('loading').style.display = none;
 }
