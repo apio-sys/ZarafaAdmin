@@ -228,7 +228,7 @@ def zarafa_group(groupname):
     print args['delimiter'].join([data.get(x[0],"") for x in fieldmappings] + tmp)
   else:
     xml = ElementTree.Element('groups')
-    xmlgroup = ElementTree.SubElement(xml, "group", **data)
+    xmlgroup = ElementTree.SubElement(xml, "group", **{k:brandt.strXML(v) for k,v in data.items()})
     for send in sendas:
       ElementTree.SubElement(xmlgroup, 'sendas', username=brandt.strXML(send[1]), fullname=brandt.strXML(send[2]))
     for user in users:
