@@ -160,7 +160,7 @@ def zarafa_group(groupname):
 
   p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   out, err = p.communicate()
-  #if err: raise IOError(err)
+  if err: raise IOError(err)
 
   out = str(out).split("\n")
   users = []
@@ -187,8 +187,8 @@ def zarafa_group(groupname):
   data = { x[0]:x[1] for x in out }
   data.update(props)
 
-  command = '/usr/sbin/zarafa-admin --type group --list-sendas ' + str(groupname)
-  p = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+  command = '/usr/sbin/zarafa-admin --type group --list-sendas "' + str(groupname) +'"'
+  p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   out, err = p.communicate()
   if err: raise IOError(err)
   sendas = [ str(x).split("\t") for x in str(out).split("\n")[3:] if x ]
@@ -237,7 +237,7 @@ def zarafa_group(groupname):
 
 # Start program
 if __name__ == "__main__":
-  # try:
+  try:
     output = ""
     error = ""
     xmldata = ElementTree.Element('error', code="-1", msg="Unknown Error", cmd=brandt.strXML(" ".join(sys.argv)))
@@ -251,28 +251,28 @@ if __name__ == "__main__":
     else:
       xmldata = zarafa_groups(groups)
 
-  # except SystemExit as err:
-  #   pass
-  # except Exception as err:
-  #   try:
-  #     exitcode = int(err[0])
-  #     errmsg = str(" ".join(err[1:]))
-  #   except:
-  #     exitcode = -1
-  #     errmsg = str(err)
+  except SystemExit as err:
+    pass
+  except Exception as err:
+    try:
+      exitcode = int(err[0])
+      errmsg = str(" ".join(err[1:]))
+    except:
+      exitcode = -1
+      errmsg = str(err)
 
-  #   if args['output'] != 'xml': 
-  #     error = "(" + str(exitcode) + ") " + str(errmsg) + "\nCommand: " + " ".join(sys.argv)
-  #   else:
-  #     xmldata = ElementTree.Element('error', code=brandt.strXML(exitcode), 
-  #                                            msg=brandt.strXML(errmsg), 
-  #                                            cmd=brandt.strXML(" ".join(sys.argv)))
-  # finally:
-  #   if args['output'] != 'xml': 
-  #     if output: print str(output)
-  #     if error:  sys.stderr.write( str(error) + "\n" )
-  #   else:
-  #     xml = ElementTree.Element('zarafaadmin')
-  #     xml.append(xmldata)
-  #     print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
-  #   sys.exit(exitcode)
+    if args['output'] != 'xml': 
+      error = "(" + str(exitcode) + ") " + str(errmsg) + "\nCommand: " + " ".join(sys.argv)
+    else:
+      xmldata = ElementTree.Element('error', code=brandt.strXML(exitcode), 
+                                             msg=brandt.strXML(errmsg), 
+                                             cmd=brandt.strXML(" ".join(sys.argv)))
+  finally:
+    if args['output'] != 'xml': 
+      if output: print str(output)
+      if error:  sys.stderr.write( str(error) + "\n" )
+    else:
+      xml = ElementTree.Element('zarafaadmin')
+      xml.append(xmldata)
+      print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
+    sys.exit(exitcode)
