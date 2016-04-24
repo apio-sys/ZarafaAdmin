@@ -216,6 +216,7 @@ def zarafa_users(users):
       if logon:  child = ElementTree.SubElement(xmluser, "logon", lag=brandt.strXML((today - logon).days), date=brandt.strXML(logon))
       if logoff: child = ElementTree.SubElement(xmluser, "logoff", lag=brandt.strXML((today - logoff).days), date=brandt.strXML(logoff))
 
+    print xml
     return xml
 
 def zarafa_user(username):
@@ -284,9 +285,7 @@ def zarafa_user(username):
   out, err = p.communicate()
   if err: raise IOError(err)
   sendas = [ str(x).split("\t") for x in str(out).split("\n")[3:] if x ]
-
-  xml = ElementTree.Element('users')
-  today = datetime.datetime.today()  
+ 
   if args['output'] == "text":
     maxlen = max([ len(f[1]) for f in fieldmappings ] + [ len(f[1]) for f in quotafieldmappings ] + [ len(f[1]) for f in ldapfieldmappings if data.has_key(f[0]) ] )
     maxlen += 2
@@ -312,6 +311,7 @@ def zarafa_user(username):
       print "\nGroups (" + str(len(groups)) + "):"
       print '-' * (maxlen + 10)
       brandt.printTable(sorted(groups),2)
+    sys.exit(0)
 
   elif args['output'] == "csv":
     tmp = []
@@ -327,10 +327,14 @@ def zarafa_user(username):
     if sendas: tmp += sorted([ x[1] + "(" + x[2] + ")" for x in sendas ])
     if groups: tmp += sorted(groups)
     print args['delimiter'].join([ data.get(f[0],"") for f in (fieldmappings + quotafieldmappings ) ] + tmp )
+    sys.exit(0)
 
   else:
     del data["lastlogon"]
     del data["lastlogoff"]
+
+    xml = ElementTree.Element('users')
+    today = datetime.datetime.today()     
     xmluser = ElementTree.SubElement(xml, "user", **{k:brandt.strXML(v) for k,v in data.items()})
     if logon:  child = ElementTree.SubElement(xmluser, "logon", lag=brandt.strXML((today - logon).days), date=brandt.strXML(logon))
     if logoff: child = ElementTree.SubElement(xmluser, "logoff", lag=brandt.strXML((today - logoff).days), date=brandt.strXML(logoff))
@@ -338,7 +342,7 @@ def zarafa_user(username):
       ElementTree.SubElement(xmluser, 'sendas', username = brandt.strXML(send[1]), fullname = brandt.strXML(send[2]))
     for group in groups:
       ElementTree.SubElement(xmluser, 'group', groupname = brandt.strXML(group))
-  return xml
+    return xml
 
 # Start program
 if __name__ == "__main__":
