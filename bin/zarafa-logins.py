@@ -9,8 +9,9 @@ import subprocess
 
 args = {}
 args['output'] = "text"
-args['version'] = 0.3
-encoding = "utf-8"
+
+version = 0.3
+encoding = 'utf-8'
 
 months = ('','jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec')
 
