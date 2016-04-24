@@ -145,15 +145,6 @@ def get_data():
 
   return data
 
-def proper(string):
-  string=str(string).lower().replace("mysql","MySQL")
-  return string.title()
-
-allowedASCII = tuple([9,10,13] + range(32,127))
-def strXML(string):
-  global allowedASCII
-  return ''.join([ s for s in string if ord(s) in allowedASCII ])
-
 def process_logs(logdata):
   global args
 
@@ -177,10 +168,10 @@ def process_logs(logdata):
     print "\n".join(logdata)
     sys.exit(0)
 
-  xml = ElementTree.Element('log', log=strXML(proper(args['log'])), filters=strXML(args['filters']))
+  xml = ElementTree.Element('log', log=brandt.strXML(brandt.proper(args['log'])), filters=brandt.strXML(args['filters']))
   for line in logdata:
     xmldata = ElementTree.SubElement(xml, "line")
-    xmldata.text = strXML(line)
+    xmldata.text = brandt.strXML(line)
   return xml
 
 # Start program
