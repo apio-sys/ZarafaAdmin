@@ -57,7 +57,7 @@ echo '<div id="loading"><img src="loading.gif"/> Loading...</div>';
 echo str_pad('',$buffer)."\n"; ob_flush();
 
 // XML
-$output = shell_exec("sudo /opt/brandt/ZarafaAdmin/bin/zarafa-groups.py --output xml \'$group\'");
+$output = shell_exec("sudo /opt/brandt/ZarafaAdmin/bin/zarafa-groups.py --output xml ".escapeshellarg($group));
 $outputxml = new DOMDocument();
 $outputxml->loadXML( $output );
 
