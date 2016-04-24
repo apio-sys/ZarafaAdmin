@@ -177,7 +177,11 @@ def process_logs(logdata):
 # Start program
 if __name__ == "__main__":
   try:
+    output = ""
+    error = ""
+    xmldata = ElementTree.Element('error', code="-1", msg="Unknown Error", cmd=brandt.strXML(" ".join(sys.argv)))
     exitcode = 0
+
     command_line_args()  
 
     if args['list']:
@@ -195,12 +199,10 @@ if __name__ == "__main__":
     logdata = get_data()
     xmldata = process_logs(logdata)
 
-    if args['output'] == 'xml': 
-      xml = ElementTree.Element('zarafaadmin')
-      xml.append(xmldata)
-      print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
-
-  except ( Exception, SystemExit ) as err:
+  except SystemExit as err:
+    print "Testing", err
+    # pass
+  except Exception as err:
     try:
       exitcode = int(err[0])
       errmsg = str(" ".join(err[1:]))
@@ -208,14 +210,18 @@ if __name__ == "__main__":
       exitcode = -1
       errmsg = str(err)
 
-    if exitcode != 0: 
-      if args['output'] != 'xml': 
-        sys.stderr.write( str(err) + "\nCommand: " + " ".join(sys.argv) + '\n' )
-      else:
-        xml = ElementTree.Element('zarafaadmin')      
-        xmldata = ElementTree.SubElement(xml, 'error', code=str(exitcode), 
-                                                       msg=str(errmsg), 
-                                                       cmd=" ".join(sys.argv))
-        print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
-
-  sys.exit(exitcode)
+    if args['output'] != 'xml': 
+      error = "(" + str(exitcode) + ") " + str(errmsg) + "\nCommand: " + " ".join(sys.argv)
+    else:
+      xmldata = ElementTree.Element('error', code=brandt.strXML(exitcode), 
+                                                       msg=brandt.strXML(errmsg), 
+                                                       cmd=brandt.strXML(" ".join(sys.argv)))
+  finally:
+    if args['output'] != 'xml': 
+      if output: print str(output)
+      if error:  sys.stderr.write( str(error) + "\n" )
+    else:
+      xml = ElementTree.Element('zarafaadmin')
+      xml.append(xmldata)
+      print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
+    sys.exit(exitcode)
