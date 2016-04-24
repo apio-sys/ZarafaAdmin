@@ -216,7 +216,6 @@ def zarafa_users(users):
       if logon:  child = ElementTree.SubElement(xmluser, "logon", lag=brandt.strXML((today - logon).days), date=brandt.strXML(logon))
       if logoff: child = ElementTree.SubElement(xmluser, "logoff", lag=brandt.strXML((today - logoff).days), date=brandt.strXML(logoff))
 
-    print xml
     return xml
 
 def zarafa_user(username):
@@ -346,7 +345,7 @@ def zarafa_user(username):
 
 # Start program
 if __name__ == "__main__":
-  # try:
+  try:
     output = ""
     error = ""
     xmldata = ElementTree.Element('error', code="-1", msg="Unknown Error", cmd=brandt.strXML(" ".join(sys.argv)))
@@ -359,30 +358,29 @@ if __name__ == "__main__":
       xmldata = zarafa_user(users[0].split(";")[headers.index("username")])
     else:
       xmldata = zarafa_users(users)
-      print xmldata
 
-  # except SystemExit as err:
-  #   pass
-  # except Exception as err:
-  #   try:
-  #     exitcode = int(err[0])
-  #     errmsg = str(" ".join(err[1:]))
-  #   except:
-  #     exitcode = -1
-  #     errmsg = str(err)
+  except SystemExit as err:
+    pass
+  except Exception as err:
+    try:
+      exitcode = int(err[0])
+      errmsg = str(" ".join(err[1:]))
+    except:
+      exitcode = -1
+      errmsg = str(err)
 
-  #   if args['output'] != 'xml': 
-  #     error = "(" + str(exitcode) + ") " + str(errmsg) + "\nCommand: " + " ".join(sys.argv)
-  #   else:
-  #     xmldata = ElementTree.Element('error', code=brandt.strXML(exitcode), 
-  #                                            msg=brandt.strXML(errmsg), 
-  #                                            cmd=brandt.strXML(" ".join(sys.argv)))
-  # finally:
-  #   if args['output'] != 'xml': 
-  #     if output: print str(output)
-  #     if error:  sys.stderr.write( str(error) + "\n" )
-  #   else:
-  #     xml = ElementTree.Element('zarafaadmin')
-  #     xml.append(xmldata)
-  #     print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
-  #   sys.exit(exitcode)
+    if args['output'] != 'xml': 
+      error = "(" + str(exitcode) + ") " + str(errmsg) + "\nCommand: " + " ".join(sys.argv)
+    else:
+      xmldata = ElementTree.Element('error', code=brandt.strXML(exitcode), 
+                                             msg=brandt.strXML(errmsg), 
+                                             cmd=brandt.strXML(" ".join(sys.argv)))
+  finally:
+    if args['output'] != 'xml': 
+      if output: print str(output)
+      if error:  sys.stderr.write( str(error) + "\n" )
+    else:
+      xml = ElementTree.Element('zarafaadmin')
+      xml.append(xmldata)
+      print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
+    sys.exit(exitcode)
