@@ -151,7 +151,7 @@ def zarafa_groups(groups):
   else:
     xml = ElementTree.Element('groups')
     for group in groups:
-      xmluser = ElementTree.SubElement(xml, "group", groupname = group)
+      xmluser = ElementTree.SubElement(xml, "group", groupname = brandt.strXML(group))
     return xml
 
 def zarafa_group(groupname):
@@ -230,9 +230,9 @@ def zarafa_group(groupname):
     xml = ElementTree.Element('groups')
     xmlgroup = ElementTree.SubElement(xml, "group", **data)
     for send in sendas:
-      ElementTree.SubElement(xmlgroup, 'sendas', username=send[1], fullname=send[2])   
+      ElementTree.SubElement(xmlgroup, 'sendas', username=brandt.strXML(send[1]), fullname=brandt.strXML(send[2]))
     for user in users:
-      ElementTree.SubElement(xmlgroup, 'user', username=user[0], fullname=user[1])
+      ElementTree.SubElement(xmlgroup, 'user', username=brandt.strXML(user[0]), fullname=brandt.strXML(user[1]))
     return xml
 
 # Start program
