@@ -156,9 +156,9 @@ def zarafa_groups(groups):
 
 def zarafa_group(groupname):
   global args, ldapmapping
-  command = ['/usr/sbin/zarafa-admin','--type','group','--details',str(groupname)]
+  command = '/usr/sbin/zarafa-admin --type group --details ' + str(groupname)
 
-  p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+  p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   out, err = p.communicate()
   if err: raise IOError(err)
 
