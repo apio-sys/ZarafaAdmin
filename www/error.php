@@ -5,8 +5,7 @@
   echo "This output is buffered.<br/>\n";
   echo "As is this.<br/>\n";
 
-  // $buffer = ini_get('output_buffering');
-  $buffer = "no";
+  $buffer = ini_get('output_buffering');
   if (!is_numeric($buffer)) $buffer = 8192;
 
   echo "output_buffering = $buffer<br/>\n";
