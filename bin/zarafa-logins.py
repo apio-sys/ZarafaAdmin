@@ -68,6 +68,7 @@ def command_line_args():
                       default=args['output'],
                       choices=['text', 'xml'],
                       help="Display output type.")
+  args.update(vars(parser.parse_args()))
 
 def get_data():
   global args
