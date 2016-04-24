@@ -56,9 +56,9 @@ echo '<html><head>';
 echo '<meta http-equiv="content-type" content="text/html; charset=UTF-8">';
 echo '<meta http-equiv="Content-Type" charset="utf-8">';
 echo '<link rel="stylesheet" href="zarafaadmin.css">';
-// echo '<script src="my.js"></script>';
+echo '<script src="loading.js"></script>';
 echo '<title>Zarafa Log Viewer</title>';
-echo '</head><body>';
+echo '</head><body onload="hide_loading();>';
 echo str_pad('',$buffer)."\n"; ob_flush();
 
 echo '<div id="loading-div"><img src="loading.gif"\> Loading...</div>';
