@@ -4,8 +4,6 @@ Python wrapper for analyzing at zarafa logs
 """
 import argparse, textwrap, fnmatch, datetime
 import xml.etree.cElementTree as ElementTree
-import subprocess
-from multiprocessing import Process, Queue
 
 # Import Brandt Common Utilities
 import sys, os
