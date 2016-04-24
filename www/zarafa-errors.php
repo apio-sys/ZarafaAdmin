@@ -34,6 +34,11 @@ header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
+// The following is needed to display loading screen
+ob_start(); // not needed if output_buffering is on in php.ini
+ob_implicit_flush(); // implicitly calls flush() after every ob_flush()
+$buffer = ini_get('output_buffering'); // retrive the buffer size from the php.ini file
+if (!is_numeric($buffer)) $buffer = 8192;
 
 $filter = "";
 if (isset($_GET['filter']))  $filter = $_GET['filter'];
@@ -54,8 +59,10 @@ echo '<link rel="stylesheet" href="zarafaadmin.css">';
 // echo '<script src="my.js"></script>';
 echo '<title>Zarafa Log Viewer</title>';
 echo '</head><body>';
+echo str_pad('',$buffer).'\n'; ob_flush();
+
 echo '<div id="loading-div"><img src="loading.gif"\> Loading...</div>';
-flush();
+echo str_pad('',$buffer).'\n'; ob_flush();
 
 // User XML
 $form = shell_exec("sudo /opt/brandt/ZarafaAdmin/bin/zarafa-errors.py --list --output xml");
@@ -75,6 +82,7 @@ if ( $filter !== "" ) $formproc->setParameter( '', 'filter', $filter);
 
 $form = $formproc->transformToDoc($formxml)->saveXML(); 
 echo "$form";
+echo str_pad('',$buffer).'\n'; ob_flush();
 
 // User XML
 $command = "sudo /opt/brandt/ZarafaAdmin/bin/zarafa-errors.py --output xml";
