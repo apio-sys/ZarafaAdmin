@@ -175,7 +175,7 @@ def process_logs(logdata):
   xml = ElementTree.Element('log', log=proper(args['log']), filters=args['filters'])
   for line in logdata:
     xmldata = ElementTree.SubElement(xml, "line")
-    xmldata.text = str(line).decode('unicode_escape','ignore')
+    xmldata.text = str(line).decode('unicode_escape','ignore').encode(encoding,'ignore')
   return xml
 
 # Start program
