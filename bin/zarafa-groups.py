@@ -160,7 +160,7 @@ def zarafa_group(groupname):
 
   p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   out, err = p.communicate()
-  if err: raise IOError(err)
+  #if err: raise IOError(err)
 
   out = str(out).split("\n")
   users = []
