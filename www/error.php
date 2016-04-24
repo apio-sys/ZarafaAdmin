@@ -4,6 +4,7 @@
 
   echo "This output is buffered.\n";
   echo "As is this.\n";
+  echo str_pad('',4096)."\n";    
 
   for ($i = 0; $i < 10; $i++)
   {
