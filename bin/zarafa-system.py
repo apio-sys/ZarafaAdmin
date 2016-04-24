@@ -5,7 +5,6 @@ Python wrapper for zarafa-stats --system
 import argparse, textwrap, datetime
 import xml.etree.cElementTree as ElementTree
 import subprocess
-from multiprocessing import Process, Queue
 
 # Import Brandt Common Utilities
 import sys, os
@@ -141,45 +140,52 @@ def zarafa_system(data):
       print str(desc).ljust(width) + args['delimiter'] + str(value)
     sys.exit(0)
 
-  attrib = {}
-  for line in data:
-    parameter, desc, value = line.split(";")
-    if parameter in ['server_start_date','cache_purge_date','config_reload_date','sql_last_fail_time']:
-      if value:
-        value = str(datetime.datetime.strptime(value.decode('unicode_escape'),'%a %b %d %H:%M:%S %Y'))
-    attrib[parameter] = value
+  else:
+    attrib = {}
+    for line in data:
+      parameter, desc, value = line.split(";")
+      if parameter in ['server_start_date','cache_purge_date','config_reload_date','sql_last_fail_time']:
+        if value:
+          value = str(datetime.datetime.strptime(value.decode('unicode_escape'),'%a %b %d %H:%M:%S %Y'))
+      attrib[parameter] = brandt.strXML(value)
 
-  xml = ElementTree.Element('system', **attrib)
-  return xml
-
+    xml = ElementTree.Element('system', **attrib)
+    return xml
 
 # Start program
 if __name__ == "__main__":
-  command_line_args()
-
-  exitcode = 0
   try:
+    output = ""
+    error = ""
+    xmldata = ElementTree.Element('error', code="-1", msg="Unknown Error", cmd=brandt.strXML(" ".join(sys.argv)))
+    exitcode = 0
+
+    command_line_args()  
+
     xmldata = zarafa_system(get_data())
 
-    if args['output'] == 'xml': 
-      xml = ElementTree.Element('zarafaadmin')
-      xml.append(xmldata)
-      print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
-
-  except ( Exception, SystemExit ) as err:
+  except SystemExit as err:
+    pass
+  except Exception as err:
     try:
       exitcode = int(err[0])
       errmsg = str(" ".join(err[1:]))
     except:
       exitcode = -1
-      errmsg = str(" ".join(err))
+      errmsg = str(err)
 
     if args['output'] != 'xml': 
-      if exitcode != 0: sys.stderr.write( str(err) +'\n' )
+      error = "(" + str(exitcode) + ") " + str(errmsg) + "\nCommand: " + " ".join(sys.argv)
     else:
-      xml = ElementTree.Element('zarafaadmin')      
-      xmldata = ElementTree.SubElement(xml, 'error', errorcode = str(exitcode) )
-      xmldata.text = errmsg
+      xmldata = ElementTree.Element('error', code=brandt.strXML(exitcode), 
+                                             msg=brandt.strXML(errmsg), 
+                                             cmd=brandt.strXML(" ".join(sys.argv)))
+  finally:
+    if args['output'] != 'xml': 
+      if output: print str(output)
+      if error:  sys.stderr.write( str(error) + "\n" )
+    else:
+      xml = ElementTree.Element('zarafaadmin')
+      xml.append(xmldata)
       print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
-
-  sys.exit(exitcode)
+    sys.exit(exitcode)
