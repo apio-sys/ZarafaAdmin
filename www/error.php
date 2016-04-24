@@ -7,7 +7,7 @@
 
   // $buffer = ini_get('output_buffering');
   $buffer = "no";
-  if ! is_numeric($buffer) $buffer = 8192;
+  if (!is_numeric($buffer)) $buffer = 8192;
 
   echo "output_buffering = $buffer<br/>\n";
   echo str_pad('',$buffer)."\n";
