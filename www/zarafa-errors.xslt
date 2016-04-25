@@ -26,7 +26,7 @@
 <xsl:template match="/zarafaadmin/logs">
 	<form method="get">
 		<table valign="top" align="center">
-			<tr class="logdata">
+			<tr>
 				<td>
 					<select name="log">
 						<xsl:for-each select="log">
@@ -64,7 +64,7 @@
 </xsl:template>
 
 <xsl:template match="line">
-  <tr><td>
+  <tr class="logdata"><td>
   	<xsl:value-of select="."/>
  	</td></tr>
 </xsl:template>
