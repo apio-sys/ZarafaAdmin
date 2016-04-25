@@ -183,12 +183,14 @@ a:hover, a:active
 	margin-left: -60px;
 }
 
-.entry 
+.entry { background: #FFF; }
+/*.entry tr:nth-child(odd) { background: #FFF }
+*/.entry tr:nth-child(even) { background: #DDD }
+.entry:hover
 { 
-	background: #FFF; 
+	background: #BBB;
+	font-weight: bold;	
 }
-
-
 
 
 
