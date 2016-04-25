@@ -117,26 +117,31 @@
   <td class="number"><xsl:value-of select="format-number(@quotahard div 1024,'###,###,##0')"/></td>
 
   <td class="number">
-  <xsl:choose>
-  <xsl:when test="number(@size div 1024) &gt;= number(@quotahard)">
-  <xsl:attribute name="class">hard</xsl:attribute>
-  </xsl:when>
-  <xsl:when test="number(@size div 1024) &gt;= number(@quotasoft)">
-  <xsl:attribute name="class">soft</xsl:attribute>
-  </xsl:when>
-  <xsl:when test="number(@size div 1024) &gt;= number(@quotawarn)">
-  <xsl:attribute name="class">warn</xsl:attribute>
-  </xsl:when>
-  <xsl:otherwise>
-  <xsl:attribute name="class">size</xsl:attribute>
-  </xsl:otherwise>
-  </xsl:choose>
+    <xsl:choose>
+    <xsl:when test="number(@size div 1024) &gt;= number(@quotahard)">
+      <xsl:attribute name="class">number red</xsl:attribute>
+    </xsl:when>
+    <xsl:when test="number(@size div 1024) &gt;= number(@quotasoft)">
+      <xsl:attribute name="class">number red</xsl:attribute>
+    </xsl:when>
+    <xsl:when test="number(@size div 1024) &gt;= number(@quotawarn)">
+      <xsl:attribute name="class">number red</xsl:attribute>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:attribute name="class">number</xsl:attribute>
+    </xsl:otherwise>
+    </xsl:choose>
   <xsl:value-of select="format-number(@size div 1048576,'###,###,##0.00')"/></td>
 
   <td>
-  <xsl:if test="logon/@lag &gt;= 30">
-  <xsl:attribute name="class">red</xsl:attribute>
-  </xsl:if>
+    <xsl:choose>    
+    <xsl:when test="logon/@lag &gt;= 30">
+      <xsl:attribute name="class">number red</xsl:attribute>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:attribute name="class">number</xsl:attribute>
+    </xsl:otherwise>
+    </xsl:choose>    
   <xsl:value-of select="logon/@date"/></td>
   </tr>
 </xsl:template>
