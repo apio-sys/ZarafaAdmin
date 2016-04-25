@@ -108,7 +108,7 @@
 </xsl:template>
 
 <xsl:template match="user">
-  <tr class="hover">
+  <tr class="entry">
   <td><a href="./zarafa-users.php?user={@username}"><xsl:value-of select="@username"/></a></td>
   <td><xsl:value-of select="@fullname"/></td>
   <td><xsl:value-of select="@emailaddress"/></td>
