@@ -186,6 +186,7 @@ a:hover, a:active
 .entry { background: #FFF; }
 .entry:hover { background: #BBB; }
 
+.number { text-align: right; }
 
 
 
@@ -213,7 +214,6 @@ a:hover, a:active
 #zarafa-login-errors th { padding: 0px 10px 0px 10px; white-space: nowrap; }
 #zarafa-login-errors td { padding: 0px 10px 0px 10px; white-space: nowrap; }
 #zarafa-login-errors tr.hover:hover { background: #BBB }
-#zarafa-login-errors .number { text-align: right; }
 
 .hide { display: none; }
 .show { display: table-row; }

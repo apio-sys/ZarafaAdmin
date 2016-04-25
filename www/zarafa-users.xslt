@@ -112,9 +112,9 @@
   <td><a href="./zarafa-users.php?user={@username}"><xsl:value-of select="@username"/></a></td>
   <td><xsl:value-of select="@fullname"/></td>
   <td><xsl:value-of select="@emailaddress"/></td>
-  <td class="quota"><xsl:value-of select="format-number(@quotawarn div 1024,'###,###,##0')"/></td>
-  <td class="quota"><xsl:value-of select="format-number(@quotasoft div 1024,'###,###,##0')"/></td>
-  <td class="quota"><xsl:value-of select="format-number(@quotahard div 1024,'###,###,##0')"/></td>
+  <td class="number"><xsl:value-of select="format-number(@quotawarn div 1024,'###,###,##0')"/></td>
+  <td class="number"><xsl:value-of select="format-number(@quotasoft div 1024,'###,###,##0')"/></td>
+  <td class="number"><xsl:value-of select="format-number(@quotahard div 1024,'###,###,##0')"/></td>
 
   <td>
   <xsl:choose>
