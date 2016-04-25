@@ -66,14 +66,14 @@
       <pre>
         <table id="zarafa-users" width="100%">
         <tr>
-          <td><a href="./zarafa-users.php?sort=username" align="left">Username</a></td>
-          <th><a href="./zarafa-users.php?sort=fullname" align="left">Full Name</a></th>
-          <th><a href="./zarafa-users.php?sort=emailaddress" align="left">Email Address</a></th>
-          <th><a href="./zarafa-users.php?sort=quotawarn" align="right">Warning</a></th>
-          <th><a href="./zarafa-users.php?sort=quotasoft" align="right">Soft</a></th>
-          <th><a href="./zarafa-users.php?sort=quotahard" align="right">Hard</a></th>
-          <th><a href="./zarafa-users.php?sort=size" align="right">Size (MB)</a></th>
-          <th><a href="./zarafa-users.php?sort=logon" align="center">Last Logon</a></th>
+          <th align="left"><a href="./zarafa-users.php?sort=username">Username</a></td>
+          <th align="left"><a href="./zarafa-users.php?sort=fullname">Full Name</a></th>
+          <th align="left"><a href="./zarafa-users.php?sort=emailaddress">Email Address</a></th>
+          <th align="right"><a href="./zarafa-users.php?sort=quotawarn">Warning</a></th>
+          <th align="right"><a href="./zarafa-users.php?sort=quotasoft">Soft</a></th>
+          <th align="right"><a href="./zarafa-users.php?sort=quotahard">Hard</a></th>
+          <th align="right"><a href="./zarafa-users.php?sort=size">Size (MB)</a></th>
+          <th align="center"><a href="./zarafa-users.php?sort=logon">Last Logon</a></th>
         </tr>
         <xsl:choose>
         <xsl:when test="$sort = 'fullname'">
