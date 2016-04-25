@@ -26,25 +26,15 @@ html, body
 	height: 100%;
 }
 
-a:link {
+a:link, a:visited
+{
     text-decoration: none;
 }
 
-a:visited {
-    text-decoration: none;
-}
-
-a:hover {
+a:hover, a:active 
+{
     text-decoration: underline;
 }
-
-a:active {
-    text-decoration: underline;
-}
-
-
-
-
 
 
 /*Settings for Page Header and Side Panel*/
@@ -182,7 +172,7 @@ a:active {
 
 /* General */
 #loading {
-    display: block;	
+  display: block;	
 	width: 120px; 
 	height: 20px; 
 	z-index: 9999;
@@ -191,6 +181,15 @@ a:active {
 	left: 50%;
 	margin-top: -10px;
 	margin-left: -60px;
+}
+
+/* Logs */
+.logdata
+{
+	color:black; 
+	font-size :0.9em; 
+	font-family: "Courier New", Courier, monospace;
+	text-align: left;
 }
 
 

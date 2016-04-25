@@ -25,9 +25,9 @@
 
 <xsl:template match="/zarafaadmin/logs">
 	<form method="get">
-		<table valign="middle" id="entry" align="center">
-			<tr class="entry">
-				<td class="entry">
+		<table valign="top" align="center">
+			<tr class="logdata">
+				<td>
 					<select name="log">
 						<xsl:for-each select="log">
 							<option value="{@name}">
@@ -37,7 +37,7 @@
 						</xsl:for-each>
 					</select>
 				</td>
-				<td class="entry"> 
+				<td> 
 					<select name="sort">
 					  <option value="ascending">
 							<xsl:if test="$sort = 'ascending'"><xsl:attribute name="selected"/></xsl:if>
@@ -49,8 +49,8 @@
 					  </option>					  
 					</select>
 				</td>			
-				<td class="entry"><input name="filter" type="text" value="{$filter}"/></td>
-				<td class="entry"><input name="submit" value="Filter Log" type="submit"/></td>
+				<td><input name="filter" type="text" value="{$filter}"/></td>
+				<td><input name="submit" value="Filter Log" type="submit"/></td>
 			</tr>	
 		</table>
 	</form>
