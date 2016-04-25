@@ -64,7 +64,7 @@
 
     <xsl:otherwise>
       <pre>
-        <table id="zarafa-users" width="100%">
+        <table id="zarafa-users">
         <tr>
           <th align="left"><a href="./zarafa-users.php?sort=username">Username</a></th>
           <th align="left"><a href="./zarafa-users.php?sort=fullname">Full Name</a></th>

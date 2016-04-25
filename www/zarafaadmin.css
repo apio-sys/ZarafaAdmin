@@ -184,9 +184,8 @@ a:hover, a:active
 }
 
 .entry { background: #FFF; }
-.entry tr:nth-child(odd) { background: #FFF }
-.entry tr:nth-child(even) { background: #DDD }
 .entry:hover { background: #BBB; }
+
 
 
 
@@ -207,10 +206,6 @@ a:hover, a:active
 	font-weight: bold;
 }
 
-/*
-#zarafa-user-quota tr:nth-child(odd) { background: #FFF }
-#zarafa-user-quota tr:nth-child(even) { background: #DDD }
-*/
 
 /* Login Errors */
 #entry tr { background: #FFF; }
@@ -225,6 +220,14 @@ a:hover, a:active
 
 
 /* Users */
+#zarafa-users 
+{
+	width: 100%;
+	border-collapse: collapse;	
+}
+
+
+
 #userdetail th { text-align: right; padding: 0px 10px 0px 10px; vertical-align: text-top; }
 #userdetail td { text-align: left;  padding: 0px 10px 0px 10px; }
 #userdetail tr:nth-child(odd) { background: #FFF }
