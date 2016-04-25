@@ -183,6 +183,16 @@ a:hover, a:active
 	margin-left: -60px;
 }
 
+.entry 
+{ 
+	background: #FFF; 
+}
+
+
+
+
+
+
 /* Logs */
 .logdata
 {
@@ -223,3 +233,4 @@ a:hover, a:active
 #userdetail tr:nth-child(even) { background: #DDD }
 #userdetail .center { text-align: center; }
 #userdetail tr.hover:hover { background: #BBB }
+
