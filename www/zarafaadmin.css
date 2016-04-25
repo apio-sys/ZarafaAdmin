@@ -193,6 +193,12 @@ a:hover, a:active
 }
 
 
+.logdata:hover { background: #BBB }
+
+
+#zarafa-user-quota tr:nth-child(odd) { background: #FFF }
+#zarafa-user-quota tr:nth-child(even) { background: #DDD }
+
 
 /* Login Errors */
 #entry tr { background: #FFF; }
