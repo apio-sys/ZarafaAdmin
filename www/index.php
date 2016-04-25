@@ -6,7 +6,8 @@
 		<title>Zarafa Administration</title>
 	</head>
 	<body>
-		<div id="header">
+		<div id="frame-wrapper">
+		<div id="frame-header">
   			<div id="header-panel">
     			<div id="header-title1">Zarafa Admin</div>
     			<div id="header-title2">Office of Public Works - Zarafa Administration</b></div>
@@ -15,12 +16,12 @@
 		</div>
 		<table id="frame-table">
 			<tr>
- 				<td id="frame-header">&nbsp;&nbsp;Commands</td>
- 				<td id="frame-user">&nbsp;Logged in as <?=strtolower( $_SERVER['PHP_AUTH_USER'] )?>
+ 				<td id="table-header">&nbsp;&nbsp;Commands</td>
+ 				<td id="table-user" align="right">&nbsp;Logged in as <?=strtolower( $_SERVER['PHP_AUTH_USER'] )?>
 				&nbsp;<a href="https://logout:logout@<?=$_SERVER['HTTP_HOST']?>/">Logout</a>&nbsp;&nbsp;</td>
 			</tr>
 			<tr>
-				<td id="frame-commands">
+				<td id="table-commands">
 					<p></p>
 					<p>&nbsp;Zarafa Management
 					<ul>
@@ -38,10 +39,11 @@
 						<li><a href="./zarafa-errors.php?log=z-push" target="cmdiframe">Z-Push Errors</a></li>						
 					</ul></p>
 				</td>
-				<td id="frame-results">
+				<td id="table-results">
 					<iframe id="cmdiframe" src="blank.html" name="cmdiframe">Browser not compatible.</iframe>
 				</td>
 			</tr>
 		</table>
+		</div>
 	</body>
 </html>
