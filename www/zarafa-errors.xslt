@@ -59,6 +59,9 @@
 <xsl:template match="/zarafaadmin/log">
   <h2 align="center"><xsl:value-of select="@log"/> Log entries <xsl:if test="@filters != ''">using filter(s): <xsl:value-of select="@filters"/></xsl:if></h2>
   <table id="zarafa-logs">
+  	<caption>
+  		<xsl:value-of select="@log"/> Log entries <xsl:if test="@filters != ''">using filter(s): <xsl:value-of select="@filters"/></xsl:if>
+  	</caption>
     <xsl:apply-templates select="line"/>
   </table>
 </xsl:template>
