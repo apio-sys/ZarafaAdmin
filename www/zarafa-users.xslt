@@ -63,44 +63,46 @@
     </xsl:when>
 
     <xsl:otherwise>
-      <table id="zarafa-users">
-      <tr>
-          <th><a href="./zarafa-users.php?sort=username">Username</a></th>
-          <th><a href="./zarafa-users.php?sort=fullname">Full Name</a></th>
-          <th><a href="./zarafa-users.php?sort=emailaddress">Email Address</a></th>
-          <th><a href="./zarafa-users.php?sort=quotawarn">Warning</a></th>
-          <th><a href="./zarafa-users.php?sort=quotasoft">Soft</a></th>
-          <th><a href="./zarafa-users.php?sort=quotahard">Hard</a></th>
-          <th><a href="./zarafa-users.php?sort=size">Size (MB)</a></th>
-          <th><a href="./zarafa-users.php?sort=logon">Last Logon</a></th>
-      </tr>
-      <xsl:choose>
-      <xsl:when test="$sort = 'fullname'">
+      <pre>
+        <table id="zarafa-users" width="100%">
+        <tr>
+          <th><a href="./zarafa-users.php?sort=username" align="left">Username</a></th>
+          <th><a href="./zarafa-users.php?sort=fullname" align="left">Full Name</a></th>
+          <th><a href="./zarafa-users.php?sort=emailaddress" align="left">Email Address</a></th>
+          <th><a href="./zarafa-users.php?sort=quotawarn" align="right">Warning</a></th>
+          <th><a href="./zarafa-users.php?sort=quotasoft" align="right">Soft</a></th>
+          <th><a href="./zarafa-users.php?sort=quotahard" align="right">Hard</a></th>
+          <th><a href="./zarafa-users.php?sort=size" align="right">Size (MB)</a></th>
+          <th><a href="./zarafa-users.php?sort=logon" align="center">Last Logon</a></th>
+        </tr>
+        <xsl:choose>
+        <xsl:when test="$sort = 'fullname'">
           <xsl:apply-templates select="user"><xsl:sort select="translate(@fullname, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" /></xsl:apply-templates>
-      </xsl:when>
-      <xsl:when test="$sort = 'emailaddress'">
+        </xsl:when>
+        <xsl:when test="$sort = 'emailaddress'">
           <xsl:apply-templates select="user"><xsl:sort select="translate(@emailaddress, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" /></xsl:apply-templates>
-      </xsl:when>
-      <xsl:when test="$sort = 'quotawarn'">
+        </xsl:when>
+        <xsl:when test="$sort = 'quotawarn'">
           <xsl:apply-templates select="user"><xsl:sort select="@quotawarn" order="descending" data-type="number"/></xsl:apply-templates>
-      </xsl:when>
-      <xsl:when test="$sort = 'quotasoft'">
+        </xsl:when>
+        <xsl:when test="$sort = 'quotasoft'">
           <xsl:apply-templates select="user"><xsl:sort select="@quotasoft" order="descending" data-type="number"/></xsl:apply-templates>
-      </xsl:when>
-      <xsl:when test="$sort = 'quotahard'">
+        </xsl:when>
+        <xsl:when test="$sort = 'quotahard'">
           <xsl:apply-templates select="user"><xsl:sort select="@quotahard" order="descending" data-type="number"/></xsl:apply-templates>
-      </xsl:when>
-      <xsl:when test="$sort = 'size'">
+        </xsl:when>
+        <xsl:when test="$sort = 'size'">
           <xsl:apply-templates select="user"><xsl:sort select="@size" order="descending" data-type="number"/></xsl:apply-templates>
-      </xsl:when>
-      <xsl:when test="$sort = 'logon'">
+        </xsl:when>
+        <xsl:when test="$sort = 'logon'">
           <xsl:apply-templates select="user"><xsl:sort select="logon/@lag" order="descending" data-type="number"/></xsl:apply-templates>
-      </xsl:when>
-      <xsl:otherwise>
+        </xsl:when>
+        <xsl:otherwise>
           <xsl:apply-templates select="user"><xsl:sort select="translate(@username, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" /></xsl:apply-templates>
-      </xsl:otherwise>
-      </xsl:choose>
-      </table>
+        </xsl:otherwise>
+        </xsl:choose>
+        </table>
+      </pre>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
