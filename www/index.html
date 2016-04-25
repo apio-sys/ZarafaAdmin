@@ -6,21 +6,21 @@
 		<title>Zarafa Administration</title>
 	</head>
 	<body>
-		<div id="header" style="background: url(&quot;/images/header-line.gif&quot;) repeat-x scroll left top black;">
-  			<div class="panel" style="background: url(&quot;/images/header-backgnd.gif&quot;) no-repeat scroll 0% 0% transparent;">
-    			<div class="title1">Zarafa Admin</div>
-    			<div class="title2">Office of Public Works - Zarafa Administration</b></div>
-    			<div class="opwlogo"></div>
+		<div id="header">
+  			<div id="header-panel">
+    			<div id="header-title1">Zarafa Admin</div>
+    			<div id="header-title2">Office of Public Works - Zarafa Administration</b></div>
+    			<div id="header-opwlogo"></div>
   			</div>
 		</div>
-		<table class="CmdTable">
+		<table id="frame-table">
 			<tr>
-				<td class="ColumnHead" nowrap="nowrap" align="left">&nbsp;&nbsp;Commands</td>
- 				<td class="ColumnHead" nowrap="nowrap" align="right">&nbsp;Logged in as <?=strtolower( $_SERVER['PHP_AUTH_USER'] )?>&nbsp;
-				<a href="https://logout:logout@<?=$_SERVER['HTTP_HOST']?>/">Logout</a>&nbsp;</td>
+ 				<td id="frame-header">&nbsp;&nbsp;Commands</td>
+ 				<td id="frame-user">&nbsp;Logged in as <?=strtolower( $_SERVER['PHP_AUTH_USER'] )?>
+				&nbsp;<a href="https://logout:logout@<?=$_SERVER['HTTP_HOST']?>/">Logout</a>&nbsp;&nbsp;</td>
 			</tr>
 			<tr>
-				<td class="Commands">
+				<td id="frame-commands">
 					<p></p>
 					<p>&nbsp;Zarafa Management
 					<ul>
@@ -38,8 +38,8 @@
 						<li><a href="./zarafa-errors.php?log=z-push" target="cmdiframe">Z-Push Errors</a></li>						
 					</ul></p>
 				</td>
-				<td class="Results">
-					<iframe class="iFrameResult" src="blank.html" name="cmdiframe">Browser not compatible.</iframe>
+				<td id="frame-results">
+					<iframe id="cmdiframe" src="blank.html" name="cmdiframe">Browser not compatible.</iframe>
 				</td>
 			</tr>
 		</table>
