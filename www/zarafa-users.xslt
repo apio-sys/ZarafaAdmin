@@ -134,14 +134,9 @@
   <xsl:value-of select="format-number(@size div 1048576,'###,###,##0.00')"/></td>
 
   <td>
-  <xsl:choose>
-  <xsl:when test="logon/@lag &gt;= 30">
-  <xsl:attribute name="class">datelong</xsl:attribute>
-  </xsl:when>
-  <xsl:otherwise>
-  <xsl:attribute name="class">date</xsl:attribute>
-  </xsl:otherwise>
-  </xsl:choose>
+  <xsl:if test="logon/@lag &gt;= 30">
+  <xsl:attribute name="class">red</xsl:attribute>
+  </xsl:if>
   <xsl:value-of select="logon/@date"/></td>
   </tr>
 </xsl:template>
