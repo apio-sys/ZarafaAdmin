@@ -66,7 +66,7 @@
       <pre>
         <table id="zarafa-users" width="100%">
         <tr>
-          <th><a href="./zarafa-users.php?sort=username" align="left">Username</a></th>
+          <td><a href="./zarafa-users.php?sort=username" align="left">Username</a></td>
           <th><a href="./zarafa-users.php?sort=fullname" align="left">Full Name</a></th>
           <th><a href="./zarafa-users.php?sort=emailaddress" align="left">Email Address</a></th>
           <th><a href="./zarafa-users.php?sort=quotawarn" align="right">Warning</a></th>
