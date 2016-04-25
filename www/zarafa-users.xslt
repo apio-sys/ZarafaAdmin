@@ -116,7 +116,7 @@
   <td class="number"><xsl:value-of select="format-number(@quotasoft div 1024,'###,###,##0')"/></td>
   <td class="number"><xsl:value-of select="format-number(@quotahard div 1024,'###,###,##0')"/></td>
 
-  <td>
+  <td class="number">
   <xsl:choose>
   <xsl:when test="number(@size div 1024) &gt;= number(@quotahard)">
   <xsl:attribute name="class">hard</xsl:attribute>
