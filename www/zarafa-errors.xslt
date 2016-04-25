@@ -64,7 +64,7 @@
 </xsl:template>
 
 <xsl:template match="line">
-  <tr class="logdata"><td>
+  <tr><td class="logdata">
   	<xsl:value-of select="."/>
  	</td></tr>
 </xsl:template>
