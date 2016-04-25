@@ -3,14 +3,14 @@ body, div, p, link, td, option, li, ol, ul
 {
 	color:black; 
 	font-size:0.9em; 
-	font-family:"Trebuchet MS", Arial, Helvetica, Geneva, Swiss, SunSans-Regular
+	font-family:"Trebuchet MS", Arial, Helvetica, Geneva, Swiss, SunSans-Regular;
 }
 select, input, textarea 
 {
 	color: black; 
 	font-size: 0.8em; 
 	line-height: 1em; 
-	font-family: "Trebuchet MS", Arial, Helvetica, Geneva, Swiss, SunSans-Regular
+	font-family: "Trebuchet MS", Arial, Helvetica, Geneva, Swiss, SunSans-Regular;
 }
 a  
 {
@@ -187,7 +187,7 @@ a:hover, a:active
 .logdata
 {
 	color:black; 
-	font-size :0.9em; 
+	font-size :0.7em; 
 	font-family: "Courier New", Courier, monospace;
 	text-align: left;
 }
