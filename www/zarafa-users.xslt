@@ -156,7 +156,7 @@
 
         <tr><td colspan="6">&#xA0;</td></tr>
         <tr><th colspan="6" class="center">Groups (<xsl:value-of select="count(user/group)"/>)</th></tr>
-        <xsl:variable name="columns" select="2"/>
+<!--         <xsl:variable name="columns" select="2"/> -->        
         <xsl:apply-templates select="user/group[(position() - 1) mod $columns = 0]" mode="first">
           <xsl:sort select="translate(@groupname, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
           <xsl:with-param name="columns" select="$columns"/>
