@@ -125,13 +125,10 @@
         </tr>
 
         <tr><td colspan="6">&#xA0;</td></tr>
-        <tr>
-          <th colspan="6" class="center">Send As Rights
-            <xsl:if test="count(user/sendas) &gt; 0">
-              (<xsl:value-of select="user/sendas"/>)
-            </xsl:if>
-          </th>
-        </tr>
+        <tr><th colspan="6" class="center">Send As Rights (<xsl:value-of select="count(user/sendas)"/>)</th></tr>
+
+
+
 
 
 
@@ -150,15 +147,9 @@
 
 
         <tr><td colspan="6">&#xA0;</td></tr>
-        <tr>
-          <th colspan="6" class="center">Groups
-            <xsl:if test="count(user/group) &gt; 0">
-              (<xsl:value-of select="user/group"/>)
-            </xsl:if>
-          </th>
-        </tr>
+        <tr><th colspan="6" class="center">Groups (<xsl:value-of select="count(user/group)"/>)</th></tr>
 
-        <xsl:if test="count(user/group) &gt; 0">
+<!--         <xsl:if test="count(user/group) &gt; 0">
           <tr>
             <th colspan="3" align="right" valign="top">Groups:&#xA0;</th>
             <td>&#xA0;</td>            
@@ -169,6 +160,22 @@
             </td>
           </tr>
         </xsl:if>
+ -->
+
+
+        <xsl:variable name="columns" select="2"/>
+        <xsl:apply-templates select="user/group[(position() - 1) mod $columns = 0]" mode="first">
+          <xsl:sort select="translate(@groupname, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
+          <xsl:with-param name="columns" select="$columns"/>
+        </xsl:apply-templates>
+
+
+
+
+
+
+
+
       </table>
     </xsl:when>
 
@@ -248,6 +255,39 @@
     </xsl:if>   
     <xsl:value-of select="logon/@date"/></td>
   </tr>
+</xsl:template>
+
+
+
+
+<xsl:template match="group" mode="first">
+<xsl:param name="columns"/>  
+  <tr>
+     <xsl:apply-templates select=".|following-sibling::group[position() &lt; $columns]"/>
+     <xsl:if test="count(following-sibling::group) &lt; ($columns - 1)">
+        <xsl:call-template name="emptycell">
+           <xsl:with-param name="columns" select="$columns"/>
+           <xsl:with-param name="cells" select="$columns - 1 - count(following-sibling::group)"/>
+        </xsl:call-template>
+     </xsl:if>
+  </tr>
+</xsl:template>
+
+<xsl:template match="group">
+  <td align="center" class="hover" colspan="3">
+    <a href="./zarafa-groups.php?group={@groupname}"><xsl:value-of select="@groupname"/></a>
+  </td>
+</xsl:template>
+
+<xsl:template name="emptycell">
+<xsl:param name="columns"/>  
+  <xsl:param name="cells"/>
+  <td colspan="3">&#xA0;</td>
+  <xsl:if test="$cells &gt; 1">
+     <xsl:call-template name="emptycell">
+        <xsl:with-param name="cells" select="$cells - 1"/>
+     </xsl:call-template>
+  </xsl:if>
 </xsl:template>
 
 </xsl:stylesheet>
