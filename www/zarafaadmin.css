@@ -184,11 +184,14 @@ a:hover, a:active
 }
 
 .entry { background: #FFF; }
-.hover { background: #BBB; }
+.entry:hover { background: #BBB; }
 
 .number { text-align: right; }
 
 .red { color: red; }
+
+tr.hover:hover { background: #BBB }
+td.hover:hover { background: #BBB }
 
 
 /* Logs */
