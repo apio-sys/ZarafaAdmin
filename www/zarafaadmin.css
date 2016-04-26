@@ -236,3 +236,10 @@ td.hover:hover { background: #BBB }
  	min-width: 500px;	
 	border-collapse: collapse;	
 }
+
+/* Groups */
+#zarafa-groups, #zarafa-group
+{
+	width: 500px;	
+	border-collapse: collapse;	
+}
