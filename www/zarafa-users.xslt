@@ -129,7 +129,7 @@
 
         <xsl:variable name="columns" select="2"/>
         <xsl:apply-templates select="user/sendas[(position() - 1) mod $columns = 0]" mode="first">
-          <xsl:sort select="translate(@username, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
+<!--           <xsl:sort select="translate(@username, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" /> -->
           <xsl:with-param name="columns" select="$columns"/>
         </xsl:apply-templates>
 
