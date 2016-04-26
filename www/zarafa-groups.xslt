@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:output method="html" indent="yes" omit-xml-declaration="yes" />
-<!-- <xsl:param name="columns" select="2"/> -->
 
 <xsl:template match="/zarafaadmin/error">
   <table align="center">
@@ -47,8 +46,10 @@
             <th colspan="2" align="center">Users (<xsl:value-of select="count(group/user)"/>):</th>
           </tr>
 
+          <xsl:variable name="columns" select="2"/>
           <xsl:apply-templates select="group/user[(position() - 1) mod $columns = 0]" mode="first">
-            <xsl:with-param name="columns" select="2"/>
+            <xsl:with-param name="columns" select="$columns"/>
+            <xsl:sort select="translate(@username, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />            
           </xsl:apply-templates>
 
 
@@ -58,7 +59,7 @@
             <th align="right" valign="top">Users (<xsl:value-of select="count(group/user)"/>):&#xA0;</th>
             <td>
               <xsl:for-each select="group/user">
-                <xsl:sort select="translate(@username, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
+
                 <a href="./zarafa-users.php?user={@username}"><xsl:value-of select="@username"/></a><br/>
               </xsl:for-each>
             </td>
@@ -75,9 +76,10 @@
           <th colspan="2" align="center">Group Name</th>
         </tr>
 
+        <xsl:variable name="columns" select="2"/>
         <xsl:apply-templates select="group[(position() - 1) mod $columns = 0]" mode="first">
           <xsl:sort select="translate(@groupname, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
-          <xsl:with-param name="columns" select="2"/>
+          <xsl:with-param name="columns" select="$columns"/>
         </xsl:apply-templates>
 
         </table>
