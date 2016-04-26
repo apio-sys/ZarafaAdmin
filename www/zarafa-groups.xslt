@@ -47,7 +47,7 @@
         <xsl:for-each select="group">
           <xsl:sort select="translate(@groupname, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
           <tr class="hover">
-            <td>
+            <td align="center">
               <a href="./zarafa-groups.php?group={@groupname}"><xsl:value-of select="@groupname"/></a>
             </td>
           </tr>
