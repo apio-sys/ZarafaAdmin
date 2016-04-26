@@ -231,6 +231,6 @@ td.hover:hover { background: #BBB }
 
 #zarafa-user, #zarafa-user-quota
 {
- 	min-width: 800px;	
+ 	min-width: 500px;	
 	border-collapse: collapse;	
 }
