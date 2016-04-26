@@ -39,7 +39,7 @@
             <xsl:value-of select="group/@emailaddress"/></td>
           </tr>
           <tr class="hover">
-            <thv>Visible:&#xA0;</th>
+            <th align="right">Visible:&#xA0;</th>
             <td><xsl:if test="group/@addressbook = 'Visible'">&#x2713;</xsl:if></td>
           </tr>
 <!--           <tr class="hover">
