@@ -57,6 +57,8 @@
 
       <xsl:otherwise>
         <table id="zarafa-groups">
+        <col width="50%"/>
+        <col width="50%"/>          
         <tr class="hover">
           <th colspan="2" align="center">Group Name</th>
         </tr>
