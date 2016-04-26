@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:output method="html" indent="yes" omit-xml-declaration="yes" />
-<xsl:variable name="columns" select="2"/>
+<!-- <xsl:param name="columns" select="2"/> -->
 
 <xsl:template match="/zarafaadmin/error">
   <table align="center">
@@ -44,11 +44,11 @@
             <td><xsl:if test="group/@addressbook = 'Visible'">&#x2713;</xsl:if></td>
           </tr>
           <tr class="hover">
-            <th colspan="2" align="right">Users (<xsl:value-of select="count(group/user)"/>):</th>
+            <th colspan="2" align="center">Users (<xsl:value-of select="count(group/user)"/>):</th>
           </tr>
 
           <xsl:apply-templates select="group/user[(position() - 1) mod $columns = 0]" mode="first">
-                
+            <xsl:with-param name="columns" select="2"/>
           </xsl:apply-templates>
 
 
@@ -76,7 +76,8 @@
         </tr>
 
         <xsl:apply-templates select="group[(position() - 1) mod $columns = 0]" mode="first">
-          <xsl:sort select="translate(@groupname, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />          
+          <xsl:sort select="translate(@groupname, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
+          <xsl:with-param name="columns" select="2"/>
         </xsl:apply-templates>
 
         </table>
@@ -88,10 +89,12 @@
 
 
 <xsl:template match="user" mode="first">
+<xsl:param name="columns" select="2"/>  
   <tr>
      <xsl:apply-templates select=".|following-sibling::user[position() &lt; $columns]"/>
      <xsl:if test="count(following-sibling::user) &lt; ($columns - 1)">
         <xsl:call-template name="emptycell">
+           <xsl:with-param name="columns" select="$columns"/>          
            <xsl:with-param name="cells" select="$columns - 1 - count(following-sibling::user)"/>
         </xsl:call-template>
      </xsl:if>
@@ -104,18 +107,13 @@
   </td>
 </xsl:template>
 
-
-
-
-
-
-
-
 <xsl:template match="group" mode="first">
+<xsl:param name="columns" select="2"/>  
   <tr>
      <xsl:apply-templates select=".|following-sibling::group[position() &lt; $columns]"/>
      <xsl:if test="count(following-sibling::group) &lt; ($columns - 1)">
         <xsl:call-template name="emptycell">
+           <xsl:with-param name="columns" select="$columns"/>
            <xsl:with-param name="cells" select="$columns - 1 - count(following-sibling::group)"/>
         </xsl:call-template>
      </xsl:if>
@@ -129,6 +127,7 @@
 </xsl:template>
 
 <xsl:template name="emptycell">
+<xsl:param name="columns" select="2"/>  
   <xsl:param name="cells"/>
   <td>&#xA0;</td>
   <xsl:if test="$cells &gt; 1">
