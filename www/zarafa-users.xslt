@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-<xsl:output method="html"/>
+<xsl:output method="html" indent="yes" omit-xml-declaration="yes" />
+<xsl:param name="columns" select="2"/>
 <xsl:param name="sort" select="'username'"/>
 
 <xsl:template match="/zarafaadmin/error">
