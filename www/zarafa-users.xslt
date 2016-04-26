@@ -29,55 +29,58 @@
         <tr><th colspan="4" align="center">User Detail for <xsl:value-of select="user/@username"/></th></tr>
         <tr><th colspan="2" align="center">Zarafa Details</th><th colspan="2" align="center">LDAP Details</th></tr>
         <tr class="hover">
-          <th align="right">Username</th><td><xsl:value-of select="user/@username"/></td>
-          <th align="right">GivenName</th><td><xsl:value-of select="user/@pr_given_name"/></td>
+          <th align="right">Username&#160;:</th><td><xsl:value-of select="user/@username"/></td>
+          <th align="right">GivenName&#160;:</th><td><xsl:value-of select="user/@pr_given_name"/></td>
         </tr>
         <tr class="hover">
-          <th align="right">Email</th><td><xsl:value-of select="user/@emailaddress"/></td>
-          <th align="right">Surname</th><td><xsl:value-of select="user/@pr_surname"/></td>
+          <th align="right">Email&#160;:</th><td><xsl:value-of select="user/@emailaddress"/></td>
+          <th align="right">Surname&#160;:</th><td><xsl:value-of select="user/@pr_surname"/></td>
         </tr>
         <tr class="hover">
-          <th align="right">Active</th><td><xsl:if test="user/@active = 'yes'">&#x2713;</xsl:if></td>
-          <th align="right">Fullname</th><td><xsl:value-of select="user/@fullname"/></td>
+          <th align="right">Active&#160;:</th><td><xsl:if test="user/@active = 'yes'">&#x2713;</xsl:if></td>
+          <th align="right">Fullname&#160;:</th><td><xsl:value-of select="user/@fullname"/></td>
         </tr>
         <tr class="hover">
-          <th align="right">Administrator</th><td><xsl:if test="user/@administrator = 'yes'">&#x2713;</xsl:if></td>
-          <th align="right">Title</th><td><xsl:value-of select="user/@pr_title"/></td>
+          <th align="right">Administrator&#160;:</th><td><xsl:if test="user/@administrator = 'yes'">&#x2713;</xsl:if></td>
+          <th align="right">Title&#160;:</th><td><xsl:value-of select="user/@pr_title"/></td>
         </tr>
         <tr class="hover">
-          <th align="right">Visible</th><td><xsl:if test="user/@addressbook = 'Visible'">&#x2713;</xsl:if></td>
-          <th align="right">Section</th><td><xsl:value-of select="user/@pr_department_name"/></td>
+          <th align="right">Visible&#160;:</th><td><xsl:if test="user/@addressbook = 'Visible'">&#x2713;</xsl:if></td>
+          <th align="right">Section&#160;:</th><td><xsl:value-of select="user/@pr_department_name"/></td>
         </tr>
         <tr class="hover">
-          <th align="right">Auto-accept</th><td><xsl:if test="user/@autoacceptmeetingreq = 'yes'">&#x2713;</xsl:if></td>
-          <th align="right">Location</th><td><xsl:value-of select="user/@location"/></td>
+          <th align="right">Auto-accept&#160;:</th><td><xsl:if test="user/@autoacceptmeetingreq = 'yes'">&#x2713;</xsl:if></td>
+          <th align="right">Location&#160;:</th><td><xsl:value-of select="user/@location"/></td>
         </tr>
         <tr class="hover">
-          <th align="right">Logon</th><td><xsl:value-of select="user/logon/@date"/></td>
-          <th align="right">Telephone</th><td><xsl:value-of select="user/@pr_business_telephone_number"/></td>
+          <th align="right">Logon&#160;:</th><td><xsl:value-of select="user/logon/@date"/></td>
+          <th align="right">Telephone&#160;:</th><td><xsl:value-of select="user/@pr_business_telephone_number"/></td>
         </tr>
         <tr class="hover">
-          <th align="right">Logoff</th><td><xsl:value-of select="user/logoff/@date"/></td>
-          <th align="right">Mobile</th><td><xsl:value-of select="user/@pr_mobile_telephone_number"/></td>
+          <th align="right">Logoff&#160;:</th><td><xsl:value-of select="user/logoff/@date"/></td>
+          <th align="right">Mobile&#160;:</th><td><xsl:value-of select="user/@pr_mobile_telephone_number"/></td>
         </tr>
         <tr class="hover">
           <td colspan="2">&#xA0;</td>
-          <th>Fax</th><td><xsl:value-of select="user/@pr_business_fax_number"/></td>
+          <th align="right">Fax&#160;:</th><td><xsl:value-of select="user/@pr_business_fax_number"/></td>
         </tr>
       </table>
+
       <table id="zarafa-user-quota">
         <tr><th colspan="4" class="center">Quota Information<xsl:if test="user/@quotaoverrides = 'yes'">&#xA0;(Override Defaults &#x2713;)</xsl:if></th></tr>
         <tr class="hover">
-          <th align="right">Warning Level</th><td><xsl:value-of select="format-number(user/@quotawarn div 1024,'###,###,##0')"/> MB</td>
-          <th align="right">Soft Level</th><td><xsl:value-of select="format-number(user/@quotasoft div 1024,'###,###,##0')"/> MB</td>         
+          <th align="right">Warning Level&#160;:</th><td><xsl:value-of select="format-number(user/@quotawarn div 1024,'###,###,##0')"/> MB</td>
+          <th align="right">Soft Level&#160;:</th><td><xsl:value-of select="format-number(user/@quotasoft div 1024,'###,###,##0')"/> MB</td>         
         </tr>
         <tr class="hover">
-          <th align="right">Hard Level</th><td><xsl:value-of select="format-number(user/@quotahard div 1024,'###,###,##0')"/> MB</td>
-          <th align="right">Current Size</th><td><xsl:value-of select="format-number(user/@size div 1048576,'###,###,##0')"/> MB</td>
+          <th align="right">Hard Level&#160;:</th><td><xsl:value-of select="format-number(user/@quotahard div 1024,'###,###,##0')"/> MB</td>
+          <th align="right">Current Size&#160;:</th><td><xsl:value-of select="format-number(user/@size div 1048576,'###,###,##0.00')"/> MB</td>
         </tr>
+
         <xsl:if test="count(user/sendas) &gt; 0">
+          <tr><td colspan="4">&#xA0;</td></tr>
           <tr>
-            <th colspan="2" align="right" valign="top">Send As Rights</th>
+            <th colspan="2" align="right" valign="top">Send As Rights&#xA0;:</th>
             <td colspan="2">
               <xsl:for-each select="user/sendas"><xsl:sort select="translate(@username, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
               <a href="./zarafa-users.php?user={@username}"><xsl:value-of select="@username"/></a><br/>
@@ -86,8 +89,9 @@
           </tr>
         </xsl:if>      
         <xsl:if test="count(user/group) &gt; 0">
+          <tr><td colspan="4">&#xA0;</td></tr>          
           <tr>
-            <th colspan="2" align="right" valign="top">Groups</th>
+            <th colspan="2" align="right" valign="top">Groups&#xA0;:</th>
             <td colspan="2">
               <xsl:for-each select="user/group"><xsl:sort select="translate(@groupname, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
               <a href="./zarafa-groups.php?group={@groupname}"><xsl:value-of select="@groupname"/></a><br/>
