@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:output method="html" indent="yes" omit-xml-declaration="yes" />
-<xsl:param name="columns" select="2"/>
+<xsl:variable name="columns" select="2"/>
 
 <xsl:template match="/zarafaadmin/error">
   <table align="center">
@@ -43,7 +43,18 @@
             <th align="right">Visible:&#xA0;</th>
             <td><xsl:if test="group/@addressbook = 'Visible'">&#x2713;</xsl:if></td>
           </tr>
-          <tr>
+          <tr class="hover">
+            <th colspan="2" align="right">Users (<xsl:value-of select="count(group/user)"/>):</th>
+          </tr>
+
+          <xsl:apply-templates select="group/user[(position() - 1) mod $columns = 0]" mode="first">
+                
+          </xsl:apply-templates>
+
+
+
+
+<!--           <tr>
             <th align="right" valign="top">Users (<xsl:value-of select="count(group/user)"/>):&#xA0;</th>
             <td>
               <xsl:for-each select="group/user">
@@ -51,7 +62,8 @@
                 <a href="./zarafa-users.php?user={@username}"><xsl:value-of select="@username"/></a><br/>
               </xsl:for-each>
             </td>
-          </tr>
+          </tr> -->
+
         </table>
       </xsl:when>
 
@@ -72,6 +84,26 @@
     </xsl:choose>
   </pre>
 </xsl:template>
+
+
+
+<xsl:template match="user" mode="first">
+  <tr>
+     <xsl:apply-templates select=".|following-sibling::user[position() &lt; $columns]"/>
+     <xsl:if test="count(following-sibling::user) &lt; ($columns - 1)">
+        <xsl:call-template name="emptycell">
+           <xsl:with-param name="cells" select="$columns - 1 - count(following-sibling::user)"/>
+        </xsl:call-template>
+     </xsl:if>
+  </tr>
+</xsl:template>
+
+<xsl:template match="user">
+  <td align="center" class="hover">
+    <a href="./zarafa-users.php?user={@username}"><xsl:value-of select="@username"/></a>
+  </td>
+</xsl:template>
+
 
 
 
