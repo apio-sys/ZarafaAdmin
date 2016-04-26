@@ -68,16 +68,16 @@
       <table id="zarafa-user-quota">
         <tr><th colspan="4" class="center">Quota Information<xsl:if test="user/@quotaoverrides = 'yes'">&#xA0;(Override Defaults &#x2713;)</xsl:if></th></tr>
         <tr class="hover">
-          <th align="right">Warning Level</th><td><xsl:value-of select="user/@quotawarn"/></td>
-          <th align="right">Soft Level</th><td><xsl:value-of select="user/@quotasoft"/></td>
+          <th align="right">Warning Level</th><td><xsl:value-of select="format-number(user/@quotawarn div 1024,'###,###,##0')"/> MB</td>
+          <th align="right">Soft Level</th><td><xsl:value-of select="format-number(user/@quotasoft div 1024,'###,###,##0')"/> MB</td>         
         </tr>
         <tr class="hover">
-          <th align="right">Hard Level</th><td><xsl:value-of select="user/@quotahard"/></td>
-          <th align="right">Current Size</th><td><xsl:value-of select="user/@size"/></td>
+          <th align="right">Hard Level</th><td><xsl:value-of select="format-number(user/@quotahard div 1024,'###,###,##0')"/> MB</td>
+          <th align="right">Current Size</th><td><xsl:value-of select="format-number(user/@size div 1048576,'###,###,##0')"/> MB</td>
         </tr>
         <xsl:if test="count(user/sendas) &gt; 0">
           <tr>
-            <th colspan="2" align="right">Send As Rights</th>
+            <th colspan="2" align="right" valign="top">Send As Rights</th>
             <td colspan="2">
               <xsl:for-each select="user/sendas"><xsl:sort select="translate(@username, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
               <a href="./zarafa-users.php?user={@username}"><xsl:value-of select="@username"/></a><br/>
@@ -87,7 +87,7 @@
         </xsl:if>      
         <xsl:if test="count(user/group) &gt; 0">
           <tr>
-            <th colspan="2" align="right">Groups</th>
+            <th colspan="2" align="right" valign="top">Groups</th>
             <td colspan="2">
               <xsl:for-each select="user/group"><xsl:sort select="translate(@groupname, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
               <a href="./zarafa-groups.php?group={@groupname}"><xsl:value-of select="@groupname"/></a><br/>
