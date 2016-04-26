@@ -89,7 +89,7 @@
 </xsl:template>
 
 <xsl:template match="group">
-  <td align="center">
+  <td align="center" class="hover">
     <a href="./zarafa-groups.php?group={@groupname}"><xsl:value-of select="@groupname"/></a>
   </td>
 </xsl:template>
