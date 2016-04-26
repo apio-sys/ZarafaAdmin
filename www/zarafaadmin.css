@@ -223,7 +223,7 @@ td.hover:hover { background: #BBB }
 
 
 /* Users */
-#zarafa-users #zarafa-user #zarafa-user-quota
+#zarafa-users, #zarafa-user, #zarafa-user-quota
 {
 	width: 100%;
 	border-collapse: collapse;	
