@@ -223,9 +223,13 @@ td.hover:hover { background: #BBB }
 
 
 /* Users */
-#zarafa-users, #zarafa-user, #zarafa-user-quota
+#zarafa-users
 {
 	width: 100%;
 	border-collapse: collapse;	
 }
 
+#zarafa-user, #zarafa-user-quota
+{
+	border-collapse: collapse;	
+}
