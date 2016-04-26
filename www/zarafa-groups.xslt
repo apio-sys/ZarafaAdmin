@@ -78,7 +78,7 @@
 
 
 <xsl:template match="user" mode="first">
-<xsl:param name="columns" select="2"/>  
+<xsl:param name="columns"/>  
   <tr>
      <xsl:apply-templates select=".|following-sibling::user[position() &lt; $columns]"/>
      <xsl:if test="count(following-sibling::user) &lt; ($columns - 1)">
@@ -97,7 +97,7 @@
 </xsl:template>
 
 <xsl:template match="group" mode="first">
-<xsl:param name="columns" select="2"/>  
+<xsl:param name="columns"/>  
   <tr>
      <xsl:apply-templates select=".|following-sibling::group[position() &lt; $columns]"/>
      <xsl:if test="count(following-sibling::group) &lt; ($columns - 1)">
@@ -116,7 +116,7 @@
 </xsl:template>
 
 <xsl:template name="emptycell">
-<xsl:param name="columns" select="2"/>  
+<xsl:param name="columns"/>  
   <xsl:param name="cells"/>
   <td>&#xA0;</td>
   <xsl:if test="$cells &gt; 1">

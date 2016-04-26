@@ -124,8 +124,18 @@
           </td>
         </tr>
 
+        <tr><td colspan="6">&#xA0;</td></tr>
+        <tr>
+          <th colspan="6" class="center">Send As Rights
+            <xsl:if test="count(user/sendas) &gt; 0">
+              (<xsl:value-of select="user/sendas"/>)
+            </xsl:if>
+          </th>
+        </tr>
+
+
+
         <xsl:if test="count(user/sendas) &gt; 0">
-          <tr><td colspan="6">&#xA0;</td></tr>
           <tr>
             <th colspan="3" align="right" valign="top">Send As Rights:&#xA0;</th>
             <td>&#xA0;</td>            
@@ -135,9 +145,20 @@
               </xsl:for-each>
             </td>
           </tr>
-        </xsl:if>      
+        </xsl:if>
+
+
+
+        <tr><td colspan="6">&#xA0;</td></tr>
+        <tr>
+          <th colspan="6" class="center">Groups
+            <xsl:if test="count(user/group) &gt; 0">
+              (<xsl:value-of select="user/group"/>)
+            </xsl:if>
+          </th>
+        </tr>
+
         <xsl:if test="count(user/group) &gt; 0">
-          <tr><td colspan="6">&#xA0;</td></tr>          
           <tr>
             <th colspan="3" align="right" valign="top">Groups:&#xA0;</th>
             <td>&#xA0;</td>            
