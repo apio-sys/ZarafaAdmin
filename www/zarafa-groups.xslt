@@ -26,16 +26,35 @@
       <xsl:when test="count(group) = 1">
         <table id="zarafa-group">
           <tr><th colspan="2" class="center">Group Detail for <xsl:value-of select="group/@fullname"/></th></tr>
-          <tr class="hover"><th>Groupname</th><td><xsl:value-of select="group/@groupname"/></td></tr>
-          <tr class="hover"><th>Fullname</th><td><xsl:value-of select="group/@fullname"/></td></tr>
-          <tr class="hover"><th>Email</th><td><xsl:value-of select="group/@emailaddress"/></td></tr>
-          <tr class="hover"><th>Visible</th><td><xsl:if test="group/@addressbook = 'Visible'">&#x2713;</xsl:if></td></tr>
-          <tr class="hover"><th>Number of Users</th><td><xsl:value-of select="count(group/user)"/></td></tr>
-          <tr><th>Users</th>
-          <td><xsl:for-each select="group/user"><xsl:sort select="translate(@username, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
-          <a href="./zarafa-users.php?user={@username}"><xsl:value-of select="@username"/></a><br/>
-          </xsl:for-each>
-          </td></tr>
+          <tr class="hover">
+            <th align="right">Groupname:&#xA0;</th>
+            <td><xsl:value-of select="group/@groupname"/></td>
+          </tr>
+          <tr class="hover">
+            <th align="right">Fullname:&#xA0;</th>
+            <td><xsl:value-of select="group/@fullname"/></td>
+          </tr>
+          <tr class="hover">
+            <th align="right">Email:&#xA0;</th><td>
+            <xsl:value-of select="group/@emailaddress"/></td>
+          </tr>
+          <tr class="hover">
+            <thv>Visible:&#xA0;</th>
+            <td><xsl:if test="group/@addressbook = 'Visible'">&#x2713;</xsl:if></td>
+          </tr>
+<!--           <tr class="hover">
+            <th align="right">Number of Users</th>
+            <td><xsl:value-of select="count(group/user)"/></td>
+          </tr> -->
+          <tr>
+            <th align="right" valign="top">Users (<xsl:value-of select="count(group/user)"/>):&#xA0;</th>
+            <td>
+              <xsl:for-each select="group/user">
+                <xsl:sort select="translate(@username, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
+                <a href="./zarafa-users.php?user={@username}"><xsl:value-of select="@username"/></a><br/>
+              </xsl:for-each>
+            </td>
+          </tr>
         </table>
       </xsl:when>
 
