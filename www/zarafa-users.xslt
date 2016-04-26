@@ -127,12 +127,16 @@
         <tr><td colspan="6">&#xA0;</td></tr>
         <tr><th colspan="6" class="center">Send As Rights (<xsl:value-of select="count(user/sendas)"/>)</th></tr>
 
+        <xsl:variable name="columns" select="2"/>
+        <xsl:apply-templates select="user/sendas[(position() - 1) mod $columns = 0]" mode="first">
+          <xsl:sort select="translate(@username, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
+          <xsl:with-param name="columns" select="$columns"/>
+        </xsl:apply-templates>
 
 
 
 
-
-        <xsl:if test="count(user/sendas) &gt; 0">
+<!--         <xsl:if test="count(user/sendas) &gt; 0">
           <tr>
             <th colspan="3" align="right" valign="top">Send As Rights:&#xA0;</th>
             <td>&#xA0;</td>            
@@ -142,39 +146,21 @@
               </xsl:for-each>
             </td>
           </tr>
-        </xsl:if>
+        </xsl:if> -->
+
+
+
+
 
 
 
         <tr><td colspan="6">&#xA0;</td></tr>
         <tr><th colspan="6" class="center">Groups (<xsl:value-of select="count(user/group)"/>)</th></tr>
-
-<!--         <xsl:if test="count(user/group) &gt; 0">
-          <tr>
-            <th colspan="3" align="right" valign="top">Groups:&#xA0;</th>
-            <td>&#xA0;</td>            
-            <td colspan="2">
-              <xsl:for-each select="user/group"><xsl:sort select="translate(@groupname, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
-              <a href="./zarafa-groups.php?group={@groupname}"><xsl:value-of select="@groupname"/></a><br/>
-              </xsl:for-each>
-            </td>
-          </tr>
-        </xsl:if>
- -->
-
-
         <xsl:variable name="columns" select="2"/>
         <xsl:apply-templates select="user/group[(position() - 1) mod $columns = 0]" mode="first">
           <xsl:sort select="translate(@groupname, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
           <xsl:with-param name="columns" select="$columns"/>
         </xsl:apply-templates>
-
-
-
-
-
-
-
 
       </table>
     </xsl:when>
@@ -258,6 +244,26 @@
 </xsl:template>
 
 
+
+
+<xsl:template match="sendas" mode="first">
+<xsl:param name="columns"/>  
+  <tr>
+     <xsl:apply-templates select=".|following-sibling::sendas[position() &lt; $columns]"/>
+     <xsl:if test="count(following-sibling::sendas) &lt; ($columns - 1)">
+        <xsl:call-template name="emptycell">
+           <xsl:with-param name="columns" select="$columns"/>
+           <xsl:with-param name="cells" select="$columns - 1 - count(following-sibling::sendas)"/>
+        </xsl:call-template>
+     </xsl:if>
+  </tr>
+</xsl:template>
+
+<xsl:template match="sendas">
+  <td align="center" class="hover" colspan="3">
+    <a href="./zarafa-users.php?group={@username}"><xsl:value-of select="@username"/></a>
+  </td>
+</xsl:template>
 
 
 <xsl:template match="group" mode="first">
