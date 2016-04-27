@@ -120,7 +120,7 @@
             <td>&#xA0;</td>
             <th align="right">Version:&#xA0;</th>
             <td><xsl:value-of select="device/@activesyncversion"/></td>
-            <td colspan="3" class="center"><xsl:value-of select="device/@synchronizeddata"/></td>
+            <td colspan="3" align="center"><xsl:value-of select="device/@synchronizeddata"/></td>
           </tr>
         </table>
         <table id="zarafa-device-errors">
