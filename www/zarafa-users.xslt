@@ -258,7 +258,7 @@
 
 <xsl:template match="sendas">
   <td align="center" class="hover" colspan="3">
-    <a href="./zarafa-users.php?group={@username}"><xsl:value-of select="@username"/></a>
+    <a href="./zarafa-users.php?user={@username}"><xsl:value-of select="@username"/></a>
   </td>
 </xsl:template>
 
