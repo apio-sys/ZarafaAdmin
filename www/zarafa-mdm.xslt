@@ -157,6 +157,22 @@
               <td><xsl:value-of select="@itemparentid"/></td>
             </tr>
           </xsl:for-each>
+
+          <tr><td colspan="3">&#xA0;</td></tr>
+          <tr><th colspan="3" align="center">Actions</th></tr>
+          <tr>
+            <td align="center">
+              <input type="button" value="Remove All State Data"/>
+            </td>
+            <td align="center">
+              <input type="button" value="Remote Wipe All Data from Phone"/>
+            </td>
+            <td align="center">
+              <input type="button" value="Clears All Loop Detection Data"/>
+            </td>            
+          </tr>
+
+
         </table>
       </xsl:when>
 
