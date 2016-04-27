@@ -133,22 +133,22 @@
             <tr><td colspan="3">&#xA0;</td></tr>
             <tr class="hover">
               <td>&#xA0;</td>
-              <th align="right">Object:&#xA0;</th>
+              <th align="right" nowrap="nowrap">Object:&#xA0;</th>
               <td><xsl:value-of select="@brokenobject"/></td>
             </tr>
             <tr class="hover">
               <td>&#xA0;</td>
-              <th align="right">Information:&#xA0;</th>
+              <th align="right" nowrap="nowrap">Information:&#xA0;</th>
               <td><xsl:value-of select="@information"/></td>
             </tr>
             <tr class="hover">
               <td>&#xA0;</td>
-              <th align="right">Reason:&#xA0;</th>
+              <th align="right" nowrap="nowrap">Reason:&#xA0;</th>
               <td><xsl:value-of select="@reason"/></td>
             </tr>
             <tr class="hover">
               <td>&#xA0;</td>
-              <th align="right">Item/Parent ID:&#xA0;</th>
+              <th align="right" nowrap="nowrap">Item/Parent ID:&#xA0;</th>
               <td><xsl:value-of select="@itemparentid"/></td>
             </tr>
           </xsl:for-each>
