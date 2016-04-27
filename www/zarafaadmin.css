@@ -251,3 +251,10 @@ td.hover:hover { background: #BBB }
 	border-collapse: collapse;	
 }
 
+/* Zarafa System and Sessions */
+#zarafa-system
+{
+	width: 600px;	
+	border-collapse: collapse;	
+}
+

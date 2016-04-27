@@ -68,7 +68,6 @@ $proc->importStylesheet($xsl);
 
 $output = $proc->transformToDoc($outputxml)->saveXML(); 
 
-echo "<pre>$output</pre>";
-
+echo "$output";
 echo '</body></html>';
 ?>

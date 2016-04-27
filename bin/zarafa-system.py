@@ -142,14 +142,27 @@ def zarafa_system(data):
 
   else:
     attrib = {}
+    dates = {}
+
     for line in data:
       parameter, desc, value = line.split(";")
       if parameter in ['server_start_date','cache_purge_date','config_reload_date','sql_last_fail_time']:
-        if value:
-          value = str(datetime.datetime.strptime(value.decode('unicode_escape'),'%a %b %d %H:%M:%S %Y'))
-      attrib[parameter] = brandt.strXML(value)
+        try:
+          dates[parameter]['text'] = value
+          dates[parameter]['date'] = datetime.datetime.strptime(value.decode('unicode_escape'),'%a %b %d %H:%M:%S %Y')
+        except:
+          dates[parameter]['text'] = values
+          dates[parameter]['date'] = datetime.datetime.strptime("0001-01-01 00:00".decode('unicode_escape'),'%Y-%m-%d %H:%M')
+
+      else:
+        attrib[parameter] = brandt.strXML(value)
 
     xml = ElementTree.Element('system', **attrib)
+    today = datetime.datetime.today()
+    for parameter in ['server_start_date','cache_purge_date','config_reload_date','sql_last_fail_time']:
+      if dates[parameter]['text']: 
+        ElementTree.SubElement(xml, parameter, date=brandt.strXML(dates[parameter]['text']), lag=brandt.strXML((today - dates[parameter]['date']).days) + '.' + brandt.strXML((today - dates[parameter]['date']).seconds/60) )
+
     return xml
 
 # Start program
