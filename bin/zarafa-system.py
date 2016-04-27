@@ -160,7 +160,7 @@ def zarafa_system(data):
     xml = ElementTree.Element('system', **attrib)
     today = datetime.datetime.today()
     for parameter in ['server_start_date','cache_purge_date','config_reload_date','sql_last_fail_time']:
-      if dates[parameter]['text']: 
+      if dates.has_key(parameter) and dates[parameter].get('text',""): 
         ElementTree.SubElement(xml, parameter, date=brandt.strXML(dates[parameter]['text']), lag=brandt.strXML((today - dates[parameter]['date']).days) + '.' + brandt.strXML((today - dates[parameter]['date']).seconds/60) )
 
     return xml
