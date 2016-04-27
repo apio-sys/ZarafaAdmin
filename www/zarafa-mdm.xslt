@@ -128,17 +128,30 @@
           <tr class="hover">
             <td>&#xA0;</td>
             <th align="right">Errors:&#xA0;</th>
-            <td colspan="4"><xsl:value-of select="device/@attentionneeded"/></td>
+            <td><xsl:value-of select="device/@attentionneeded"/></td>
           </tr>          
           <xsl:for-each select="device/error">
             <tr><td>&#xA0;</td><td>
-              <table id="zarafa-device-errors">
-              <tr class="hover"><th style="width: 100;">Object</th><td><xsl:value-of select="@brokenobject"/></td></tr>
-              <tr class="hover"><th>Information</th><td><xsl:value-of select="@information"/></td></tr>
-              <tr class="hover"><th>Reason</th><td><xsl:value-of select="@reason"/></td></tr>
-              <tr class="hover"><th>Item/Parent ID</th><td><xsl:value-of select="@itemparentid"/></td></tr>
-              </table>
-            </td></tr>
+            <tr class="hover">
+              <td>&#xA0;</td>
+              <th align="right">Object:&#xA0;</th>
+              <td><xsl:value-of select="@brokenobject"/></td>
+            </tr>
+            <tr class="hover">
+              <td>&#xA0;</td>
+              <th align="right">Information:&#xA0;</th>
+              <td><xsl:value-of select="@information"/></td>
+            </tr>
+            <tr class="hover">
+              <td>&#xA0;</td>
+              <th align="right">Reason:&#xA0;</th>
+              <td><xsl:value-of select="@reason"/></td>
+            </tr>
+            <tr class="hover">
+              <td>&#xA0;</td>
+              <th align="right">Item/Parent ID:&#xA0;</th>
+              <td><xsl:value-of select="@itemparentid"/></td>
+            </tr>
           </xsl:for-each>
         </table>
       </xsl:when>
