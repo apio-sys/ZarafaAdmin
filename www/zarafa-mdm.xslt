@@ -74,7 +74,12 @@
             <td><xsl:value-of select="device/@deviceimei"/></td>
             <td>&#xA0;</td>
             <th align="right">First Sync:&#xA0;</th>
-            <td><xsl:value-of select="device/@firstsync"/></td>
+            <td>
+              <xsl:if test="firstsync/@lag &gt;= 30">
+                <xsl:attribute name="class">red</xsl:attribute>
+              </xsl:if>                     
+              <xsl:value-of select="firstsync"/>
+            </td>
           </tr>
           <tr class="hover">
             <td>&#xA0;</td>
@@ -82,7 +87,12 @@
             <td><xsl:value-of select="device/@devicefriendlyname"/></td>
             <td>&#xA0;</td>
             <th align="right">Last Sync:&#xA0;</th>
-            <td><xsl:value-of select="device/@lastsync"/></td>
+            <td>
+              <xsl:if test="lastsync/@lag &gt;= 30">
+                <xsl:attribute name="class">red</xsl:attribute>
+              </xsl:if>                     
+              <xsl:value-of select="lastsync"/>
+            </td>            
           </tr>
           <tr class="hover">
             <td>&#xA0;</td>
@@ -183,7 +193,12 @@
   <tr class="hover">
     <td><a href="./zarafa-users.php?user={@username}"><xsl:value-of select="@username"/></a></td>
     <td><a href="./zarafa-mdm.php?user={@username}&amp;device={@deviceid}"><xsl:value-of select="@deviceid"/></a></td>
-    <td><a href="./zarafa-mdm.php?user={@username}&amp;device={@deviceid}"><xsl:value-of select="lastsync"/></a></td>
+    <td>
+      <xsl:if test="lastsync/@lag &gt;= 30">
+        <xsl:attribute name="class">red</xsl:attribute>
+      </xsl:if>         
+      <a href="./zarafa-mdm.php?user={@username}&amp;device={@deviceid}"><xsl:value-of select="lastsync"/></a>
+    </td>
   </tr>
 </xsl:template>
 
