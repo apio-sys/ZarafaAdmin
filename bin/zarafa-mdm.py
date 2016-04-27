@@ -259,7 +259,7 @@ def zarafa_device(deviceID, username):
     sys.exit(0)
   else:
     xml = ElementTree.Element('devices')
-    today = datetime.datetime.today()    
+    today = datetime.datetime.today()
     firstsyncText = data.pop("firstsync","never")
     lastsyncText = data.pop("lastsync","never")
     device = ElementTree.SubElement(xml, 'device', **{k:brandt.strXML(v) for k,v in data.items()})
@@ -269,13 +269,13 @@ def zarafa_device(deviceID, username):
         firstsync = datetime.datetime.strptime(firstsyncText.decode('unicode_escape'),'%Y-%m-%d %H:%M')
       except:
         firstsync = datetime.datetime.strptime("0001-01-01 00:00".decode('unicode_escape'),'%Y-%m-%d %H:%M')
-      child = ElementTree.SubElement(device, "firstsync", date=brandt.strXML(firstsyncText), lag=brandt.strXML((today - firstsync).days) + '.' + brandt.strXML((today - firstsync).seconds/60) )
+      ElementTree.SubElement(device, "firstsync", date=brandt.strXML(firstsyncText), lag=brandt.strXML((today - firstsync).days) + '.' + brandt.strXML((today - firstsync).seconds/60) )
     if lastsyncText:
       try:
         lastsync = datetime.datetime.strptime(lastsyncText.decode('unicode_escape'),'%Y-%m-%d %H:%M')
       except:
         lastsync = datetime.datetime.strptime("0001-01-01 00:00".decode('unicode_escape'),'%Y-%m-%d %H:%M')
-      child = ElementTree.SubElement(device, "lastsync", date=brandt.strXML(lastsyncText), lag=brandt.strXML((today - lastsync).days) + '.' + brandt.strXML((today - lastsync).seconds/60) )
+      ElementTree.SubElement(device, "lastsync", date=brandt.strXML(lastsyncText), lag=brandt.strXML((today - lastsync).days) + '.' + brandt.strXML((today - lastsync).seconds/60) )
 
     for error in errors:
       ElementTree.SubElement(device, 'error', **{k:brandt.strXML(v) for k,v in error.items()})
