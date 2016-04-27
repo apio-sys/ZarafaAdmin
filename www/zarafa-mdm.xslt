@@ -193,11 +193,13 @@
   <tr class="hover">
     <td><a href="./zarafa-users.php?user={@username}"><xsl:value-of select="@username"/></a></td>
     <td><a href="./zarafa-mdm.php?user={@username}&amp;device={@deviceid}"><xsl:value-of select="@deviceid"/></a></td>
-    <td>
-      <xsl:if test="lastsync/@lag &gt;= 30">
-        <xsl:attribute name="class">red</xsl:attribute>
-      </xsl:if>         
-      <a href="./zarafa-mdm.php?user={@username}&amp;device={@deviceid}"><xsl:value-of select="lastsync"/></a>
+    <td>       
+      <a href="./zarafa-mdm.php?user={@username}&amp;device={@deviceid}">
+        <xsl:if test="lastsync/@lag &gt;= 30">
+          <xsl:attribute name="class">red</xsl:attribute>
+        </xsl:if>          
+        <xsl:value-of select="lastsync"/>
+      </a>
     </td>
   </tr>
 </xsl:template>
