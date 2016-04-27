@@ -114,7 +114,7 @@
             <td>&#xA0;</td>
             <th align="right">Device Operator:&#xA0;</th>
             <td><xsl:value-of select="device/@deviceoperator"/></td>
-            <th colspan="3" class="center">Synced Folders (<xsl:value-of select="device/@synchronizedfolders"/>)</th>
+            <th colspan="3" align="center">Synced Folders (<xsl:value-of select="device/@synchronizedfolders"/>)</th>
           </tr>
           <tr class="hover">
             <td>&#xA0;</td>
