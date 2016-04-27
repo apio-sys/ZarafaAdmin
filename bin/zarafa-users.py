@@ -313,7 +313,9 @@ def zarafa_user(username):
     p = subprocess.Popen(mdmCMD + " --output text", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     mdmSTR, err = p.communicate()
     if err: raise IOError(err)
-    print "\nMobile Devices (", str(len(mdmSTR.split("\n"))), "):"
+    mdmLEN = len(mdmSTR.split("\n")) - 2
+    if mdmLEN < 0: mdmLEN = 0
+    print "\nMobile Devices (", str(mdmLEN).strip(), "):"
     print '-' * (maxlen + 10)
 
     print mdmSTR
