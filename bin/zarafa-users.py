@@ -267,7 +267,7 @@ def zarafa_user(username):
   if data.has_key("lastlogon"):
     try:
       logon = datetime.datetime.strptime(data.get("lastlogon").decode('unicode_escape'),'%d/%m/%y %H:%M:%S')
-    else:
+    except:
       logon = datetime.datetime.strptime(data.get("lastlogon").decode('unicode_escape'),'%m/%d/%y %H:%M:%S')
     finally:
       data["lastlogon"] = str(logon)
@@ -275,7 +275,7 @@ def zarafa_user(username):
   if data.has_key("lastlogoff"):
     try:
       logoff = datetime.datetime.strptime(data.get("lastlogoff").decode('unicode_escape'),'%d/%m/%y %H:%M:%S')
-    else:
+    except:
       logoff = datetime.datetime.strptime(data.get("lastlogoff").decode('unicode_escape'),'%m/%d/%y %H:%M:%S')
     finally:
       data["lastlogoff"] = str(logoff)
