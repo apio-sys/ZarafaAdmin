@@ -200,8 +200,7 @@ def zarafa_devices(devices):
         lastSync = datetime.datetime.strptime(lastSyncText.decode('unicode_escape'),'%Y-%m-%d %H:%M')
       except:
         lastSync = datetime.datetime.strptime("0001-01-01 00:00".decode('unicode_escape'),'%Y-%m-%d %H:%M')
-      child = ElementTree.SubElement(xmldevice, "lastsync", lag=brandt.strXML((today - lastSync).days) + '.' + brandt.strXML((today - lastSync).seconds/60) )
-      child.text = brandt.strXML(lastSyncText)
+      child = ElementTree.SubElement(xmldevice, "lastsync", date=brandt.strXML(lastSyncText), lag=brandt.strXML((today - lastSync).days) + '.' + brandt.strXML((today - lastSync).seconds/60) )
     return xml
 
 def parseData(data):
@@ -270,15 +269,13 @@ def zarafa_device(deviceID, username):
         firstsync = datetime.datetime.strptime(firstsyncText.decode('unicode_escape'),'%Y-%m-%d %H:%M')
       except:
         firstsync = datetime.datetime.strptime("0001-01-01 00:00".decode('unicode_escape'),'%Y-%m-%d %H:%M')
-      child = ElementTree.SubElement(device, "firstsync", lag=brandt.strXML((today - firstsync).days) + '.' + brandt.strXML((today - firstsync).seconds/60) )
-      child.text = brandt.strXML(firstsyncText)
+      child = ElementTree.SubElement(device, "firstsync", date=brandt.strXML(firstsyncText), lag=brandt.strXML((today - firstsync).days) + '.' + brandt.strXML((today - firstsync).seconds/60) )
     if lastsyncText:
       try:
         lastsync = datetime.datetime.strptime(lastsyncText.decode('unicode_escape'),'%Y-%m-%d %H:%M')
       except:
         lastsync = datetime.datetime.strptime("0001-01-01 00:00".decode('unicode_escape'),'%Y-%m-%d %H:%M')
-      child = ElementTree.SubElement(device, "lastsync", lag=brandt.strXML((today - lastsync).days) + '.' + brandt.strXML((today - lastsync).seconds/60) )
-      child.text = brandt.strXML(lastsyncText)
+      child = ElementTree.SubElement(device, "lastsync", date=brandt.strXML(lastsyncText), lag=brandt.strXML((today - lastsync).days) + '.' + brandt.strXML((today - lastsync).seconds/60) )
 
     for error in errors:
       ElementTree.SubElement(device, 'error', **{k:brandt.strXML(v) for k,v in error.items()})
