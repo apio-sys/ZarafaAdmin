@@ -192,7 +192,7 @@ a:hover, a:active
 .soft { color: red; }
 .hard { color: red; font-weight: bold; }
 .red  { color: red; }
-a.red { color: red; }
+
 tr.hover:hover { background: #BBB }
 td.hover:hover { background: #BBB }
 
