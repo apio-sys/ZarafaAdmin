@@ -177,7 +177,7 @@
             </td>
             <td align="left" colspan="2">
               <select>
-                <option value="all">all folders for this device and user</option>
+                <option value="all" selected="">all folders for this device and user</option>
                 <option value="email">folders of type 'email' for this device and user</option>
                 <option value="calendar">folders of type 'calendar' for this device and user</option>
                 <option value="contact">folders of type 'contact' for this device and user</option>
