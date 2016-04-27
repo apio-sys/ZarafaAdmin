@@ -315,9 +315,8 @@ def zarafa_user(username):
     if err: raise IOError(err)
     mdmLEN = len(mdmSTR.split("\n")) - 2
     if mdmLEN < 0: mdmLEN = 0
-    print "\nMobile Devices (", str(mdmLEN).strip(), "):"
+    print "\nMobile Devices (" + str(mdmLEN) + "):"
     print '-' * (maxlen + 10)
-
     print mdmSTR
 
     sys.exit(0)
@@ -353,10 +352,17 @@ def zarafa_user(username):
     for group in groups:
       ElementTree.SubElement(xmluser, 'group', groupname = brandt.strXML(group))
 
-    p = subprocess.Popen(mdmCMD + " --output xml", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    mdmSTR, err = p.communicate()
-    if err: raise IOError(err)
-    mdmXML = ElementTree.fromstring(mdmSTR)
+    try:
+      p = subprocess.Popen(mdmCMD + " --output xml", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+      mdmSTR, err = p.communicate()
+      if err: raise IOError(err)
+      mdmXML = ElementTree.fromstring(mdmSTR)
+      mdmXML = mdmXML.find('/zarafaadmin/devices')
+
+      print ElementTree.tostring(mdmXML, encoding=encoding, method="xml")
+    except:
+      pass
+    print 
 
     return xml
 
