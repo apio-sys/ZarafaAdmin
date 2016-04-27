@@ -352,17 +352,14 @@ def zarafa_user(username):
     for group in groups:
       ElementTree.SubElement(xmluser, 'group', groupname = brandt.strXML(group))
 
-    try:
-      p = subprocess.Popen(mdmCMD + " --output xml", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-      mdmSTR, err = p.communicate()
-      if err: raise IOError(err)
-      mdmXML = ElementTree.fromstring(mdmSTR)
-      mdmXML = mdmXML.find('/zarafaadmin/devices')
+    p = subprocess.Popen(mdmCMD + " --output xml", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    mdmSTR, err = p.communicate()
+    if err: raise IOError(err)
+    mdmXML = ElementTree.fromstring(mdmSTR)
+    mdmXML = mdmXML.find('devices')
 
-      print ElementTree.tostring(mdmXML, encoding=encoding, method="xml")
-    except:
-      pass
-    print 
+    print ElementTree.tostring(mdmXML, encoding=encoding, method="xml")
+
 
     return xml
 
