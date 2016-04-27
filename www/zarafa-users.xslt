@@ -147,15 +147,17 @@
         </tr>
         <xsl:for-each select="user/devices/device">
           <xsl:sort select="lastsync/@lag" order="decending" data-type="number"/>
-          <td colspan="3" class="center"><a href="./zarafa-mdm.php?user={@username}&amp;device={@deviceid}"><xsl:value-of select="@deviceid"/></td>
-          <td colspan="3" class="center">
-            <a href="./zarafa-mdm.php?user={@username}&amp;device={@deviceid}">
-              <xsl:if test="lastsync/@lag &gt;= 30">
-                <xsl:attribute name="class">red</xsl:attribute>
-              </xsl:if>          
-              <xsl:value-of select="lastsync/@date"/>
-            </a>            
-          </td>
+          <tr class="hover">
+            <td colspan="3" class="center"><a href="./zarafa-mdm.php?user={@username}&amp;device={@deviceid}"><xsl:value-of select="@deviceid"/></a></td>
+            <td colspan="3" class="center">
+              <a href="./zarafa-mdm.php?user={@username}&amp;device={@deviceid}">
+                <xsl:if test="lastsync/@lag &gt;= 30">
+                  <xsl:attribute name="class">red</xsl:attribute>
+                </xsl:if>          
+                <xsl:value-of select="lastsync/@date"/>
+              </a>            
+            </td>
+          </tr>
       </table>
     </xsl:when>
 
