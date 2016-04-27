@@ -238,10 +238,11 @@ if __name__ == "__main__":
 
 
   ldapURI = "ldaps://ldap1.opw.ie/ou=it,o=opw?cn,mail?sub??"
-
+  results = LDAPSearch(ldapURI)
 
 
   print ldapURI
+  print results
   sys.exit(0)
 
 
