@@ -245,7 +245,7 @@ td.hover:hover { background: #BBB }
 }
 
 /* Mobile Devices */
-#zarafa-devices, #zarafa-device
+#zarafa-devices, #zarafa-device, #zarafa-device-errors
 {
 	width: 500px;	
 	border-collapse: collapse;	
