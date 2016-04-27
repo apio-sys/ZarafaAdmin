@@ -78,7 +78,8 @@ def get_data():
 if __name__ == "__main__":
   command_line_args()
 
-  p = subprocess.Popen(['grep','Authentication by plugin failed for user', '/var/log/zarafa/server.log'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+  command = 'grep "Authentication by plugin failed for user" "/var/log/zarafa/server.log"'
+  p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   out, err = p.communicate()
   if err: raise IOError(err)
   users = {}
@@ -102,6 +103,9 @@ if __name__ == "__main__":
         if tmpTime > now - datetime.timedelta(days = 3): users[tmpUser]['3d'] += 1
     except:
       pass
+
+  print users
+  sys.exit(0)
 
 
 
