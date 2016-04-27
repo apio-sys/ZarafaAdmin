@@ -29,8 +29,8 @@
       <xsl:when test="count(device) = 1">
         <table id="zarafa-device">
           <tr>
-            <th colspan="3" class="center">Device Information</th>
-            <th colspan="3" class="center">Wipe Information</th>
+            <th colspan="3" align="center">Device Information</th>
+            <th colspan="3" align="center">Wipe Information</th>
           </tr>
           <tr class="hover">
             <td>&#xA0;</td>
@@ -66,7 +66,7 @@
             <td>&#xA0;</td>
             <th align="right">Device Model:&#xA0;</th>
             <td><xsl:value-of select="device/@devicemodel"/></td>
-            <th colspan="3" class="center">Folder Information</th>
+            <th colspan="3" align="center">Folder Information</th>
           </tr>
           <tr class="hover">
             <td>&#xA0;</td>

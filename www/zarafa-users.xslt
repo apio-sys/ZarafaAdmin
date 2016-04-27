@@ -95,7 +95,7 @@
       </table>
 
       <table id="zarafa-user-quota">
-        <tr><th colspan="6" class="center">Quota Information<xsl:if test="user/@quotaoverrides = 'yes'">&#xA0;(Override Defaults &#x2713;)</xsl:if></th></tr>
+        <tr><th colspan="6" align="center">Quota Information<xsl:if test="user/@quotaoverrides = 'yes'">&#xA0;(Override Defaults &#x2713;)</xsl:if></th></tr>
         <tr class="hover">
           <td>&#xA0;</td>          
           <th align="right">Warning Level:&#xA0;</th><td><xsl:value-of select="format-number(user/@quotawarn div 1024,'###,###,##0')"/> MB</td>
@@ -124,7 +124,7 @@
         </tr>
 
         <tr><td colspan="6">&#xA0;</td></tr>
-        <tr><th colspan="6" class="center">Send As Rights (<xsl:value-of select="count(user/sendas)"/>)</th></tr>
+        <tr><th colspan="6" align="center">Send As Rights (<xsl:value-of select="count(user/sendas)"/>)</th></tr>
 
         <xsl:variable name="columns" select="2"/>
         <xsl:apply-templates select="user/sendas[(position() - 1) mod $columns = 0]" mode="first">
@@ -133,23 +133,23 @@
         </xsl:apply-templates>
 
         <tr><td colspan="6">&#xA0;</td></tr>
-        <tr><th colspan="6" class="center">Groups (<xsl:value-of select="count(user/group)"/>)</th></tr>
+        <tr><th colspan="6" align="center">Groups (<xsl:value-of select="count(user/group)"/>)</th></tr>
         <xsl:apply-templates select="user/group[(position() - 1) mod $columns = 0]" mode="first">
           <xsl:sort select="translate(@groupname, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
           <xsl:with-param name="columns" select="$columns"/>
         </xsl:apply-templates>
 
         <tr><td colspan="6">&#xA0;</td></tr>
-        <tr><th colspan="6" class="center">Mobile Devices (<xsl:value-of select="count(user/devices/device)"/>)</th></tr>
+        <tr><th colspan="6" align="center">Mobile Devices (<xsl:value-of select="count(user/devices/device)"/>)</th></tr>
         <tr>
-          <th colspan="3" class="center">Device ID</th>
-          <th colspan="3" class="center">Last Sync</th>
+          <th colspan="3" align="center">Device ID</th>
+          <th colspan="3" align="center">Last Sync</th>
         </tr>
         <xsl:for-each select="user/devices/device">
           <xsl:sort select="lastsync/@lag" order="decending" data-type="number"/>
           <tr class="hover">
-            <td colspan="3" class="center"><a href="./zarafa-mdm.php?user={@username}&amp;device={@deviceid}"><xsl:value-of select="@deviceid"/></a></td>
-            <td colspan="3" class="center">
+            <td colspan="3" align="center"><a href="./zarafa-mdm.php?user={@username}&amp;device={@deviceid}"><xsl:value-of select="@deviceid"/></a></td>
+            <td colspan="3" align="center">
               <a href="./zarafa-mdm.php?user={@username}&amp;device={@deviceid}">
                 <xsl:if test="lastsync/@lag &gt;= 30">
                   <xsl:attribute name="class">red</xsl:attribute>
