@@ -265,12 +265,20 @@ def zarafa_user(username):
   if data.has_key("currentstoresize"): data["currentstoresize"] = "{:.0f}".format(float(data.get("currentstoresize","").split(" ")[0]) * 1048576)
   logon = None
   if data.has_key("lastlogon"):
-    logon = datetime.datetime.strptime(data.get("lastlogon").decode('unicode_escape'),'%d/%m/%y %H:%M:%S')
-    data["lastlogon"] = str(logon)
+    try:
+      logon = datetime.datetime.strptime(data.get("lastlogon").decode('unicode_escape'),'%d/%m/%y %H:%M:%S')
+    else:
+      logon = datetime.datetime.strptime(data.get("lastlogon").decode('unicode_escape'),'%m/%d/%y %H:%M:%S')
+    finally:
+      data["lastlogon"] = str(logon)
   logoff = None
   if data.has_key("lastlogoff"):
-    logoff = datetime.datetime.strptime(data.get("lastlogoff").decode('unicode_escape'),'%d/%m/%y %H:%M:%S')
-    data["lastlogoff"] = str(logoff)
+    try:
+      logoff = datetime.datetime.strptime(data.get("lastlogoff").decode('unicode_escape'),'%d/%m/%y %H:%M:%S')
+    else:
+      logoff = datetime.datetime.strptime(data.get("lastlogoff").decode('unicode_escape'),'%m/%d/%y %H:%M:%S')
+    finally:
+      data["lastlogoff"] = str(logoff)
 
   for good,bad in ldapmapping:
     if data.has_key(bad):
