@@ -157,8 +157,8 @@
               <td><xsl:value-of select="@itemparentid"/></td>
             </tr>
           </xsl:for-each>
-
-          <tr><td colspan="3">&#xA0;</td></tr>
+        </table>
+        <table id="zarafa-device-actions">
           <tr><th colspan="3" align="center">Actions</th></tr>
           <tr>
             <td align="center">
@@ -171,9 +171,9 @@
               <input type="button" value="Clears All Loop Detection Data"/>
             </td>            
           </tr>
-
-
         </table>
+
+
       </xsl:when>
 
       <xsl:otherwise>
