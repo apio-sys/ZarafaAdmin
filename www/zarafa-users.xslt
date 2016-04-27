@@ -159,6 +159,17 @@
             </td>
           </tr>
         </xsl:for-each>
+
+        <tr><td colspan="6">&#xA0;</td></tr>
+        <tr><th colspan="6" align="center">Actions</th></tr>
+        <tr>
+          <td colspan="3" align="center">
+            <input type="button" value="Set Out of Office"/>
+          </td>
+          <td colspan="3" align="center">
+            <input type="button" value="Remove Out of Office"/>
+          </td>
+        </tr>
       </table>
     </xsl:when>
 
@@ -239,9 +250,6 @@
     <xsl:value-of select="logon/@date"/></td>
   </tr>
 </xsl:template>
-
-
-
 
 <xsl:template match="sendas" mode="first">
 <xsl:param name="columns"/>  
