@@ -4,7 +4,7 @@ Python program for Zarafa
 """
 import argparse, textwrap, fnmatch, datetime
 import xml.etree.cElementTree as ElementTree
-import subprocess, ldapurl, ldap
+import subprocess
 
 # Import Brandt Common Utilities
 import sys, os
