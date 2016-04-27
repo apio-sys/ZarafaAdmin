@@ -123,7 +123,7 @@
 
       <xsl:otherwise>
         <table id="zarafa-devices">
-          <tr class="hover">
+          <tr>
             <th><a href="./zarafa-mdm.php?user={$user}&amp;device={@device}&amp;sort=username">Username</a></th>
             <th><a href="./zarafa-mdm.php?user={$user}&amp;device={@device}&amp;sort=device">Device ID</a></th>
             <th><a href="./zarafa-mdm.php?user={$user}&amp;device={@device}&amp;sort=sync">Last Sync</a></th>
@@ -146,7 +146,7 @@
 </xsl:template>
 
 <xsl:template match="device">
-  <tr>
+  <tr class="hover">
     <td><a href="./zarafa-users.php?user={@username}"><xsl:value-of select="@username"/></a></td>
     <td><a href="./zarafa-mdm.php?user={@username}&amp;device={@deviceid}"><xsl:value-of select="@deviceid"/></a></td>
     <td><a href="./zarafa-mdm.php?user={@username}&amp;device={@deviceid}"><xsl:value-of select="lastsync"/></a></td>
