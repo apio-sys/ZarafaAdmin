@@ -265,14 +265,12 @@ def zarafa_user(username):
   if data.has_key("currentstoresize"): data["currentstoresize"] = "{:.0f}".format(float(data.get("currentstoresize","").split(" ")[0]) * 1048576)
   logon = None
   if data.has_key("lastlogon"):
-    logon = datetime.datetime.strptime(data.get("lastlogon").decode('unicode_escape'),'%m/%d/%y %H:%M:%S')
+    logon = datetime.datetime.strptime(data.get("lastlogon").decode('unicode_escape'),'%d/%m/%y %H:%M:%S')
     data["lastlogon"] = str(logon)
-    # data["lastlogon"] = str(datetime.datetime.strptime(data.get("lastlogon").decode('unicode_escape'),'%m/%d/%y %H:%M:%S'))
   logoff = None
   if data.has_key("lastlogoff"):
-    logoff = datetime.datetime.strptime(data.get("lastlogoff").decode('unicode_escape'),'%m/%d/%y %H:%M:%S')
+    logoff = datetime.datetime.strptime(data.get("lastlogoff").decode('unicode_escape'),'%d/%m/%y %H:%M:%S')
     data["lastlogoff"] = str(logoff)
-    # data["lastlogoff"] = str(datetime.datetime.strptime(data.get("lastlogoff").decode('unicode_escape'),'%m/%d/%y %H:%M:%S'))
 
   for good,bad in ldapmapping:
     if data.has_key(bad):
