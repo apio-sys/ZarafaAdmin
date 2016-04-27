@@ -4,7 +4,7 @@ Python program for Zarafa
 """
 import argparse, textwrap, fnmatch, datetime
 import xml.etree.cElementTree as ElementTree
-import subprocess
+import subprocess, ldapurl, ldap
 
 # Import Brandt Common Utilities
 import sys, os
@@ -15,10 +15,137 @@ sys.path.pop()
 args = {}
 args['output'] = "text"
 
+
 version = 0.3
 encoding = 'utf-8'
 
 months = ('','jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec')
+
+
+
+class LDAPSearch(object):
+    """ 
+    The class returns a List of a Truples of a String and a Dicionary of a List
+        
+        ldapurl     = ldap[s]://[host[:port]][/base[?[attributes][?[scope][?[filter][?extensions]]]]]
+        scope       = "base" / "one" / "sub"
+        ldap://ldap.opw.ie:389/o=opw?cn,mail?base
+        ldaps://ldap1.opw.ie/ou=userapp,o=opw?cn,mail?sub??bindname=cn=brandtb%2cou=it%2co=opw,X-BINDPW=password
+    """
+    
+    def __init__(self, source = None):
+        self.__source = None
+        self.__type = None
+        self.__sourcename = None
+        self.__results = None 
+        if source != None:
+            self.search(source)
+    
+    def getSource(self):
+        return self.__source
+    def setSource(self, source):
+        if str(type(source)) == "<type 'str'>" and source == "stdin":
+            self.__source = sys.stdin
+            self.__type = "stream"
+            self.__sourcename = "stdin"            
+        elif str(type(source)) == "<type 'file'>":
+            self.__source = source
+            self.__type = "file"
+            self.__sourcename = str(source.name).lstrip("<").rstrip(">")
+        elif str(type(source)) == "<type 'str'>":
+            try:
+                self.__source = ldapurl.LDAPUrl(source)
+                self.__type = "url"
+                self.__sourcename = source
+            except:
+                try:
+                    self.__source = open(source)
+                    self.__type = "file"
+                    self.__sourcename = str(source)
+                except:
+                    raise ValueError, "Parameter source does not seem to be a LDAP URL or File."
+                    self.__source = None
+                    self.__type = None
+                    self.__sourcename = None
+
+        else:
+            raise ValueError, "Parameter source does not seem to be a LDAP URL or File."
+            self.__source = None
+            self.__type = None
+            self.__sourcename = None
+    source = property(getSource, setSource)
+
+    def getType(self):
+        if self.__type != None:
+            return self.__type
+        else:
+            raise ValueError, "Source does not seem to be a LDAP URL or File."
+            return None
+    type=property(getType)
+
+    def getSourceName(self):
+        if self.__sourcename != None:
+            return self.__sourcename
+        else:
+            raise ValueError, "Source does not seem to be a LDAP URL or File."
+            return None
+    sourcename=property(getSourceName)        
+
+    def getresults(self):
+        return self.__results
+    results = property(getresults)
+    
+    def search(self, source):
+        timeout = 0
+        self.source = source
+        self.__results = []
+        if self.type == "file" or self.type == "stream":
+            ldifFile = ldif.LDIFRecordList(self.__source)
+            ldifFile.parse()
+            self.__results = ldifFile.all_records
+
+        elif self.type == "url":
+            filterstr = self.source.filterstr
+            #extensions = self.source.extensions
+            if filterstr == None: filterstr = "(objectClass=*)"
+          
+            con_string = "%s://%s" % (self.source.urlscheme, self.source.hostport)    
+            l = ldap.initialize(con_string)
+            #l.start_tls_s()
+            if self.source.who:
+                l.bind_s(self.source.who, self.source.cred)
+            else:
+                l.bind_s('', '') # anonymous bind
+        
+            ldap_result_id = l.search(self.source.dn, self.source.scope, filterstr, self.source.attrs)
+            while 1:
+                result_type, result_data = l.result(ldap_result_id, timeout)
+                if (result_data == []):
+                    break
+                else:
+                    if result_type == ldap.RES_SEARCH_ENTRY:
+                        self.__results.append(result_data[0])
+        return self.__results
+
+    def attributelist(self, attribute):
+        temp = {}
+        for entry in self.results:            
+            for attr in entry[1]:
+                if attr == attribute:
+                    for value in entry[1][attr]:
+                        temp[value] = value            
+        return tuple( temp.keys() )
+    
+    def __str__(self):
+        tmp = ""
+        if self.results:
+            for result in self.results:
+                tmp += str(result) + "\n"
+        return tmp.strip("\n")
+    
+
+
+
 
 class customUsageVersion(argparse.Action):
   def __init__(self, option_strings, dest, **kwargs):
@@ -72,11 +199,6 @@ def command_line_args():
 
 def get_data():
   global args
-  pass
-
-# Start program
-if __name__ == "__main__":
-  command_line_args()
 
   command = 'grep "Authentication by plugin failed for user" "/var/log/zarafa/server.log"'
   p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -104,7 +226,22 @@ if __name__ == "__main__":
     except:
       pass
 
-  print users
+  return users
+
+
+
+# Start program
+if __name__ == "__main__":
+  command_line_args()
+
+  #users get_data()
+
+
+  ldapURI = "ldaps://ldap1.opw.ie/ou=it,o=opw?cn,mail?sub??"
+
+
+
+  print ldapURI
   sys.exit(0)
 
 
