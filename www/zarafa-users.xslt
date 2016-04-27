@@ -139,6 +139,12 @@
           <xsl:with-param name="columns" select="$columns"/>
         </xsl:apply-templates>
 
+        <tr><td colspan="6">&#xA0;</td></tr>
+        <tr><th colspan="6" class="center">Mobile Devices (<xsl:value-of select="count(user/devices/device)"/>)</th></tr>
+
+
+
+
       </table>
     </xsl:when>
 
