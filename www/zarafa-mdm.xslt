@@ -75,10 +75,10 @@
             <td>&#xA0;</td>
             <th align="right">First Sync:&#xA0;</th>
             <td>
-              <xsl:if test="firstsync/@lag &gt;= 30">
+              <xsl:if test="device/firstsync/@lag &gt;= 30">
                 <xsl:attribute name="class">red</xsl:attribute>
               </xsl:if>                     
-              <xsl:value-of select="firstsync"/>
+              <xsl:value-of select="device/firstsync"/>
             </td>
           </tr>
           <tr class="hover">
@@ -88,10 +88,10 @@
             <td>&#xA0;</td>
             <th align="right">Last Sync:&#xA0;</th>
             <td>
-              <xsl:if test="lastsync/@lag &gt;= 30">
+              <xsl:if test="device/lastsync/@lag &gt;= 30">
                 <xsl:attribute name="class">red</xsl:attribute>
               </xsl:if>                     
-              <xsl:value-of select="lastsync"/>
+              <xsl:value-of select="device/lastsync"/>
             </td>            
           </tr>
           <tr class="hover">
