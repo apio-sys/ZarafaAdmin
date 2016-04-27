@@ -151,7 +151,7 @@ def zarafa_system(data):
           dates[parameter]['text'] = value
           dates[parameter]['date'] = datetime.datetime.strptime(value.decode('unicode_escape'),'%a %b %d %H:%M:%S %Y')
         except:
-          dates[parameter]['text'] = values
+          dates[parameter]['text'] = value
           dates[parameter]['date'] = datetime.datetime.strptime("0001-01-01 00:00".decode('unicode_escape'),'%Y-%m-%d %H:%M')
 
       else:
