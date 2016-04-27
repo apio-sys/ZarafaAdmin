@@ -159,7 +159,7 @@
           </xsl:for-each>
         </table>
         <table id="zarafa-device-actions">
-          <tr><th colspan="3" align="center">Actions</th></tr>
+          <tr><th colspan="3" align="center"><br/>Actions</th></tr>
           <tr>
             <td align="center">
               <input type="button" value="Remove All State Data"/>
@@ -170,6 +170,22 @@
             <td align="center">
               <input type="button" value="Clears All Loop Detection Data"/>
             </td>            
+          </tr>
+          <tr>
+            <td align="right">
+              <input type="button" value="Resynchronize"/>
+            </td>
+            <td align="left" colspan="2">
+              <select>
+                <option value="all">all folders for this device and user</option>
+                <option value="email">folders of type 'email' for this device and user</option>
+                <option value="calendar">folders of type 'calendar' for this device and user</option>
+                <option value="contact">folders of type 'contact' for this device and user</option>
+                <option value="task">folders of type 'task' for this device and user</option>
+                <option value="note">folders of type 'note' for this device and user</option>
+                <option value="hierarchy">Resynchronize the folder hierarchy for this device and user</option>
+              </select>
+            </td>
           </tr>
         </table>
 
