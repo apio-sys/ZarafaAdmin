@@ -38,7 +38,7 @@
             <td><a href="./zarafa-users.php?user={device/@synchronizedbyuser}"><xsl:value-of select="device/@synchronizedbyuser"/></a></td>
             <td>&#xA0;</td>
             <th align="right">Request On:&#xA0;</th>
-            <td><xsl:value-of select="wipe/@wiperequeston"/></td>
+            <td><xsl:value-of select="device/@wiperequeston"/></td>
           </tr>
           <tr class="hover">
             <td>&#xA0;</td>
@@ -46,7 +46,7 @@
             <td><a href="./zarafa-mdm.php?device={device/@deviceid}"><xsl:value-of select="device/@deviceid"/></a></td>
             <td>&#xA0;</td>
             <th align="right">Request By:&#xA0;</th>
-            <td><xsl:value-of select="wipe/@wiperequestby"/></td>
+            <td><xsl:value-of select="device/@wiperequestby"/></td>
           </tr>
           <tr class="hover">
             <td>&#xA0;</td>
@@ -54,7 +54,7 @@
             <td><xsl:value-of select="device/@devicetype"/></td>
             <td>&#xA0;</td>
             <th align="right">Wiped On:&#xA0;</th>
-            <td><xsl:value-of select="wipe/@wipedon"/></td>
+            <td><xsl:value-of select="device/@wipedon"/></td>
           </tr>
           <tr class="hover">
             <td>&#xA0;</td>
