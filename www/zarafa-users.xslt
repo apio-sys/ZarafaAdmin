@@ -141,10 +141,21 @@
 
         <tr><td colspan="6">&#xA0;</td></tr>
         <tr><th colspan="6" class="center">Mobile Devices (<xsl:value-of select="count(user/devices/device)"/>)</th></tr>
-
-
-
-
+        <tr>
+          <th colspan="3" class="center">Device ID</th>
+          <th colspan="3" class="center">Last Sync</th>
+        </tr>
+        <xsl:for-each select="user/devices/device">
+          <xsl:sort select="lastsync/@lag" order="decending" data-type="number"/>
+          <td colspan="3" class="center"><a href="./zarafa-mdm.php?user={@username}&amp;device={@deviceid}"><xsl:value-of select="@deviceid"/></td>
+          <td colspan="3" class="center">
+            <a href="./zarafa-mdm.php?user={@username}&amp;device={@deviceid}">
+              <xsl:if test="lastsync/@lag &gt;= 30">
+                <xsl:attribute name="class">red</xsl:attribute>
+              </xsl:if>          
+              <xsl:value-of select="lastsync/@date"/>
+            </a>            
+          </td>
       </table>
     </xsl:when>
 
