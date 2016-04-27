@@ -161,13 +161,13 @@
         <table id="zarafa-device-actions">
           <tr><th colspan="3" align="center"><br/>Actions</th></tr>
           <tr>
-            <td align="center">
+            <td align="right">
               <input type="button" value="Remove All State Data"/>
             </td>
             <td align="center">
               <input type="button" value="Remote Wipe All Data from Phone"/>
             </td>
-            <td align="center">
+            <td align="left">
               <input type="button" value="Clears All Loop Detection Data"/>
             </td>            
           </tr>
