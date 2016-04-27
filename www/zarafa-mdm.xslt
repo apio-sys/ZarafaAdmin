@@ -131,7 +131,7 @@
             <td><xsl:value-of select="device/@attentionneeded"/></td>
           </tr>          
           <xsl:for-each select="device/error">
-            <tr><td>&#xA0;</td><td>
+            <tr><td colspan="3">&#xA0;</td></tr>
             <tr class="hover">
               <td>&#xA0;</td>
               <th align="right">Object:&#xA0;</th>
