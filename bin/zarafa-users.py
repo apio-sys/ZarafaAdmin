@@ -356,10 +356,12 @@ def zarafa_user(username):
     mdmSTR, err = p.communicate()
     if err: raise IOError(err)
     mdmXML = ElementTree.fromstring(mdmSTR)
-    mdmXML = mdmXML.find('/zarafaadmin/devices')
+    mdmXML = mdmXML.find('devices')
+
+    xmluser.append(mdmXML)
 
     print ElementTree.tostring(mdmXML, encoding=encoding, method="xml")
-
+    print
 
     return xml
 
