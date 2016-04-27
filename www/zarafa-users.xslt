@@ -158,6 +158,7 @@
               </a>            
             </td>
           </tr>
+        </xsl:for-each>
       </table>
     </xsl:when>
 
