@@ -240,21 +240,21 @@ td.hover:hover { background: #BBB }
 /* Groups */
 #zarafa-groups, #zarafa-group
 {
-	width: 500px;	
+	min-width: 500px;	
 	border-collapse: collapse;	
 }
 
 /* Mobile Devices */
 #zarafa-devices, #zarafa-device, #zarafa-device-errors
 {
-	width: 600px;	
+	min-width: 600px;	
 	border-collapse: collapse;	
 }
 
 /* Zarafa System and Sessions */
-#zarafa-system
+#zarafa-system, #zarafa-session
 {
-	width: 600px;	
+	min-width: 600px;	
 	border-collapse: collapse;	
 }
 
