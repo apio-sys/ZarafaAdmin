@@ -243,3 +243,11 @@ td.hover:hover { background: #BBB }
 	width: 500px;	
 	border-collapse: collapse;	
 }
+
+/* Mobile Devices */
+#zarafa-devices, #zarafa-device
+{
+	width: 500px;	
+	border-collapse: collapse;	
+}
+

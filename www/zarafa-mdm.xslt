@@ -28,23 +28,85 @@
     <xsl:choose>
       <xsl:when test="count(device) = 1">
         <table id="zarafa-device">
-          <tr><th colspan="2" class="center">Device Information</th><th colspan="2" class="center">Wipe Information</th></tr>
-          <tr class="hover"><th>User</th><td><a href="./zarafa-users.php?user={device/@synchronizedbyuser}"><xsl:value-of select="device/@synchronizedbyuser"/></a></td><th>Request On</th><td><xsl:value-of select="wipe/@wiperequeston"/></td></tr>
-          <tr class="hover"><th>Device ID</th><td><a href="./zarafa-mdm.php?device={device/@deviceid}"><xsl:value-of select="device/@deviceid"/></a></td><th>Request By</th><td><xsl:value-of select="wipe/@wiperequestby"/></td></tr>
-          <tr class="hover"><th>Device Type</th><td><xsl:value-of select="device/@devicetype"/></td><th>Wiped On</th><td><xsl:value-of select="wipe/@wipedon"/></td></tr>
-          <tr class="hover"><th>User Agent</th><td><xsl:value-of select="device/@useragent"/></td><td colspan="2"></td></tr>
-          <tr class="hover"><th>Device Model</th><td><xsl:value-of select="device/@devicemodel"/></td><th colspan="2" class="center">Folder Information</th></tr>
-          <tr class="hover"><th>Device IMEI</th><td><xsl:value-of select="device/@deviceimei"/></td><th>First Sync</th><td><xsl:value-of select="device/@firstsync"/></td></tr>
-          <tr class="hover"><th>Device Name</th><td><xsl:value-of select="device/@devicefriendlyname"/></td><th>Last Sync</th><td><xsl:value-of select="device/@lastsync"/></td></tr>
-          <tr class="hover"><th>Device OS</th><td><xsl:value-of select="device/@deviceos"/></td><th>Total Folders</th><td><xsl:value-of select="device/@totalfolders"/></td></tr>
-          <tr class="hover"><th>Device Language</th><td><xsl:value-of select="device/@deviceoslanguage"/></td><td colspan="2">&#xA0;</td></tr>
-          <tr class="hover"><th>Status</th><td><xsl:value-of select="device/@status"/></td><td colspan="2">&#xA0;</td></tr>
-          <tr class="hover"><th>Outbound SMS</th><td><xsl:value-of select="device/@deviceoutboundsms"/></td><td colspan="2">&#xA0;</td></tr>
-
-          <tr class="hover"><th>Device Operator</th><td><xsl:value-of select="device/@deviceoperator"/></td><th colspan="2" class="center">Synced Folders (<xsl:value-of select="device/@synchronizedfolders"/>)</th></tr>
-          <tr class="hover"><th>Version</th><td><xsl:value-of select="device/@activesyncversion"/></td>
-          <td colspan="2" class="center"><xsl:value-of select="device/@synchronizeddata"/>&#xA0;</td></tr>
-          <tr class="hover"><th>Errors</th><td colspan="3"><xsl:value-of select="device/@attentionneeded"/></td></tr>
+          <tr>
+            <th colspan="2" class="center">Device Information</th>
+            <th colspan="2" class="center">Wipe Information</th>
+          </tr>
+          <tr class="hover">
+            <th align="right">User:&#xA0;</th>
+            <td><a href="./zarafa-users.php?user={device/@synchronizedbyuser}"><xsl:value-of select="device/@synchronizedbyuser"/></a></td>
+            <th align="right">Request On:&#xA0;</th>
+            <td><xsl:value-of select="wipe/@wiperequeston"/></td>
+          </tr>
+          <tr class="hover">
+            <th align="right">Device ID:&#xA0;</th>
+            <td><a href="./zarafa-mdm.php?device={device/@deviceid}"><xsl:value-of select="device/@deviceid"/></a></td>
+            <th align="right">Request By:&#xA0;</th>
+            <td><xsl:value-of select="wipe/@wiperequestby"/></td>
+          </tr>
+          <tr class="hover">
+            <th align="right">Device Type:&#xA0;</th>
+            <td><xsl:value-of select="device/@devicetype"/></td>
+            <th align="right">Wiped On:&#xA0;</th>
+            <td><xsl:value-of select="wipe/@wipedon"/></td>
+          </tr>
+          <tr class="hover">
+            <th align="right">User Agent:&#xA0;</th>
+            <td><xsl:value-of select="device/@useragent"/></td>
+            <td colspan="2">&#xA0;</td>
+          </tr>
+          <tr class="hover">
+            <th align="right">Device Model:&#xA0;</th>
+            <td><xsl:value-of select="device/@devicemodel"/></td>
+            <th colspan="2" class="center">Folder Information</th>
+          </tr>
+          <tr class="hover">
+            <th align="right">Device IMEI:&#xA0;</th>
+            <td><xsl:value-of select="device/@deviceimei"/></td>
+            <th align="right">First Sync:&#xA0;</th>
+            <td><xsl:value-of select="device/@firstsync"/></td>
+          </tr>
+          <tr class="hover">
+            <th align="right">Device Name:&#xA0;</th>
+            <td><xsl:value-of select="device/@devicefriendlyname"/></td>
+            <th align="right">Last Sync:&#xA0;</th>
+            <td><xsl:value-of select="device/@lastsync"/></td>
+          </tr>
+          <tr class="hover">
+            <th align="right">Device OS:&#xA0;</th>
+            <td><xsl:value-of select="device/@deviceos"/></td>
+            <th align="right">Total Folders:&#xA0;</th>
+            <td><xsl:value-of select="device/@totalfolders"/></td>
+          </tr>
+          <tr class="hover">
+            <th align="right">Device Language:&#xA0;</th>
+            <td><xsl:value-of select="device/@deviceoslanguage"/></td>
+            <td colspan="2">&#xA0;</td>
+          </tr>
+          <tr class="hover">
+            <th align="right">Status:&#xA0;</th>
+            <td><xsl:value-of select="device/@status"/></td>
+            <td colspan="2">&#xA0;</td>
+          </tr>
+          <tr class="hover">
+            <th align="right">Outbound SMS:&#xA0;</th>
+            <td><xsl:value-of select="device/@deviceoutboundsms"/></td>
+            <td colspan="2">&#xA0;</td>
+          </tr>
+          <tr class="hover">
+            <th align="right">Device Operator:&#xA0;</th>
+            <td><xsl:value-of select="device/@deviceoperator"/></td>
+            <th colspan="2" class="center">Synced Folders (<xsl:value-of select="device/@synchronizedfolders"/>)</th>
+          </tr>
+          <tr class="hover">
+            <th align="right">Version:&#xA0;</th>
+            <td><xsl:value-of select="device/@activesyncversion"/></td>
+            <td colspan="2" class="center"><xsl:value-of select="device/@synchronizeddata"/>&#xA0;</td>
+          </tr>
+          <tr class="hover">
+            <th align="right">Errors:&#xA0;</th>
+            <td colspan="3"><xsl:value-of select="device/@attentionneeded"/></td>
+          </tr>
     
           <xsl:for-each select="device/error">
             <tr><td>&#xA0;</td><td>
