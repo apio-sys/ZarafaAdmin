@@ -285,6 +285,19 @@ def zarafa_user(username):
   if err: raise IOError(err)
   sendas = [ str(x).split("\t") for x in str(out).split("\n")[3:] if x ]
  
+
+  mdmCMD = '/opt/brandt/ZarafaAdmin/bin/zarafa-mdm.py --user "' + str(username) + '"'
+  p = subprocess.Popen(mdmCMD, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+  xmlstring, err = p.communicate()
+  if err: raise IOError(err)
+  mdmxml =  ET.fromstring(countrydata)
+
+
+
+
+
+
+
   if args['output'] == "text":
     maxlen = max([ len(f[1]) for f in fieldmappings ] + [ len(f[1]) for f in quotafieldmappings ] + [ len(f[1]) for f in ldapfieldmappings if data.has_key(f[0]) ] )
     maxlen += 2
@@ -310,6 +323,12 @@ def zarafa_user(username):
       print "\nGroups (" + str(len(groups)) + "):"
       print '-' * (maxlen + 10)
       brandt.printTable(sorted(groups),2)
+
+    p = subprocess.Popen(mdmCMD + " --output text", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    mdmSTR, err = p.communicate()
+    if err: raise IOError(err)
+    print mdmSTR
+
     sys.exit(0)
 
   elif args['output'] == "csv":
@@ -326,6 +345,7 @@ def zarafa_user(username):
     if sendas: tmp += sorted([ x[1] + "(" + x[2] + ")" for x in sendas ])
     if groups: tmp += sorted(groups)
     print args['delimiter'].join([ data.get(f[0],"") for f in (fieldmappings + quotafieldmappings ) ] + tmp )
+
     sys.exit(0)
 
   else:
@@ -341,6 +361,12 @@ def zarafa_user(username):
       ElementTree.SubElement(xmluser, 'sendas', username = brandt.strXML(send[1]), fullname = brandt.strXML(send[2]))
     for group in groups:
       ElementTree.SubElement(xmluser, 'group', groupname = brandt.strXML(group))
+
+    p = subprocess.Popen(mdmCMD + " --output xml", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    mdmSTR, err = p.communicate()
+    if err: raise IOError(err)
+    mdmXML = ElementTree.fromstring(mdmSTR)
+
     return xml
 
 # Start program
