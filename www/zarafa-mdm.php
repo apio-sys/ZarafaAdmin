@@ -85,8 +85,7 @@ if ( $device !== "" ) $proc->setParameter( '', 'device', $device);
 
 $output = $proc->transformToDoc($outputxml)->saveXML();
 
-echo "<pre>$output</pre>";
-
+echo "$output";
 echo '</body></html>';
 ?>
 

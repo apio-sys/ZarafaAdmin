@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:output method="html" indent="yes" omit-xml-declaration="yes" />
-<xsl:param name="columns" select="2"/>
 <xsl:param name="sort" select="'username'"/>
 
 <xsl:template match="/zarafaadmin/error">
@@ -133,30 +132,8 @@
           <xsl:with-param name="columns" select="$columns"/>
         </xsl:apply-templates>
 
-
-
-
-<!--         <xsl:if test="count(user/sendas) &gt; 0">
-          <tr>
-            <th colspan="3" align="right" valign="top">Send As Rights:&#xA0;</th>
-            <td>&#xA0;</td>            
-            <td colspan="2">
-              <xsl:for-each select="user/sendas"><xsl:sort select="translate(@username, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
-              <a href="./zarafa-users.php?user={@username}"><xsl:value-of select="@username"/></a><br/>
-              </xsl:for-each>
-            </td>
-          </tr>
-        </xsl:if> -->
-
-
-
-
-
-
-
         <tr><td colspan="6">&#xA0;</td></tr>
         <tr><th colspan="6" class="center">Groups (<xsl:value-of select="count(user/group)"/>)</th></tr>
-<!--         <xsl:variable name="columns" select="2"/> -->        
         <xsl:apply-templates select="user/group[(position() - 1) mod $columns = 0]" mode="first">
           <xsl:sort select="translate(@groupname, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
           <xsl:with-param name="columns" select="$columns"/>
