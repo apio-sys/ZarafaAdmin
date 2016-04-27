@@ -163,19 +163,27 @@
       <xsl:otherwise>
         <table id="zarafa-devices">
           <tr>
-            <th><a href="./zarafa-mdm.php?user={$user}&amp;device={@device}&amp;sort=username">Username</a></th>
-            <th><a href="./zarafa-mdm.php?user={$user}&amp;device={@device}&amp;sort=device">Device ID</a></th>
-            <th><a href="./zarafa-mdm.php?user={$user}&amp;device={@device}&amp;sort=sync">Last Sync</a></th>
+            <th align="left"><a href="./zarafa-mdm.php?user={$user}&amp;device={@device}&amp;sort=username">Username</a></th>
+            <th align="left"><a href="./zarafa-mdm.php?user={$user}&amp;device={@device}&amp;sort=device">Device ID</a></th>
+            <th align="left"><a href="./zarafa-mdm.php?user={$user}&amp;device={@device}&amp;sort=sync">Last Sync</a></th>
           </tr>
           <xsl:choose>
           <xsl:when test="$sort = 'device'">
-            <xsl:apply-templates select="device"><xsl:sort select="translate(@deviceid, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" /></xsl:apply-templates>
+            <xsl:apply-templates select="device">
+              <xsl:sort select="translate(@deviceid, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
+              <xsl:sort select="translate(@username, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />              
+            </xsl:apply-templates>
           </xsl:when>
           <xsl:when test="$sort = 'sync'">
-            <xsl:apply-templates select="device"><xsl:sort select="lastsync/@lag" order="ascending" data-type="number"/></xsl:apply-templates>
+            <xsl:apply-templates select="device">
+              <xsl:sort select="lastsync/@lag" order="decending" data-type="number"/>
+            </xsl:apply-templates>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:apply-templates select="device"><xsl:sort select="translate(@username, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" /></xsl:apply-templates>
+            <xsl:apply-templates select="device">
+              <xsl:sort select="translate(@username, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
+              <xsl:sort select="lastsync/@lag" order="decending" data-type="number"/>              
+            </xsl:apply-templates>
           </xsl:otherwise>
           </xsl:choose>
         </table>
