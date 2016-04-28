@@ -103,7 +103,7 @@ def get_data():
   attrs = "cn,samAccountName,mail,badPwdCount,badPasswordTime,lastLogon,logonHours,pwdLastSet,accountExpires,logonCount,lastLogonTimestamp"
   for user in users.keys():
     for key in ['1m','5m','15m','1h','4h','8h','1d','3d']:
-      users[tmpUser][key] == brandt.strXML(str(users[tmpUser][key]))
+      users[user][key] == brandt.strXML(str(users[user][key]))
 
     try:
       ldapURI = "ldaps://opwdc2.i.opw.ie/ou=opw,dc=i,dc=opw,dc=ie?" + attrs + "?sub?sAMAccountName=" + user
