@@ -147,11 +147,12 @@ if __name__ == "__main__":
         print
         
     for user in sorted(users.keys()):
-      if users[user].get('cn',''):
+      if users[user].get('samaccountname','') and users[user].get('cn',''):
         print "User information for " + users[user].get('samaccountname','').lower() + " (" + users[user].get('cn','') +"):\n" + ("-" * 30)
         for key in sorted([ k.strip() for k in attrs.split(",") ]):
           if key not in ['cn','samAccountName']:
             print str(key).rjust(18) + ": " +  users[user].get(str(key).lower(),"")
+        print
 
   else:
 
