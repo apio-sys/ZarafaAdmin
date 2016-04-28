@@ -106,6 +106,7 @@ def get_data():
 
     for key in ['1m','5m','15m','1h','4h','8h','1d','3d']:
       tmp = brandt.strXML(users[user].pop(key))
+      print key , users[user]
       users[user][key] == tmp
 
     print user, users[user]
