@@ -102,6 +102,9 @@ def get_data():
 
   attrs = "cn,samAccountName,mail,badPwdCount,badPasswordTime,lastLogon,logonHours,pwdLastSet,accountExpires,logonCount,lastLogonTimestamp"
   for user in users.keys():
+    for key in ['1m','5m','15m','1h','4h','8h','1d','3d']
+      users[tmpUser][key] == brandt.strXML(users[tmpUser][key])
+
     try:
       ldapURI = "ldaps://opwdc2.i.opw.ie/ou=opw,dc=i,dc=opw,dc=ie?" + attrs + "?sub?sAMAccountName=" + user
       results = brandt.LDAPSearch(ldapURI).results
@@ -131,29 +134,18 @@ if __name__ == "__main__":
 
   users = get_data()
 
-  for user in users:
-    print users[user]
+  xml = ElementTree.Element('zarafaadmin')
+  xmlLog = ElementTree.Element('log', log='Login Errors', filters='')
+  for user in sorted(users.keys()):
+    xmldata = ElementTree.SubElement(xmlLog, "user", **users[key])
+
+  xml.append(xmldata)
+  print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
+
+
+
 
   sys.exit(0)
-
-
-
-  for user in users.keys():
-    p = subprocess.Popen(['/opt/opw/zarafa-logins.sh',user], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    out, err = p.communicate()
-    if err: users[user]['error'] = err
-    for line in out.split('\n'):
-      try:
-        key, value = line.split(':',1)
-        key = str(key).strip().lower()
-        value = value.strip()
-        if key in ['badpasswordtime','lastlogoff','lastlogon','pwdlastset','lastlogontimestamp','accountexpires']:
-          value = datetime.datetime(1601,1,1) + datetime.timedelta(microseconds=( int(value)/10) )
-        if key in ['logonhours'] and value[0:2] == ": ":
-          value = value[2:]
-        users[user][key] = str(value)
-      except:
-        pass
 
 
   if args['output'] == "text":
