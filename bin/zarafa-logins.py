@@ -121,7 +121,7 @@ if __name__ == "__main__":
 
 
   print ldapURI
-  print results
+  print results[1]
   sys.exit(0)
 
 
