@@ -121,7 +121,7 @@ if __name__ == "__main__":
   users = get_data()
 
   for user in users:
-    print user
+    print users[user]
 
   sys.exit(0)
 
