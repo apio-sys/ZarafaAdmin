@@ -243,7 +243,7 @@ if __name__ == "__main__":
   else:
 
     xml = ElementTree.Element('zarafaadmin')
-    xmlLog = ElementTree.Element('log', log='Login Errors', filters='')
+    xmlLog = ElementTree.SubElement(xml, 'log', log='Login Errors', filters='')
     for user in sorted(users.keys()):
       for key in ['1m','5m','15m','1h','4h','8h','1d','3d']:
         tmp = brandt.strXML(users[user].pop(key))
