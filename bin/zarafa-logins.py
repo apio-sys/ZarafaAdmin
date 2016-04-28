@@ -133,7 +133,8 @@ if __name__ == "__main__":
 
   users = get_data()
 
-  print users.iteritems()
+  for x,y in users.iteritems():
+    print x,y
   sys.exit(0)
 
   if args['output'] != "xml":
