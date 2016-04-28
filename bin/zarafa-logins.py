@@ -106,7 +106,18 @@ def get_data():
       ldapURI = "ldaps://opwdc2.i.opw.ie/ou=opw,dc=i,dc=opw,dc=ie?" + attrs + "?sub?sAMAccountName=" + user
       results = brandt.LDAPSearch(ldapURI).results
       if str(results[0][1]['sAMAccountName'][0]).lower() == user.lower():
-        users[user].update(results[0][1])
+        for key in results[0][1]:
+          value = results[0][1][key][0]
+          key = key.lower()
+          if key in ['badpasswordtime','lastlogoff','lastlogon','pwdlastset','lastlogontimestamp','accountexpires']:
+            value = datetime.datetime(1601,1,1) + datetime.timedelta(microseconds=( int(value)/10) )
+          elif key in ['logonhours'] and value[0:2] == ": ":
+            tmp = ""
+            for char in value:
+              tmp += str(hex(ord(char))[2:]).upper()
+            value = tmp
+
+        users[user][key] = value
     except:
       pass
 
