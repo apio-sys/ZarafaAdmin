@@ -138,13 +138,14 @@ if __name__ == "__main__":
 
     for label, key in [('Last Minute','1m'),('Last 5 Minutes','5m'),('Last 15 Minutes','15m'),('Last Hour','1h'),('Last 4 Hours','4h'),('Last 8 Hours','8h'),('Last Day','1d'),('Last 3 Days','3d')]:
       tmp = sorted([ (u, d[key]) for u, d in users.iteritems() if d.get(key, 0) > 0 ], reverse=True)
-      if tmp:
-        print tmp
-        sys.exit(0)
-        
+      if tmp:       
         print str(label).center(usermaxlen + 9)
         print "Username".ljust(usermaxlen), "  ", "Count"
-        print "-" * (usermaxlen + 9) 
+        print "-" * (usermaxlen + 9)
+        
+        print tmp
+        sys.exit(0)
+
         for user, data in tmp:
           print str(user).ljust(usermaxlen), "  ", str(data).rjust(5)
 
