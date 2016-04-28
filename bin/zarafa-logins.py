@@ -100,6 +100,13 @@ def get_data():
     except:
       pass
 
+  attrs = "cn,samAccountName,mail,badPwdCount,badPasswordTime,lastLogon,logonHours,pwdLastSet,accountExpires,logonCount,lastLogonTimestamp"
+  for user in users.keys():
+    ldapURI = "ldaps://opwdc2.i.opw.ie/ou=opw,dc=i,dc=opw,dc=ie?" + attrs + "?sub?sAMAccountName=" + user
+    print ldapURI
+    # results = brandt.LDAPSearch(ldapURI).results
+
+
   return users
 
 
@@ -108,20 +115,10 @@ def get_data():
 if __name__ == "__main__":
   command_line_args()
 
-  #users get_data()
+  users get_data()
 
-  attrs = "cn,samAccountName,mail,badPwdCount,badPasswordTime,lastLogon,logonHours,pwdLastSet,accountExpires,logonCount,lastLogonTimestamp"
-  ldapURI = "ldaps://opwdc2.i.opw.ie/ou=opw,dc=i,dc=opw,dc=ie?" + attrs + "?sub?sAMAccountName=ApplebyP"
-  results = brandt.LDAPSearch(ldapURI).results
-
-# badPwdCount,badPasswordTime,lastLogon,logonHours,pwdLastSet,accountExpires,logonCount,lastLogonTimestamp
-#     ldapurl     = ldap[s]://[host[:port]][/base[?[attributes][?[scope][?[filter][?extensions]]]]]
-
-
-
-
-  print ldapURI
-  print results[0][1]
+  # print ldapURI
+  # print results[0][1]
   sys.exit(0)
 
 
