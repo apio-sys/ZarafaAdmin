@@ -144,9 +144,9 @@ if __name__ == "__main__":
         print "-" * (usermaxlen + 9)
         for user, data in sorted(tmp, key=lambda x: x[0]):
           print str(user).ljust(usermaxlen), "  ", str(data).rjust(5)
+        print
         
-        print tmp
-        sys.exit(0)          
+    sys.exit(0)          
 
     for user in sorted(users.keys()):
       print "\n" + user + ":\n" + ("-" * 30)
