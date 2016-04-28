@@ -142,7 +142,7 @@ if __name__ == "__main__":
         print str(label).center(usermaxlen + 9)
         print "Username".ljust(usermaxlen), "  ", "Count"
         print "-" * (usermaxlen + 9)
-        for user, data in tmp:
+        for user, data in sorted(tmp, key=lambda x: x[0]):
           print str(user).ljust(usermaxlen), "  ", str(data).rjust(5)
         
         print tmp
