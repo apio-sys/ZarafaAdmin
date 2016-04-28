@@ -102,10 +102,6 @@ def get_data():
 
   attrs = "cn,samAccountName,mail,badPwdCount,badPasswordTime,lastLogon,logonHours,pwdLastSet,accountExpires,logonCount,lastLogonTimestamp"
   for user in users.keys():
-    for key in ['1m','5m','15m','1h','4h','8h','1d','3d']:
-      tmp = brandt.strXML(users[user].pop(key))
-      users[user].update({key:tmp})
-
     try:
       ldapURI = "ldaps://opwdc2.i.opw.ie/ou=opw,dc=i,dc=opw,dc=ie?" + attrs + "?sub?sAMAccountName=" + user
       results = brandt.LDAPSearch(ldapURI).results
@@ -135,21 +131,7 @@ if __name__ == "__main__":
 
   users = get_data()
 
-  xml = ElementTree.Element('zarafaadmin')
-  xmlLog = ElementTree.Element('log', log='Login Errors', filters='')
-  for user in sorted(users.keys()):
-    print users[user]
-    ElementTree.SubElement(xmlLog, "user", **users[user])
-
-  print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
-
-
-
-
-  sys.exit(0)
-
-
-  if args['output'] == "text":
+  if args['output'] != "xml":
     usermaxlen = max( [ len(x) for x in users.keys() ] + [8] )
 
     tmp = sorted([ (d['1m'],u) for (u, d) in users.iteritems() if d['1m'] > 0 ], reverse=True)
@@ -258,32 +240,14 @@ if __name__ == "__main__":
       if users[user].has_key("error"):
         print "Error".rjust(18) + ": " +  users[user]["error"]
 
-  if args['output'] == "xml":
-    print '<?xml version="1.0" encoding="' + encoding + '"?>'
-    xml = ElementTree.Element('zarafa-admin')           
-    tmp = ElementTree.SubElement(xml, 'login-errors')
-    for user in users:
-      attrib = {'username':user}
-      if users[user]['1m'] > 0: attrib['m1'] = str(users[user]['1m'])
-      if users[user]['5m'] > 0: attrib['m5'] = str(users[user]['5m'])
-      if users[user]['15m'] > 0: attrib['m15'] = str(users[user]['15m'])
-      if users[user]['1h'] > 0: attrib['h1'] = str(users[user]['1h'])
-      if users[user]['4h'] > 0: attrib['h4'] = str(users[user]['4h'])
-      if users[user]['8h'] > 0: attrib['h8'] = str(users[user]['8h'])
-      if users[user]['1d'] > 0: attrib['d1'] = str(users[user]['1d'])
-      if users[user]['3d'] > 0: attrib['d3'] = str(users[user]['3d'])
+  else:
 
-      if users[user].has_key('dn'): attrib['dn'] = users[user]['dn']
-      if users[user].has_key('badpwdcount'): attrib['badpwdcount'] = users[user]['badpwdcount']
-      if users[user].has_key('badpasswordtime'): attrib['badpasswordtime'] = users[user]['badpasswordtime']
-      if users[user].has_key('lastlogoff'): attrib['lastlogoff'] = users[user]['lastlogoff']
-      if users[user].has_key('lastlogon'): attrib['lastlogon'] = users[user]['lastlogon']
-      if users[user].has_key('logonhours'): attrib['logonhours'] = users[user]['logonhours']
-      if users[user].has_key('pwdlastset'): attrib['pwdlastset'] = users[user]['pwdlastset']
-      if users[user].has_key('accountexpires'): attrib['accountexpires'] = users[user]['accountexpires']
-      if users[user].has_key('logoncount'): attrib['logoncount'] = users[user]['logoncount']
-      if users[user].has_key('lastlogontimestamp'): attrib['lastlogontimestamp'] = users[user]['lastlogontimestamp']
-      if users[user].has_key('error'): attrib['error'] = users[user]['error']
-      ElementTree.SubElement(tmp, 'user', attrib=attrib)
+    xml = ElementTree.Element('zarafaadmin')
+    xmlLog = ElementTree.Element('log', log='Login Errors', filters='')
+    for user in sorted(users.keys()):
+      for key in ['1m','5m','15m','1h','4h','8h','1d','3d']:
+        tmp = brandt.strXML(users[user].pop(key))
+        users[user].update({key:tmp})
+      ElementTree.SubElement(xmlLog, "user", **users[user])
 
-    print ElementTree.tostring(xml, encoding=encoding, method="xml")
+    print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
