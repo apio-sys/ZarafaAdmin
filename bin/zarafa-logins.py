@@ -102,10 +102,13 @@ def get_data():
 
   attrs = "cn,samAccountName,mail,badPwdCount,badPasswordTime,lastLogon,logonHours,pwdLastSet,accountExpires,logonCount,lastLogonTimestamp"
   for user in users.keys():
-    ldapURI = "ldaps://opwdc2.i.opw.ie/ou=opw,dc=i,dc=opw,dc=ie?" + attrs + "?sub?sAMAccountName=" + user
-    print ldapURI
-    # results = brandt.LDAPSearch(ldapURI).results
-
+    try:
+      ldapURI = "ldaps://opwdc2.i.opw.ie/ou=opw,dc=i,dc=opw,dc=ie?" + attrs + "?sub?sAMAccountName=" + user
+      results = brandt.LDAPSearch(ldapURI).results
+      if str(results[0][1]['sAMAccountName'][0]).lower() == user.lower():
+        users[user].update(results[0][1])
+    except:
+      pass
 
   return users
 
@@ -117,8 +120,9 @@ if __name__ == "__main__":
 
   users = get_data()
 
-  # print ldapURI
-  # print results[0][1]
+  for user in users:
+    print user
+
   sys.exit(0)
 
 
