@@ -137,6 +137,7 @@ if __name__ == "__main__":
   xml = ElementTree.Element('zarafaadmin')
   xmlLog = ElementTree.Element('log', log='Login Errors', filters='')
   for user in sorted(users.keys()):
+    print users[user]
     xmldata = ElementTree.SubElement(xmlLog, "user", **users[user])
 
   xml.append(xmldata)
