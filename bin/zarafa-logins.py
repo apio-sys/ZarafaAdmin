@@ -105,7 +105,8 @@ def get_data():
     print user, users[user]
 
     for key in ['1m','5m','15m','1h','4h','8h','1d','3d']:
-      users[user][key] == brandt.strXML(str(users[user][key]))
+      tmp = brandt.strXML(users[user].pop(key))
+      users[user][key] == tmp
 
     print user, users[user]
 
@@ -142,7 +143,7 @@ if __name__ == "__main__":
   xml = ElementTree.Element('zarafaadmin')
   xmlLog = ElementTree.Element('log', log='Login Errors', filters='')
   for user in sorted(users.keys()):
-    print users[user]
+    # print users[user]
     xmldata = ElementTree.SubElement(xmlLog, "user", **users[user])
 
   xml.append(xmldata)
