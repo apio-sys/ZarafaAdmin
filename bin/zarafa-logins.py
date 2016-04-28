@@ -115,7 +115,7 @@ def get_data():
 if __name__ == "__main__":
   command_line_args()
 
-  users get_data()
+  users = get_data()
 
   # print ldapURI
   # print results[0][1]
