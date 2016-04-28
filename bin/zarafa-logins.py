@@ -102,8 +102,6 @@ def get_data():
 
   attrs = "cn,samAccountName,mail,badPwdCount,badPasswordTime,lastLogon,logonHours,pwdLastSet,accountExpires,logonCount,lastLogonTimestamp"
   for user in users.keys():
-    print user, users[user]
-
     for key in ['1m','5m','15m','1h','4h','8h','1d','3d']:
       tmp = brandt.strXML(users[user].pop(key))
       users[user].update({key:tmp})
@@ -141,10 +139,9 @@ if __name__ == "__main__":
   xmlLog = ElementTree.Element('log', log='Login Errors', filters='')
   for user in sorted(users.keys()):
     print users[user]
-  #   xmldata = ElementTree.SubElement(xmlLog, "user", **users[user])
+    ElementTree.SubElement(xmlLog, "user", **users[user])
 
-  # xml.append(xmldata)
-  # print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
+  print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
 
 
 
