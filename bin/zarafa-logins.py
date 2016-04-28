@@ -110,7 +110,8 @@ def get_data():
           value = results[0][1][key][0]
           key = key.lower()
           if key in ['badpasswordtime','lastlogoff','lastlogon','pwdlastset','lastlogontimestamp','accountexpires']:
-            value = datetime.datetime(1601,1,1) + datetime.timedelta(microseconds=( int(value)/10) )
+            value = str(datetime.datetime(1601,1,1) + datetime.timedelta(microseconds=( int(value)/10) ))[:19]
+            if value == '1601-01-01 00:00:00': value = 'never'
           elif key == 'logonhours':
             tmp = ""
             for char in value:
