@@ -20,6 +20,9 @@ version = 0.3
 encoding = 'utf-8'
 
 months = ('','jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec')
+attrs = "cn,samAccountName,mail,badPwdCount,badPasswordTime,lastLogon,logonHours,pwdLastSet,accountExpires,logonCount,lastLogonTimestamp"
+
+
 
 class customUsageVersion(argparse.Action):
   def __init__(self, option_strings, dest, **kwargs):
@@ -72,7 +75,7 @@ def command_line_args():
   args.update(vars(parser.parse_args()))
 
 def get_data():
-  global args
+  global args, attrs
 
   command = 'grep "Authentication by plugin failed for user" "/var/log/zarafa/server.log"'
   p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -100,7 +103,6 @@ def get_data():
     except:
       pass
 
-  attrs = "cn,samAccountName,mail,badPwdCount,badPasswordTime,lastLogon,logonHours,pwdLastSet,accountExpires,logonCount,lastLogonTimestamp"
   for user in users.keys():
     try:
       ldapURI = "ldaps://opwdc2.i.opw.ie/ou=opw,dc=i,dc=opw,dc=ie?" + attrs + "?sub?sAMAccountName=" + user
@@ -134,111 +136,19 @@ if __name__ == "__main__":
   if args['output'] != "xml":
     usermaxlen = max( [ len(x) for x in users.keys() ] + [8] )
 
-    tmp = sorted([ (d['1m'],u) for (u, d) in users.iteritems() if d['1m'] > 0 ], reverse=True)
-    if tmp:
-      print "Last Minute".center(usermaxlen + 9)
-      print "Username".ljust(usermaxlen), "  ", "Count"
-      print "-" * (usermaxlen + 9) 
-      for user in tmp:
-        print str(user[1]).ljust(usermaxlen), "  ", str(user[0]).rjust(5)
-
-    tmp = sorted([ (d['5m'],u) for (u, d) in users.iteritems() if d['5m'] > 0 ], reverse=True)
-    if tmp:
-      print "Last 5 Minutes".center(usermaxlen + 9)
-      print "Username".ljust(usermaxlen), "  ", "Count"
-      print "-" * (usermaxlen + 9) 
-      for user in tmp:
-        print str(user[1]).ljust(usermaxlen), "  ", str(user[0]).rjust(5)
-
-
-    tmp = sorted([ (d['15m'],u) for (u, d) in users.iteritems() if d['15m'] > 0 ], reverse=True)
-    if tmp:
-      print "Last 15 Minutes".center(usermaxlen + 9)
-      print "Username".ljust(usermaxlen), "  ", "Count"
-      print "-" * (usermaxlen + 9) 
-      for user in tmp:
-        print str(user[1]).ljust(usermaxlen), "  ", str(user[0]).rjust(5)
-
-
-    tmp = sorted([ (d['1h'],u) for (u, d) in users.iteritems() if d['1h'] > 0 ], reverse=True)
-    if tmp:
-      print "Last Hour".center(usermaxlen + 9)
-      print "Username".ljust(usermaxlen), "  ", "Count"
-      print "-" * (usermaxlen + 9) 
-      for user in tmp:
-        print str(user[1]).ljust(usermaxlen), "  ", str(user[0]).rjust(5)
-
-
-    tmp = sorted([ (d['4h'],u) for (u, d) in users.iteritems() if d['4h'] > 0 ], reverse=True)
-    if tmp:
-      print "Last 4 Hours".center(usermaxlen + 9)
-      print "Username".ljust(usermaxlen), "  ", "Count"
-      print "-" * (usermaxlen + 9) 
-      for user in tmp:
-        print str(user[1]).ljust(usermaxlen), "  ", str(user[0]).rjust(5)
-
-
-    tmp = sorted([ (d['8h'],u) for (u, d) in users.iteritems() if d['8h'] > 0 ], reverse=True)
-    if tmp:
-      print "Last 8 Hours".center(usermaxlen + 9)
-      print "Username".ljust(usermaxlen), "  ", "Count"
-      print "-" * (usermaxlen + 9) 
-      for user in tmp:
-        print str(user[1]).ljust(usermaxlen), "  ", str(user[0]).rjust(5)
-
-
-    tmp = sorted([ (d['1d'],u) for (u, d) in users.iteritems() if d['1d'] > 0 ], reverse=True)
-    if tmp:
-      print "Last Day".center(usermaxlen + 9)
-      print "Username".ljust(usermaxlen), "  ", "Count"
-      print "-" * (usermaxlen + 9) 
-      for user in tmp:
-        print str(user[1]).ljust(usermaxlen), "  ", str(user[0]).rjust(5)
-
-    tmp = sorted([ (d['3d'],u) for (u, d) in users.iteritems() if d['3d'] > 0 ], reverse=True)
-    if tmp:
-      print "Last 3 Days".center(usermaxlen + 9)
-      print "Username".ljust(usermaxlen), "  ", "Count"
-      print "-" * (usermaxlen + 9) 
-      for user in tmp:
-        print str(user[1]).ljust(usermaxlen), "  ", str(user[0]).rjust(5)
+    for label,key in [('Last Minute','1m'),('Last 5 Minutes','5m'),('Last 15 Minutes','15m'),('Last Hour','1h'),('Last 4 Hours','4h'),('Last 8 Hours','8h'),('Last Day','1d'),('Last 3 Days','3d')]:
+      tmp = sorted([ (u, d[key]) for (u, d) in users.iteritems() if d[key] > 0 ], reverse=True)
+      if tmp:
+        print str(label).center(usermaxlen + 9)
+        print "Username".ljust(usermaxlen), "  ", "Count"
+        print "-" * (usermaxlen + 9) 
+        for user, data in tmp:
+          print str(user).ljust(usermaxlen), "  ", str(data).rjust(5)
 
     for user in sorted(users.keys()):
-      print
-      print user + ":"
-      print "-" * 30
-      if users[user].has_key("dn"):
-        print "dn".rjust(18) + ": " +  users[user]["dn"]
-
-      if users[user].has_key("badpwdcount"):
-        print "badPwdCount".rjust(18) + ": " +  users[user]["badpwdcount"]
-
-      if users[user].has_key("badpasswordtime"):
-        print "badPasswordTime".rjust(18) + ": " +  users[user]["badpasswordtime"]
-
-      if users[user].has_key("lastlogoff"):
-        print "lastLogoff".rjust(18) + ": " +  users[user]["lastlogoff"]
-
-      if users[user].has_key("lastlogon"):
-        print "lastLogon".rjust(18) + ": " +  users[user]["lastlogon"]
-
-      if users[user].has_key("logonhours"):
-        print "logonHours".rjust(18) + ": " +  users[user]["logonhours"]
-
-      if users[user].has_key("pwdlastset"):
-        print "pwdLastSet".rjust(18) + ": " +  users[user]["pwdlastset"]
-
-      if users[user].has_key("accountexpires"):
-        print "accountExpires".rjust(18) + ": " +  users[user]["accountexpires"]
-
-      if users[user].has_key("logoncount"):
-        print "logonCount".rjust(18) + ": " +  users[user]["logoncount"]
-
-      if users[user].has_key("lastlogontimestamp"):
-        print "lastLogonTimestamp".rjust(18) + ": " +  users[user]["lastlogontimestamp"]
-
-      if users[user].has_key("error"):
-        print "Error".rjust(18) + ": " +  users[user]["error"]
+      print "\n" + user + ":\n" + ("-" * 30)
+      for key in sorted(attrs):
+        print str(key).rjust(18) + ": " +  users[user].get(str(key).lower(),"")
 
   else:
 
