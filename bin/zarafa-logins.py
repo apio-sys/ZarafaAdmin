@@ -110,18 +110,11 @@ if __name__ == "__main__":
 
   #users get_data()
 
-
-  ldapURI = "ldaps://opwdc2.i.opw.ie/ou=opw,dc=i,dc=opw,dc=ie?cn,samAccountName,mail?sub?sAMAccountName=ApplebyP"
+  attrs = "cn,samAccountName,mail,badPwdCount,badPasswordTime,lastLogon,logonHours,pwdLastSet,accountExpires,logonCount,lastLogonTimestamp"
+  ldapURI = "ldaps://opwdc2.i.opw.ie/ou=opw,dc=i,dc=opw,dc=ie?" + attr + "?sub?sAMAccountName=ApplebyP"
   results = brandt.LDAPSearch(ldapURI)
 
-# badPwdCount: 0
-# badPasswordTime: 131055341118450592
-# lastLogon: 131062908817681857
-# logonHours:: ////////////////////////////
-# pwdLastSet: 130885250751674350
-# accountExpires: 0
-# logonCount: 2686
-# lastLogonTimestamp: 131057560970718861
+# badPwdCount,badPasswordTime,lastLogon,logonHours,pwdLastSet,accountExpires,logonCount,lastLogonTimestamp
 #     ldapurl     = ldap[s]://[host[:port]][/base[?[attributes][?[scope][?[filter][?extensions]]]]]
 
 
