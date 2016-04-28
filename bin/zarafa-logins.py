@@ -111,7 +111,7 @@ if __name__ == "__main__":
   #users get_data()
 
 
-  ldapURI = "ldaps://opwdc2.i.opw.ie/ou=opw,dc=i,dc=opw,dc=ie?samAccountName,mail?sub?(samAccountName=brandtb)?"
+  ldapURI = "ldaps://opwdc2.i.opw.ie/ou=opw,dc=i,dc=opw,dc=ie?samAccountName,mail?sub?samAccountName=brandtb?"
   results = brandt.LDAPSearch(ldapURI)
 
 # badPwdCount: 0
