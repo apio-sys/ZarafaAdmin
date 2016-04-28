@@ -130,38 +130,56 @@ def get_data():
 # Start program
 if __name__ == "__main__":
   command_line_args()
+  try:
+    users = get_data()
 
-  users = get_data()
+  except SystemExit as err:
+    pass
+  except Exception as err:
+    try:
+      exitcode = int(err[0])
+      errmsg = str(" ".join(err[1:]))
+    except:
+      exitcode = -1
+      errmsg = str(err)
 
-  if args['output'] != "xml":
-    usermaxlen = max( [ len(x) for x in users.keys() ] + [8] )
+    if args['output'] != 'xml': 
+      error = "(" + str(exitcode) + ") " + str(errmsg) + "\nCommand: " + " ".join(sys.argv)
+    else:
+      xmldata = ElementTree.Element('error', code=brandt.strXML(exitcode), 
+                                             msg=brandt.strXML(errmsg), 
+                                             cmd=brandt.strXML(" ".join(sys.argv)))
 
-    for label, key in [('Last Minute','1m'),('Last 5 Minutes','5m'),('Last 15 Minutes','15m'),('Last Hour','1h'),('Last 4 Hours','4h'),('Last 8 Hours','8h'),('Last Day','1d'),('Last 3 Days','3d')]:
-      tmp = sorted([ (u, d[key]) for u, d in users.iteritems() if d.get(key, 0) > 0 ], reverse=True)
-      if tmp:       
-        print str(label).center(usermaxlen + 9)
-        print "Username".ljust(usermaxlen), "  ", "Count"
-        print "-" * (usermaxlen + 9)
-        for user, data in sorted(tmp, key=lambda x: x[0]):
-          print str(user).ljust(usermaxlen), "  ", str(data).rjust(5)
-        print
-        
-    for user in sorted(users.keys()):
-      if users[user].get('samaccountname','') and users[user].get('cn',''):
-        print "User information for " + users[user].get('samaccountname','').lower() + " (" + users[user].get('cn','') +"):\n" + ("-" * 30)
-        for key in sorted([ k.strip() for k in attrs.split(",") ]):
-          if key not in ['cn','samAccountName']:
-            print str(key).rjust(18) + ": " +  users[user].get(str(key).lower(),"")
-        print
+  finally:
+    if args['output'] != "xml":
+      usermaxlen = max( [ len(x) for x in users.keys() ] + [8] )
 
-  else:
+      for label, key in [('Last Minute','1m'),('Last 5 Minutes','5m'),('Last 15 Minutes','15m'),('Last Hour','1h'),('Last 4 Hours','4h'),('Last 8 Hours','8h'),('Last Day','1d'),('Last 3 Days','3d')]:
+        tmp = sorted([ (u, d[key]) for u, d in users.iteritems() if d.get(key, 0) > 0 ], reverse=True)
+        if tmp:       
+          print str(label).center(usermaxlen + 9)
+          print "Username".ljust(usermaxlen), "  ", "Count"
+          print "-" * (usermaxlen + 9)
+          for user, data in sorted(tmp, key=lambda x: x[0]):
+            print str(user).ljust(usermaxlen), "  ", str(data).rjust(5)
+          print
+          
+      for user in sorted(users.keys()):
+        if users[user].get('samaccountname','') and users[user].get('cn',''):
+          print "User information for " + users[user].get('samaccountname','').lower() + " (" + users[user].get('cn','') +"):\n" + ("-" * 30)
+          for key in sorted([ k.strip() for k in attrs.split(",") ]):
+            if key not in ['cn','samAccountName']:
+              print str(key).rjust(18) + ": " +  users[user].get(str(key).lower(),"")
+          print
 
-    xml = ElementTree.Element('zarafaadmin')
-    xmlLog = ElementTree.SubElement(xml, 'log', log='Login Errors', filters='')
-    for user in sorted(users.keys()):
-      for key in ['1m','5m','15m','1h','4h','8h','1d','3d']:
-        tmp = brandt.strXML(users[user].pop(key))
-        users[user].update({key:tmp})
-      ElementTree.SubElement(xmlLog, "user", **users[user])
+    else:
 
-    print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
+      xml = ElementTree.Element('zarafaadmin')
+      xmlLog = ElementTree.SubElement(xml, 'log', log='Login Errors', filters='')
+      for user in sorted(users.keys()):
+        for key in ['1m','5m','15m','1h','4h','8h','1d','3d']:
+          tmp = brandt.strXML(users[user].pop(key))
+          users[user].update({key:tmp})
+        ElementTree.SubElement(xmlLog, "user", **users[user])
+
+      print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
