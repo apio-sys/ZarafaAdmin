@@ -106,11 +106,7 @@ def get_data():
 
     for key in ['1m','5m','15m','1h','4h','8h','1d','3d']:
       tmp = brandt.strXML(users[user].pop(key))
-      print key , users[user]
       users[user].update({key:tmp})
-
-    print user, users[user]
-
 
     try:
       ldapURI = "ldaps://opwdc2.i.opw.ie/ou=opw,dc=i,dc=opw,dc=ie?" + attrs + "?sub?sAMAccountName=" + user
@@ -144,11 +140,11 @@ if __name__ == "__main__":
   xml = ElementTree.Element('zarafaadmin')
   xmlLog = ElementTree.Element('log', log='Login Errors', filters='')
   for user in sorted(users.keys()):
-    # print users[user]
-    xmldata = ElementTree.SubElement(xmlLog, "user", **users[user])
+    print users[user]
+  #   xmldata = ElementTree.SubElement(xmlLog, "user", **users[user])
 
-  xml.append(xmldata)
-  print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
+  # xml.append(xmldata)
+  # print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
 
 
 
