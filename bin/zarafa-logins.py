@@ -147,10 +147,11 @@ if __name__ == "__main__":
         print
         
     for user in sorted(users.keys()):
-      print "\n" + user + ":\n" + ("-" * 30)
-      sys.exit(0)
-      for key in sorted(attrs):
-        print str(key).rjust(18) + ": " +  users[user].get(str(key).lower(),"")
+      if users[user].get('cn',''):
+        print "\nUser information for " + users[user].get('samAccountName','') + " (" + users[user].get('cn','') +"):\n" + ("-" * 30)
+        for key in sorted(attrs):
+          print str(key).rjust(18) + ": " +  users[user].get(str(key).lower(),"")
+        sys.exit(0)
 
   else:
 
