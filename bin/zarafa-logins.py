@@ -112,7 +112,7 @@ if __name__ == "__main__":
 
   attrs = "cn,samAccountName,mail,badPwdCount,badPasswordTime,lastLogon,logonHours,pwdLastSet,accountExpires,logonCount,lastLogonTimestamp"
   ldapURI = "ldaps://opwdc2.i.opw.ie/ou=opw,dc=i,dc=opw,dc=ie?" + attrs + "?sub?sAMAccountName=ApplebyP"
-  results = brandt.LDAPSearch(ldapURI)
+  results = brandt.LDAPSearch(ldapURI).results
 
 # badPwdCount,badPasswordTime,lastLogon,logonHours,pwdLastSet,accountExpires,logonCount,lastLogonTimestamp
 #     ldapurl     = ldap[s]://[host[:port]][/base[?[attributes][?[scope][?[filter][?extensions]]]]]
@@ -121,7 +121,7 @@ if __name__ == "__main__":
 
 
   print ldapURI
-  print results[1]
+  print results
   sys.exit(0)
 
 
