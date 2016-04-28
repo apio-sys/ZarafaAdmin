@@ -146,10 +146,9 @@ if __name__ == "__main__":
           print str(user).ljust(usermaxlen), "  ", str(data).rjust(5)
         print
         
-    sys.exit(0)          
-
     for user in sorted(users.keys()):
       print "\n" + user + ":\n" + ("-" * 30)
+      sys.exit(0)
       for key in sorted(attrs):
         print str(key).rjust(18) + ": " +  users[user].get(str(key).lower(),"")
 
