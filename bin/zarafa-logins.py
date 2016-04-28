@@ -142,12 +142,11 @@ if __name__ == "__main__":
         print str(label).center(usermaxlen + 9)
         print "Username".ljust(usermaxlen), "  ", "Count"
         print "-" * (usermaxlen + 9)
-        
-        print tmp
-        sys.exit(0)
-
         for user, data in tmp:
           print str(user).ljust(usermaxlen), "  ", str(data).rjust(5)
+        
+        print tmp
+        sys.exit(0)          
 
     for user in sorted(users.keys()):
       print "\n" + user + ":\n" + ("-" * 30)
