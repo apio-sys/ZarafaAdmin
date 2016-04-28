@@ -111,7 +111,7 @@ def get_data():
           key = key.lower()
           if key in ['badpasswordtime','lastlogoff','lastlogon','pwdlastset','lastlogontimestamp','accountexpires']:
             value = datetime.datetime(1601,1,1) + datetime.timedelta(microseconds=( int(value)/10) )
-          elif key in ['logonhours'] and value[0:2] == ": ":
+          elif key == 'logonhours':
             tmp = ""
             for char in value:
               tmp += str(hex(ord(char))[2:]).upper()
