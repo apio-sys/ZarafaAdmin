@@ -116,7 +116,7 @@ def get_data():
             for char in value:
               tmp += str(hex(ord(char))[2:]).upper()
             value = tmp
-          users[user][key] = value
+          users[user][key] = brandt.strXML(value)
     except:
       pass
 
