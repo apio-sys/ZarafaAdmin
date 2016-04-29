@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-<xsl:output method="html"/>
+<xsl:output method="html" indent="yes" omit-xml-declaration="yes" />
 <xsl:param name="sort" select="'username'"/>
 
 <xsl:template match="/zarafaadmin/error">
@@ -21,7 +21,7 @@
   </table>
 </xsl:template>
 
-<xsl:template match="/zarafa-admin/login-errors">
+<xsl:template match="/zarafaadmin/logs">
 <table id="zarafa-login-errors">
 <tr>
 <th><a href="./zarafa-logins.php?sort=username">Username</a></th>
@@ -60,40 +60,43 @@
     <xsl:apply-templates select="user"><xsl:sort select="@d3" order="descending" data-type="number"/></xsl:apply-templates>
 </xsl:when>
 <xsl:otherwise>
-    <xsl:apply-templates select="user"><xsl:sort select="translate(@username, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" /></xsl:apply-templates>
+    <xsl:apply-templates select="user"><xsl:sort select="translate(@user, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" /></xsl:apply-templates>
 </xsl:otherwise>
 </xsl:choose>
 </table>
 </xsl:template>
 
 <xsl:template match="user">
-<tr class="hover" id="{@username}-basic">
-
-<td><img id="{@username}-img" src="/images/toggle-expand.png" onclick="toggle('{@username}');"/>&#xA0;
-<a href="./zarafa-users.php?user={@username}"><xsl:value-of select="@username"/></a></td>
-<td class="number"><xsl:value-of select="@m1"/></td>
-<td class="number"><xsl:value-of select="@m5"/></td>
-<td class="number"><xsl:value-of select="@m15"/></td>
-<td class="number"><xsl:value-of select="@h1"/></td>
-<td class="number"><xsl:value-of select="@h4"/></td>
-<td class="number"><xsl:value-of select="@h8"/></td>
-<td class="number"><xsl:value-of select="@d1"/></td>
-<td class="number"><xsl:value-of select="@d3"/></td>
-</tr>
-<tr class="hide" id="{@username}-details">
-<td colspan="9">
-&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Windows DN: <xsl:value-of select="@dn"/><br/>
-&#xA0;Bad Password Count: <xsl:value-of select="@badpwdcount"/><br/>
-&#xA0;&#xA0;Bad Password Time: <xsl:value-of select="@badpasswordtime"/><br/>
-&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Last Logoff: <xsl:value-of select="@lastlogoff"/><br/>
-&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Last Login: <xsl:value-of select="@lastlogon"/><br/>
-&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Logon Hours: <xsl:value-of select="@logonhours"/><br/>
-&#xA0;&#xA0;Password Last Set: <xsl:value-of select="@pwdlastset"/><br/>
-&#xA0;&#xA0;&#xA0;&#xA0;Account Expires: <xsl:value-of select="@accountexpires"/><br/>
-&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Logon Count: <xsl:value-of select="@logoncount"/><br/>
-&#xA0;&#xA0;&#xA0;&#xA0;Last Login Time: <xsl:value-of select="@lastlogontimestamp"/><br/>
-&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Errors: <xsl:value-of select="@error"/>
-</td></tr>
+  <tr class="hover" id="{@user}-basic">
+    <td>
+      <img id="{@user}-img" src="/images/toggle-expand.png" onclick="toggle('{@user}');"/>&#xA0;
+      <a href="./zarafa-users.php?user={@user}"><xsl:value-of select="@user"/></a>
+    </td>
+    <td class="number"><xsl:value-of select="@m1"/></td>
+    <td class="number"><xsl:value-of select="@m5"/></td>
+    <td class="number"><xsl:value-of select="@m15"/></td>
+    <td class="number"><xsl:value-of select="@h1"/></td>
+    <td class="number"><xsl:value-of select="@h4"/></td>
+    <td class="number"><xsl:value-of select="@h8"/></td>
+    <td class="number"><xsl:value-of select="@d1"/></td>
+    <td class="number"><xsl:value-of select="@d3"/></td>
+    </tr>
+    <tr class="hide" id="{@user}-details">
+    <td colspan="9">
+      <table>
+        <tr><td align="right">Windows Name:&#xA0;</td><td align="left"><xsl:value-of select="@cn"/></td></tr>
+        <tr><td align="right">Bad Password Count:&#xA0;</td><td align="left"><xsl:value-of select="@badpwdcount"/></td></tr>
+        <tr><td align="right">Bad Password Time:&#xA0;</td><td align="left"><xsl:value-of select="@badpasswordtime"/></td></tr>
+        <tr><td align="right">Last Logoff:&#xA0;</td><td align="left"><xsl:value-of select="@lastlogoff"/></td></tr>
+        <tr><td align="right">Last Login:&#xA0;</td><td align="left"><xsl:value-of select="@lastlogon"/></td></tr>
+        <tr><td align="right">Logon Hours:&#xA0;</td><td align="left"><xsl:value-of select="@logonhours"/></td></tr>
+        <tr><td align="right">Password Last Set:&#xA0;</td><td align="left"><xsl:value-of select="@pwdlastset"/></td></tr>
+        <tr><td align="right">Account Expires:&#xA0;</td><td align="left"><xsl:value-of select="@accountexpires"/></td></tr>
+        <tr><td align="right">Logon Count:&#xA0;</td><td align="left"><xsl:value-of select="@logoncount"/></td></tr>
+        <tr><td align="right">Last Login Time:&#xA0;</td><td align="left"><xsl:value-of select="@lastlogontimestamp"/></td></tr>
+      </table>
+    </td>
+  </tr>
 </xsl:template>
 
 </xsl:stylesheet>
