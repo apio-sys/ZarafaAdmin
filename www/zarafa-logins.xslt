@@ -33,7 +33,7 @@
 <th><a href="./zarafa-logins.php?sort=h8">8 Hour</a></th>
 <th><a href="./zarafa-logins.php?sort=d1">1 Day</a></th>
 <th><a href="./zarafa-logins.php?sort=d3">3 Day</a></th></tr>
-
+<!-- 
 <xsl:choose>
 <xsl:when test="$sort = 'm1'">
     <xsl:apply-templates select="user"><xsl:sort select="@m1" order="descending" data-type="number"/></xsl:apply-templates>
@@ -62,7 +62,7 @@
 <xsl:otherwise>
     <xsl:apply-templates select="user"><xsl:sort select="translate(@user, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" /></xsl:apply-templates>
 </xsl:otherwise>
-</xsl:choose>
+</xsl:choose> -->
 </table>
 </xsl:template>
 
