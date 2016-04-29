@@ -21,7 +21,7 @@
   </table>
 </xsl:template>
 
-<xsl:template match="/zarafaadmin/logs">
+<xsl:template match="/zarafaadmin/log">
   <pre>
     <table id="zarafa-login-errors">
       <tr>
