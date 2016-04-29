@@ -15,14 +15,11 @@ sys.path.pop()
 args = {}
 args['output'] = "text"
 
-
 version = 0.3
 encoding = 'utf-8'
 
 months = ('','jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec')
 attrs = "cn,samAccountName,mail,badPwdCount,badPasswordTime,lastLogon,logonHours,pwdLastSet,accountExpires,logonCount,lastLogonTimestamp"
-
-
 
 class customUsageVersion(argparse.Action):
   def __init__(self, option_strings, dest, **kwargs):

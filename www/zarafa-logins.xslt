@@ -22,17 +22,18 @@
 </xsl:template>
 
 <xsl:template match="/zarafaadmin/logs">
-<table id="zarafa-login-errors">
-<tr>
-<th><a href="./zarafa-logins.php?sort=username">Username</a></th>
-<th><a href="./zarafa-logins.php?sort=m1">1 Min</a></th>
-<th><a href="./zarafa-logins.php?sort=m5">5 Min</a></th>
-<th><a href="./zarafa-logins.php?sort=m15">15 Min</a></th>
-<th><a href="./zarafa-logins.php?sort=h1">1 Hour</a></th>
-<th><a href="./zarafa-logins.php?sort=h4">4 Hour</a></th>
-<th><a href="./zarafa-logins.php?sort=h8">8 Hour</a></th>
-<th><a href="./zarafa-logins.php?sort=d1">1 Day</a></th>
-<th><a href="./zarafa-logins.php?sort=d3">3 Day</a></th></tr>
+  <pre>
+    <table id="zarafa-login-errors">
+      <tr>
+        <th><a href="./zarafa-logins.php?sort=username">Username</a></th>
+        <th><a href="./zarafa-logins.php?sort=m1">1 Min</a></th>
+        <th><a href="./zarafa-logins.php?sort=m5">5 Min</a></th>
+        <th><a href="./zarafa-logins.php?sort=m15">15 Min</a></th>
+        <th><a href="./zarafa-logins.php?sort=h1">1 Hour</a></th>
+        <th><a href="./zarafa-logins.php?sort=h4">4 Hour</a></th>
+        <th><a href="./zarafa-logins.php?sort=h8">8 Hour</a></th>
+        <th><a href="./zarafa-logins.php?sort=d1">1 Day</a></th>
+        <th><a href="./zarafa-logins.php?sort=d3">3 Day</a></th></tr>
 <!-- 
 <xsl:choose>
 <xsl:when test="$sort = 'm1'">
@@ -63,7 +64,8 @@
     <xsl:apply-templates select="user"><xsl:sort select="translate(@user, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" /></xsl:apply-templates>
 </xsl:otherwise>
 </xsl:choose> -->
-</table>
+    </table>
+  </pre>
 </xsl:template>
 
 <xsl:template match="user">

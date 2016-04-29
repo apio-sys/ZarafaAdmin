@@ -87,8 +87,7 @@ if ( $sort !== "" ) $proc->setParameter( '', 'sort', $sort);
 
 $output = $proc->transformToDoc($outputxml)->saveXML();
 
-echo "<pre>$output</pre>";
-
+echo "$output";
 echo '</body></html>';
 ?>
 
