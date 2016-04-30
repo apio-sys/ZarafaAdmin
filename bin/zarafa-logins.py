@@ -149,25 +149,25 @@ def get_data():
           else:
             users[user][attr] = str(users[user][attr])
 
-    # for user in users.keys():
-    #   try:
-    #     ldapURI = "ldaps://opwdc2.i.opw.ie/ou=opw,dc=i,dc=opw,dc=ie?" + ",".join(attrsLDAP.keys()) + "?sub?sAMAccountName=" + user
-    #     results = brandt.LDAPSearch(ldapURI).results
-    #     if str(results[0][1]['sAMAccountName'][0]).lower() == user:
-    #       for key in results[0][1]:
-    #         value = results[0][1][key][0]
-    #         key = key.lower()
-    #         if key in ['badpasswordtime','lastlogoff','lastlogon','pwdlastset','lastlogontimestamp','accountexpires']:
-    #           value = str(datetime.datetime(1601,1,1) + datetime.timedelta(microseconds=( int(value)/10) ))[:19]
-    #           if value == '1601-01-01 00:00:00': value = 'never'
-    #         elif key == 'logonhours':
-    #           tmp = ""
-    #           for char in value:
-    #             tmp += str(hex(ord(char))[2:]).upper()
-    #           value = tmp
-    #         users[user][key] = brandt.strXML(value)
-    #   except:
-    #     pass
+    for user in users.keys():
+      try:
+        ldapURI = "ldaps://opwdc2.i.opw.ie/ou=opw,dc=i,dc=opw,dc=ie?" + ",".join(attrsLDAP.keys()) + "?sub?sAMAccountName=" + user
+        results = brandt.LDAPSearch(ldapURI).results
+        if str(results[0][1]['sAMAccountName'][0]).lower() == user:
+          for key in results[0][1]:
+            value = results[0][1][key][0]
+            key = key.lower()
+            if key in ['badpasswordtime','lastlogoff','lastlogon','pwdlastset','lastlogontimestamp','accountexpires']:
+              value = str(datetime.datetime(1601,1,1) + datetime.timedelta(microseconds=( int(value)/10) ))[:19]
+              if value == '1601-01-01 00:00:00': value = 'never'
+            elif key == 'logonhours':
+              tmp = ""
+              for char in value:
+                tmp += str(hex(ord(char))[2:]).upper()
+              value = tmp
+            users[user][key] = brandt.strXML(value)
+      except:
+        pass
 
     for user in sorted(users.keys()): print user, users[user]
     sys.exit(0)
