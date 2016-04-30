@@ -166,7 +166,7 @@ def get_data():
     for user in sorted(users.keys()):
       f.write(user)
       for attr in sorted(attrsTime, key=attrsTime.get) + sorted(attrsLDAP.keys(), key=lambda x: x.lower()):
-        f.write( "," + str(users[user].get(attr,"")) )
+        f.write( "," + str(users[user].get(attr.lower(),"")) )
       f.write("\n")
     f.close()
   # else:
