@@ -162,11 +162,13 @@ def get_data():
       except:
         pass
 
-  #   f = open(cachefile, 'w')
-  #   for user in sorted(users.keys()):
-
-  #     f.write("\n".join(out))
-  #   f.close()
+    f = open(cachefile, 'w')
+    for user in sorted(users.keys()):
+      f.write(user)
+      for attr in sorted(attrsTime, key=attrsTime.get) + sorted(attrsLDAP.keys(), key=lambda x: x.lower()):
+        f.write("," + users[user].get(attr,""))
+      f.write("\n")
+    f.close()
   # else:
   #   f = open(cachefile, 'r')
   #   out = f.read().split('\n')
@@ -174,8 +176,8 @@ def get_data():
 
   for user in users.keys(): print users[user]
 
-  print sorted(attrsTime, key=attrsTime.get)
-  print sorted(attrsLDAP.keys(), key=lambda x: x.lower())
+  print 
+  print 
 
 
   sys.exit(0)
