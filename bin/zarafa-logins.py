@@ -68,8 +68,8 @@ class customUsageVersion(argparse.Action):
       print textwrap.fill(version, self.__row)
       print "\nWritten by Bob Brandt <projects@brandt.ie>."
     else:
-      print "Usage: " + self.__prog + " [options] [-d|-u] [FILTER]"
-      print "Script used to find details about Zarafa users.\n"
+      print "Usage: " + self.__prog + " [options] "
+      print "Script used to find number of login errors per user.\n"
       print "Options:"
       options = []
       options.append(("-h, --help",              "Show this help message and exit"))
@@ -118,15 +118,14 @@ def get_data():
 
   for line in out.split('\n'):
     try:
+      now =  datetime.datetime.now()        
       tmp = line.replace("  "," ").replace(" ",":").split(":")
-      if tmp and len(tmp) > 5:
-        now =  datetime.datetime.now()        
-        tmpTime = datetime.datetime( int(tmp[6]), months.index(tmp[1].lower()), int(tmp[2]), int(tmp[3]), int(tmp[4]), int(tmp[5]) )
-        tmpUser = tmp[-1].lower()
+      tmpTime = datetime.datetime( int(tmp[6]), months.index(tmp[1].lower()), int(tmp[2]), int(tmp[3]), int(tmp[4]), int(tmp[5]) )
+      tmpUser = tmp[-1].lower()
 
-        if not users.has_key(tmpUser): users[tmpUser] = {'user':tmp[-1]}
-        for attr in attrsTime.keys():
-          if tmpTime > now - datetime.timedelta(minutes = attrsTime[attr]): users[tmpUser].update( {attr: users[tmpUser].get(attr,0) + 1})
+      if not users.has_key(tmpUser): users[tmpUser] = {'user':tmp[-1]}
+      # for attr in attrsTime.keys():
+      #   if tmpTime > now - datetime.timedelta(minutes = attrsTime[attr]): users[tmpUser].update( {attr: users[tmpUser].get(attr,0) + 1})
 
     except:
       pass
@@ -162,56 +161,56 @@ def get_data():
 # Start program
 if __name__ == "__main__":
   command_line_args()
-  try:
+  # try:
     users = get_data()
 
-  except SystemExit as err:
-    pass
-  except Exception as err:
-    try:
-      exitcode = int(err[0])
-      errmsg = str(" ".join(err[1:]))
-    except:
-      exitcode = -1
-      errmsg = str(err)
+  # except SystemExit as err:
+  #   pass
+  # except Exception as err:
+  #   try:
+  #     exitcode = int(err[0])
+  #     errmsg = str(" ".join(err[1:]))
+  #   except:
+  #     exitcode = -1
+  #     errmsg = str(err)
 
-    if args['output'] != 'xml': 
-      error = "(" + str(exitcode) + ") " + str(errmsg) + "\nCommand: " + " ".join(sys.argv)
-    else:
-      xmldata = ElementTree.Element('error', code=brandt.strXML(exitcode), 
-                                             msg=brandt.strXML(errmsg), 
-                                             cmd=brandt.strXML(" ".join(sys.argv)))
+  #   if args['output'] != 'xml': 
+  #     error = "(" + str(exitcode) + ") " + str(errmsg) + "\nCommand: " + " ".join(sys.argv)
+  #   else:
+  #     xmldata = ElementTree.Element('error', code=brandt.strXML(exitcode), 
+  #                                            msg=brandt.strXML(errmsg), 
+  #                                            cmd=brandt.strXML(" ".join(sys.argv)))
 
-  finally:
-    if args['output'] != "xml":
-      usermaxlen = max( [ len(x) for x in users.keys() ] + [8] )
+  # finally:
+  #   if args['output'] != "xml":
+  #     usermaxlen = max( [ len(x) for x in users.keys() ] + [8] )
 
-      for label, key in [('Last Minute','1m'),('Last 5 Minutes','5m'),('Last 15 Minutes','15m'),('Last Hour','1h'),('Last 4 Hours','4h'),('Last 8 Hours','8h'),('Last Day','1d'),('Last 3 Days','3d')]:
-        tmp = sorted([ (u, d[key]) for u, d in users.iteritems() if d.get(key, 0) > 0 ], reverse=True)
-        if tmp:       
-          print str(label).center(usermaxlen + 9)
-          print "Username".ljust(usermaxlen), "  ", "Count"
-          print "-" * (usermaxlen + 9)
-          for user, data in sorted(tmp, key=lambda x: x[0]):
-            print str(user).ljust(usermaxlen), "  ", str(data).rjust(5)
-          print
+  #     for label, key in [('Last Minute','1m'),('Last 5 Minutes','5m'),('Last 15 Minutes','15m'),('Last Hour','1h'),('Last 4 Hours','4h'),('Last 8 Hours','8h'),('Last Day','1d'),('Last 3 Days','3d')]:
+  #       tmp = sorted([ (u, d[key]) for u, d in users.iteritems() if d.get(key, 0) > 0 ], reverse=True)
+  #       if tmp:       
+  #         print str(label).center(usermaxlen + 9)
+  #         print "Username".ljust(usermaxlen), "  ", "Count"
+  #         print "-" * (usermaxlen + 9)
+  #         for user, data in sorted(tmp, key=lambda x: x[0]):
+  #           print str(user).ljust(usermaxlen), "  ", str(data).rjust(5)
+  #         print
           
-      for user in sorted(users.keys()):
-        if users[user].get('samaccountname','') and users[user].get('cn',''):
-          print "User information for " + users[user].get('samaccountname','').lower() + " (" + users[user].get('cn','') +"):\n" + ("-" * 30)
-          for key in sorted([ k.strip() for k in attrs.split(",") ]):
-            if key not in ['cn','samAccountName']:
-              print str(key).rjust(18) + ": " +  users[user].get(str(key).lower(),"")
-          print
+  #     for user in sorted(users.keys()):
+  #       if users[user].get('samaccountname','') and users[user].get('cn',''):
+  #         print "User information for " + users[user].get('samaccountname','').lower() + " (" + users[user].get('cn','') +"):\n" + ("-" * 30)
+  #         for key in sorted([ k.strip() for k in attrs.split(",") ]):
+  #           if key not in ['cn','samAccountName']:
+  #             print str(key).rjust(18) + ": " +  users[user].get(str(key).lower(),"")
+  #         print
 
-    else:
+  #   else:
 
-      xml = ElementTree.Element('zarafaadmin')
-      xmlLog = ElementTree.SubElement(xml, 'log', log='Login Errors', filters='')
-      for user in sorted(users.keys()):
-        for key in ['1m','5m','15m','1h','4h','8h','1d','3d']:
-          tmp = brandt.strXML(users[user].pop(key))
-          users[user].update({key:tmp})
-        ElementTree.SubElement(xmlLog, "user", **users[user])
+  #     xml = ElementTree.Element('zarafaadmin')
+  #     xmlLog = ElementTree.SubElement(xml, 'log', log='Login Errors', filters='')
+  #     for user in sorted(users.keys()):
+  #       for key in ['1m','5m','15m','1h','4h','8h','1d','3d']:
+  #         tmp = brandt.strXML(users[user].pop(key))
+  #         users[user].update({key:tmp})
+  #       ElementTree.SubElement(xmlLog, "user", **users[user])
 
-      print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
+  #     print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
