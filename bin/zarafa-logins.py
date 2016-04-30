@@ -131,7 +131,7 @@ def get_data():
       pass
 
   for user in users.keys():
-    if len(users[user]): del users[user]
+    if len(users[user]) == 1: del users[user]
 
   for user in users.keys(): print users[user]
   sys.exit(0)
