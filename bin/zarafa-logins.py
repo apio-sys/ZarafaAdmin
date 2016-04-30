@@ -135,9 +135,9 @@ def get_data():
 
   for user in users.keys():
     try:
-      ldapURI = "ldaps://opwdc2.i.opw.ie/ou=opw,dc=i,dc=opw,dc=ie?" + attrs + "?sub?sAMAccountName=" + user
+      ldapURI = "ldaps://opwdc2.i.opw.ie/ou=opw,dc=i,dc=opw,dc=ie?" + ",".join(attrsLDAP.keys()) + "?sub?sAMAccountName=" + user
       results = brandt.LDAPSearch(ldapURI).results
-      if str(results[0][1]['sAMAccountName'][0]).lower() == user == users[user].lower():
+      if str(results[0][1]['sAMAccountName'][0]).lower() == user.lower():
         for key in results[0][1]:
           value = results[0][1][key][0]
           key = key.lower()
