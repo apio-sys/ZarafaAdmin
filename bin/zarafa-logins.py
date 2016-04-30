@@ -124,13 +124,13 @@ def get_data():
       tmpUser = tmp[-1].lower()
 
       if not users.has_key(tmpUser): users[tmpUser] = {'user':tmp[-1]}
-      # for attr in attrsTime.keys():
-      #   if tmpTime > now - datetime.timedelta(minutes = attrsTime[attr]): users[tmpUser].update( {attr: users[tmpUser].get(attr,0) + 1})
+      for attr in attrsTime.keys():
+        if tmpTime > now - datetime.timedelta(minutes = attrsTime[attr]): users[tmpUser].update( {attr: users[tmpUser].get(attr,0) + 1})
 
     except:
       pass
 
-  print users
+  for user in users: print user
   sys.exit(0)
 
 
