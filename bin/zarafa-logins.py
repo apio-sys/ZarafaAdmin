@@ -109,52 +109,75 @@ def command_line_args():
 
 def get_data():
   global args, attrsTime, attrsLDAP
+  cachefile = '/tmp/zarafa-logins.cache'    
 
-  command = 'grep "Authentication by plugin failed for user" "/var/log/zarafa/server.log"'
-  p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-  out, err = p.communicate()
-  if err: raise IOError(err)
-  users = {}
+  args['cache'] *= 60
+  age = args['cache'] + 1
+  try:
+    age = (datetime.datetime.now() - datetime.datetime.fromtimestamp(os.stat(cachefile).st_mtime)).seconds
+  except:
+    pass
 
-  for line in out.split('\n'):
-    try:
-      now =  datetime.datetime.now()        
-      tmp = line.replace("  "," ").replace(" ",":").split(":")
-      tmpTime = datetime.datetime( int(tmp[6]), months.index(tmp[1].lower()), int(tmp[2]), int(tmp[3]), int(tmp[4]), int(tmp[5]) )
-      tmpUser = tmp[-1].lower()
+  if age > args['cache']:
+    command = 'grep "Authentication by plugin failed for user" "/var/log/zarafa/server.log"'
+    p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    out, err = p.communicate()
+    if err: raise IOError(err)
+    users = {}
 
-      if not users.has_key(tmpUser): users[tmpUser] = {'user':tmp[-1]}
-      for attr in attrsTime.keys():
-        if tmpTime > now - datetime.timedelta(minutes = attrsTime[attr]): users[tmpUser].update( {attr: users[tmpUser].get(attr,0) + 1})
+    for line in out.split('\n'):
+      try:
+        now =  datetime.datetime.now()        
+        tmp = line.replace("  "," ").replace(" ",":").split(":")
+        tmpTime = datetime.datetime( int(tmp[6]), months.index(tmp[1].lower()), int(tmp[2]), int(tmp[3]), int(tmp[4]), int(tmp[5]) )
+        tmpUser = tmp[-1].lower()
 
-    except:
-      pass
+        if not users.has_key(tmpUser): users[tmpUser] = {'user':tmp[-1]}
+        for attr in attrsTime.keys():
+          if tmpTime > now - datetime.timedelta(minutes = attrsTime[attr]): users[tmpUser].update( {attr: users[tmpUser].get(attr,0) + 1})
 
-  for user in users.keys():
-    if len(users[user]) == 1: del users[user]
+      except:
+        pass
 
-  for user in users.keys():
-    try:
-      ldapURI = "ldaps://opwdc2.i.opw.ie/ou=opw,dc=i,dc=opw,dc=ie?" + ",".join(attrsLDAP.keys()) + "?sub?sAMAccountName=" + user
-      results = brandt.LDAPSearch(ldapURI).results
-      if str(results[0][1]['sAMAccountName'][0]).lower() == user:
-        for key in results[0][1]:
-          value = results[0][1][key][0]
-          key = key.lower()
-          if key in ['badpasswordtime','lastlogoff','lastlogon','pwdlastset','lastlogontimestamp','accountexpires']:
-            value = str(datetime.datetime(1601,1,1) + datetime.timedelta(microseconds=( int(value)/10) ))[:19]
-            if value == '1601-01-01 00:00:00': value = 'never'
-          elif key == 'logonhours':
-            tmp = ""
-            for char in value:
-              tmp += str(hex(ord(char))[2:]).upper()
-            value = tmp
-          users[user][key] = brandt.strXML(value)
-    except:
-      pass
+    for user in users.keys():
+      if len(users[user]) == 1: del users[user]
 
+    for user in users.keys():
+      try:
+        ldapURI = "ldaps://opwdc2.i.opw.ie/ou=opw,dc=i,dc=opw,dc=ie?" + ",".join(attrsLDAP.keys()) + "?sub?sAMAccountName=" + user
+        results = brandt.LDAPSearch(ldapURI).results
+        if str(results[0][1]['sAMAccountName'][0]).lower() == user:
+          for key in results[0][1]:
+            value = results[0][1][key][0]
+            key = key.lower()
+            if key in ['badpasswordtime','lastlogoff','lastlogon','pwdlastset','lastlogontimestamp','accountexpires']:
+              value = str(datetime.datetime(1601,1,1) + datetime.timedelta(microseconds=( int(value)/10) ))[:19]
+              if value == '1601-01-01 00:00:00': value = 'never'
+            elif key == 'logonhours':
+              tmp = ""
+              for char in value:
+                tmp += str(hex(ord(char))[2:]).upper()
+              value = tmp
+            users[user][key] = brandt.strXML(value)
+      except:
+        pass
+
+  #   f = open(cachefile, 'w')
+  #   for user in sorted(users.keys()):
+
+  #     f.write("\n".join(out))
+  #   f.close()
+  # else:
+  #   f = open(cachefile, 'r')
+  #   out = f.read().split('\n')
+  #   f.close()
 
   for user in users.keys(): print users[user]
+
+  print sorted(attrsTime, key=attrsTime.get)
+  print sorted(attrsLDAP.keys())
+
+
   sys.exit(0)
 
   return users
