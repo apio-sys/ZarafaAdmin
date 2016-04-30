@@ -22,14 +22,14 @@ encoding = 'utf-8'
 
 months = ('','jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec')
 
-attrsTime = { 'm1':  1,
-              'm5':  5,
-              'm15': 15,
-              'h1':  1 * 60,
-              'h4':  4 * 60,
-              'h8':  8 * 60,
-              'd1':  1 * 60 * 24,
-              'd3':  3 * 60 * 24 }
+attrsTime = { 'm1':  {'min':1,           'label':'Last Minute'},
+              'm5':  {'min':5,           'label':'Last 5 Minutes'},
+              'm15': {'min':15,          'label':'Last 15 Minutes'},
+              'h1':  {'min':1 * 60,      'label':'Last Hour'},
+              'h4':  {'min':4 * 60,      'label':'Last 4 Hours'},
+              'h8':  {'min':8 * 60,      'label':'Last 8 Hours'},
+              'd1':  {'min':1 * 60 * 24, 'label':'Last Day'},
+              'd3':  {'min':3 * 60 * 24, 'label':'Last 3 Days'} }
 
 attrsLDAP = { 'cn':'Windows Name',
               'samAccountName':'Username',
@@ -108,17 +108,17 @@ def command_line_args():
   if not args['delimiter'] and args['output'] == "csv": args['delimiter'] = ","  
 
 def get_data():
-  global args, attrsTime, attrsLDAP
-  cachefile = '/tmp/zarafa-logins.cache'    
+  # global args, attrsTime, attrsLDAP
+  # cachefile = '/tmp/zarafa-logins.cache'    
 
-  args['cache'] *= 60
-  age = args['cache'] + 1
-  try:
-    age = (datetime.datetime.now() - datetime.datetime.fromtimestamp(os.stat(cachefile).st_mtime)).seconds
-  except:
-    pass
+  # args['cache'] *= 60
+  # age = args['cache'] + 1
+  # try:
+  #   age = (datetime.datetime.now() - datetime.datetime.fromtimestamp(os.stat(cachefile).st_mtime)).seconds
+  # except:
+  #   pass
 
-  if age > args['cache']:
+  # if age > args['cache']:
     command = 'grep "Authentication by plugin failed for user" "/var/log/zarafa/server.log"'
     p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = p.communicate()
@@ -134,79 +134,119 @@ def get_data():
 
         if not users.has_key(tmpUser): users[tmpUser] = {'user':tmp[-1]}
         for attr in attrsTime.keys():
-          if tmpTime > now - datetime.timedelta(minutes = attrsTime[attr]): users[tmpUser].update( {attr: users[tmpUser].get(attr,0) + 1})
+          if tmpTime > now - datetime.timedelta(minutes = attrsTime[attr]['min']): users[tmpUser].update( {attr: users[tmpUser].get(attr,0) + 1})
 
       except:
         pass
 
-    for user in users.keys():
-      if len(users[user]) == 1: 
-        del users[user]
-      else:
-        for attr in attrsTime.keys():
-          if not users[user].has_key(attr): 
-            users[user].update({attr:"0"})
-          else:
-            users[user][attr] = str(users[user][attr])
+    # for user in users.keys():
+    #   if len(users[user]) == 1: 
+    #     del users[user]
+    #   else:
+    #     for attr in attrsTime.keys():
+    #       if not users[user].has_key(attr): 
+    #         users[user].update({attr:"0"})
+    #       else:
+    #         users[user][attr] = str(users[user][attr])
 
-    for user in users.keys():
-      try:
-        ldapURI = "ldaps://opwdc2.i.opw.ie/ou=opw,dc=i,dc=opw,dc=ie?" + ",".join(attrsLDAP.keys()) + "?sub?sAMAccountName=" + user
-        results = brandt.LDAPSearch(ldapURI).results
-        if str(results[0][1]['sAMAccountName'][0]).lower() == user:
-          for key in results[0][1]:
-            value = results[0][1][key][0]
-            key = key.lower()
-            if key in ['badpasswordtime','lastlogoff','lastlogon','pwdlastset','lastlogontimestamp','accountexpires']:
-              value = str(datetime.datetime(1601,1,1) + datetime.timedelta(microseconds=( int(value)/10) ))[:19]
-              if value == '1601-01-01 00:00:00': value = 'never'
-            elif key == 'logonhours':
-              tmp = ""
-              for char in value:
-                tmp += str(hex(ord(char))[2:]).upper()
-              value = tmp
-            users[user][key] = brandt.strXML(value)
-      except:
-        pass
+    # for user in users.keys():
+    #   try:
+    #     ldapURI = "ldaps://opwdc2.i.opw.ie/ou=opw,dc=i,dc=opw,dc=ie?" + ",".join(attrsLDAP.keys()) + "?sub?sAMAccountName=" + user
+    #     results = brandt.LDAPSearch(ldapURI).results
+    #     if str(results[0][1]['sAMAccountName'][0]).lower() == user:
+    #       for key in results[0][1]:
+    #         value = results[0][1][key][0]
+    #         key = key.lower()
+    #         if key in ['badpasswordtime','lastlogoff','lastlogon','pwdlastset','lastlogontimestamp','accountexpires']:
+    #           value = str(datetime.datetime(1601,1,1) + datetime.timedelta(microseconds=( int(value)/10) ))[:19]
+    #           if value == '1601-01-01 00:00:00': value = 'never'
+    #         elif key == 'logonhours':
+    #           tmp = ""
+    #           for char in value:
+    #             tmp += str(hex(ord(char))[2:]).upper()
+    #           value = tmp
+    #         users[user][key] = brandt.strXML(value)
+    #   except:
+    #     pass
 
-    f = open(cachefile, 'w')
+    for user in sorted(users.key()): print user, users[user]
+    sys.exit(0)
+
+  #   f = open(cachefile, 'w')
+  #   for user in sorted(users.keys()):
+  #     f.write(user)
+  #     for attr in sorted(attrsTime, key=attrsTime.get) + sorted([ a.lower() for a in attrsLDAP.keys()]):
+  #       f.write( "," + str(users[user].get(attr,"")) )
+  #     f.write("\n")
+  #   f.close()
+  # else:
+  #   f = open(cachefile, 'r')
+  #   out = f.read().split('\n')
+  #   f.close()
+
+  #   users = {}
+  #   for line in out:
+  #     line = line.split(",")
+  #     user = str(line[0]).lower()
+
+  #     tmp={"user":line[0]}
+  #     c=1
+  #     attrs = sorted(attrsTime, key=attrsTime.get) + sorted([ a.lower() for a in attrsLDAP.keys()])
+  #     for attr in attrs:
+  #       if c < len(line): tmp[attr] = line[c]
+  #       c += 1
+  #     users[user] = tmp.copy()
+
+  # return users
+
+def format_users(users):
+  global args
+  if args['output'] == "text":
+    usermaxlen = max( [ len(x) for x in users.keys() ] + [8] )
+
+    for label, key in [('Last Minute','1m'),('Last 5 Minutes','5m'),('Last 15 Minutes','15m'),('Last Hour','1h'),('Last 4 Hours','4h'),('Last 8 Hours','8h'),('Last Day','1d'),('Last 3 Days','3d')]:
+      tmp = sorted([ (u, d[key]) for u, d in users.iteritems() if d.get(key, 0) > 0 ], reverse=True)
+      if tmp:       
+        print str(label).center(usermaxlen + 9)
+        print "Username".ljust(usermaxlen), "  ", "Count"
+        print "-" * (usermaxlen + 9)
+        for user, data in sorted(tmp, key=lambda x: x[0]):
+          print str(user).ljust(usermaxlen), "  ", str(data).rjust(5)
+        print
+        
     for user in sorted(users.keys()):
-      f.write(user)
-      for attr in sorted(attrsTime, key=attrsTime.get) + sorted([ a.lower() for a in attrsLDAP.keys()]):
-        f.write( "," + str(users[user].get(attr,"")) )
-      f.write("\n")
-    f.close()
+      if users[user].get('samaccountname','') and users[user].get('cn',''):
+        print "User information for " + users[user].get('samaccountname','').lower() + " (" + users[user].get('cn','') +"):\n" + ("-" * 30)
+        for key in sorted([ k.strip() for k in attrs.split(",") ]):
+          if key not in ['cn','samAccountName']:
+            print str(key).rjust(18) + ": " +  users[user].get(str(key).lower(),"")
+        print
+
   else:
-    f = open(cachefile, 'r')
-    out = f.read().split('\n')
-    f.close()
 
-    users = {}
-    for line in out:
-      line = line.split(",")
-      user = str(line[0]).lower()
+    xml = ElementTree.Element('zarafaadmin')
+    xmlLog = ElementTree.SubElement(xml, 'log', log='Login Errors', filters='')
+    for user in sorted(users.keys()):
+      for key in ['1m','5m','15m','1h','4h','8h','1d','3d']:
+        tmp = brandt.strXML(users[user].pop(key))
+        users[user].update({key:tmp})
+      ElementTree.SubElement(xmlLog, "user", **users[user])
 
-      tmp={"user":line[0]}
-      c=1
-      attrs = sorted(attrsTime, key=attrsTime.get) + sorted([ a.lower() for a in attrsLDAP.keys()])
-      for attr in attrs:
-        if c < len(line): tmp[attr] = line[c]
-        c += 1
-      users[user] = tmp.copy()
-
-  for user in sorted(users.keys()): print users[user]
-
-  sys.exit(0)
-
-  return users
-
-
+    print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
 
 # Start program
 if __name__ == "__main__":
   # try:
+    output = ""
+    error = ""
+    xmldata = ElementTree.Element('error', code="-1", msg="Unknown Error", cmd=brandt.strXML(" ".join(sys.argv)))
+    exitcode = 0
+
     command_line_args()
+    
     users = get_data()
+
+    output, error, xmldata = format_users(users)
 
   # except SystemExit as err:
   #   pass
@@ -226,35 +266,3 @@ if __name__ == "__main__":
   #                                            cmd=brandt.strXML(" ".join(sys.argv)))
 
   # finally:
-  #   if args['output'] != "xml":
-  #     usermaxlen = max( [ len(x) for x in users.keys() ] + [8] )
-
-  #     for label, key in [('Last Minute','1m'),('Last 5 Minutes','5m'),('Last 15 Minutes','15m'),('Last Hour','1h'),('Last 4 Hours','4h'),('Last 8 Hours','8h'),('Last Day','1d'),('Last 3 Days','3d')]:
-  #       tmp = sorted([ (u, d[key]) for u, d in users.iteritems() if d.get(key, 0) > 0 ], reverse=True)
-  #       if tmp:       
-  #         print str(label).center(usermaxlen + 9)
-  #         print "Username".ljust(usermaxlen), "  ", "Count"
-  #         print "-" * (usermaxlen + 9)
-  #         for user, data in sorted(tmp, key=lambda x: x[0]):
-  #           print str(user).ljust(usermaxlen), "  ", str(data).rjust(5)
-  #         print
-          
-  #     for user in sorted(users.keys()):
-  #       if users[user].get('samaccountname','') and users[user].get('cn',''):
-  #         print "User information for " + users[user].get('samaccountname','').lower() + " (" + users[user].get('cn','') +"):\n" + ("-" * 30)
-  #         for key in sorted([ k.strip() for k in attrs.split(",") ]):
-  #           if key not in ['cn','samAccountName']:
-  #             print str(key).rjust(18) + ": " +  users[user].get(str(key).lower(),"")
-  #         print
-
-  #   else:
-
-  #     xml = ElementTree.Element('zarafaadmin')
-  #     xmlLog = ElementTree.SubElement(xml, 'log', log='Login Errors', filters='')
-  #     for user in sorted(users.keys()):
-  #       for key in ['1m','5m','15m','1h','4h','8h','1d','3d']:
-  #         tmp = brandt.strXML(users[user].pop(key))
-  #         users[user].update({key:tmp})
-  #       ElementTree.SubElement(xmlLog, "user", **users[user])
-
-  #     print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
