@@ -133,15 +133,11 @@ def get_data():
   for user in users.keys():
     if len(users[user]) == 1: del users[user]
 
-  for user in users.keys(): print users[user]
-  sys.exit(0)
-
-
   for user in users.keys():
     try:
       ldapURI = "ldaps://opwdc2.i.opw.ie/ou=opw,dc=i,dc=opw,dc=ie?" + attrs + "?sub?sAMAccountName=" + user
       results = brandt.LDAPSearch(ldapURI).results
-      if str(results[0][1]['sAMAccountName'][0]).lower() == user.lower():
+      if str(results[0][1]['sAMAccountName'][0]).lower() == user == users[user].lower():
         for key in results[0][1]:
           value = results[0][1][key][0]
           key = key.lower()
@@ -156,6 +152,10 @@ def get_data():
           users[user][key] = brandt.strXML(value)
     except:
       pass
+
+
+  for user in users.keys(): print users[user]
+  sys.exit(0)
 
   return users
 
