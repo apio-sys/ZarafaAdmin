@@ -169,7 +169,7 @@ def get_data():
     #   except:
     #     pass
 
-    for user in sorted(users.key()): print user, users[user]
+    for user in sorted(users.keys()): print user, users[user]
     sys.exit(0)
 
   #   f = open(cachefile, 'w')
