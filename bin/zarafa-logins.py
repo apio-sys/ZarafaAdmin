@@ -130,7 +130,7 @@ def get_data():
     except:
       pass
 
-  for user in users: print user
+  for user in users.keys(): print users[user]
   sys.exit(0)
 
 
