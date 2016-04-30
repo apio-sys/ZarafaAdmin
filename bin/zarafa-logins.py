@@ -183,7 +183,7 @@ def get_data():
       c=1
       attrs = sorted(attrsTime, key=attrsTime.get) + sorted([ a.lower() for a in attrsLDAP.keys()])
       for attr in attrs:
-        if c <= len(attrs): tmp[attr] = line[c]
+        if c < len(line): tmp[attr] = line[c]
         c += 1
       users[user] = tmp.copy()
 
