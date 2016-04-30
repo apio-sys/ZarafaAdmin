@@ -130,6 +130,10 @@ def get_data():
     except:
       pass
 
+  for user in users.keys():
+    print user, len(users[user])
+
+
   for user in users.keys(): print users[user]
   sys.exit(0)
 
