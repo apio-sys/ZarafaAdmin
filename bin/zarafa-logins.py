@@ -139,15 +139,15 @@ def get_data():
       except:
         pass
 
-    # for user in users.keys():
-    #   if len(users[user]) == 1: 
-    #     del users[user]
-    #   else:
-    #     for attr in attrsTime.keys():
-    #       if not users[user].has_key(attr): 
-    #         users[user].update({attr:"0"})
-    #       else:
-    #         users[user][attr] = str(users[user][attr])
+    for user in users.keys():
+      if len(users[user]) == 1: 
+        del users[user]
+      else:
+        for attr in attrsTime.keys():
+          if not users[user].has_key(attr): 
+            users[user].update({attr:"0"})
+          else:
+            users[user][attr] = str(users[user][attr])
 
     # for user in users.keys():
     #   try:
