@@ -13,13 +13,36 @@ import brandt
 sys.path.pop()
 
 args = {}
+args['cache'] = 15
 args['output'] = "text"
+args['delimiter'] = ""
 
 version = 0.3
 encoding = 'utf-8'
 
 months = ('','jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec')
-attrs = "cn,samAccountName,mail,badPwdCount,badPasswordTime,lastLogon,logonHours,pwdLastSet,accountExpires,logonCount,lastLogonTimestamp"
+
+attrsTime = { 'm1':  1,
+              'm5':  5,
+              'm15': 15,
+              'h1':  1 * 60,
+              'h4':  4 * 60,
+              'h8':  8 * 60,
+              'd1':  1 * 60 * 24,
+              'd3':  3 * 60 * 24 }
+
+attrsLDAP = { 'cn':'Windows Name',
+              'samAccountName':'Username',
+              'mail':'Email Address',
+              'badPwdCount':'Bad Password Count',
+              'badPasswordTime':'Bad Password Time',
+              'lastLogon':'Last Logon',
+              'lastlogoff':'Last Logoff',
+              'logonHours':'Logon Hours',
+              'pwdLastSet':'Password Last Set',
+              'accountExpires':'Account Expires',
+              'logonCount':'Logon Count',
+              'lastLogonTimestamp':'Last Login Time' }
 
 class customUsageVersion(argparse.Action):
   def __init__(self, option_strings, dest, **kwargs):
@@ -29,7 +52,6 @@ class customUsageVersion(argparse.Action):
     self.__exit = int(kwargs.get('exit', 0))
     super(customUsageVersion, self).__init__(option_strings, dest, nargs=0)
   def __call__(self, parser, namespace, values, option_string=None):
-    # print('%r %r %r' % (namespace, values, option_string))
     if self.__version:
       print self.__prog + " " + self.__version
       print "Copyright (C) 2013 Free Software Foundation, Inc."
@@ -52,7 +74,9 @@ class customUsageVersion(argparse.Action):
       options = []
       options.append(("-h, --help",              "Show this help message and exit"))
       options.append(("-v, --version",           "Show program's version number and exit"))
-      options.append(("-o, --output OUTPUT",     "Type of output {text | xml}"))
+      options.append(("-o, --output OUTPUT",     "Type of output {text | csv| xml}"))
+      options.append(("-c, --cache MINUTES",     "Cache time. (in minutes)"))
+      options.append(("-d, --delimiter DELIM",   "Character to use instead of TAB for field delimiter"))      
       length = max( [ len(option[0]) for option in options ] )
       for option in options:
         description = textwrap.wrap(option[1], (self.__row - length - 5))
@@ -64,15 +88,27 @@ def command_line_args():
   parser = argparse.ArgumentParser(add_help=False)
   parser.add_argument('-v', '--version', action=customUsageVersion, version=version, max=80)
   parser.add_argument('-h', '--help', action=customUsageVersion)
+  parser.add_argument('-c', '--cache',
+                      required=False,
+                      default=args['cache'],
+                      type=int,
+                      help="Cache time. (in minutes)")
+  parser.add_argument('-d', '--delimiter',
+                      required=False,
+                      default=args['delimiter'],
+                      type=str,
+                      help="Character to use instead of TAB for field delimiter")  
   parser.add_argument('-o', '--output',
                       required=False,
                       default=args['output'],
-                      choices=['text', 'xml'],
+                      choices=['text', 'csv', 'xml'],
                       help="Display output type.")
   args.update(vars(parser.parse_args()))
+  if args['delimiter']: args['delimiter'] = args['delimiter'][0]
+  if not args['delimiter'] and args['output'] == "csv": args['delimiter'] = ","  
 
 def get_data():
-  global args, attrs
+  global args, attrsTime, attrsLDAP
 
   command = 'grep "Authentication by plugin failed for user" "/var/log/zarafa/server.log"'
   p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -84,21 +120,20 @@ def get_data():
     try:
       tmp = line.replace("  "," ").replace(" ",":").split(":")
       if tmp and len(tmp) > 5:
+        now =  datetime.datetime.now()        
         tmpTime = datetime.datetime( int(tmp[6]), months.index(tmp[1].lower()), int(tmp[2]), int(tmp[3]), int(tmp[4]), int(tmp[5]) )
         tmpUser = tmp[-1].lower()
 
-        if not users.has_key(tmpUser): users[tmpUser] = {'user':tmpUser, '1m':0, '5m':0, '15m':0, '1h':0, '4h':0, '8h':0, '1d':0, '3d':0}
-        now =  datetime.datetime.now()
-        if tmpTime > now - datetime.timedelta(minutes = 1): users[tmpUser]['1m'] += 1
-        if tmpTime > now - datetime.timedelta(minutes = 5): users[tmpUser]['5m'] += 1
-        if tmpTime > now - datetime.timedelta(minutes = 15): users[tmpUser]['15m'] += 1
-        if tmpTime > now - datetime.timedelta(hours = 1): users[tmpUser]['1h'] += 1
-        if tmpTime > now - datetime.timedelta(hours = 4): users[tmpUser]['4h'] += 1
-        if tmpTime > now - datetime.timedelta(hours = 8): users[tmpUser]['8h'] += 1
-        if tmpTime > now - datetime.timedelta(days = 1): users[tmpUser]['1d'] += 1
-        if tmpTime > now - datetime.timedelta(days = 3): users[tmpUser]['3d'] += 1
+        if not users.has_key(tmpUser): users[tmpUser] = {'user':tmp[-1]}
+        for attr in attrsTime.keys():
+          if tmpTime > now - datetime.timedelta(minutes = attrsTime[attr]): users[tmpUser].update( {attr: users[tmpUser].get(attr,0) + 1})
+
     except:
       pass
+
+  print users
+  sys.exit(0)
+
 
   for user in users.keys():
     try:
