@@ -160,8 +160,8 @@ def get_data():
 
 # Start program
 if __name__ == "__main__":
-  command_line_args()
   # try:
+    command_line_args()
     users = get_data()
 
   # except SystemExit as err:
