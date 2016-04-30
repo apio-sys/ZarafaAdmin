@@ -165,14 +165,27 @@ def get_data():
     f = open(cachefile, 'w')
     for user in sorted(users.keys()):
       f.write(user)
-      for attr in sorted(attrsTime, key=attrsTime.get) + sorted(attrsLDAP.keys(), key=lambda x: x.lower()):
-        f.write( "," + str(users[user].get(attr.lower(),"")) )
+      for attr in sorted(attrsTime, key=attrsTime.get) + sorted([ a.lower() for a in attrsLDAP.keys()]):
+        f.write( "," + str(users[user].get(attr,"")) )
       f.write("\n")
     f.close()
-  # else:
-  #   f = open(cachefile, 'r')
-  #   out = f.read().split('\n')
-  #   f.close()
+  else:
+    f = open(cachefile, 'r')
+    out = f.read().split('\n')
+    f.close()
+
+    users = {}
+    for line in out:
+      line = line.split(",")
+      user = str(line[0]).lower()
+
+      tmp={"user":line[0]}
+      c=1
+      attrs = sorted(attrsTime, key=attrsTime.get) + sorted([ a.lower() for a in attrsLDAP.keys()])
+      for attr in attrs:
+        if c <= len(attrs): tmp[attr] = line[c]
+        c += 1
+      users[user] = tmp.copy()
 
   for user in users.keys(): print users[user]
 
