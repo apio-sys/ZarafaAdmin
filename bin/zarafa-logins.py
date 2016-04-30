@@ -175,7 +175,7 @@ def get_data():
   for user in users.keys(): print users[user]
 
   print sorted(attrsTime, key=attrsTime.get)
-  print sorted(attrsLDAP.keys())
+  print sorted(attrsLDAP.keys(), key=lambda x: x.lower())
 
 
   sys.exit(0)
