@@ -187,11 +187,7 @@ def get_data():
         c += 1
       users[user] = tmp.copy()
 
-  for user in users.keys(): print users[user]
-
-  print 
-  print 
-
+  for user in sorted(users.keys()): print users[user]
 
   sys.exit(0)
 
