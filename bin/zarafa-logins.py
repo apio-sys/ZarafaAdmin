@@ -205,6 +205,11 @@ def get_data():
 
 def format_users(users):
   global args
+  output = ""
+  error = ""
+  xmldata = ""
+  exitcode = 1
+
   if args['output'] == "text":
     usermaxlen = max( [ len(x) for x in users.keys() ] + [8] )
 
@@ -227,6 +232,7 @@ def format_users(users):
             print str(key).rjust(18) + ": " + str(label)
         print
 
+    exitcode = 0
   else:
 
     xml = ElementTree.Element('zarafaadmin')
@@ -239,6 +245,13 @@ def format_users(users):
 
     print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
 
+    exitcode = 0
+
+  return output, error, xmldata, exitcode
+
+
+
+
 # Start program
 if __name__ == "__main__":
   # try:
@@ -250,7 +263,7 @@ if __name__ == "__main__":
     command_line_args()
     
     users = get_data()
-    output, error, xmldata = format_users(users)
+    output, error, xmldata, exitcode = format_users(users)
 
   # except SystemExit as err:
   #   pass
