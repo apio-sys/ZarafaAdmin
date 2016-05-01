@@ -213,17 +213,6 @@ td.hover:hover { background: #BBB }
 }
 
 
-/* Login Errors */
-#entry tr { background: #FFF; }
-
-#zarafa-login-errors th { padding: 0px 10px 0px 10px; white-space: nowrap; }
-#zarafa-login-errors td { padding: 0px 10px 0px 10px; white-space: nowrap; }
-#zarafa-login-errors tr.hover:hover { background: #BBB }
-
-.hide { display: none; }
-.show { display: table-row; }
-
-
 /* Users */
 #zarafa-users
 {
@@ -257,4 +246,22 @@ td.hover:hover { background: #BBB }
 	min-width: 600px;	
 	border-collapse: collapse;	
 }
+
+/* Login Errors */
+#zarafa-login-errors
+{
+	min-width: 500px;	
+	border-collapse: collapse;	
+}
+/*#entry tr { background: #FFF; }
+*/
+#zarafa-login-errors th { padding: 0px 10px 0px 10px; white-space: nowrap; }
+#zarafa-login-errors td { padding: 0px 10px 0px 10px; white-space: nowrap; }
+#zarafa-login-errors tr.hover:hover { background: #BBB }
+
+#zarafa-login-errors.hide { display: none; }
+#zarafa-login-errors.show { display: table-row; }
+
+
+
 
