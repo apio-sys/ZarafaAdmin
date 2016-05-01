@@ -16,15 +16,13 @@ args = {}
 args['cache'] = 15
 args['output'] = "text"
 args['delimiter'] = ""
+args['scheme'] = 'ldaps'
+args['server'] = 'opwdc2.i.opw.ie'
+args['base']   = 'ou=opw,dc=i,dc=opw,dc=ie'
+args['scope']  = 'sub'
 
 version = 0.3
 encoding = 'utf-8'
-
-ldapValues = {}
-ldapValues['scheme'] = 'ldaps'
-ldapValues['server'] = 'opwdc2.i.opw.ie'
-ldapValues['base']   = 'ou=opw,dc=i,dc=opw,dc=ie'
-ldapValues['scope']  = 'sub'
 
 months = ('','jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec')
 
@@ -49,10 +47,6 @@ attrsLDAP = { 'cn':                 {'sort':0,  'label':'Windows Name'},
               'accountExpires':     {'sort':9,  'label':'Account Expires'},
               'logonCount':         {'sort':10, 'label':'Logon Count'},
               'lastLogonTimestamp': {'sort':11, 'label':'Last Login Time'} }
-
-
-#sorted(a, key = lambda x: a[x]['sort'])
-
 
 class customUsageVersion(argparse.Action):
   def __init__(self, option_strings, dest, **kwargs):
@@ -118,17 +112,17 @@ def command_line_args():
   if not args['delimiter'] and args['output'] == "csv": args['delimiter'] = ","  
 
 def get_data():
-  # global args, ldap, attrsTime, attrsLDAP
-  # cachefile = '/tmp/zarafa-logins.cache'    
+  global args, attrsTime, attrsLDAP
+  cachefile = '/tmp/zarafa-logins.cache'
 
-  # args['cache'] *= 60
-  # age = args['cache'] + 1
-  # try:
-  #   age = (datetime.datetime.now() - datetime.datetime.fromtimestamp(os.stat(cachefile).st_mtime)).seconds
-  # except:
-  #   pass
+  args['cache'] *= 60
+  age = args['cache'] + 1
+  try:
+    age = (datetime.datetime.now() - datetime.datetime.fromtimestamp(os.stat(cachefile).st_mtime)).seconds
+  except:
+    pass
 
-  # if age > args['cache']:
+  if age > args['cache']:
     command = 'grep "Authentication by plugin failed for user" "/var/log/zarafa/server.log"'
     p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = p.communicate()
@@ -159,8 +153,8 @@ def get_data():
     # Retrieve LDAP values for remaining users
     for user in users.keys():
       try:
-        ldapURI  = ldapValues['scheme'] + "://" + ldapValues['server'] + "/" 
-        ldapURI += ldapValues['base'] + "?" + ",".join(attrsLDAP.keys()) + "?" + ldapValues['scope'] + "?sAMAccountName=" + user
+        ldapURI  = args['scheme'] + "://" + args['server'] + "/" 
+        ldapURI += args['base'] + "?" + ",".join(attrsLDAP.keys()) + "?" + args['scope'] + "?sAMAccountName=" + user
         results = brandt.LDAPSearch(ldapURI).results
         if str(results[0][1]['sAMAccountName'][0]).lower() == user:
           for key in results[0][1]:
@@ -181,35 +175,33 @@ def get_data():
       except:
         pass
 
-    for user in sorted(users.keys()): print user, users[user]
-    sys.exit(0)
+    attrs = sorted(attrsTime, key = lambda x: attrsTime[x]['min']) + [ a.lower() for a in sorted(attrsLDAP, key = lambda x: attrsLDAP[x]['sort']) ]
+    f = open(cachefile, 'w')
+    for user in sorted(users.keys()):
+      f.write(user)
+      for attr in attrs:
+        f.write( "," + str(users[user].get(attr,"")) )
+      f.write("\n")
+    f.close()
+  else:
+    f = open(cachefile, 'r')
+    out = f.read().split('\n')
+    f.close()
 
-  #   f = open(cachefile, 'w')
-  #   for user in sorted(users.keys()):
-  #     f.write(user)
-  #     for attr in sorted(attrsTime, key=attrsTime.get) + sorted([ a.lower() for a in attrsLDAP.keys()]):
-  #       f.write( "," + str(users[user].get(attr,"")) )
-  #     f.write("\n")
-  #   f.close()
-  # else:
-  #   f = open(cachefile, 'r')
-  #   out = f.read().split('\n')
-  #   f.close()
+    users = {}
+    for line in out:
+      c=0
+      line = line.split(",")
+      user = str(line[c]).lower()
+      tmp={"user":line[c]}
+      attrs = sorted(attrsTime, key = lambda x: attrsTime[x]['min']) + [ a.lower() for a in sorted(attrsLDAP, key = lambda x: attrsLDAP[x]['sort']) ]
+      for attr in attrs:
+        c += 1
+        tmp[attr] = str(line[c])
+        # if c < len(line): tmp[attr] = line[c]
+      users[user] = tmp.copy()
 
-  #   users = {}
-  #   for line in out:
-  #     line = line.split(",")
-  #     user = str(line[0]).lower()
-
-  #     tmp={"user":line[0]}
-  #     c=1
-  #     attrs = sorted(attrsTime, key=attrsTime.get) + sorted([ a.lower() for a in attrsLDAP.keys()])
-  #     for attr in attrs:
-  #       if c < len(line): tmp[attr] = line[c]
-  #       c += 1
-  #     users[user] = tmp.copy()
-
-  # return users
+  return users
 
 def format_users(users):
   global args
@@ -257,6 +249,12 @@ if __name__ == "__main__":
     command_line_args()
     
     users = get_data()
+
+
+    for user in sorted(users.keys()): print user, users[user]
+    sys.exit(0)
+
+
 
     # output, error, xmldata = format_users(users)
 
