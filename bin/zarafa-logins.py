@@ -216,7 +216,7 @@ def format_users(users):
     for key, label in [ (k, attrsTime[k]['label']) for k in sorted(attrsTime.keys(),key = lambda x: int(attrsTime[x]['min'])) ]:
       tmp = sorted([ u for u in users.keys() if users[u].get(key, 0) > 0 ], key = lambda u: int(users[u][key]), reverse = True)
       if tmp:
-        print str(label).center(usermaxlen + 9)
+        print str(label).center(usermaxlen + 18)
         print "Username".ljust(usermaxlen), "  ", "Count"
         print "-" * (usermaxlen + 9)
         for u in tmp:
@@ -225,14 +225,28 @@ def format_users(users):
         
     for user in sorted(users.keys()):
       if users[user].get('samaccountname','') and users[user].get('cn',''):
-        print "User information for " + users[user]['samaccountname'].lower() + " (" + users[user]['cn'] +"):\n" + ("-" * (usermaxlen + 9))
+        print "User information for " + users[user]['samaccountname'].lower() + " (" + users[user]['cn'] +"):\n" + ("-" * (usermaxlen + 18)
 
         for key, label in [ (str(k).lower(), attrsLDAP[k]['label']) for k in sorted(attrsLDAP.keys(),key = lambda x: attrsLDAP[x]['sort']) ]:
           if key not in ['cn','samaccountname']:
             print str(label).rjust(18) + ": " + str(users[user].get(key,""))
         print
-
     exitcode = 0
+
+  elif args['output'] == "csv":
+    output  = ",".join([ attrsTime[k]['label'] for k in sorted(attrsTime.keys(), key = lambda x: attrsTime[x]['min']) ])
+    output += ","
+    output  = ",".join([ attrsLDAP[k]['label'] for k in sorted(attrsLDAP.keys(), key = lambda x: attrsLDAP[x]['sort']) ])
+    print output
+
+    attrs = sorted(attrsTime, key = lambda x: attrsTime[x]['min']) + [ a.lower() for a in sorted(attrsLDAP, key = lambda x: attrsLDAP[x]['sort']) ]
+    for user in sorted(users.keys()):
+      output = user + ","
+      for attr in attrs:
+        output += "," + str(users[user].get(attr,""))
+      print output
+    exitcode = 0
+
   else:
 
     xml = ElementTree.Element('zarafaadmin')
