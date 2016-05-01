@@ -217,8 +217,8 @@ def format_users(users):
       tmp = sorted([ u for u in users.keys() if users[u].get(key, 0) > 0 ], key = lambda u: int(users[u][key]), reverse = True)
       if tmp:
         output = str(label).center(usermaxlen + 18) + "\n"
-        output += "Username".ljust(usermaxlen) + "  Count" + "\n"
-        output += "-" * (usermaxlen + 9) + "\n"
+        output += "Username".ljust(usermaxlen + 18) + "  Count" + "\n"
+        output += "-" * (usermaxlen + 18) + "\n"
         for u in tmp:
           output += str(u).ljust(usermaxlen) + "  " + str(users[u][key]).rjust(5) + "\n"
         output += "\n"
@@ -250,6 +250,7 @@ def format_users(users):
 
     xmlLog = ElementTree.SubElement(xml, 'log', log='Login Errors', filters='')
     for user in sorted(users.keys()):
+      print users[user]
       for key in ['1m','5m','15m','1h','4h','8h','1d','3d']:
         tmp = brandt.strXML(users[user].pop(key))
         users[user].update({key:tmp})
