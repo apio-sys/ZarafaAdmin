@@ -34,36 +34,36 @@
         <th><a href="./zarafa-logins.php?sort=h8">8 Hour</a></th>
         <th><a href="./zarafa-logins.php?sort=d1">1 Day</a></th>
         <th><a href="./zarafa-logins.php?sort=d3">3 Day</a></th></tr>
-<!-- 
-<xsl:choose>
-<xsl:when test="$sort = 'm1'">
-    <xsl:apply-templates select="user"><xsl:sort select="@m1" order="descending" data-type="number"/></xsl:apply-templates>
-</xsl:when>
-<xsl:when test="$sort = 'm5'">
-    <xsl:apply-templates select="user"><xsl:sort select="@m5" order="descending" data-type="number"/></xsl:apply-templates>
-</xsl:when>
-<xsl:when test="$sort = 'm15'">
-    <xsl:apply-templates select="user"><xsl:sort select="@m15" order="descending" data-type="number"/></xsl:apply-templates>
-</xsl:when>
-<xsl:when test="$sort = 'h1'">
-    <xsl:apply-templates select="user"><xsl:sort select="@h1" order="descending" data-type="number"/></xsl:apply-templates>
-</xsl:when>
-<xsl:when test="$sort = 'h4'">
-    <xsl:apply-templates select="user"><xsl:sort select="@h4" order="descending" data-type="number"/></xsl:apply-templates>
-</xsl:when>
-<xsl:when test="$sort = 'h8'">
-    <xsl:apply-templates select="user"><xsl:sort select="@h8" order="descending" data-type="number"/></xsl:apply-templates>
-</xsl:when>
-<xsl:when test="$sort = 'd1'">
-    <xsl:apply-templates select="user"><xsl:sort select="@d1" order="descending" data-type="number"/></xsl:apply-templates>
-</xsl:when>
-<xsl:when test="$sort = 'd3'">
-    <xsl:apply-templates select="user"><xsl:sort select="@d3" order="descending" data-type="number"/></xsl:apply-templates>
-</xsl:when>
-<xsl:otherwise>
-    <xsl:apply-templates select="user"><xsl:sort select="translate(@user, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" /></xsl:apply-templates>
-</xsl:otherwise>
-</xsl:choose> -->
+ 
+        <xsl:choose>
+        <xsl:when test="$sort = 'm1'">
+            <xsl:apply-templates select="user"><xsl:sort select="@m1" order="descending" data-type="number"/></xsl:apply-templates>
+        </xsl:when>
+        <xsl:when test="$sort = 'm5'">
+            <xsl:apply-templates select="user"><xsl:sort select="@m5" order="descending" data-type="number"/></xsl:apply-templates>
+        </xsl:when>
+        <xsl:when test="$sort = 'm15'">
+            <xsl:apply-templates select="user"><xsl:sort select="@m15" order="descending" data-type="number"/></xsl:apply-templates>
+        </xsl:when>
+        <xsl:when test="$sort = 'h1'">
+            <xsl:apply-templates select="user"><xsl:sort select="@h1" order="descending" data-type="number"/></xsl:apply-templates>
+        </xsl:when>
+        <xsl:when test="$sort = 'h4'">
+            <xsl:apply-templates select="user"><xsl:sort select="@h4" order="descending" data-type="number"/></xsl:apply-templates>
+        </xsl:when>
+        <xsl:when test="$sort = 'h8'">
+            <xsl:apply-templates select="user"><xsl:sort select="@h8" order="descending" data-type="number"/></xsl:apply-templates>
+        </xsl:when>
+        <xsl:when test="$sort = 'd1'">
+            <xsl:apply-templates select="user"><xsl:sort select="@d1" order="descending" data-type="number"/></xsl:apply-templates>
+        </xsl:when>
+        <xsl:when test="$sort = 'd3'">
+            <xsl:apply-templates select="user"><xsl:sort select="@d3" order="descending" data-type="number"/></xsl:apply-templates>
+        </xsl:when>
+        <xsl:otherwise>
+            <xsl:apply-templates select="user"><xsl:sort select="translate(@user, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" /></xsl:apply-templates>
+        </xsl:otherwise>
+        </xsl:choose>
     </table>
   </pre>
 </xsl:template>
