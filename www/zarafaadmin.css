@@ -259,8 +259,8 @@ td.hover:hover { background: #BBB }
 #zarafa-login-errors td { padding: 0px 10px 0px 10px; white-space: nowrap; }
 #zarafa-login-errors tr.hover:hover { background: #BBB }
 
-#zarafa-login-errors.hide { display: none; }
-#zarafa-login-errors.show { display: table-row; }
+#zarafa-login-errors tr.hide { display: none; }
+#zarafa-login-errors tr.show { display: table-row; }
 
 
 
