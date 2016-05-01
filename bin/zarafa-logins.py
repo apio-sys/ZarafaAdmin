@@ -158,7 +158,7 @@ def get_data():
 
     # Retrieve LDAP values for remaining users
     for user in users.keys():
-      try:
+      # try:
         ldapURI  = ldap['scheme'] + "://" + ldap['server'] + "/" 
         ldapURI += ldap['base'] + "?" + ",".join(attrsLDAP.keys()) + "?" + ldap['base'] + "?sAMAccountName=" + user
         results = brandt.LDAPSearch(ldapURI).results
@@ -175,8 +175,8 @@ def get_data():
                 tmp += str(hex(ord(char))[2:]).upper()
               value = tmp
             users[user][key] = brandt.strXML(value)
-      except:
-        pass
+      # except:
+      #   pass
 
     for user in sorted(users.keys()): print user, users[user]
     sys.exit(0)
@@ -255,7 +255,7 @@ if __name__ == "__main__":
     
     users = get_data()
 
-    output, error, xmldata = format_users(users)
+    # output, error, xmldata = format_users(users)
 
   # except SystemExit as err:
   #   pass
