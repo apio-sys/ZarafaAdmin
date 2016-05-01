@@ -294,4 +294,5 @@ if __name__ == "__main__":
       if exitcode or error: sys.stderr.write(error + "\n")
     else:
       xml = ElementTree.Element('zarafaadmin')
+      if xmldata: xml.append(xmldata)
       print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
