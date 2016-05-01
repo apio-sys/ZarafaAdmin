@@ -225,7 +225,7 @@ def format_users(users):
         
     for user in sorted(users.keys()):
       if users[user].get('samaccountname','') and users[user].get('cn',''):
-        output = "User information for " + users[user]['samaccountname'].lower() + " (" + users[user]['cn'] +"):\n" + ("-" * (usermaxlen + 18)) + "\n"
+        output += "User information for " + users[user]['samaccountname'].lower() + " (" + users[user]['cn'] +"):\n" + ("-" * (usermaxlen + 18)) + "\n"
         for key, label in [ (str(k).lower(), attrsLDAP[k]['label']) for k in sorted(attrsLDAP.keys(),key = lambda x: attrsLDAP[x]['sort']) ]:
           if key not in ['cn','samaccountname']:
             output += str(label).rjust(18) + ": " + str(users[user].get(key,"")) + "\n"
@@ -242,7 +242,7 @@ def format_users(users):
     for user in sorted(users.keys()):
       output += user + args['delimiter']
       for attr in attrs:
-        output += args['delimiter'] + str(users[user].get(attr,"")) + "\n"
+        output += args['delimiter'] + str(users[user].get(attr,""))
       output += "\n"
     exitcode = 0
 
