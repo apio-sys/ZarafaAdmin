@@ -185,7 +185,7 @@ def get_data():
     f.close()
   else:
     f = open(cachefile, 'r')
-    out = f.read().split('\n')
+    out = f.read().strip().split('\n')
     f.close()
 
     users = {}
