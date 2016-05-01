@@ -229,7 +229,7 @@ def format_users(users):
 
         for key, label in [ (k, attrsLDAP[k]['label']) for k in sorted(attrsLDAP.keys(),key = lambda x: attrsLDAP[x]['sort']) ]:
           if key not in ['cn','samAccountName']:
-            print str(key).rjust(18) + ": " + str(label)
+            print str(label).rjust(18) + ": " + str(users[user].get(key,""))
         print
 
     exitcode = 0
