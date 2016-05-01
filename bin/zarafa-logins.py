@@ -255,40 +255,35 @@ def format_users(users):
 
   return output, error, xmldata, exitcode
 
-
-
-
 # Start program
 if __name__ == "__main__":
-  # try:
+  try:
     output = ""
     error = ""
     xmldata = ElementTree.Element('error', code="-1", msg="Unknown Error", cmd=brandt.strXML(" ".join(sys.argv)))
     exitcode = 0
 
     command_line_args()
-    
-    users = get_data()
-    output, error, xmldata, exitcode = format_users(users)
+    output, error, xmldata, exitcode = format_users(get_data())
 
-  # except SystemExit as err:
-  #   pass
-  # except Exception as err:
-  #   try:
-  #     exitcode = int(err[0])
-  #     errmsg = str(" ".join(err[1:]))
-  #   except:
-  #     exitcode = -1
-  #     errmsg = str(err)
+  except SystemExit as err:
+    pass
+  except Exception as err:
+    try:
+      exitcode = int(err[0])
+      errmsg = str(" ".join(err[1:]))
+    except:
+      exitcode = -1
+      errmsg = str(err)
 
-  #   if args['output'] != 'xml': 
-  #     error = "(" + str(exitcode) + ") " + str(errmsg) + "\nCommand: " + " ".join(sys.argv)
-  #   else:
-  #     xmldata = ElementTree.Element('error', code=brandt.strXML(exitcode), 
-  #                                            msg=brandt.strXML(errmsg), 
-  #                                            cmd=brandt.strXML(" ".join(sys.argv)))
+    if args['output'] != 'xml': 
+      error = "(" + str(exitcode) + ") " + str(errmsg) + "\nCommand: " + " ".join(sys.argv)
+    else:
+      xmldata = ElementTree.Element('error', code=brandt.strXML(exitcode), 
+                                             msg=brandt.strXML(errmsg), 
+                                             cmd=brandt.strXML(" ".join(sys.argv)))
 
-  # finally:
+  finally:
     if args['output'] != 'xml': 
       print output
       if exitcode or error: sys.stderr.write(error + "\n")
