@@ -158,7 +158,7 @@ def get_data():
 
     # Retrieve LDAP values for remaining users
     for user in users.keys():
-      # try:
+      try:
         ldapURI  = ldapValues['scheme'] + "://" + ldapValues['server'] + "/" 
         ldapURI += ldapValues['base'] + "?" + ",".join(attrsLDAP.keys()) + "?" + ldapValues['scope'] + "?sAMAccountName=" + user
         results = brandt.LDAPSearch(ldapURI).results
@@ -178,8 +178,8 @@ def get_data():
               users[user][key] = brandt.strXML(value)
             except:
               pass
-      # except:
-      #   pass
+      except:
+        pass
 
     for user in sorted(users.keys()): print user, users[user]
     sys.exit(0)
