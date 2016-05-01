@@ -214,7 +214,7 @@ def format_users(users):
     usermaxlen = max( [ len(x) for x in users.keys() ] + [8] )
 
     for key, label in [ (k, attrsTime[k]['label']) for k in sorted(attrsTime.keys(),key = lambda x: int(attrsTime[x]['min'])) ]:
-      tmp = sorted([ u for u in users.keys() if users[u].get(key, 0) > 0 ], key = lambda u: int(users[u][key]))
+      tmp = sorted([ u for u in users.keys() if users[u].get(key, 0) > 0 ], key = lambda u: int(users[u][key]), reverse = True)
       if tmp:
         print str(label).center(usermaxlen + 9)
         print "Username".ljust(usermaxlen), "  ", "Count"
