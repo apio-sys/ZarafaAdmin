@@ -213,7 +213,7 @@ def format_users(users):
   if args['output'] == "text":
     usermaxlen = max( [ len(x) for x in users.keys() ] + [8] )
 
-    for key, label in [ (k, attrsTime[k]['label']) for k in sorted(attrsTime.keys(),key = lambda x: attrsTime[x]['min']) ]:
+    for key, label in [ (k, attrsTime[k]['label']) for k in sorted(attrsTime.keys(),key = lambda x: int(attrsTime[x]['min'])) ]:
       tmp = sorted([ u for u in users.keys() if users[u].get(key, 0) > 0 ], key = lambda u: users[u][key])
       if tmp:
         print str(label).center(usermaxlen + 9)
@@ -227,8 +227,8 @@ def format_users(users):
       if users[user].get('samaccountname','') and users[user].get('cn',''):
         print "User information for " + users[user]['samaccountname'].lower() + " (" + users[user]['cn'] +"):\n" + ("-" * 30)
 
-        for key, label in [ (k, attrsLDAP[k]['label']) for k in sorted(attrsLDAP.keys(),key = lambda x: attrsLDAP[x]['sort']) ]:
-          if key not in ['cn','samAccountName']:
+        for key, label in [ (str(k).lower(), attrsLDAP[k]['label']) for k in sorted(attrsLDAP.keys(),key = lambda x: attrsLDAP[x]['sort']) ]:
+          if key not in ['cn','samaccountname']:
             print str(label).rjust(18) + ": " + str(users[user].get(key,""))
         print
 
