@@ -161,13 +161,13 @@ def get_data():
       # try:
         ldapURI  = ldapValues['scheme'] + "://" + ldapValues['server'] + "/" 
         ldapURI += ldapValues['base'] + "?" + ",".join(attrsLDAP.keys()) + "?" + ldapValues['scope'] + "?sAMAccountName=" + user
-        print ldapURI
         results = brandt.LDAPSearch(ldapURI).results
         if str(results[0][1]['sAMAccountName'][0]).lower() == user:
           for key in results[0][1]:
             value = results[0][1][key][0]
             key = key.lower()
             if key in ['badpasswordtime','lastlogoff','lastlogon','pwdlastset','lastlogontimestamp','accountexpires']:
+              print user, key, value
               value = str(datetime.datetime(1601,1,1) + datetime.timedelta(microseconds=( int(value)/10) ))[:19]
               if value == '1601-01-01 00:00:00': value = 'never'
             elif key == 'logonhours':
