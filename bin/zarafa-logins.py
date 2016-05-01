@@ -20,11 +20,11 @@ args['delimiter'] = ""
 version = 0.3
 encoding = 'utf-8'
 
-ldap = {}
-ldap['scheme'] = 'ldaps'
-ldap['server'] = 'opwdc2.i.opw.ie'
-ldap['base']   = 'ou=opw,dc=i,dc=opw,dc=ie'
-ldap['scope']  = 'sub'
+ldapValues = {}
+ldapValues['scheme'] = 'ldaps'
+ldapValues['server'] = 'opwdc2.i.opw.ie'
+ldapValues['base']   = 'ou=opw,dc=i,dc=opw,dc=ie'
+ldapValues['scope']  = 'sub'
 
 months = ('','jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec')
 
@@ -159,8 +159,8 @@ def get_data():
     # Retrieve LDAP values for remaining users
     for user in users.keys():
       # try:
-        ldapURI  = ldap['scheme'] + "://" + ldap['server'] + "/" 
-        ldapURI += ldap['base'] + "?" + ",".join(attrsLDAP.keys()) + "?" + ldap['base'] + "?sAMAccountName=" + user
+        ldapURI  = ldapValues['scheme'] + "://" + ldapValues['server'] + "/" 
+        ldapURI += ldapValues['base'] + "?" + ",".join(attrsLDAP.keys()) + "?" + ldapValues['base'] + "?sAMAccountName=" + user
         results = brandt.LDAPSearch(ldapURI).results
         if str(results[0][1]['sAMAccountName'][0]).lower() == user:
           for key in results[0][1]:
