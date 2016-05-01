@@ -221,7 +221,7 @@ def format_users(users):
         output += "-" * (usermaxlen + 9) + "\n"
         for u in tmp:
           output += str(u).ljust(usermaxlen) + "  " + str(users[u][key]).rjust(5) + "\n"
-        print output + "\n"
+        output += "\n"
         
     for user in sorted(users.keys()):
       if users[user].get('samaccountname','') and users[user].get('cn',''):
@@ -229,26 +229,25 @@ def format_users(users):
         for key, label in [ (str(k).lower(), attrsLDAP[k]['label']) for k in sorted(attrsLDAP.keys(),key = lambda x: attrsLDAP[x]['sort']) ]:
           if key not in ['cn','samaccountname']:
             output += str(label).rjust(18) + ": " + str(users[user].get(key,"")) + "\n"
-        print output + "\n"
+        output += "\n"
     exitcode = 0
 
   elif args['output'] == "csv":
     output  = args['delimiter'].join([ attrsTime[k]['label'] for k in sorted(attrsTime.keys(), key = lambda x: attrsTime[x]['min']) ])
     output += args['delimiter']
-    output  = args['delimiter'].join([ attrsLDAP[k]['label'] for k in sorted(attrsLDAP.keys(), key = lambda x: attrsLDAP[x]['sort']) ])
-    print output
+    output += args['delimiter'].join([ attrsLDAP[k]['label'] for k in sorted(attrsLDAP.keys(), key = lambda x: attrsLDAP[x]['sort']) ])
+    output += "\n"
 
     attrs = sorted(attrsTime, key = lambda x: attrsTime[x]['min']) + [ a.lower() for a in sorted(attrsLDAP, key = lambda x: attrsLDAP[x]['sort']) ]
     for user in sorted(users.keys()):
-      output = user + args['delimiter']
+      output += user + args['delimiter']
       for attr in attrs:
-        output += args['delimiter'] + str(users[user].get(attr,""))
-      print output
+        output += args['delimiter'] + str(users[user].get(attr,"")) + "\n"
+      output += "\n"
     exitcode = 0
 
   else:
 
-    xml = ElementTree.Element('zarafaadmin')
     xmlLog = ElementTree.SubElement(xml, 'log', log='Login Errors', filters='')
     for user in sorted(users.keys()):
       for key in ['1m','5m','15m','1h','4h','8h','1d','3d']:
@@ -296,3 +295,9 @@ if __name__ == "__main__":
   #                                            cmd=brandt.strXML(" ".join(sys.argv)))
 
   # finally:
+    if args['output'] != 'xml': 
+      print output
+      if exitcode or error: sys.stderr.write(error + "\n")
+    else:
+      xml = ElementTree.Element('zarafaadmin')
+      print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
