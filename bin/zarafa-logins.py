@@ -208,22 +208,23 @@ def format_users(users):
   if args['output'] == "text":
     usermaxlen = max( [ len(x) for x in users.keys() ] + [8] )
 
-    for label, key in [('Last Minute','1m'),('Last 5 Minutes','5m'),('Last 15 Minutes','15m'),('Last Hour','1h'),('Last 4 Hours','4h'),('Last 8 Hours','8h'),('Last Day','1d'),('Last 3 Days','3d')]:
-      tmp = sorted([ (u, d[key]) for u, d in users.iteritems() if d.get(key, 0) > 0 ], reverse=True)
-      if tmp:       
+    for key, label in [ (k, attrsTime[k]['label']) for k in sorted(attrsTime.keys(),key = lambda x: attrsTime[x]['min']) ]:
+      tmp = sorted([ u for u in users.keys() if users[u].get(key, 0) > 0 ], key = lambda u: users[u][key])
+      if tmp:
         print str(label).center(usermaxlen + 9)
         print "Username".ljust(usermaxlen), "  ", "Count"
         print "-" * (usermaxlen + 9)
-        for user, data in sorted(tmp, key=lambda x: x[0]):
-          print str(user).ljust(usermaxlen), "  ", str(data).rjust(5)
+        for u in tmp:
+          print str(u).ljust(usermaxlen), "  ", str(users[u][key]).rjust(5)
         print
         
     for user in sorted(users.keys()):
       if users[user].get('samaccountname','') and users[user].get('cn',''):
-        print "User information for " + users[user].get('samaccountname','').lower() + " (" + users[user].get('cn','') +"):\n" + ("-" * 30)
-        for key in sorted([ k.strip() for k in attrs.split(",") ]):
+        print "User information for " + users[user]['samaccountname'].lower() + " (" + users[user]['cn'] +"):\n" + ("-" * 30)
+
+        for key, label in [ (k, attrsLDAP[k]['label']) for k in sorted(attrsLDAP.keys(),key = lambda x: attrsLDAP[x]['sort']) ]:
           if key not in ['cn','samAccountName']:
-            print str(key).rjust(18) + ": " +  users[user].get(str(key).lower(),"")
+            print str(key).rjust(18) + ": " + str(label)
         print
 
   else:
@@ -249,13 +250,6 @@ if __name__ == "__main__":
     command_line_args()
     
     users = get_data()
-
-
-    for user in sorted(users.keys()): print user, users[user]
-    sys.exit(0)
-
-
-
     output, error, xmldata = format_users(users)
 
   # except SystemExit as err:
