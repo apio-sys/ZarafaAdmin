@@ -190,17 +190,16 @@ def get_data():
 
     users = {}
     for line in out:
-      c=0
-      line = line.split(",")
-      user = str(line[c]).lower()
-      tmp={"user":line[c]}
-      attrs = sorted(attrsTime, key = lambda x: attrsTime[x]['min']) + [ a.lower() for a in sorted(attrsLDAP, key = lambda x: attrsLDAP[x]['sort']) ]
-      for attr in attrs:
-        c += 1
-        print attr, c, line[c]
-        tmp[attr] = str(line[c])
-        # if c < len(line): tmp[attr] = line[c]
-      users[user] = tmp.copy()
+      if line:
+        c=0
+        line = line.split(",")
+        user = str(line[c]).lower()
+        tmp={"user":line[c]}
+        attrs = sorted(attrsTime, key = lambda x: attrsTime[x]['min']) + [ a.lower() for a in sorted(attrsLDAP, key = lambda x: attrsLDAP[x]['sort']) ]
+        for attr in attrs:
+          c += 1
+          if str(line[c]): tmp[attr] = str(line[c])
+        users[user] = tmp.copy()
 
   return users
 
@@ -257,7 +256,7 @@ if __name__ == "__main__":
 
 
 
-    # output, error, xmldata = format_users(users)
+    output, error, xmldata = format_users(users)
 
   # except SystemExit as err:
   #   pass
