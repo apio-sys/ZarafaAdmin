@@ -250,11 +250,7 @@ def format_users(users):
 
     xmldata = ElementTree.Element('log', log='Login Errors', filters='')
     for user in sorted(users.keys()):
-      print users[user]
-      for key in ['1m','5m','15m','1h','4h','8h','1d','3d']:
-        tmp = brandt.strXML(users[user].pop(key))
-        users[user].update({key:tmp})
-      ElementTree.SubElement(xmldata, "user", **users[user])
+      ElementTree.SubElement(xmldata, "user", **{ k:brandt.strXML(v) for k,v in users[user].items() })
     exitcode = 0
 
   return output, error, xmldata, exitcode
