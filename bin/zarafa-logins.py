@@ -161,6 +161,7 @@ def get_data():
       # try:
         ldapURI  = ldapValues['scheme'] + "://" + ldapValues['server'] + "/" 
         ldapURI += ldapValues['base'] + "?" + ",".join(attrsLDAP.keys()) + "?" + ldapValues['base'] + "?sAMAccountName=" + user
+        print ldapURI
         results = brandt.LDAPSearch(ldapURI).results
         if str(results[0][1]['sAMAccountName'][0]).lower() == user:
           for key in results[0][1]:
