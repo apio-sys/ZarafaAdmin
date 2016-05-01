@@ -20,6 +20,12 @@ args['delimiter'] = ""
 version = 0.3
 encoding = 'utf-8'
 
+ldap = {}
+ldap['scheme'] = 'ldaps'
+ldap['server'] = 'opwdc2.i.opw.ie'
+ldap['base']   = 'ou=opw,dc=i,dc=opw,dc=ie'
+ldap['scope']  = 'sub'
+
 months = ('','jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec')
 
 attrsTime = { 'm1':  {'min':1,           'label':'Last Minute'},
@@ -31,18 +37,22 @@ attrsTime = { 'm1':  {'min':1,           'label':'Last Minute'},
               'd1':  {'min':1 * 60 * 24, 'label':'Last Day'},
               'd3':  {'min':3 * 60 * 24, 'label':'Last 3 Days'} }
 
-attrsLDAP = { 'cn':'Windows Name',
-              'samAccountName':'Username',
-              'mail':'Email Address',
-              'badPwdCount':'Bad Password Count',
-              'badPasswordTime':'Bad Password Time',
-              'lastLogon':'Last Logon',
-              'lastlogoff':'Last Logoff',
-              'logonHours':'Logon Hours',
-              'pwdLastSet':'Password Last Set',
-              'accountExpires':'Account Expires',
-              'logonCount':'Logon Count',
-              'lastLogonTimestamp':'Last Login Time' }
+attrsLDAP = { 'cn':                 {'sort':0,  'label':'Windows Name'},
+              'samAccountName':     {'sort':1,  'label':'Username'},
+              'mail':               {'sort':2,  'label':'Email Address'},
+              'badPwdCount':        {'sort':3,  'label':'Bad Password Count'},
+              'badPasswordTime':    {'sort':4,  'label':'Bad Password Time'},
+              'lastLogon':          {'sort':5,  'label':'Last Logon'},
+              'lastlogoff':         {'sort':6,  'label':'Last Logoff'},
+              'logonHours':         {'sort':7,  'label':'Logon Hours'},
+              'pwdLastSet':         {'sort':8,  'label':'Password Last Set'},
+              'accountExpires':     {'sort':9,  'label':'Account Expires'},
+              'logonCount':         {'sort':10, 'label':'Logon Count'},
+              'lastLogonTimestamp': {'sort':11, 'label':'Last Login Time'} }
+
+
+#sorted(a, key = lambda x: a[x]['sort'])
+
 
 class customUsageVersion(argparse.Action):
   def __init__(self, option_strings, dest, **kwargs):
@@ -108,7 +118,7 @@ def command_line_args():
   if not args['delimiter'] and args['output'] == "csv": args['delimiter'] = ","  
 
 def get_data():
-  # global args, attrsTime, attrsLDAP
+  # global args, ldap, attrsTime, attrsLDAP
   # cachefile = '/tmp/zarafa-logins.cache'    
 
   # args['cache'] *= 60
@@ -125,33 +135,32 @@ def get_data():
     if err: raise IOError(err)
     users = {}
 
+    # Troll the logs to find users failed logins and count the occurances
     for line in out.split('\n'):
       try:
         now =  datetime.datetime.now()        
         tmp = line.replace("  "," ").replace(" ",":").split(":")
         tmpTime = datetime.datetime( int(tmp[6]), months.index(tmp[1].lower()), int(tmp[2]), int(tmp[3]), int(tmp[4]), int(tmp[5]) )
         tmpUser = tmp[-1].lower()
-
         if not users.has_key(tmpUser): users[tmpUser] = {'user':tmp[-1]}
         for attr in attrsTime.keys():
           if tmpTime > now - datetime.timedelta(minutes = attrsTime[attr]['min']): users[tmpUser].update( {attr: users[tmpUser].get(attr,0) + 1})
-
       except:
         pass
 
+    # Remove users who's login failures occurred too long ago and convert integer values to strings
     for user in users.keys():
       if len(users[user]) == 1: 
         del users[user]
       else:
         for attr in attrsTime.keys():
-          if not users[user].has_key(attr): 
-            users[user].update({attr:"0"})
-          else:
-            users[user][attr] = str(users[user][attr])
+          if users[user].has_key(attr): users[user][attr] = str(users[user][attr])
 
+    # Retrieve LDAP values for remaining users
     for user in users.keys():
       try:
-        ldapURI = "ldaps://opwdc2.i.opw.ie/ou=opw,dc=i,dc=opw,dc=ie?" + ",".join(attrsLDAP.keys()) + "?sub?sAMAccountName=" + user
+        ldapURI  = ldap['scheme'] + "://" + ldap['server'] + "/" 
+        ldapURI += ldap['base'] + "?" + ",".join(attrsLDAP.keys()) + "?" + ldap['base'] + "?sAMAccountName=" + user
         results = brandt.LDAPSearch(ldapURI).results
         if str(results[0][1]['sAMAccountName'][0]).lower() == user:
           for key in results[0][1]:
