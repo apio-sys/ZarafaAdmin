@@ -265,6 +265,7 @@ def zarafa_user(username):
   if data.has_key("currentstoresize"): data["currentstoresize"] = "{:.0f}".format(float(data.get("currentstoresize","").split(" ")[0]) * 1048576)
   logon = None
   if data.has_key("lastlogon"):
+    print data["lastlogon"]    
     try:
       logon = datetime.datetime.strptime(data.get("lastlogon").decode('unicode_escape'),'%d/%m/%y %H:%M:%S')
     except:
@@ -273,6 +274,7 @@ def zarafa_user(username):
       data["lastlogon"] = str(logon)
   logoff = None
   if data.has_key("lastlogoff"):
+    print data["lastlogoff"]
     try:
       logoff = datetime.datetime.strptime(data.get("lastlogoff").decode('unicode_escape'),'%d/%m/%y %H:%M:%S')
     except:
