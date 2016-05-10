@@ -28,6 +28,8 @@ logDefaults = {'system':{"logfile":"/var/log/syslog","oldlogfile":"/var/log/sysl
                'zarafa':{"logfile":"/var/log/zarafa/server.log","oldlogfile":"/var/log/zarafa/server.log.1"},
                'mysql':{"logfile":"/var/log/mysql/mysql.log","oldlogfile":"/var/log/mysql/mysql.log.1"},
                'mysql-error':{"logfile":"/var/log/mysql/error.log","oldlogfile":"/var/log/mysql/error.log.1"},
+               'mail':{"logfile":"/var/log/mail.log","oldlogfile":"/var/log/mail.log.1"},
+               'mail-error':{"logfile":"/var/log/mail.err","oldlogfile":"/var/log/mail.err.1"},               
                'z-push':{"logfile":"/var/log/z-push/z-push.log","oldlogfile":"/var/log/z-push/z-push.log.1"},
                'z-push-error':{"logfile":"/var/log/z-push/z-push-error.log","oldlogfile":"/var/log/z-push/z-push-error.log.1"}}
 
