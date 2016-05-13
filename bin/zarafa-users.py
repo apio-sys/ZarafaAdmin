@@ -351,7 +351,7 @@ def zarafa_user(username):
     if data.has_key("lastlogoff"): del data["lastlogoff"]
 
     xml = ElementTree.Element('users')
-    today = datetime.datetime.today()     
+    today = datetime.datetime.today()
     xmluser = ElementTree.SubElement(xml, "user", **{k:brandt.strXML(v) for k,v in data.items()})
     if logon:  child = ElementTree.SubElement(xmluser, "logon", lag=brandt.strXML((today - logon).days), date=brandt.strXML(logon))
     if logoff: child = ElementTree.SubElement(xmluser, "logoff", lag=brandt.strXML((today - logoff).days), date=brandt.strXML(logoff))
