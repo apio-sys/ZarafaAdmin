@@ -37,6 +37,10 @@
 						<li><a href="./zarafa-errors.php?log=system" target="cmdiframe">System Errors</a></li>
 						<li><a href="./zarafa-errors.php?log=mysql" target="cmdiframe">MySQL Errors</a></li>
 						<li><a href="./zarafa-errors.php?log=z-push" target="cmdiframe">Z-Push Errors</a></li>						
+					</ul></p>					
+					<p>&nbsp;Email Addresses
+					<ul>
+						<li><a href="./zarafa-emails.php" target="cmdiframe">OPW Emails</a></li>					
 					</ul></p>
 				</td>
 				<td id="table-results">
