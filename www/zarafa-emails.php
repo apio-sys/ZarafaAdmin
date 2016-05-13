@@ -58,7 +58,6 @@ echo str_pad('',$buffer)."\n"; ob_flush();
 
 // XML
 $command = "sudo /opt/brandt/zarafa/zarafa-ldap.py --web";
-if ( $user !== "" ) $command = "$command ".escapeshellarg($user);
 $output = shell_exec($command);
 $outputxml = new DOMDocument();
 $outputxml->loadXML( $output );
