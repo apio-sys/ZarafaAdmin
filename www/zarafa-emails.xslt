@@ -27,7 +27,7 @@
       <caption>Cached on <xsl:value-of select="@date"/></caption>
       <tr>
         <th colspan="5">
-          <table align="center">
+          <table align="center" id="zarafa-emails-totals">
             <tr>
               <td align="right">
                 Total Accounts:&#160;<br/>

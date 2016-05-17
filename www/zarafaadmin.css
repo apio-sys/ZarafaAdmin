@@ -278,3 +278,11 @@ td.hover:hover { background: #BBB }
 
 #zarafa-emails tr.hide { display: none; }
 #zarafa-emails tr.show { display: table-row; }
+
+
+#zarafa-emails-totals
+{
+	border-collapse: collapse;		
+}
+#zarafa-emails-totals th { padding: 0px 10px 0px 10px; white-space: nowrap; vertical-align: top; }
+
