@@ -26,31 +26,33 @@
     <table id="zarafa-emails">
       <caption>Cached on <xsl:value-of select="@date"/></caption>
       <tr colspan="5">
-<!--         <table align="center">
-          <th align="right">
+        <table>
+          <tr>
+          <td align="right">
             Total Accounts:&#160;<br/>
             User Accounts:&#160;<br/>
             Group Accounts:&#160;<br/>
-          </th>
-          <th>&#160;</th>
-          <th align="left">
+          </td>
+          <td>&#160;</td>
+          <td align="left">
             1000<br/>
             800<br/>
             200<br/>
-          </th>
-          <th align="right">
+          </td>
+          <td align="right">
             Zarafa Accounts:&#160;<br/>
             Domino Accounts:&#160;<br/>
             Zarafa-Only Accounts:&#160;<br/>
             Domino-Only Accounts:&#160;<br/>
-          </th>
-          <th align="left">
+          </td>
+          <td align="left">
             1000<br/>
             800<br/>
             200<br/>
             200<br/>
-          </th>
-        </table> -->
+          </td>
+        </tr>
+        </table>
       </tr>          
       <tr>
         <th align="left"><a href="./zarafa-emails.php?sort=mail">Email Address</a></th>
