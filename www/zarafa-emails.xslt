@@ -24,7 +24,31 @@
 <xsl:template match="/zarafaadmin/emails">
   <pre>
     <table id="zarafa-emails">
-      <caption>Cached on <xsl:value-of select="@date"/></caption>      
+      <caption>Cached on <xsl:value-of select="@date"/></caption>
+      <tr>
+        <th align="right">
+          1000&#160;<br/>
+          800&#160;<br/>
+          200&#160;<br/>
+        </th>
+        <th align="left">
+          &#160;Total Accounts<br/>
+          &#160;User Accounts<br/>
+          &#160;Group Accounts<br/>
+        </th>
+        <th align="center"&#160;</th>
+        <th align="right">
+          1000&#160;<br/>
+          800&#160;<br/>
+          200&#160;<br/>
+        </th>
+        <th align="left">
+          &#160;Zarafa Accounts<br/>
+          &#160;Domino Accounts<br/>
+          &#160;Zarafa-Only Accounts<br/>
+          &#160;Domino-Only Accounts<br/>
+        </th>
+      </tr>          
       <tr>
         <th align="left"><a href="./zarafa-emails.php?sort=mail">Email Address</a></th>
         <th align="center"><a href="./zarafa-emails.php?sort=type">Account Type</a></th>
