@@ -284,5 +284,5 @@ td.hover:hover { background: #BBB }
 {
 	border-collapse: collapse;		
 }
-#zarafa-emails-totals th { padding: 0px 10px 0px 10px; white-space: nowrap; vertical-align: top; }
+#zarafa-emails-totals th { padding: 0px 0px 0px 0px; white-space: nowrap; vertical-align: top; }
 
