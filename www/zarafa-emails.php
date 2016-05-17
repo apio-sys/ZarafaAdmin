@@ -35,8 +35,6 @@ header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
-header("Location: /admin/zarafa-emails.php?r=".mt_rand(0, 9999999));
-
 // The following is needed to display loading screen using Progressive Rendering
 ob_start(); // not needed if output_buffering is on in php.ini
 ob_implicit_flush(); // implicitly calls flush() after every ob_flush()
