@@ -271,7 +271,7 @@ td.hover:hover { background: #BBB }
 }
 /*#entry tr { background: #FFF; }
 */
-#zarafa-emails th { padding: 0px 10px 0px 10px; white-space: nowrap; vertical-align: top; }
+#zarafa-emails th { padding: 0px 10px 0px 10px; white-space: nowrap; vertical-align: bottom; }
 #zarafa-emails td { padding: 0px 10px 0px 10px; white-space: nowrap; }
 #zarafa-emails tr.hover:hover { background: #BBB }
 
