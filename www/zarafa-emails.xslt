@@ -54,7 +54,7 @@
               </td>
             </tr>
           </table>
-        </td>
+        </th>
       </tr>          
       <tr>
         <th align="left"><a href="./zarafa-emails.php?sort=mail">Email Address</a></th>
