@@ -24,30 +24,31 @@
 <xsl:template match="/zarafaadmin/emails">
   <pre>
     <table id="zarafa-emails">
-    <tr>
-      <th align="left"><a href="./zarafa-emails.php?sort=mail">Email Address</a></th>
-      <th align="center"><a href="./zarafa-emails.php?sort=type">Account Type</a></th>
-      <th align="center"><a href="./zarafa-emails.php?sort=zarafa">Zarafa Account</a></th>
-      <th align="center"><a href="./zarafa-emails.php?sort=domino">Domino Account</a></th>
-      <th align="center"><a href="./zarafa-emails.php?sort=forward">Forwarding</a></th>
-    </tr>
-    <xsl:choose>
-    <xsl:when test="$sort = 'type'">
-      <xsl:apply-templates select="email"><xsl:sort select="@type" order="descending"/></xsl:apply-templates>
-    </xsl:when>
-    <xsl:when test="$sort = 'zarafa'">
-      <xsl:apply-templates select="email"><xsl:sort select="@zarafa" order="descending"/></xsl:apply-templates>
-    </xsl:when>
-    <xsl:when test="$sort = 'domino'">
-      <xsl:apply-templates select="email"><xsl:sort select="@domino" order="descending"/></xsl:apply-templates>
-    </xsl:when>
-    <xsl:when test="$sort = 'forward'">
-      <xsl:apply-templates select="email"><xsl:sort select="@forward" order="descending"/></xsl:apply-templates>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:apply-templates select="email"><xsl:sort select="@mail" order="ascending"/></xsl:apply-templates>
-    </xsl:otherwise>
-    </xsl:choose>
+      <caption>Cached on <xsl:value-of select="@date"/></caption>      
+      <tr>
+        <th align="left"><a href="./zarafa-emails.php?sort=mail">Email Address</a></th>
+        <th align="center"><a href="./zarafa-emails.php?sort=type">Account Type</a></th>
+        <th align="center"><a href="./zarafa-emails.php?sort=zarafa">Zarafa Account</a></th>
+        <th align="center"><a href="./zarafa-emails.php?sort=domino">Domino Account</a></th>
+        <th align="center"><a href="./zarafa-emails.php?sort=forward">Forwarding</a></th>
+      </tr>
+      <xsl:choose>
+      <xsl:when test="$sort = 'type'">
+        <xsl:apply-templates select="email"><xsl:sort select="@type" order="descending"/></xsl:apply-templates>
+      </xsl:when>
+      <xsl:when test="$sort = 'zarafa'">
+        <xsl:apply-templates select="email"><xsl:sort select="@zarafa" order="descending"/></xsl:apply-templates>
+      </xsl:when>
+      <xsl:when test="$sort = 'domino'">
+        <xsl:apply-templates select="email"><xsl:sort select="@domino" order="descending"/></xsl:apply-templates>
+      </xsl:when>
+      <xsl:when test="$sort = 'forward'">
+        <xsl:apply-templates select="email"><xsl:sort select="@forward" order="descending"/></xsl:apply-templates>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates select="email"><xsl:sort select="@mail" order="ascending"/></xsl:apply-templates>
+      </xsl:otherwise>
+      </xsl:choose>
     </table>
   </pre>
 </xsl:template>
