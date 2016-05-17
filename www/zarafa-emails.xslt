@@ -51,9 +51,9 @@
       </tr>          
       <tr>
         <th align="left"><a href="./zarafa-emails.php?sort=mail">Email Address</a></th>
-        <th align="center"><a href="./zarafa-emails.php?sort=type">Account Type</a></th>
-        <th align="center"><a href="./zarafa-emails.php?sort=zarafa">Zarafa Account</a></th>
-        <th align="center"><a href="./zarafa-emails.php?sort=domino">Domino Account</a></th>
+        <th align="center"><a href="./zarafa-emails.php?sort=type">Account<br/>Type</a></th>
+        <th align="center"><a href="./zarafa-emails.php?sort=zarafa">Zarafa<br/>Account</a></th>
+        <th align="center"><a href="./zarafa-emails.php?sort=domino">Domino<br/>Account</a></th>
         <th align="center"><a href="./zarafa-emails.php?sort=forward">Forwarding</a></th>
       </tr>
       <xsl:choose>

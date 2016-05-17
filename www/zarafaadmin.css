@@ -263,5 +263,17 @@ td.hover:hover { background: #BBB }
 #zarafa-login-errors tr.show { display: table-row; }
 
 
+/* Email List */
+#zarafa-emails
+{
+	min-width: 500px;	
+	border-collapse: collapse;	
+}
+/*#entry tr { background: #FFF; }
+*/
+#zarafa-emails th { padding: 0px 10px 0px 10px; white-space: nowrap; vertical-align: top; }
+#zarafa-emails td { padding: 0px 10px 0px 10px; white-space: nowrap; }
+#zarafa-emails tr.hover:hover { background: #BBB }
 
-
+#zarafa-emails tr.hide { display: none; }
+#zarafa-emails tr.show { display: table-row; }
