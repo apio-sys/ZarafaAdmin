@@ -29,29 +29,29 @@
         <th colspan="5">
           <table align="center" id="zarafa-emails-totals">
             <tr>
-              <td align="right">
+              <th align="right">
                 Total Accounts:&#160;<br/>
                 User Accounts:&#160;<br/>
                 Group Accounts:&#160;<br/>
-              </td>
-              <td>&#160;</td>
-              <td align="left">
+              </th>
+              <th>&#160;</th>
+              <th align="left">
                 1000<br/>
                 800<br/>
                 200<br/>
-              </td>
-              <td align="right">
+              </th>
+              <th align="right">
                 Zarafa Accounts:&#160;<br/>
                 Domino Accounts:&#160;<br/>
                 Zarafa-Only Accounts:&#160;<br/>
                 Domino-Only Accounts:&#160;<br/>
-              </td>
-              <td align="left">
+              </th>
+              <th align="left">
                 1000<br/>
                 800<br/>
                 200<br/>
                 200<br/>
-              </td>
+              </th>
             </tr>
           </table>
         </th>
