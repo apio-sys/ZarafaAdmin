@@ -25,7 +25,7 @@
   <pre>
     <table id="zarafa-emails">
       <caption>Cached on <xsl:value-of select="@date"/></caption>
-      <tr colspan="5">
+<!--       <tr colspan="5">
         <table align="center">
           <th align="right">
             Total Accounts:&#160;<br/>
@@ -51,7 +51,7 @@
             200<br/>
           </th>
         </table>        
-      </tr>          
+      </tr>  -->         
       <tr>
         <th align="left"><a href="./zarafa-emails.php?sort=mail">Email Address</a></th>
         <th align="center"><a href="./zarafa-emails.php?sort=type">Account<br/>Type</a></th>
