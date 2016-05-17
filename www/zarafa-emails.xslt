@@ -25,29 +25,31 @@
   <pre>
     <table id="zarafa-emails">
       <caption>Cached on <xsl:value-of select="@date"/></caption>
-      <tr>
-        <th align="right">
-          1000&#160;<br/>
-          800&#160;<br/>
-          200&#160;<br/>
-        </th>
-        <th align="left">
-          &#160;Total Accounts<br/>
-          &#160;User Accounts<br/>
-          &#160;Group Accounts<br/>
-        </th>
-        <th align="center">&#160;</th>
-        <th align="right">
-          1000&#160;<br/>
-          800&#160;<br/>
-          200&#160;<br/>
-        </th>
-        <th align="left">
-          &#160;Zarafa Accounts<br/>
-          &#160;Domino Accounts<br/>
-          &#160;Zarafa-Only Accounts<br/>
-          &#160;Domino-Only Accounts<br/>
-        </th>
+      <tr colspan="5">
+        <table>
+          <th align="left">
+            Total Accounts:&#160;<br/>
+            User Accounts:&#160;<br/>
+            Group Accounts:&#160;<br/>
+          </th>          
+          <th align="right">
+            1000<br/>
+            800<br/>
+            200<br/>
+          </th>
+          <th align="left">
+            Zarafa Accounts:&#160;<br/>
+            Domino Accounts:&#160;<br/>
+            Zarafa-Only Accounts:&#160;<br/>
+            Domino-Only Accounts:&#160;<br/>
+          </th>
+          <th align="right">
+            1000<br/>
+            800<br/>
+            200<br/>
+            200<br/>
+          </th>
+        </table>        
       </tr>          
       <tr>
         <th align="left"><a href="./zarafa-emails.php?sort=mail">Email Address</a></th>
