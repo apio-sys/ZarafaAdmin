@@ -24,10 +24,10 @@
 <xsl:template match="/zarafaadmin/emails">
   <pre>
     <table id="zarafa-emails">
-      <caption>Cached on <xsl:value-of select="@date"/></caption>
+      <caption>Information cached on <xsl:value-of select="@date"/></caption>
       <tr>
         <th colspan="5">
-          <table align="center" class="zarafa-emails-totals" width="100%">
+          <table align="center" id="zarafa-emails-totals" width="100%">
             <tr>
               <th align="right" width="25%">
                 Total Accounts:&#160;<br/>
@@ -35,9 +35,9 @@
                 Group Accounts:&#160;<br/>
               </th>
               <th align="left" width="25%">
-                1000<br/>
-                800<br/>
-                200<br/>
+                <xsl:value-of select="count(email)"/><br/>
+                <xsl:value-of select="count(email) - 200"/><br/>
+                <xsl:value-of select="count(email) - 800"/><br/>
               </th>
               <th align="right" width="25%">
                 Zarafa Accounts:&#160;<br/>
