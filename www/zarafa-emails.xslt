@@ -27,26 +27,25 @@
       <caption>Cached on <xsl:value-of select="@date"/></caption>
       <tr>
         <th colspan="5">
-          <table align="center" id="zarafa-emails-totals">
+          <table align="center" class="zarafa-emails-totals" width="100%">
             <tr>
-              <th align="right">
+              <th align="right" width="25%">
                 Total Accounts:&#160;<br/>
                 User Accounts:&#160;<br/>
                 Group Accounts:&#160;<br/>
               </th>
-              <th>&#160;</th>
-              <th align="left">
+              <th align="left" width="25%">
                 1000<br/>
                 800<br/>
                 200<br/>
               </th>
-              <th align="right">
+              <th align="right" width="25%">
                 Zarafa Accounts:&#160;<br/>
                 Domino Accounts:&#160;<br/>
                 Zarafa-Only Accounts:&#160;<br/>
                 Domino-Only Accounts:&#160;<br/>
               </th>
-              <th align="left">
+              <th align="left" width="25%">
                 1000<br/>
                 800<br/>
                 200<br/>
