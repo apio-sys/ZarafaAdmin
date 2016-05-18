@@ -70,13 +70,24 @@
         </xsl:apply-templates>
       </xsl:when>
       <xsl:when test="$sort = 'zarafa'">
-        <xsl:apply-templates select="email"><xsl:sort select="@zarafa" order="descending"/></xsl:apply-templates>
+        <xsl:apply-templates select="email">
+          <xsl:sort select="@zarafa" order="descending"/>
+          <xsl:sort select="@domino" order="descending"/>
+          <xsl:sort select="@forward" order="descending"/>
+          <xsl:sort select="@mail" order="ascending"/>          
+        </xsl:apply-templates>
       </xsl:when>
       <xsl:when test="$sort = 'domino'">
-        <xsl:apply-templates select="email"><xsl:sort select="@domino" order="descending"/></xsl:apply-templates>
+        <xsl:apply-templates select="email">
+          <xsl:sort select="@domino" order="descending"/>
+          <xsl:sort select="@mail" order="ascending"/>
+        </xsl:apply-templates>
       </xsl:when>
       <xsl:when test="$sort = 'forward'">
-        <xsl:apply-templates select="email"><xsl:sort select="@forward" order="descending"/></xsl:apply-templates>
+        <xsl:apply-templates select="email">
+          <xsl:sort select="@forward" order="descending"/>
+          <xsl:sort select="@mail" order="ascending"/>
+        </xsl:apply-templates>
       </xsl:when>
       <xsl:otherwise>
         <xsl:apply-templates select="email">
