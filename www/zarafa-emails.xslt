@@ -30,9 +30,9 @@
           <table align="center" id="zarafa-emails-totals" width="100%">
             <tr>
               <th align="right" width="25%">
-                Total Accounts:&#160;<br/>
-                User Accounts:&#160;<br/>
-                Group Accounts:&#160;<br/>
+                Total Emails:&#160;<br/>
+                User Emails:&#160;<br/>
+                Group Emails:&#160;<br/>
               </th>
               <th align="left" width="25%">
                 <xsl:value-of select="count(email)"/><br/>
@@ -40,14 +40,14 @@
                 <xsl:value-of select="count(email[@type = 'Group'])"/><br/>
               </th>
               <th align="right" width="25%">
-                Zarafa Accounts:&#160;<br/>
-                Domino Accounts:&#160;<br/>
-                Zarafa-Only Accounts:&#160;<br/>
-                Domino-Only Accounts:&#160;<br/>
+                Zarafa Emails:&#160;<br/>
+                Domino Emails:&#160;<br/>
+                Zarafa-Only Emails:&#160;<br/>
+                Domino-Only Emails:&#160;<br/>
               </th>
               <th align="left" width="25%">
-                1000<br/>
-                800<br/>
+                <xsl:value-of select="count(email[@zarafa = 'True'])"/><br/>
+                <xsl:value-of select="count(email[@domino = 'True'])"/><br/>
                 200<br/>
                 200<br/>
               </th>
