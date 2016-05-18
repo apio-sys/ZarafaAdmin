@@ -47,9 +47,9 @@
               </th>
               <th align="left" width="25%">
                 <xsl:value-of select="count(email[@zarafa = 'True'])"/><br/>
-                <xsl:value-of select="count(email[@domino = 'True'])"/><br/>
-                200<br/>
-                200<br/>
+                <xsl:value-of select="count(email[@domino = 'True' and @forward = 'False'])"/><br/>
+                <xsl:value-of select="count(email[@zarafa = 'True' and @domino = @forward])"/><br/>
+                <xsl:value-of select="count(email[@domino = 'True' and @zarafa = 'False'])"/><br/>
               </th>
             </tr>
           </table>
