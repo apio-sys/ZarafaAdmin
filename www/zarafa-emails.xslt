@@ -36,8 +36,8 @@
               </th>
               <th align="left" width="25%">
                 <xsl:value-of select="count(email)"/><br/>
-                <xsl:value-of select="count(email)"/><br/>
-                <xsl:value-of select="count(email)"/><br/>
+                <xsl:value-of select="count(email[@type = 'User'])"/><br/>
+                <xsl:value-of select="count(email[@type = 'Group'])"/><br/>
               </th>
               <th align="right" width="25%">
                 Zarafa Accounts:&#160;<br/>
