@@ -30,6 +30,7 @@
 				<td>
 					<select name="log">
 						<xsl:for-each select="log">
+          		<xsl:sort select="@name" order="ascending"/>
 							<option value="{@name}">
 								<xsl:if test="$log = @name"><xsl:attribute name="selected"/></xsl:if>
 								<xsl:value-of select="@display"/>
