@@ -132,7 +132,16 @@ if __name__ == "__main__":
       output += "\n".join([ args['delimiter'].join([o['store'], o['username'], o['login'], o['size'], o['type']]) for o in orphans ])
     else:
       xmldata = ElementTree.Element('orphans')
+      today = datetime.datetime.today()
+
       for orphan in orphans:
+        try:
+          orphan["login"] = datetime.datetime.strptime(orphan.get("login").decode('unicode_escape'),'%d/%m/%y %H:%M:%S')
+        except:
+          orphan["login"] = datetime.datetime.strptime(orphan.get("login").decode('unicode_escape'),'%m/%d/%y %H:%M:%S')
+        finally:
+          orphan["login"] = str(orphan.get("login"))
+        print orphan
         ElementTree.SubElement(xmldata, "orphan", **orphan)
 
   except SystemExit as err:
