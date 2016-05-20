@@ -79,8 +79,8 @@ optional arguments:
 	<tr>
 		<td>
 			<select name="mode">
-			  <option value="volvo">Set Out-of-Office</option>
-			  <option value="saab">Unset Out-of-Office</option>
+			  <option value="0">Disable Out-of-Office</option>
+			  <option value="1"> Enable Out-of-Office</option>
 			</select>
 		</td>
 		<td>From:</td>
