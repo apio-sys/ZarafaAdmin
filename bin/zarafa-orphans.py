@@ -137,11 +137,13 @@ if __name__ == "__main__":
       for orphan in orphans:
         print orphan        
         try:
-          orphan["login"] = datetime.datetime.strptime(orphan.get("login").decode('unicode_escape'),'%m/%d/%y %H:%M:%S')
+          login = datetime.datetime.strptime(orphan.get("login").decode('unicode_escape'),'%m/%d/%y %H:%M:%S')
         except:
-          orphan["login"] = datetime.datetime.strptime(orphan.get("login").decode('unicode_escape'),'%y/%m/%d %H:%M:%S')
+          login = datetime.datetime.strptime('01/01/01 00:00:00','%y/%m/%d %H:%M:%S')
         finally:
-          orphan["login"] = brandt.strXML(orphan.get("login"))
+          orphan["login"] = brandt.strXML(login)
+          orphan["lag"] = brandt.strXML((today - login).days)
+
         ElementTree.SubElement(xmldata, "orphan", **orphan)
 
   except SystemExit as err:
