@@ -137,11 +137,12 @@ if __name__ == "__main__":
       for orphan in orphans:
         try:
           logon = datetime.datetime.strptime(orphan.get("logon").decode('unicode_escape'),'%m/%d/%y %H:%M:%S')
+          orphan["logon"] = brandt.strXML(logon)
+          orphan["lag"] = brandt.strXML((today - logon).days)          
         except:
           logon = datetime.datetime.strptime('01/01/01 00:00:00','%y/%m/%d %H:%M:%S')
-        finally:
-          orphan["logon"] = brandt.strXML(logon)
-          orphan["lag"] = brandt.strXML((today - logon).days)
+          orphan["lag"] = brandt.strXML((today - logon).days)           
+
         orphan["username"] = orphan["username"].lower()
         orphan["size"] = orphan["size"].split()[0]
 
