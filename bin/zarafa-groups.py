@@ -155,7 +155,7 @@ def zarafa_groups(groups):
     return xml
 
 def zarafa_group(groupname):
-  global args, ldapmapping
+  global args, ldapmapping, output
   command = '/usr/sbin/zarafa-admin --type group --details "' + str(groupname) + '"'
 
   p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -197,22 +197,22 @@ def zarafa_group(groupname):
     if not args['delimiter']: args['delimiter'] = "\t" 
     width = max( [ len(x[1]) for x in fieldmappings ] + [ len(x[1]) + 2 for x in ldapfieldmappings ] ) + 1
     for key, text in fieldmappings:
-      print str(text + ":").ljust(width) + args['delimiter'] + data.get(key,'')
-    print "Mapped properties:"
+      output = str(text + ":").ljust(width) + args['delimiter'] + data.get(key,'') + '\n'
+    output += "Mapped properties:\n"
     for key, text in ldapfieldmappings:
-      print str( "  " + text + ":").ljust(width) + args['delimiter'] + data.get(key,'')
+      output += str( "  " + text + ":").ljust(width) + args['delimiter'] + data.get(key,'') + '\n'
     if sendas:
       tmp = [ x[1] + "(" + x[2] + ")" for x in sendas ]
-      print "\nSend As Rights (" + str(len(sendas)) + "):"
-      print '-' * (width + 10)
-      brandt.printTable(sorted(tmp),2)
+      output += "\nSend As Rights (" + str(len(sendas)) + "):\n"
+      output += '-' * (width + 10) + '\n'
+      output += brandt.printTable(sorted(tmp),2) + '\n'
     if users:        
-      print "Users (" + str(len(users)) + "):"
+      output += "Users (" + str(len(users)) + "):\n"
       widths = [ max([ len(x[0]) for x in users ]) + 2, max([ len(x[1]) for x in users ]) ] 
-      print "  " + "Username".ljust(widths[0]) + args['delimiter'] + "Full Name".ljust(widths[1])
-      print "  " + "-" * (sum(widths) + 5)
+      output += "  " + "Username".ljust(widths[0]) + args['delimiter'] + "Full Name".ljust(widths[1]) + '\n'
+      output += "  " + "-" * (sum(widths) + 5) + '\n'
       for user in users:
-        print "  " + user[0].ljust(widths[0]) + args['delimiter'] + user[1].ljust(widths[1])
+        output += "  " + user[0].ljust(widths[0]) + args['delimiter'] + user[1].ljust(widths[1]) +'\n'
   elif args['output'] == "csv":
     tmp = []
     if sendas:
@@ -221,11 +221,11 @@ def zarafa_group(groupname):
     if users:
       tmp.append("Users")
       for i in range(1,len(groups)): tmp.append('')    
-    print args['delimiter'].join([x[1] for x in fieldmappings] + tmp)
+    output = args['delimiter'].join([x[1] for x in fieldmappings] + tmp) + '\n'
     tmp = []
     if sendas: tmp += sorted([ x[1] + "(" + x[2] + ")" for x in sendas ])
     if groups: tmp += sorted(groups)    
-    print args['delimiter'].join([data.get(x[0],"") for x in fieldmappings] + tmp)
+    output += args['delimiter'].join([data.get(x[0],"") for x in fieldmappings] + tmp) + '\n'
   else:
     xml = ElementTree.Element('groups')
     xmlgroup = ElementTree.SubElement(xml, "group", **{k:brandt.strXML(v) for k,v in data.items()})
