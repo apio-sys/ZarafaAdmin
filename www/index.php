@@ -45,7 +45,7 @@
 					</ul></p>
 					<p>&nbsp;Mail Stores
 					<ul>
-						<li><a href="./zarafa-orphans.php" target="cmdiframe">Orphaned Stored</a></li>					
+						<li><a href="./zarafa-orphans.php" target="cmdiframe">Orphaned Stores</a></li>					
 					</ul></p>
 				</td>
 				<td id="table-results">

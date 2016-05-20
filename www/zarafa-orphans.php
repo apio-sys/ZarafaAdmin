@@ -44,10 +44,6 @@ $sort = "";
 if (isset($_GET['sort']))    $sort = $_GET['sort'];
 if (isset($_POST['sort']))   $sort = $_POST['sort'];
 
-$user = "";
-if (isset($_GET['user']))    $user = $_GET['user'];
-if (isset($_POST['user']))   $user = $_POST['user'];
-
 echo '<html><head>';
 echo '<meta http-equiv="content-type" content="text/html; charset=UTF-8">';
 echo '<meta http-equiv="Content-Type" charset="utf-8">';
@@ -61,8 +57,7 @@ echo '<div id="loading"><img src="loading.gif"/> Loading...</div>';
 echo str_pad('',$buffer)."\n"; ob_flush();
 
 // XML
-$command = "sudo /opt/brandt/ZarafaAdmin/bin/zarafa-users.py --output xml";
-if ( $user !== "" ) $command = "$command ".escapeshellarg($user);
+$command = "sudo /opt/brandt/ZarafaAdmin/bin/zarafa-orphans.py --output xml";
 $output = shell_exec($command);
 $outputxml = new DOMDocument();
 $outputxml->loadXML( $output );
