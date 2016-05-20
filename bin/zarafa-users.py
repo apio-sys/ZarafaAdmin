@@ -196,11 +196,11 @@ def zarafa_users(users):
   out, err = p.communicate()
   if err: raise IOError(err)
 
-  if args['output'] == 'text': output = out + '\n' + output
+  if args['output'] == 'text': output +=  out + '\n'
   if args['output'] != 'xml':
     if not args['delimiter']: args['delimiter'] = "\t"
-    print args['delimiter'].join(headers)
-    print "\n".join( [ user.replace(";",args['delimiter']) for user in users ] )
+    output += args['delimiter'].join(headers) + '\n'
+    output += "\n".join( [ user.replace(";",args['delimiter']) for user in users ] )
   else:
     data = {}
     xml = ElementTree.Element('users')
