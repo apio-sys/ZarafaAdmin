@@ -136,11 +136,11 @@ if __name__ == "__main__":
 
       for orphan in orphans:
         try:
-          orphan["login"] = datetime.datetime.strptime(orphan.get("login").decode('unicode_escape'),'%d/%m/%y %H:%M:%S')
+          orphan["login"] = datetime.datetime.strptime(orphan.get("login").decode('unicode_escape'),'%Y-%m-%d %H:%M:%S')
         except:
-          orphan["login"] = datetime.datetime.strptime(orphan.get("login").decode('unicode_escape'),'%m/%d/%y %H:%M:%S')
+          orphan["login"] = datetime.datetime.strptime(orphan.get("login").decode('unicode_escape'),'%y-%m-%d %H:%M:%S')
         finally:
-          orphan["login"] = str(orphan.get("login"))
+          orphan["login"] = brandt.strXML(orphan.get("login"))
         print orphan
         ElementTree.SubElement(xmldata, "orphan", **orphan)
 
