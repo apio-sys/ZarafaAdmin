@@ -189,15 +189,42 @@ def get_data():
   return out
 
 def zarafa_users(users):
-  global args
+  global args, output
 
+  command = '/usr/sbin/zarafa-admin --user-count'
+  p = subprocess.Popen(mdmCMD + " --output xml", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+  out, err = p.communicate()
+  if err: raise IOError(err)
+
+  if args['output'] == 'text': output +=  out
   if args['output'] != 'xml':
     if not args['delimiter']: args['delimiter'] = "\t"
     print args['delimiter'].join(headers)
     print "\n".join( [ user.replace(";",args['delimiter']) for user in users ] )
   else:
+    data = {}
     xml = ElementTree.Element('users')
     today = datetime.datetime.today()
+
+    for line in out.split('\n')[3:]:
+      tmp = line.split('\t')
+      if line and len(tmp) > 5:
+        name = str(tmp[1]).strip().lower()
+        allowed = str(tmp[-4]).strip()
+        allowed = allowed.split()[0].lower() if allowed else "0"
+        used = str(tmp[-3]).strip()
+        used = used.split()[0].lower() if used else "0"
+        available = str(tmp[-2]).strip()
+        available = available.split()[0].lower() if available else "0"  
+        if name in ["active", "non-active", "total"]: 
+          data[name] = {"allowed":brandt.strXML(allowed), "used":brandt.strXML(used), "available":brandt.strXML(available)}
+        elif data.has_key("non-active"): 
+          data["non-active"].update({name:brandt.strXML(used)})
+    xmllic = ElementTree.SubElement(xml, 'licensed')
+    ElementTree.SubElement(xmllic, "active", **data["active"])
+    ElementTree.SubElement(xmllic, "nonactive", **data["non-active"])
+    ElementTree.SubElement(xmllic, "total", **data["total"])
+
     for user in users:
       tmp = user.split(';')
       attribs = {}
@@ -215,7 +242,6 @@ def zarafa_users(users):
       xmluser = ElementTree.SubElement(xml, "user", **attribs)
       if logon:  child = ElementTree.SubElement(xmluser, "logon", lag=brandt.strXML((today - logon).days), date=brandt.strXML(logon))
       if logoff: child = ElementTree.SubElement(xmluser, "logoff", lag=brandt.strXML((today - logoff).days), date=brandt.strXML(logoff))
-
     return xml
 
 def zarafa_user(username):
@@ -379,7 +405,6 @@ if __name__ == "__main__":
     exitcode = 0
 
     command_line_args()  
-
     users = get_data()
     if len(users) == 1:
       xmldata = zarafa_user(users[0].split(";")[headers.index("username")])
