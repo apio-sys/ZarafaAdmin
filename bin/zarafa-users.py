@@ -196,7 +196,7 @@ def zarafa_users(users):
   out, err = p.communicate()
   if err: raise IOError(err)
 
-  if args['output'] == 'text': output +=  out
+  if args['output'] == 'text': output = out + '\n' + output
   if args['output'] != 'xml':
     if not args['delimiter']: args['delimiter'] = "\t"
     print args['delimiter'].join(headers)
