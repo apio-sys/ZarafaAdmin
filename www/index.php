@@ -43,6 +43,10 @@
 					<ul>
 						<li><a href="./zarafa-emails.php" target="cmdiframe">OPW Emails</a></li>					
 					</ul></p>
+					<p>&nbsp;Mail Stores
+					<ul>
+						<li><a href="./zarafa-orphans.php" target="cmdiframe">Orphaned Stored</a></li>					
+					</ul></p>
 				</td>
 				<td id="table-results">
 					<iframe id="cmdiframe" src="blank.html" name="cmdiframe">Browser not compatible.</iframe>
