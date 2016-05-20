@@ -192,7 +192,7 @@ def zarafa_users(users):
   global args, output
 
   command = '/usr/sbin/zarafa-admin --user-count'
-  p = subprocess.Popen(command + " --output xml", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+  p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   out, err = p.communicate()
   if err: raise IOError(err)
 
