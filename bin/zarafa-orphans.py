@@ -142,6 +142,8 @@ if __name__ == "__main__":
         finally:
           orphan["logon"] = brandt.strXML(logon)
           orphan["lag"] = brandt.strXML((today - logon).days)
+        orphan["username"] = orphan["username"].lower()
+        orphan["size"] = orphan["size"].split()[0]
 
         ElementTree.SubElement(xmldata, "orphan", **orphan)
 
