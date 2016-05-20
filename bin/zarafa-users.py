@@ -245,7 +245,7 @@ def zarafa_users(users):
     return xml
 
 def zarafa_user(username):
-  global args, ldapmapping
+  global args, ldapmapping, output
   command = '/usr/sbin/zarafa-admin --type user --details "' + str(username) + '"'
 
   p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -256,6 +256,7 @@ def zarafa_user(username):
   groups = []
   quotas = []
   props = []
+  output = ""  
   for i in reversed(range(len(data))):
     if not data[i]: 
       del data[i]
@@ -322,26 +323,26 @@ def zarafa_user(username):
     maxlen = max([ len(f[1]) for f in fieldmappings ] + [ len(f[1]) for f in quotafieldmappings ] + [ len(f[1]) for f in ldapfieldmappings if data.has_key(f[0]) ] )
     maxlen += 2
     for key,text in fieldmappings:
-      print (text + ":").ljust(maxlen), data.get(key,"")
+      output += (text + ":").ljust(maxlen), data.get(key,"") + '\n'
 
-    print "Mapped properties:"
+    output += 'Mapped properties:\n'
     for key,text in ldapfieldmappings:
       if data.has_key(key):
-        print (" " + text + ":").ljust(maxlen), data[key]
+        output +=  (" " + text + ":").ljust(maxlen), data[key] + '\n'
 
-    print "Current user store quota settings:"
+    output +=  "Current user store quota settings:\n"
     for key,text in quotafieldmappings:
-      print (text + ":").ljust(maxlen), data.get(key,"")
+      output +=  (text + ":").ljust(maxlen), data.get(key,"") + '\n'
 
     if sendas:
       tmp = [ x[1] + "(" + x[2] + ")" for x in sendas ]
-      print "\nSend As Rights (" + str(len(sendas)) + "):"
-      print '-' * (maxlen + 10)
+      output +=  "\nSend As Rights (" + str(len(sendas)) + "):" + '\n'
+      output +=  '-' * (maxlen + 10) + '\n'
       brandt.printTable(sorted(tmp),2)
       
     if groups:
-      print "\nGroups (" + str(len(groups)) + "):"
-      print '-' * (maxlen + 10)
+      output += "\nGroups (" + str(len(groups)) + "):" + '\n'
+      output += '-' * (maxlen + 10) + '\n'
       brandt.printTable(sorted(groups),2)
 
     p = subprocess.Popen(mdmCMD + " --output text", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -349,9 +350,9 @@ def zarafa_user(username):
     if err: raise IOError(err)
     mdmLEN = len(mdmSTR.split("\n")) - 2
     if mdmLEN < 0: mdmLEN = 0
-    print "\nMobile Devices (" + str(mdmLEN) + "):"
-    print '-' * (maxlen + 10)
-    print mdmSTR
+    output += "\nMobile Devices (" + str(mdmLEN) + "):" + '\n'
+    output += '-' * (maxlen + 10) + '\n'
+    output += mdmSTR + '\n'
 
     sys.exit(0)
 
@@ -363,12 +364,12 @@ def zarafa_user(username):
     if groups:
       tmp.append("Groups")
       for i in range(1,len(groups)): tmp.append('')
-    print args['delimiter'].join([ f[1] for f in (fieldmappings + quotafieldmappings) ] + tmp)
+    output += args['delimiter'].join([ f[1] for f in (fieldmappings + quotafieldmappings) ] + tmp) + '\n'
 
     tmp = []
     if sendas: tmp += sorted([ x[1] + "(" + x[2] + ")" for x in sendas ])
     if groups: tmp += sorted(groups)
-    print args['delimiter'].join([ data.get(f[0],"") for f in (fieldmappings + quotafieldmappings ) ] + tmp )
+    output += args['delimiter'].join([ data.get(f[0],"") for f in (fieldmappings + quotafieldmappings ) ] + tmp ) + '\n'
 
     sys.exit(0)
 
