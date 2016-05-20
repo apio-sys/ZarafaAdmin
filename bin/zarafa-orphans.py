@@ -123,9 +123,9 @@ if __name__ == "__main__":
       for orphan in orphans:
         output += str(orphan["store"]).ljust(width["store"]) + args['delimiter'] + \
                   str(orphan["username"]).ljust(width["username"]) + args['delimiter'] + \
-                  str(orphan["logon"]).ljust(width["logon"]) + args['delimiter'] + \
-                  str(orphan["size"]).ljust(width["size"]) + args['delimiter'] + \
-                  str(orphan["type"]).ljust(width["type"]) + "\n"
+                  str(orphan["logon"]).center(width["logon"]) + args['delimiter'] + \
+                  str(orphan["size"]).rjust(width["size"]) + args['delimiter'] + \
+                  str(orphan["type"]).center(width["type"]) + "\n"
     elif args['output'] == 'csv':
       headers = ( "Store GUID", "Guessed Username", "Last Logon", "Store Size", "Store Type")
       output = args['delimiter'].join(headers) + '\n'
