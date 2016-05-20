@@ -78,7 +78,7 @@ echo '<title>Zarafa (Un)Set Out of Office</title>';
 		<td colspan="5" align="left">AutoReply only once to each sender with the following text:</td>
 	</tr>
 	<tr>
-		<td colspan="5"><textarea rows="4" cols="50" name="message" width="100%"/></td>
+		<td colspan="5"><textarea rows="4" cols="50" name="message" width="100%"></textarea></td>
 	</tr>
 </table>
 
