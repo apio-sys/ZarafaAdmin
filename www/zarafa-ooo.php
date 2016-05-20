@@ -52,26 +52,8 @@ echo '<title>Zarafa (Un)Set Out of Office</title>';
 ?>
 
 
-<input type="date" />
-<p>
-Usage: /usr/bin/zarafa-set-oof -u [username of mailbox]
 
-Manage out of office messages of users
 
-Required arguments:
-	-u, --user          user to set out of office message for
-	-m, --mode          0 to disable out of office (default), 1 to enable
-
-optional arguments:
-	--from              specify the date/time when oof should become active
-	--until             specify the date/time when oof should become inactive again
-	-t, --subject       specify the subject to be set in oof message
-	-n, --message       text file containing body of out of office message
-	-h, --host          Host to connect with. Default: file:///var/run/zarafa
-	-s, --sslkey-file   SSL key file to authenticate as admin.
-	-p, --sslkey-pass   Password for the SSL key file.
-	--help              Show this help message and exit.
-</p>
 <table>
 	<tr>
 		<td colspan="5" align="center">Set/Unset Out-of-Office for FullName (emailaddress)</td>
@@ -83,20 +65,20 @@ optional arguments:
 			  <option value="1"> Enable Out-of-Office</option>
 			</select>
 		</td>
-		<td>From:</td>
-		<td><input type="text" name="from"/></td>
-		<td>Until:</td>
-		<td><input type="text" name="until"/></td>
+		<td align="right">From:</td>
+		<td><input type="date" name="from"/></td>
+		<td align="right">Until:</td>
+		<td><input type="date" name="until"/></td>
 	</tr>
 	<tr>
-		<td>Subject:</td>
-		<td colspan="4"><input type="text" name="subject"/></td>
+		<td align="right">Subject:</td>
+		<td colspan="4"><input type="text" name="subject" width="100%"/></td>
 	</tr>
 	<tr>
-		<td colspan="5">AutoReply only once to each sender with the following text:</td>
+		<td colspan="5" align="left">AutoReply only once to each sender with the following text:</td>
 	</tr>
 	<tr>
-		<td colspan="5"><input type="text" name="message"/></td>
+		<td colspan="5"><textarea rows="4" cols="50" name="message" width="100%"/></td>
 	</tr>
 </table>
 
