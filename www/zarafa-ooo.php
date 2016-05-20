@@ -49,42 +49,11 @@ echo '<meta http-equiv="content-type" content="text/html; charset=UTF-8">';
 echo '<meta http-equiv="Content-Type" charset="utf-8">';
 echo '<link rel="stylesheet" href="zarafaadmin.css">';
 echo '<title>Zarafa (Un)Set Out of Office</title>';
-
-
-
-
-
-
-
-
-echo '</body></html>';
 ?>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<input type="date" />
+<p>
 Usage: /usr/bin/zarafa-set-oof -u [username of mailbox]
 
 Manage out of office messages of users
@@ -102,4 +71,23 @@ optional arguments:
    -s, --sslkey-file   SSL key file to authenticate as admin.
    -p, --sslkey-pass   Password for the SSL key file.
    --help              Show this help message and exit.
+</p>
+
+
+
+
+</body></html>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
