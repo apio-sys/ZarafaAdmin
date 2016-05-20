@@ -1,6 +1,6 @@
 <?php
 /*
- *    Zarafa User Details
+ *    Zarafa Orphaned Stores
  *
  *    Created by: Bob Brandt (http://brandt.ie)
  *    Created on: 2016-04-23
@@ -48,7 +48,7 @@ echo '<html><head>';
 echo '<meta http-equiv="content-type" content="text/html; charset=UTF-8">';
 echo '<meta http-equiv="Content-Type" charset="utf-8">';
 echo '<link rel="stylesheet" href="zarafaadmin.css">';
-echo '<title>Zarafa Users Result Page</title>';
+echo '<title>Zarafa Orphaned Stores Result Page</title>';
 echo '<script src="loading.js"></script>';
 echo '</head><body onload="hide_loading();">';
 echo str_pad('',$buffer)."\n"; ob_flush();

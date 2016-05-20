@@ -91,7 +91,7 @@ def get_data():
     if line and len(tmp) > 4:
       orphans.append({"store":brandt.strXML(tmp[0]), 
                       "username":brandt.strXML(tmp[1]), 
-                      "login":brandt.strXML(tmp[2]), 
+                      "logon":brandt.strXML(tmp[2]), 
                       "size":brandt.strXML(tmp[3]), 
                       "type":brandt.strXML(tmp[4])})
   return orphans
@@ -110,12 +110,12 @@ if __name__ == "__main__":
 
     if args['output'] == 'text':
       if not args['delimiter']: args['delimiter'] = "\t"
-      orphans.insert(0, { "store":"Store GUID", "username":"Guessed Username", "login":"Last Login", "size":"Store Size", "type":"Store Type" })      
-      width = {"store":0, "username":0, "login":0, "size":0, "type":0 }
+      orphans.insert(0, { "store":"Store GUID", "username":"Guessed Username", "logon":"Last Logon", "size":"Store Size", "type":"Store Type" })      
+      width = {"store":0, "username":0, "logon":0, "size":0, "type":0 }
       for orphan in orphans:
         width = { "store":max(len(orphan["store"]),width["store"]), 
                   "username":max(len(orphan["username"]),width["username"]), 
-                  "login":max(len(orphan["login"]),width["login"]), 
+                  "logon":max(len(orphan["logon"]),width["logon"]), 
                   "size":max(len(orphan["size"]),width["size"]), 
                   "type":max(len(orphan["type"]),width["type"]) }
 
@@ -123,26 +123,25 @@ if __name__ == "__main__":
       for orphan in orphans:
         output += str(orphan["store"]).ljust(width["store"]) + args['delimiter'] + \
                   str(orphan["username"]).ljust(width["username"]) + args['delimiter'] + \
-                  str(orphan["login"]).ljust(width["login"]) + args['delimiter'] + \
+                  str(orphan["logon"]).ljust(width["logon"]) + args['delimiter'] + \
                   str(orphan["size"]).ljust(width["size"]) + args['delimiter'] + \
                   str(orphan["type"]).ljust(width["type"]) + "\n"
     elif args['output'] == 'csv':
-      headers = ( "Store GUID", "Guessed Username", "Last Login", "Store Size", "Store Type")
+      headers = ( "Store GUID", "Guessed Username", "Last Logon", "Store Size", "Store Type")
       output = args['delimiter'].join(headers) + '\n'
-      output += "\n".join([ args['delimiter'].join([o['store'], o['username'], o['login'], o['size'], o['type']]) for o in orphans ])
+      output += "\n".join([ args['delimiter'].join([o['store'], o['username'], o['logon'], o['size'], o['type']]) for o in orphans ])
     else:
       xmldata = ElementTree.Element('orphans')
       today = datetime.datetime.today()
 
       for orphan in orphans:
-        print orphan        
         try:
-          login = datetime.datetime.strptime(orphan.get("login").decode('unicode_escape'),'%m/%d/%y %H:%M:%S')
+          logon = datetime.datetime.strptime(orphan.get("logon").decode('unicode_escape'),'%m/%d/%y %H:%M:%S')
         except:
-          login = datetime.datetime.strptime('01/01/01 00:00:00','%y/%m/%d %H:%M:%S')
+          logon = datetime.datetime.strptime('01/01/01 00:00:00','%y/%m/%d %H:%M:%S')
         finally:
-          orphan["login"] = brandt.strXML(login)
-          orphan["lag"] = brandt.strXML((today - login).days)
+          orphan["logon"] = brandt.strXML(logon)
+          orphan["lag"] = brandt.strXML((today - logon).days)
 
         ElementTree.SubElement(xmldata, "orphan", **orphan)
 
