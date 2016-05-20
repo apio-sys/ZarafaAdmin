@@ -59,20 +59,46 @@ Usage: /usr/bin/zarafa-set-oof -u [username of mailbox]
 Manage out of office messages of users
 
 Required arguments:
-   -u, --user          user to set out of office message for
-   -m, --mode          0 to disable out of office (default), 1 to enable
+	-u, --user          user to set out of office message for
+	-m, --mode          0 to disable out of office (default), 1 to enable
 
 optional arguments:
-   --from              specify the date/time when oof should become active
-   --until             specify the date/time when oof should become inactive again
-   -t, --subject       specify the subject to be set in oof message
-   -n, --message       text file containing body of out of office message
-   -h, --host          Host to connect with. Default: file:///var/run/zarafa
-   -s, --sslkey-file   SSL key file to authenticate as admin.
-   -p, --sslkey-pass   Password for the SSL key file.
-   --help              Show this help message and exit.
+	--from              specify the date/time when oof should become active
+	--until             specify the date/time when oof should become inactive again
+	-t, --subject       specify the subject to be set in oof message
+	-n, --message       text file containing body of out of office message
+	-h, --host          Host to connect with. Default: file:///var/run/zarafa
+	-s, --sslkey-file   SSL key file to authenticate as admin.
+	-p, --sslkey-pass   Password for the SSL key file.
+	--help              Show this help message and exit.
 </p>
-
+<table>
+	<tr>
+		<td colspan="5" align="center">Set/Unset Out-of-Office for FullName (emailaddress)</td>
+	</tr>
+	<tr>
+		<td>
+			<select name="mode">
+			  <option value="volvo">Set Out-of-Office</option>
+			  <option value="saab">Unset Out-of-Office</option>
+			</select>
+		</td>
+		<td>From:</td>
+		<td><input type="text" name="from"/></td>
+		<td>Until:</td>
+		<td><input type="text" name="until"/></td>
+	</tr>
+	<tr>
+		<td>Subject:</td>
+		<td colspan="4"><input type="text" name="subject"/></td>
+	</tr>
+	<tr>
+		<td colspan="5">AutoReply only once to each sender with the following text:</td>
+	</tr>
+	<tr>
+		<td colspan="5"><input type="text" name="message"/></td>
+	</tr>
+</table>
 
 
 
