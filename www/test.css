@@ -1,0 +1,15 @@
+/*General Settings*/
+body, div, p, link, td, option, li, ol, ul  
+{
+	color:black; 
+	font-size: 10px;
+	font-family:"Trebuchet MS", Arial, Helvetica, Geneva, Swiss, SunSans-Regular;
+}
+
+#ooo-mode, #ooo-from, #ooo-until, #ooo-subject, #ooo-message
+{
+	font-size: 10px; 
+	font-family:"Trebuchet MS", Arial, Helvetica, Geneva, Swiss, SunSans-Regular;
+	width: 100%;
+	resize: none;	
+}

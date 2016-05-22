@@ -2,13 +2,16 @@
 body, div, p, link, td, option, li, ol, ul  
 {
 	color:black; 
-	font-size:0.9em; 
+/*	font-size:0.9em;
+*/	font-size: 10px;
+
 	font-family:"Trebuchet MS", Arial, Helvetica, Geneva, Swiss, SunSans-Regular;
 }
 select, input, textarea 
 {
 	color: black; 
-	font-size: 0.8em; 
+/*	font-size: 0.8em;
+*/	font-size: 9px;
 	line-height: 1em; 
 	font-family: "Trebuchet MS", Arial, Helvetica, Geneva, Swiss, SunSans-Regular;
 }
@@ -286,3 +289,16 @@ td.hover:hover { background: #BBB }
 }
 #zarafa-emails-totals th { padding: 0px 0px 0px 0px; white-space: nowrap; vertical-align: top; }
 
+
+/* OOO Input */
+#ooo-mode, #ooo-from, #ooo-until, #ooo-subject, #ooo-message, #ooo-cancel, #ooo-submit
+{
+	font-size: 10px; 
+	font-family:"Trebuchet MS", Arial, Helvetica, Geneva, Swiss, SunSans-Regular;
+	width: 100%;
+	resize: none;	
+}
+
+div.ui-datepicker{
+ font-size:8px;
+}
