@@ -102,7 +102,7 @@ a:hover, a:active
 {
 	background-color: #EFEEE9;
 	border-bottom: #999999 solid 1px;
-  font-size: 8px;
+  font-size: 10px;
 	white-space: nowrap;
 	text-align: left;
 }
@@ -111,7 +111,7 @@ a:hover, a:active
 {
 	background-color: #EFEEE9;
 	border-bottom: #999999 solid 1px;
-  font-size: 8px;
+  font-size: 10px;
 	white-space: nowrap;
 	text-align: right;
 }
