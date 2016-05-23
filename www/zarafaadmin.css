@@ -2,16 +2,14 @@
 body, div, p, link, td, option, li, ol, ul  
 {
 	color:black; 
-/*	font-size:0.9em;
-*/	font-size: 10px;
+	font-size: 10px;
 
 	font-family:"Trebuchet MS", Arial, Helvetica, Geneva, Swiss, SunSans-Regular;
 }
 select, input, textarea 
 {
 	color: black; 
-/*	font-size: 0.8em;
-*/	font-size: 9px;
+	font-size: 9px;
 	line-height: 1em; 
 	font-family: "Trebuchet MS", Arial, Helvetica, Geneva, Swiss, SunSans-Regular;
 }
@@ -104,7 +102,7 @@ a:hover, a:active
 {
 	background-color: #EFEEE9;
 	border-bottom: #999999 solid 1px;
-	font-size: .8em;
+  font-size: 8px;
 	white-space: nowrap;
 	text-align: left;
 }
@@ -113,7 +111,7 @@ a:hover, a:active
 {
 	background-color: #EFEEE9;
 	border-bottom: #999999 solid 1px;
-	font-size: .8em;
+  font-size: 8px;
 	white-space: nowrap;
 	text-align: right;
 }
@@ -153,7 +151,7 @@ a:hover, a:active
 	float: left;
 	height: 100%;
 	width: 100%;	
-	font-size: 1.2em;
+  font-size: 12px;
 	color: black;
 	text-align: center;
 	vertical-align: middle;	
@@ -204,7 +202,7 @@ td.hover:hover { background: #BBB }
 .logdata
 {
 	color:black; 
-	font-size :0.8em; 
+ 	font-size:8px;
 	font-family: "Courier New", Courier, monospace;
 	text-align: left;
 }
