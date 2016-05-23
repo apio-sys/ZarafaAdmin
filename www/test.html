@@ -35,10 +35,14 @@ function setMode() {
 			document.getElementById("ooo-until").style.backgroundColor = "lightgrey";
 			document.getElementById("ooo-subject").style.backgroundColor = "lightgrey";
 			document.getElementById("ooo-message").style.backgroundColor = "lightgrey";
-			document.getElementById("ooo-subject").value = "";
+			document.getElementById("ooo-subject").value = "Out of Office";
 			document.getElementById("ooo-message").value = "";
 			document.getElementById("ooo-mode").style.color = "red";			
     }
+}
+
+function gotoRefer() {
+	window.location.href="http://zarafaadmin/";
 }
 </script>
 
@@ -63,7 +67,7 @@ function setMode() {
 	</tr>
 	<tr>
 		<td align="right" colspan="2">Subject:</td>
-		<td colspan="3"><input type="text" name="subject" id="ooo-subject" style="width: 100%;"/></td>
+		<td colspan="3"><input type="text" name="subject" id="ooo-subject" value="Out of Office" style="width: 100%;"/></td>
 	</tr>
 	<tr>
 		<td colspan="5" align="left">AutoReply only once to each sender with the following text:</td>
@@ -74,7 +78,7 @@ function setMode() {
 		</td>
 	</tr>
 	<tr>
-		<td align="left"><input id="ooo-cancel" type="button" value="Cancel"/></td>
+		<td align="left"><input id="ooo-cancel" type="button" value="Cancel" onclick="gotoRefer()"/></td>
 		<td colspan="3"></td>
 		<td align="right"><input id="ooo-submit" type="submit" value="Submit"/></td>		
 	</tr>	
