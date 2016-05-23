@@ -92,9 +92,6 @@ switch ($action) {
     	$title = "Disable Out of Office";
     }
     break;
-  case label2:
-    code to be executed if n=label2;
-    break;
 } 
 
 ?>
