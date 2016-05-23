@@ -107,7 +107,7 @@ if (isset($_POST['email']))   $email = $_POST['email'];
 	<title>Zarafa (Un)Set Out of Office</title>
 </head>
 <body onload="setMode()">
-<form>
+<form action="./zarafa-action.php" method="get">
 <input type="hidden" name="username" value="<?=$username?>"/>
 <input type="hidden" name="fullname" value="<?=$fullname?>"/>
 <input type="hidden" name="email" value="<?=$email?>"/>

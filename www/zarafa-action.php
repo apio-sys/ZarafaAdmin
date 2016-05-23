@@ -83,14 +83,30 @@ if (isset($_POST['message']))   $message = $_POST['message'];
 $referer = "";
 if (isset($_GET['referer']))    $referer = $_GET['referer'];
 if (isset($_POST['referer']))   $referer = $_POST['referer'];
+
+switch ($action) {
+  case "ooo":
+  	if ($mode == "1") {
+    	$title = "Enable Out of Office"
+    } else {
+    	$title = "Disable Out of Office"
+    }
+    break;
+  case label2:
+    code to be executed if n=label2;
+    break;
+
+} 
+
 ?>
 <html><head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<meta http-equiv="Content-Type" charset="utf-8">
 	<link rel="stylesheet" href="zarafaadmin.css">
-	<title>Zarafa (Un)Set Out of Office</title>
+	<title><?=$title?></title>
 </head>
-<body onload="setMode()">
+<body>
 
-<p class="ooo-title">Set/Unset Out-of-Office for <?=$fullname?> (<?=$email?>)</p>
+<p class="action-title"><?=$title?> for <?=$fullname?> (<?=$email?>)</p>
 
+</body></html>
