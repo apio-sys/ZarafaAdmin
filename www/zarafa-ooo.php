@@ -108,6 +108,7 @@ if (isset($_POST['email']))   $email = $_POST['email'];
 </head>
 <body onload="setMode()">
 <form action="./zarafa-action.php" method="get">
+<input type="hidden" name="action" value="ooo"/>
 <input type="hidden" name="username" value="<?=$username?>"/>
 <input type="hidden" name="fullname" value="<?=$fullname?>"/>
 <input type="hidden" name="email" value="<?=$email?>"/>
