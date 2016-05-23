@@ -303,8 +303,9 @@ td.hover:hover { background: #BBB }
 
 #ooo-table
 {
-	text-align: center
-	min-width: 500px;	
+  margin-left: auto; 
+  margin-right: auto;
+  min-width: 500px;	
 	border-collapse: collapse;	
 }
 
