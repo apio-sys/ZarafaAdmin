@@ -162,14 +162,13 @@
 
         <tr><td colspan="6">&#xA0;</td></tr>
         <tr><th colspan="6" align="center">Actions</th></tr>
-        <tr>
-          <td colspan="6" align="center">
-            <a href="./zarafa-ooo.php?username={user/@username}&amp;fullname={user/@fullname}&amp;email={user/@emailaddress}">Set/Unset Out of Office</a>
-          </td>
-          <td colspan="6" align="center">
-            <a href=".">Unhook Email Store</a>
-          </td>
-        </tr>
+        <tr><td colspan="6" align="center">
+          <a href="./zarafa-ooo.php?username={user/@username}&amp;fullname={user/@fullname}&amp;email={user/@emailaddress}">Set/Unset Out of Office</a>
+        </td></tr>
+        <tr><td colspan="6">&#xA0;</td></tr>
+        <tr><td colspan="6" align="center">
+          <a href=".">Unhook Email Store</a>
+        </td></tr>
       </table>
     </xsl:when>
 
