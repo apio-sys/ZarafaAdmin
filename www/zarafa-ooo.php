@@ -111,6 +111,7 @@ function gotoRefer() {
 	<tr>
 		<th colspan="5" align="center" class="ooo-title">Set/Unset Out-of-Office for <?=$fullname?> (<?=$email?>)</th>
 	</tr>
+	<tr><td colspan="5">&nbsp;</td></tr>
 	<tr>
 		<td>
 			<select name="mode" id="ooo-mode" style="width: 100%;" onchange="setMode()">
