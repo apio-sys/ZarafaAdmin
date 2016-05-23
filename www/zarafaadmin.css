@@ -296,6 +296,8 @@ td.hover:hover { background: #BBB }
 }
 .ooo-title th
 {
+	padding: 10px 10px 10px 10px;
+	text-align: center;
 	font-size: 12px; 
 }
 
