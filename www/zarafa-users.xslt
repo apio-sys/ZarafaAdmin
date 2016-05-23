@@ -27,7 +27,7 @@
     <xsl:when test="count(user) = 1">
       <table id="zarafa-user">
         <tr><th colspan="6" align="center">User Detail for <xsl:value-of select="user/@username"/></th></tr>
-        <tr><th colspan="3" align="center">Zarafa Details</th><th colspan="3" align="center">LDAP Details</th></tr>
+        <tr><th colspan="3" align="center">Zarafa Details</th><th colspan="3" align="center">Phonebook Details</th></tr>
         <tr class="hover">
           <td>&#xA0;</td>
           <th align="right">Username:&#xA0;</th><td><xsl:value-of select="user/@username"/></td>

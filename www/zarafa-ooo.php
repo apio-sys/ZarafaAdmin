@@ -104,6 +104,7 @@ function gotoRefer() {
 <title>Zarafa (Un)Set Out of Office</title>
 <body onload="setMode()">
 <form>
+<input type="hidden" name="username" value="<?=$username?>"/>
 <table>
 	<tr>
 		<th colspan="5" align="center" class="ooo-title">Set/Unset Out-of-Office for <?=$fullname?> (<?=$email?>)</th>
