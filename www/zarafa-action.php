@@ -87,10 +87,13 @@ if (isset($_POST['referer']))   $referer = $_POST['referer'];
 switch ($action) {
   case "ooo":
   	if ($mode == "1") {
-    	$title = "Enable Out of Office";
+    	$title = "Enable Out of Office for " . $fullname . " (" . $email . ")";
     } else {
     	$title = "Disable Out of Office";
     }
+    if ($fullname) $title .= " for " . $fullname;
+    if ($email )   $title .= " (" . $email . ")";
+
     break;
 } 
 
@@ -103,6 +106,7 @@ switch ($action) {
 </head>
 <body>
 
-<p class="action-title"><?=$title?> for <?=$fullname?> (<?=$email?>)</p>
+<p class="action-title"><?=$title?></p>
+
 
 </body></html>
