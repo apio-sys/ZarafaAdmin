@@ -1,6 +1,6 @@
 <?php
 /*
- *    Zarafa Orphaned Stores
+ *    Zarafa Out of Office form
  *
  *    Created by: Bob Brandt (http://brandt.ie)
  *    Created on: 2016-04-23
@@ -54,59 +54,64 @@ if (isset($_POST['email']))   $email = $_POST['email'];
 
 ?>
 <html><head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<meta http-equiv="Content-Type" charset="utf-8">
-<link rel="stylesheet" href="zarafaadmin.css">
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Type" charset="utf-8">
+	<link rel="stylesheet" href="zarafaadmin.css">
 
-<!-- https://jqueryui.com/datepicker/ -->
-<link rel="stylesheet" href="jquery-ui.css">
-<script src="jquery-1.10.2.js"></script>
-<script src="jquery-ui.js"></script>
-<script>
-$(function() {
-  $( "#ooo-from" ).datepicker({ dateFormat: 'dd-mm-yy' });
-  $( "#ooo-until" ).datepicker({ dateFormat: 'dd-mm-yy' });
-});
+	<!-- https://jqueryui.com/datepicker/ -->
+	<link rel="stylesheet" href="jquery-ui.css">
+	<script src="jquery-1.10.2.js"></script>
+	<script src="jquery-ui.js"></script>
+	<script>
+		$(function() {
+		  $( "#ooo-from" ).datepicker({ dateFormat: 'dd-mm-yy' });
+		  $( "#ooo-until" ).datepicker({ dateFormat: 'dd-mm-yy' });
+		});
+		$(document).keydown(function (e) {
+		    if(e.keyCode==27){
+		        gotoRefer();
+		    }
+		});
+		function setMode() {
+		    var mode = document.getElementById("ooo-mode").value;
+		    if (mode == 1) {
+					document.getElementById("ooo-from").disabled = false;
+					document.getElementById("ooo-until").disabled = false;
+					document.getElementById("ooo-subject").disabled = false;
+					document.getElementById("ooo-message").disabled = false;
+					document.getElementById("ooo-from").style.backgroundColor = "white";
+					document.getElementById("ooo-until").style.backgroundColor = "white";
+					document.getElementById("ooo-subject").style.backgroundColor = "white";
+					document.getElementById("ooo-message").style.backgroundColor = "white";
+					document.getElementById("ooo-mode").style.color = "green";
 
-function setMode() {
-    var mode = document.getElementById("ooo-mode").value;
-    if (mode == 1) {
-			document.getElementById("ooo-from").disabled = false;
-			document.getElementById("ooo-until").disabled = false;
-			document.getElementById("ooo-subject").disabled = false;
-			document.getElementById("ooo-message").disabled = false;
-			document.getElementById("ooo-from").style.backgroundColor = "white";
-			document.getElementById("ooo-until").style.backgroundColor = "white";
-			document.getElementById("ooo-subject").style.backgroundColor = "white";
-			document.getElementById("ooo-message").style.backgroundColor = "white";
-			document.getElementById("ooo-mode").style.color = "green";
+		    } else {
+					document.getElementById("ooo-from").disabled = true;
+					document.getElementById("ooo-until").disabled = true;
+					document.getElementById("ooo-subject").disabled = true;
+					document.getElementById("ooo-message").disabled = true;
+					document.getElementById("ooo-from").style.backgroundColor = "lightgrey";
+					document.getElementById("ooo-until").style.backgroundColor = "lightgrey";
+					document.getElementById("ooo-subject").style.backgroundColor = "lightgrey";
+					document.getElementById("ooo-message").style.backgroundColor = "lightgrey";
+					document.getElementById("ooo-subject").value = "Out of Office";
+					document.getElementById("ooo-message").value = "";
+					document.getElementById("ooo-mode").style.color = "red";			
+		    }
+		}
 
-    } else {
-			document.getElementById("ooo-from").disabled = true;
-			document.getElementById("ooo-until").disabled = true;
-			document.getElementById("ooo-subject").disabled = true;
-			document.getElementById("ooo-message").disabled = true;
-			document.getElementById("ooo-from").style.backgroundColor = "lightgrey";
-			document.getElementById("ooo-until").style.backgroundColor = "lightgrey";
-			document.getElementById("ooo-subject").style.backgroundColor = "lightgrey";
-			document.getElementById("ooo-message").style.backgroundColor = "lightgrey";
-			document.getElementById("ooo-subject").value = "Out of Office";
-			document.getElementById("ooo-message").value = "";
-			document.getElementById("ooo-mode").style.color = "red";			
-    }
-}
-
-function gotoRefer() {
-	window.location.href = "<?=$_SERVER['HTTP_REFERER']?>";
-}
-</script>
-
-<title>Zarafa (Un)Set Out of Office</title>
+		function gotoRefer() {
+			window.location.href = "<?=$_SERVER['HTTP_REFERER']?>";
+		}
+	</script>
+	<title>Zarafa (Un)Set Out of Office</title>
+</head>
 <body onload="setMode()">
 <form>
 <input type="hidden" name="username" value="<?=$username?>"/>
 <input type="hidden" name="fullname" value="<?=$fullname?>"/>
 <input type="hidden" name="email" value="<?=$email?>"/>
+<input type="hidden" name="referer" value="<?=$_SERVER['HTTP_REFERER']?>"/>
 <p class="ooo-title">Set/Unset Out-of-Office for <?=$fullname?> (<?=$email?>)</p>
 <table id="ooo-table" align="center">
 	<tr>
