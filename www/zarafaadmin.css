@@ -202,7 +202,7 @@ td.hover:hover { background: #BBB }
 .logdata
 {
 	color:black; 
- 	font-size:8px;
+ 	font-size: 8px;
 	font-family: "Courier New", Courier, monospace;
 	text-align: left;
 }
@@ -302,5 +302,5 @@ td.hover:hover { background: #BBB }
 }
 
 div.ui-datepicker{
- font-size:8px;
+ font-size: 8px;
 }
