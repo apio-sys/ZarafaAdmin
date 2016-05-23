@@ -84,16 +84,21 @@ $referer = "";
 if (isset($_GET['referer']))    $referer = $_GET['referer'];
 if (isset($_POST['referer']))   $referer = $_POST['referer'];
 
+$title=""
+$warning=""
 switch ($action) {
   case "ooo":
   	if ($mode == "1") {
-    	$title = "Enable Out of Office for " . $fullname . " (" . $email . ")";
+    	$title = "Enable Out of Office";
+    	$warning = "This action will turn ON the Out Of Office automatic message for the user specified."
     } else {
     	$title = "Disable Out of Office";
+    	$warning = "This action will turn OFF the Out Of Office automatic message for the user specified."    	
     }
-    if ($fullname) $title .= " for " . $fullname;
-    if ($email )   $title .= " (" . $email . ")";
-
+    if ($fullname) {
+    	$title .= " for " . $fullname;
+    	if ($email )   $title .= " (" . $email . ")";
+    }
     break;
 } 
 
@@ -102,11 +107,26 @@ switch ($action) {
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<meta http-equiv="Content-Type" charset="utf-8">
 	<link rel="stylesheet" href="zarafaadmin.css">
+	<script>
+		function gotoRefer() {
+			window.location.href = "<?=$referer?>";
+		}
+	</script>	
 	<title><?=$title?></title>
 </head>
 <body>
 
 <p class="action-title"><?=$title?></p>
+<table name="action-table">
+	<tr><th colspan="2" class="action-warning"><?=$warning?></th></tr>
+	<tr><th colspan="2">Please login with your network credentials to confirm the action above:</th></tr>
+	<tr><th>Username:</th><td><input type="text" name="loginuser" readonly="readonly" value="<?=$username?>"/></td></tr>
+	<tr><th>Password:</th><td><input type="password" name="loginpass"/></td></tr>
+	<tr>
+		<td align="left"><input id="action-cancel" type="button" value="Cancel" onclick="gotoRefer()"/></td>
+		<td align="right"><input id="action-submit" type="submit" value="Submit"/></td>	
+	</tr>
+</table>
 
 
 </body></html>
