@@ -84,16 +84,16 @@ $referer = "";
 if (isset($_GET['referer']))    $referer = $_GET['referer'];
 if (isset($_POST['referer']))   $referer = $_POST['referer'];
 
-$title=""
-$warning=""
+$title = "";
+$warning = "";
 switch ($action) {
   case "ooo":
   	if ($mode == "1") {
     	$title = "Enable Out of Office";
-    	$warning = "This action will turn ON the Out Of Office automatic message for the user specified."
+    	$warning = "This action will turn ON the Out Of Office automatic message for the user specified.";
     } else {
     	$title = "Disable Out of Office";
-    	$warning = "This action will turn OFF the Out Of Office automatic message for the user specified."    	
+    	$warning = "This action will turn OFF the Out Of Office automatic message for the user specified.";    	
     }
     if ($fullname) {
     	$title .= " for " . $fullname;
