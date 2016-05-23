@@ -299,6 +299,12 @@ td.hover:hover { background: #BBB }
 	font-size: 12px; 
 }
 
+#ooo-table
+{
+	min-width: 500px;	
+	border-collapse: collapse;	
+}
+
 div.ui-datepicker{
  font-size: 8px;
 }

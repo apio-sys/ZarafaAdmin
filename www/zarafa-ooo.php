@@ -107,7 +107,7 @@ function gotoRefer() {
 <input type="hidden" name="username" value="<?=$username?>"/>
 <input type="hidden" name="fullname" value="<?=$fullname?>"/>
 <input type="hidden" name="email" value="<?=$email?>"/>
-<table>
+<table id="ooo-table">
 	<tr>
 		<th colspan="5" align="center" class="ooo-title">Set/Unset Out-of-Office for <?=$fullname?> (<?=$email?>)</th>
 	</tr>
