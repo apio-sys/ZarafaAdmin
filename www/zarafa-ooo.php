@@ -108,11 +108,14 @@ function gotoRefer() {
 <input type="hidden" name="fullname" value="<?=$fullname?>"/>
 <input type="hidden" name="email" value="<?=$email?>"/>
 <table id="ooo-table">
+	<tr><td colspan="6">&nbsp;</td></tr>
 	<tr>
+		<td>&nbsp;</td>
 		<th colspan="5" align="center" class="ooo-title">Set/Unset Out-of-Office for <?=$fullname?> (<?=$email?>)</th>
 	</tr>
-	<tr><td colspan="5">&nbsp;</td></tr>
+	<tr><td colspan="6">&nbsp;</td></tr>
 	<tr>
+		<td>&nbsp;</td>	
 		<td>
 			<select name="mode" id="ooo-mode" style="width: 100%;" onchange="setMode()">
 			  <option value="0" selected="selected">Disable Out-of-Office</option>
@@ -125,18 +128,22 @@ function gotoRefer() {
 		<td><input id="ooo-until" name="until"/></td>
 	</tr>
 	<tr>
+		<td>&nbsp;</td>	
 		<td align="right" colspan="2">Subject:</td>
 		<td colspan="3"><input type="text" name="subject" id="ooo-subject" value="Out of Office" style="width: 100%;"/></td>
 	</tr>
 	<tr>
+		<td>&nbsp;</td>	
 		<td colspan="5" align="left">AutoReply only once to each sender with the following text:</td>
 	</tr>
 	<tr>
+		<td>&nbsp;</td>	
 		<td colspan="5">
 			<textarea rows="4" cols="50" name="message" id="ooo-message" style="width: 100%; resize: none;"></textarea>
 		</td>
 	</tr>
 	<tr>
+		<td>&nbsp;</td>	
 		<td align="left"><input id="ooo-cancel" type="button" value="Cancel" onclick="gotoRefer()"/></td>
 		<td colspan="3"></td>
 		<td align="right"><input id="ooo-submit" type="submit" value="Submit"/></td>		
