@@ -87,15 +87,14 @@ if (isset($_POST['referer']))   $referer = $_POST['referer'];
 switch ($action) {
   case "ooo":
   	if ($mode == "1") {
-    	$title = "Enable Out of Office"
+    	$title = "Enable Out of Office";
     } else {
-    	$title = "Disable Out of Office"
+    	$title = "Disable Out of Office";
     }
     break;
   case label2:
     code to be executed if n=label2;
     break;
-
 } 
 
 ?>
