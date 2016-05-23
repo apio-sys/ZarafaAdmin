@@ -97,7 +97,7 @@ function setMode() {
 }
 
 function gotoRefer() {
-	window.location.href="http://zarafaadmin/";
+	window.location.href = $_SERVER['HTTP_REFERER'];
 }
 </script>
 
@@ -106,7 +106,7 @@ function gotoRefer() {
 <form>
 <table>
 	<tr>
-		<td colspan="5" align="center">Set/Unset Out-of-Office for FullName (emailaddress)</td>
+		<th colspan="5" align="center" class="ooo-title">Set/Unset Out-of-Office for <?=$fullname?> (<?=$email?>)</th>
 	</tr>
 	<tr>
 		<td>
