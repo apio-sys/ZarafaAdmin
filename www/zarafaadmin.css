@@ -298,11 +298,12 @@ td.hover:hover { background: #BBB }
 {
 	padding: 10px 10px 10px 10px;
 	text-align: center;
-	font-size: 12px; 
+	font-size: 16px; 
 }
 
 #ooo-table
 {
+	text-align: center
 	min-width: 500px;	
 	border-collapse: collapse;	
 }
