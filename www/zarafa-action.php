@@ -90,10 +90,10 @@ switch ($action) {
   case "ooo":
   	if ($mode == "1") {
     	$title = "Enable Out of Office";
-    	$warning = "This action will turn ON the Out Of Office automatic message for the user specified.";
+    	$warning = "This action will turn ON the Out Of Office<br/>automatic message for the user specified.";
     } else {
     	$title = "Disable Out of Office";
-    	$warning = "This action will turn OFF the Out Of Office automatic message for the user specified.";    	
+    	$warning = "This action will turn OFF the Out Of Office<br/>automatic message for the user specified.";    	
     }
     if ($fullname) {
     	$title .= " for " . $fullname;
@@ -122,7 +122,7 @@ switch ($action) {
     <col width="50%">
     <col width="50%">
   </colgroup>
-	<tr><th align="center" colspan="2" class="action-warning"><?=$warning?></th></tr>
+	<tr><th align="center" colspan="2" class="action-warning">Warning: <?=$warning?></th></tr>
 	<tr><th align="center" colspan="2">Please login with your network credentials to confirm the action above:</th></tr>
 	<tr><th align="right">Username:</th><td align="left"><input type="text" name="loginuser" readonly="readonly" value="<?=$username?>"/></td></tr>
 	<tr><th align="right">Password:</th><td align="left"><input type="password" name="loginpass"/></td></tr>
