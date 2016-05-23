@@ -122,10 +122,10 @@ switch ($action) {
     <col width="50%">
     <col width="50%">
   </colgroup>
-	<tr><th colspan="2" class="action-warning"><?=$warning?></th></tr>
-	<tr><th colspan="2">Please login with your network credentials to confirm the action above:</th></tr>
-	<tr><th>Username:</th><td><input type="text" name="loginuser" readonly="readonly" value="<?=$username?>"/></td></tr>
-	<tr><th>Password:</th><td><input type="password" name="loginpass"/></td></tr>
+	<tr><th align="center" colspan="2" class="action-warning"><?=$warning?></th></tr>
+	<tr><th align="center" colspan="2">Please login with your network credentials to confirm the action above:</th></tr>
+	<tr><th align="right">Username:</th><td align="left"><input type="text" name="loginuser" readonly="readonly" value="<?=$username?>"/></td></tr>
+	<tr><th align="right">Password:</th><td align="left"><input type="password" name="loginpass"/></td></tr>
 	<tr>
 		<td align="center"><input id="action-cancel" type="button" value="Cancel" onclick="gotoRefer()"/></td>
 		<td align="center"><input id="action-submit" type="submit" value="Submit"/></td>	
