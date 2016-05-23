@@ -298,6 +298,10 @@ td.hover:hover { background: #BBB }
 	width: 100%;
 	resize: none;	
 }
+.ooo-title th
+{
+	font-size: 12px; 
+}
 
 div.ui-datepicker{
  font-size:8px;
