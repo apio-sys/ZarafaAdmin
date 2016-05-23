@@ -97,7 +97,7 @@ function setMode() {
 }
 
 function gotoRefer() {
-	window.location.href = $_SERVER['HTTP_REFERER'];
+	window.location.href = "<?=$_SERVER['HTTP_REFERER']?>";
 }
 </script>
 
