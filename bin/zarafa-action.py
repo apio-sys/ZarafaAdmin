@@ -2,7 +2,7 @@
 """
 Python wrapper for zarafa-admin actions
 """
-import argparse, textwrap, fnmatch, datetime
+import argparse, textwrap, fnmatch, datetime, getpass
 import xml.etree.cElementTree as ElementTree
 import subprocess
 
@@ -17,7 +17,7 @@ args['output'] = 'text'
 args['user'] = ''
 args['pass'] = ''
 args['action'] = ''
-args['actions'] = ['ooo-enable','ooo-disable','unhook']
+args['actions'] = ['ooo','ooo-enable','ooo-disable','hook','unhook']
 
 args['username'] = ''
 args['fullname'] = ''
@@ -98,7 +98,7 @@ def command_line_args():
           choices=['text', 'xml'],
           help="Display output type.")
   parser.add_argument('action',
-          nargs=1,
+          nargs="*",
           default= args['action'],
           choices= args['actions'],
           help="Action to perform.")
@@ -164,7 +164,27 @@ def command_line_args():
           help="Referer Page.")
 
   args.update(vars(parser.parse_args()))
-  # if args['action']: args['action'] = args['action'][0]
+  if args['action']: args['action'] = args['action'][0]
+
+def get_input(prompt, type_format = str, stream = sys.stdout.write):
+  if str(type(type_format)) == "<type 'str'>" and type_format.lower() == "password":
+    tmp = getpass.getpass(prompt)
+  else:
+    tmp = type_format(raw_input(prompt, stream))
+  return tmp
+
+def process_ooo():
+  # if not args['username']: args['username'] = get_input("Enter user name: ")
+
+  # if not args['fullname']: args['fullname'] = get_input("Enter " + args['username'] + "'s full name: ")
+  # if not args['email']: args['email'] = get_input("Enter " + args['username'] + "'s email: ")
+  # if not args['from']: args['from'] = get_input("Enter start date (DD-MM-YYYY): ")
+  # if not args['until']: args['until'] = get_input("Enter end date (DD-MM-YYYY): ")
+  # if not args['subject']: args['subject'] = get_input("Enter subject: ")
+  # if not args['message']: args['message'] = get_input("Enter message: ")
+
+  # if not args['user']: args['user'] = get_input("Enter your user name: ")
+  if not args['pass']: args['pass'] = get_input("Enter your password: ", "password")
 
 
 # Start program
@@ -177,7 +197,16 @@ if __name__ == "__main__":
 
     command_line_args()
 
-
+    if args['action'] == "ooo":
+      process_ooo()
+    elif args['action'] == "ooo-enable":
+      process_ooo_enable()
+    elif args['action'] == "ooo-disable":
+      process_ooo_disable()
+    elif args['action'] == "hook":
+      process_hook()
+    elif args['action'] == "unhook":
+      process_unhook()
 
 
   # except SystemExit as err:
