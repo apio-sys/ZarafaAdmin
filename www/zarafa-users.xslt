@@ -175,6 +175,56 @@
     <xsl:otherwise>
       <table id="zarafa-users">
       <tr>
+        <th colspan="8">
+          <table align="center" id="zarafa-users-totals" width="100%">
+            <caption>License information</caption>
+            <tr>
+              <td align="center" width="25%">&#160;</td>
+              <th align="center" width="25%">Allowed</th>
+              <th align="center" width="25%">Used</th>
+              <th align="center" width="25%">Available</th>
+            </tr>
+            <tr>
+              <td>Active:</td>
+              <td><xsl:value-of select="licensed/active/@allowed"/></td>
+              <td><xsl:value-of select="licensed/active/@used"/></td>
+              <td><xsl:value-of select="licensed/active/@available"/></td>
+            </tr>
+            <tr>
+              <td>Non-Active:</td>
+              <td><xsl:value-of select="licensed/nonactive/@allowed"/></td>
+              <td><xsl:value-of select="licensed/nonactive/@used"/></td>
+              <td><xsl:value-of select="licensed/nonactive/@available"/></td>
+            </tr>
+            <tr>
+              <td>&#160;&#160;Users:</td>
+              <td>&#160;</td>
+              <td><xsl:value-of select="licensed/nonactive/@users"/></td>
+              <td>&#160;</td>
+            </tr>            
+            <tr>
+              <td>&#160;&#160;Rooms:</td>
+              <td>&#160;</td>
+              <td><xsl:value-of select="licensed/nonactive/@rooms"/></td>
+              <td>&#160;</td>
+            </tr>            
+            <tr>
+              <td>&#160;&#160;Equipment:</td>
+              <td>&#160;</td>
+              <td><xsl:value-of select="licensed/nonactive/@equipment"/></td>
+              <td>&#160;</td>
+            </tr>            
+            <tr>
+              <td>Total:</td>
+              <td><xsl:value-of select="licensed/total/@allowed"/></td>
+              <td><xsl:value-of select="licensed/total/@used"/></td>
+              <td><xsl:value-of select="licensed/total/@available"/></td>
+            </tr>
+          </table>
+        </th>
+      </tr>   
+
+      <tr>
         <th align="left"><a href="./zarafa-users.php?sort=username">Username</a></th>
         <th align="left"><a href="./zarafa-users.php?sort=fullname">Full Name</a></th>
         <th align="left"><a href="./zarafa-users.php?sort=emailaddress">Email Address</a></th>

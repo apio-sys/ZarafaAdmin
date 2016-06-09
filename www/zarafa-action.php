@@ -117,6 +117,7 @@ switch ($action) {
 <body>
 
 <p class="action-title"><?=$title?></p>
+<form method="get">
 <table name="action-table">
   <colgroup>
     <col width="50%">
@@ -131,6 +132,7 @@ switch ($action) {
 		<td align="center"><input id="action-submit" type="submit" value="Submit"/></td>	
 	</tr>
 </table>
+</form>
 
 
 </body></html>
