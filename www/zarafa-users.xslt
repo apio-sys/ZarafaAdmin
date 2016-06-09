@@ -181,7 +181,7 @@
             <tr>
               <td align="center">&#160;</td>
               <th align="center">Allowed</th>
-              <th align="right">Used&#160;&#160;</th>
+              <th align="right">&#160;&#160;Used</th>
               <th align="center">Available</th>
             </tr>
             <tr class="entry">
