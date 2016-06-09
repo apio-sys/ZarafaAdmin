@@ -205,7 +205,7 @@
             <tr class="entry">
               <th align="left">&#160;&#160;Rooms:</th>
               <td align="right">&#160;</td>
-              <td align="right"><xsl:value-of select="licensed/nonactive/@rooms"/&#160;&#160;></td>
+              <td align="right"><xsl:value-of select="licensed/nonactive/@rooms"/>&#160;&#160;</td>
               <td align="right">&#160;</td>
             </tr>            
             <tr class="entry">
