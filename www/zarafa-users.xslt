@@ -181,40 +181,40 @@
             <tr>
               <td align="center">&#160;</td>
               <th align="center">Allowed</th>
-              <th align="center">Used</th>
+              <th align="center">&#160;&#160;Used&#160;&#160;</th>
               <th align="center">Available</th>
             </tr>
-            <tr>
+            <tr class="entry">
               <th align="left">Active:</th>
               <td align="right"><xsl:value-of select="licensed/active/@allowed"/></td>
               <td align="right"><xsl:value-of select="licensed/active/@used"/></td>
               <td align="right"><xsl:value-of select="licensed/active/@available"/></td>
             </tr>
-            <tr>
+            <tr class="entry">
               <th align="left">Non-Active:</th>
               <td align="right"><xsl:value-of select="licensed/nonactive/@allowed"/></td>
               <td align="right"><xsl:value-of select="licensed/nonactive/@used"/></td>
               <td align="right"><xsl:value-of select="licensed/nonactive/@available"/></td>
             </tr>
-            <tr>
+            <tr class="entry">
               <th align="left">&#160;&#160;Users:</th>
               <td align="right">&#160;</td>
               <td align="right"><xsl:value-of select="licensed/nonactive/@users"/></td>
               <td align="right">&#160;</td>
             </tr>            
-            <tr>
+            <tr class="entry">
               <th align="left">&#160;&#160;Rooms:</th>
               <td align="right">&#160;</td>
               <td align="right"><xsl:value-of select="licensed/nonactive/@rooms"/></td>
               <td align="right">&#160;</td>
             </tr>            
-            <tr>
+            <tr class="entry">
               <th align="left">&#160;&#160;Equipment:</th>
               <td align="right">&#160;</td>
               <td align="right"><xsl:value-of select="licensed/nonactive/@equipment"/></td>
               <td align="right">&#160;</td>
             </tr>            
-            <tr>
+            <tr class="entry">
               <th align="left">Total:</th>
               <td align="right">&#160;</td>
               <td align="right"><xsl:value-of select="licensed/total/@used"/></td>
