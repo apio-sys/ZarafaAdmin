@@ -179,46 +179,46 @@
           <table align="center" id="zarafa-users-totals" width="100%">
             <caption>License information</caption>
             <tr>
-              <td align="center" width="25%">&#160;</td>
-              <th align="center" width="25%">Allowed</th>
-              <th align="center" width="25%">Used</th>
-              <th align="center" width="25%">Available</th>
+              <td align="center">&#160;</td>
+              <th align="center">Allowed</th>
+              <th align="center">Used</th>
+              <th align="center">Available</th>
             </tr>
             <tr>
-              <td>Active:</td>
-              <td><xsl:value-of select="licensed/active/@allowed"/></td>
-              <td><xsl:value-of select="licensed/active/@used"/></td>
-              <td><xsl:value-of select="licensed/active/@available"/></td>
+              <td align="left">Active:</td>
+              <td align="right"><xsl:value-of select="licensed/active/@allowed"/></td>
+              <td align="right"><xsl:value-of select="licensed/active/@used"/></td>
+              <td align="right"><xsl:value-of select="licensed/active/@available"/></td>
             </tr>
             <tr>
-              <td>Non-Active:</td>
-              <td><xsl:value-of select="licensed/nonactive/@allowed"/></td>
-              <td><xsl:value-of select="licensed/nonactive/@used"/></td>
-              <td><xsl:value-of select="licensed/nonactive/@available"/></td>
+              <td align="left">Non-Active:</td>
+              <td align="right"><xsl:value-of select="licensed/nonactive/@allowed"/></td>
+              <td align="right"><xsl:value-of select="licensed/nonactive/@used"/></td>
+              <td align="right"><xsl:value-of select="licensed/nonactive/@available"/></td>
             </tr>
             <tr>
-              <td>&#160;&#160;Users:</td>
-              <td>&#160;</td>
-              <td><xsl:value-of select="licensed/nonactive/@users"/></td>
-              <td>&#160;</td>
+              <td align="left">&#160;&#160;Users:</td>
+              <td align="right">&#160;</td>
+              <td align="right"><xsl:value-of select="licensed/nonactive/@users"/></td>
+              <td align="right">&#160;</td>
             </tr>            
             <tr>
-              <td>&#160;&#160;Rooms:</td>
-              <td>&#160;</td>
-              <td><xsl:value-of select="licensed/nonactive/@rooms"/></td>
-              <td>&#160;</td>
+              <td align="left">&#160;&#160;Rooms:</td>
+              <td align="right">&#160;</td>
+              <td align="right"><xsl:value-of select="licensed/nonactive/@rooms"/></td>
+              <td align="right">&#160;</td>
             </tr>            
             <tr>
-              <td>&#160;&#160;Equipment:</td>
-              <td>&#160;</td>
-              <td><xsl:value-of select="licensed/nonactive/@equipment"/></td>
-              <td>&#160;</td>
+              <td align="left">&#160;&#160;Equipment:</td>
+              <td align="right">&#160;</td>
+              <td align="right"><xsl:value-of select="licensed/nonactive/@equipment"/></td>
+              <td align="right">&#160;</td>
             </tr>            
             <tr>
-              <td>Total:</td>
-              <td><xsl:value-of select="licensed/total/@allowed"/></td>
-              <td><xsl:value-of select="licensed/total/@used"/></td>
-              <td><xsl:value-of select="licensed/total/@available"/></td>
+              <td align="left">Total:</td>
+              <td align="right">&#160;</td>
+              <td align="right"><xsl:value-of select="licensed/total/@used"/></td>
+              <td align="right">&#160;</td>
             </tr>
           </table>
         </th>
