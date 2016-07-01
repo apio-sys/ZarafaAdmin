@@ -180,7 +180,7 @@
             <caption>License information</caption>
             <tr>
               <td align="center">&#160;</td>
-              <th align="right">Allowed&#160;</th>
+              <th align="right">Allowed</th>
               <th align="right">&#160;&#160;Used</th>
               <th align="right">&#160;&#160;Available</th>
             </tr>
