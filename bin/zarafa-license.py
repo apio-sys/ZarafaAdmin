@@ -87,10 +87,9 @@ def get_data():
 
   data = {}
   print out
-  
-  return data
 
-  # for line in out.split('\n'):
+  for line in out.split('\n'):
+    print line
   #   tmp = line.split('\t')
   #   print tmp
   #   if line and len(tmp) > 5:
