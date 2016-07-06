@@ -178,24 +178,13 @@ if __name__ == "__main__":
       print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
     elif args['output'] == 'csv':
       print args['delimiter'].join(['Type','Used','Available','Allowed','Users','Rooms','Equipment'])
-      print args['delimiter'].join(['active',license.get('active',{'used':'0'}).get('used'),
-                                             license.get('active',{'available':'0'}).get('available'),
-                                             license.get('active',{'allowed':'0'}).get('allowed'),
-                                             license.get('active',{'users':'0'}).get('users'),
-                                             license.get('active',{'rooms':'0'}).get('rooms'),
-                                             license.get('active',{'equipment':'0'}).get('equipment')]) 
-      print args['delimiter'].join(['non-active',license.get('non-active',{'used':'0'}).get('used'),
-                                                 license.get('non-active',{'available':'0'}).get('available'),
-                                                 license.get('non-active',{'allowed':'0'}).get('allowed'),
-                                                 license.get('non-active',{'users':'0'}).get('users'),
-                                                 license.get('non-active',{'rooms':'0'}).get('rooms'),
-                                                 license.get('non-active',{'equipment':'0'}).get('equipment')])
-      print args['delimiter'].join(['total',license.get('total',{'used':'0'}).get('used'),
-                                            license.get('total',{'available':'0'}).get('available'),
-                                            license.get('total',{'allowed':'0'}).get('allowed'),
-                                            license.get('total',{'users':'0'}).get('users'),
-                                            license.get('total',{'rooms':'0'}).get('rooms'),
-                                            license.get('total',{'equipment':'0'}).get('equipment')])
+      print args['delimiter'].join(['active',license.['active']['used'],license.['active']['available'],license.['active']['allowed'],
+                                            ,license.['active']['users'],license.['active']['rooms'],license.['active']['equipment'])
+      print args['delimiter'].join(['non-active',license.['active']['used'],license.['active']['available'],license.['active']['allowed'],
+                                            ,license.['active']['users'],license.['active']['rooms'],license.['active']['equipment'])
+      print args['delimiter'].join(['total',license.['active']['used'],license.['active']['available'],license.['active']['allowed'],
+                                            ,license.['active']['users'],license.['active']['rooms'],license.['active']['equipment'])                                                  
+
     #   if output: print str(output)
     #   if error:  sys.stderr.write( str(error) + "\n" )
     # else:
