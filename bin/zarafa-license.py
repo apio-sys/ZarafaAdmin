@@ -180,19 +180,19 @@ if __name__ == "__main__":
                                              license.get('active',{'allowed':'0'}).get('allowed'),
                                              license.get('active',{'users':'0'}).get('users'),
                                              license.get('active',{'rooms':'0'}).get('rooms'),
-                                             license.get('active',{'equipment':'0'}).get('equipment'))  
+                                             license.get('active',{'equipment':'0'}).get('equipment')]) 
       print args['delimiter'].join(['non-active',license.get('non-active',{'used':'0'}).get('used'),
                                                  license.get('non-active',{'available':'0'}).get('available'),
                                                  license.get('non-active',{'allowed':'0'}).get('allowed'),
                                                  license.get('non-active',{'users':'0'}).get('users'),
                                                  license.get('non-active',{'rooms':'0'}).get('rooms'),
-                                                 license.get('non-active',{'equipment':'0'}).get('equipment'))      
+                                                 license.get('non-active',{'equipment':'0'}).get('equipment')])
       print args['delimiter'].join(['total',license.get('total',{'used':'0'}).get('used'),
                                             license.get('total',{'available':'0'}).get('available'),
                                             license.get('total',{'allowed':'0'}).get('allowed'),
                                             license.get('total',{'users':'0'}).get('users'),
                                             license.get('total',{'rooms':'0'}).get('rooms'),
-                                            license.get('total',{'equipment':'0'}).get('equipment'))  
+                                            license.get('total',{'equipment':'0'}).get('equipment')])
     #   if output: print str(output)
     #   if error:  sys.stderr.write( str(error) + "\n" )
     # else:
