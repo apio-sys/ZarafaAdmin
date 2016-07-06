@@ -90,6 +90,7 @@ def get_data():
     tmp = line.split('\t')
     if line and len(tmp) > 5:
       name = str(tmp[1]).strip().lower()
+      print name, "-", line
       allowed = str(tmp[-4]).strip()
       allowed = allowed.split()[0].lower() if allowed else "0"
       used = str(tmp[-3]).strip()
