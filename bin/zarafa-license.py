@@ -165,10 +165,7 @@ if __name__ == "__main__":
   #                                            msg=brandt.strXML(errmsg), 
   #                                            cmd=brandt.strXML(" ".join(sys.argv)))
   # finally:
-    if args['output'] == 'json': 
-      print json.dumps(license, indent=2, sort_keys=True)
-      if error:  sys.stderr.write( str(error) + "\n" )
-    elif args['output'] == 'xml': 
+    if args['output'] == 'xml': 
       xml = ElementTree.Element('zarafaadmin')
       if xmldata: xml.append(xmldata)
       xmllic = ElementTree.SubElement(xml, 'licensed')
@@ -176,16 +173,21 @@ if __name__ == "__main__":
       ElementTree.SubElement(xmllic, "nonactive", **license['non-active'])
       ElementTree.SubElement(xmllic, "total", **license['total'])
       print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
+      
+    if args['output'] == 'json': 
+      print json.dumps(license, indent=2, sort_keys=True)
+      if error:  sys.stderr.write( str(error) + "\n" )
+
     elif args['output'] == 'csv':
       print args['delimiter'].join(['Type','Used','Available','Allowed','Users','Rooms','Equipment'])
-      print args['delimiter'].join(['active',license.['active']['used'],license.['active']['available'],license.['active']['allowed'],
-                                            ,license.['active']['users'],license.['active']['rooms'],license.['active']['equipment'])
-      print args['delimiter'].join(['non-active',license.['active']['used'],license.['active']['available'],license.['active']['allowed'],
-                                            ,license.['active']['users'],license.['active']['rooms'],license.['active']['equipment'])
-      print args['delimiter'].join(['total',license.['active']['used'],license.['active']['available'],license.['active']['allowed'],
-                                            ,license.['active']['users'],license.['active']['rooms'],license.['active']['equipment'])                                                  
-
-    #   if output: print str(output)
-    #   if error:  sys.stderr.write( str(error) + "\n" )
+      print args['delimiter'].join(['active',license['active']['used'],license['active']['available'],license['active']['allowed'],
+                                            ,license['active']['users'],license['active']['rooms'],license['active']['equipment'])
+      print args['delimiter'].join(['non-active',license['non-active']['used'],license['non-active']['available'],license['non-active']['allowed'],
+                                                ,license['non-active']['users'],license['non-active']['rooms'],license['non-active']['equipment'])
+      print args['delimiter'].join(['total',license['total']['used'],license['total']['available'],license['total']['allowed'],
+                                           ,license['total']['users'],license['total']['rooms'],license['total']['equipment'])
+      if error:  sys.stderr.write( str(error) + "\n" )      
+    else:
+      print license
     # else:
     sys.exit(exitcode)
