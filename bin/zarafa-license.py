@@ -93,9 +93,11 @@ def get_data():
     if line: 
       print line
       line[0] = str(line[0]).strip().lower()
-      print line
+      if line[0] == 'active' and len(line) > 3:
+        data[line[0]] = {'allowed':line[1], 'used':line[2], 'available':line[3]}
+        
+  return data
 
-      
       # print name, "-", line
       # allowed = str(tmp[-4]).strip()
       # allowed = allowed.split()[0].lower() if allowed else "0"
