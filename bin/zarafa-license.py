@@ -83,15 +83,18 @@ def get_data():
   out, err = p.communicate()
   if err: raise IOError(err)
 
-  data = {}
+  data = {'active': {'used': '0', 'available': '', 'allowed': '', 'users': '', 'rooms': '', 'equipment': ''},
+          'non-active': {'used': '0', 'available': '', 'allowed': '', 'users': '', 'rooms': '', 'equipment': ''},
+          'total': {'used': '0', 'available': '', 'allowed': '', 'users': '', 'rooms': '', 'equipment': ''}}
+
   for line in out.split('\n')[3:]:
     line = line.split()
     if line:
       line[0] = str(line[0]).strip().lower()
       if line[0] == 'active' and len(line) > 3:
-        data['active'] = {'allowed':line[1], 'used':line[2], 'available':line[3]}
+        data['active'].update({'allowed':line[1], 'used':line[2], 'available':line[3]})
       elif line[0] == 'non-active' and len(line) > 3:
-        data['non-active'] = {'allowed':line[1], 'used':line[2], 'available':line[3]}
+        data['non-active'].update({'allowed':line[1], 'used':line[2], 'available':line[3]})
       elif line[0] == 'users' and len(line) > 1:
         data['non-active'].update({'users':line[1]})
       elif line[0] == 'rooms' and len(line) > 1:
@@ -99,7 +102,7 @@ def get_data():
       elif line[0] == 'equipment' and len(line) > 1:
         data['non-active'].update({'equipment':line[1]})
       elif line[0] == 'total' and len(line) > 1:
-        data['total'] = {'used':line[1]}
+        data['total'].update({'used':line[1]})
 
   return data
 
@@ -174,7 +177,6 @@ if __name__ == "__main__":
       ElementTree.SubElement(xmllic, "total", **license['total'])
       print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
     elif args['output'] == 'csv':
-      print license.get('active',{'equipment':'0'}).get('equipment')
       print args['delimiter'].join(['Type','Used','Available','Allowed','Users','Rooms','Equipment'])
       print args['delimiter'].join(['active',license.get('active',{'used':'0'}).get('used'),
                                              license.get('active',{'available':'0'}).get('available'),
