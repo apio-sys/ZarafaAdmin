@@ -98,11 +98,11 @@ def get_data():
       elif line[0] == 'non-active' and len(line) > 3:
         data['non-active'] = {'allowed':line[1], 'used':line[2], 'available':line[3]}
       elif line[0] == 'users' and len(line) > 1:
-        data['non-active'].update({'users':line[1]}
+        data['non-active'].update({'users':line[1]})
       elif line[0] == 'rooms' and len(line) > 1:
-        data['non-active'].update({'rooms':line[1]}
+        data['non-active'].update({'rooms':line[1]})
       elif line[0] == 'equipment' and len(line) > 1:
-        data['non-active'].update({'equipment':line[1]}
+        data['non-active'].update({'equipment':line[1]})
       elif line[0] == 'total' and len(line) > 1:
         data['total'] = {'used':line[1]}
 
