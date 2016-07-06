@@ -88,7 +88,7 @@ def get_data():
   data = {}
   print out
 
-  for line in out.split('\n'):
+  for line in out.split('\n')[3:]:
     print line
   #   tmp = line.split('\t')
   #   print tmp
