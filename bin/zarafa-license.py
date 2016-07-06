@@ -88,6 +88,7 @@ def get_data():
   data = {}
   for line in out.split('\n')[3:]:
     tmp = line.split('\t')
+    print tmp
     if line and len(tmp) > 5:
       name = str(tmp[1]).strip().lower()
       print name, "-", line
