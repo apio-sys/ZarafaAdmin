@@ -90,22 +90,23 @@ def get_data():
 
   for line in out.split('\n')[3:]:
     line = line.split()
-    if line: print line
-  #   tmp = line.split('\t')
-  #   print tmp
-  #   if line and len(tmp) > 5:
-  #     name = str(tmp[1]).strip().lower()
-  #     print name, "-", line
-  #     allowed = str(tmp[-4]).strip()
-  #     allowed = allowed.split()[0].lower() if allowed else "0"
-  #     used = str(tmp[-3]).strip()
-  #     used = used.split()[0].lower() if used else "0"
-  #     available = str(tmp[-2]).strip()
-  #     available = available.split()[0].lower() if available else "0"  
-  #     if name in ["active", "non-active", "total"]: 
-  #       data[name] = {"allowed":brandt.strXML(allowed), "used":brandt.strXML(used), "available":brandt.strXML(available)}
-  #     elif data.has_key("non-active"): 
-  #       data["non-active"].update({name:brandt.strXML(used)})
+    if line: 
+      print line
+      line[0] = str(line[0]).strip().lower()
+      print line
+
+      
+      # print name, "-", line
+      # allowed = str(tmp[-4]).strip()
+      # allowed = allowed.split()[0].lower() if allowed else "0"
+      # used = str(tmp[-3]).strip()
+      # used = used.split()[0].lower() if used else "0"
+      # available = str(tmp[-2]).strip()
+      # available = available.split()[0].lower() if available else "0"  
+      # if name in ["active", "non-active", "total"]: 
+      #   data[name] = {"allowed":brandt.strXML(allowed), "used":brandt.strXML(used), "available":brandt.strXML(available)}
+      # elif data.has_key("non-active"): 
+      #   data["non-active"].update({name:brandt.strXML(used)})
 
 
 
