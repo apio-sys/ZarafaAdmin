@@ -86,7 +86,7 @@ def get_data():
   if err: raise IOError(err)
 
   data = {}
-  for line in out.split('\n')[3:]:
+  for line in out.split('\n'):
     tmp = line.split('\t')
     print tmp
     if line and len(tmp) > 5:
