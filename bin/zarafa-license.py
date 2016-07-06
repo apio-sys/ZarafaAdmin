@@ -173,7 +173,8 @@ if __name__ == "__main__":
       ElementTree.SubElement(xmllic, "nonactive", **license['non-active'])
       ElementTree.SubElement(xmllic, "total", **license['total'])
       print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
-    elif args['output'] == 'csv': 
+    elif args['output'] == 'csv':
+      print license.get('active',{'equipment':'0'}).get('equipment')
       print args['delimiter'].join(['Type','Used','Available','Allowed','Users','Rooms','Equipment'])
       print args['delimiter'].join(['active',license.get('active',{'used':'0'}).get('used'),
                                              license.get('active',{'available':'0'}).get('available'),
