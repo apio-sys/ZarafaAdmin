@@ -196,9 +196,9 @@ if __name__ == "__main__":
         print "-----------" + "-" * (allowed + used + available + 2)
         print "Active     " + str(license['active']['allowed']).rjust(allowed) + str(license['active']['used']).rjust(used) + str(license['active']['available']).rjust(available)
         print "Non-active " + str(license['non-active']['allowed']).rjust(allowed) + str(license['non-active']['used']).rjust(used) + str(license['non-active']['available']).rjust(available)
-        print "  Users    " + str(license['users']['used']).rjust(allowed + used)
-        print "  Rooms    " + str(license['rooms']['used']).rjust(allowed + used)
-        print "  Equipment" + str(license['equipment']['used']).rjust(allowed + used)
+        print "  Users    " + str(license['non-active']['users']).rjust(allowed + used)
+        print "  Rooms    " + str(license['non-active']['rooms']).rjust(allowed + used)
+        print "  Equipment" + str(license['non-active']['equipment']).rjust(allowed + used)
         print "Total      " + str(license['total']['used']).rjust(allowed + used)
     sys.exit(exitcode)
 
