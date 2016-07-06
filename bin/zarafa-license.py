@@ -87,6 +87,9 @@ def get_data():
 
   data = {}
   print out
+  
+  return data
+
   # for line in out.split('\n'):
   #   tmp = line.split('\t')
   #   print tmp
@@ -139,7 +142,6 @@ def get_data():
     # ElementTree.SubElement(xmllic, "nonactive", **data["non-active"])
     # ElementTree.SubElement(xmllic, "total", **data["total"])
 
-    return data
 
 
 # Start program
