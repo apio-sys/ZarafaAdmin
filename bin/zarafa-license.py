@@ -139,7 +139,6 @@ def get_data():
 # Start program
 if __name__ == "__main__":
   # try:
-    output = ""
     error = ""
     xmldata = ""
     exitcode = 0
@@ -173,21 +172,36 @@ if __name__ == "__main__":
       ElementTree.SubElement(xmllic, "nonactive", **license['non-active'])
       ElementTree.SubElement(xmllic, "total", **license['total'])
       print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
-      
-    if args['output'] == 'json': 
-      print json.dumps(license, indent=2, sort_keys=True)
-      if error:  sys.stderr.write( str(error) + "\n" )
-
-    elif args['output'] == 'csv':
-      print args['delimiter'].join(['Type','Used','Available','Allowed','Users','Rooms','Equipment'])
-      print args['delimiter'].join(['active',license['active']['used'],license['active']['available'],license['active']['allowed'],
-                                             license['active']['users'],license['active']['rooms'],license['active']['equipment']])
-      print args['delimiter'].join(['non-active',license['non-active']['used'],license['non-active']['available'],license['non-active']['allowed'],
-                                                 license['non-active']['users'],license['non-active']['rooms'],license['non-active']['equipment']])
-      print args['delimiter'].join(['total',license['total']['used'],license['total']['available'],license['total']['allowed'],
-                                            license['total']['users'],license['total']['rooms'],license['total']['equipment']])
-      if error:  sys.stderr.write( str(error) + "\n" )      
     else:
-      print license
-    # else:
+      if error:  sys.stderr.write( str(error) + "\n" )      
+      if args['output'] == 'json': 
+        print json.dumps(license, indent=2, sort_keys=True)
+
+      elif args['output'] == 'csv':
+        print args['delimiter'].join(['Type','Used','Available','Allowed','Users','Rooms','Equipment'])
+        print args['delimiter'].join(['active',license['active']['used'],license['active']['available'],license['active']['allowed'],
+                                               license['active']['users'],license['active']['rooms'],license['active']['equipment']])
+        print args['delimiter'].join(['non-active',license['non-active']['used'],license['non-active']['available'],license['non-active']['allowed'],
+                                                   license['non-active']['users'],license['non-active']['rooms'],license['non-active']['equipment']])
+        print args['delimiter'].join(['total',license['total']['used'],license['total']['available'],license['total']['allowed'],
+                                              license['total']['users'],license['total']['rooms'],license['total']['equipment']])
+        if error:  sys.stderr.write( str(error) + "\n" )      
+      else:
+        allowed   = max([7, len(license['active']['allowed']), len(license['non-active']['allowed'])]) + 2
+        used      = max([7, len(license['active']['used']), len(license['non-active']['used']), len(license['total']['used'])]) + 2
+        available = max([9, len(license['active']['available']), len(license['non-active']['available'])]) + 2
+
+        print "Zarafa Licensing Info:"
+        print "           " + "Allowed".rjust(allowed) + "Used".rjust(used) + "Available".rjust(available)
+        print "-----------" + "-" * (allowed + used + available + 2)
+        print "Active     " + str(license['active']['allowed']).rjust(allowed) + str(license['active']['used']).rjust(used) + str(license['active']['available']).rjust(available)
+        print "Non-active " + str(license['non-active']['allowed']).rjust(allowed) + str(license['non-active']['used']).rjust(used) + str(license['non-active']['available']).rjust(available)
+        print "  Users    " + str(license['users']['used']).rjust(allowed + used)
+        print "  Rooms    " + str(license['rooms']['used']).rjust(allowed + used)
+        print "  Equipment" + str(license['equipment']['used']).rjust(allowed + used)
+        print "Total      " + str(license['total']['used']).rjust(allowed + used)
     sys.exit(exitcode)
+
+
+
+
