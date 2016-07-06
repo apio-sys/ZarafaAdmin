@@ -85,30 +85,50 @@ def get_data():
   out, err = p.communicate()
   if err: raise IOError(err)
 
-  if args['output'] == 'text': output +=  out + '\n'
-  if args['output'] != 'xml':
-    if not args['delimiter']: args['delimiter'] = "\t"
-    output += args['delimiter'].join(headers) + '\n'
-    output += "\n".join( [ user.replace(";",args['delimiter']) for user in users ] )
-  else:
-    data = {}
-    xml = ElementTree.Element('users')
-    today = datetime.datetime.today()
+  data = {}
+  for line in out.split('\n')[3:]:
+    tmp = line.split('\t')
+    if line and len(tmp) > 5:
+      name = str(tmp[1]).strip().lower()
+      allowed = str(tmp[-4]).strip()
+      allowed = allowed.split()[0].lower() if allowed else "0"
+      used = str(tmp[-3]).strip()
+      used = used.split()[0].lower() if used else "0"
+      available = str(tmp[-2]).strip()
+      available = available.split()[0].lower() if available else "0"  
+      if name in ["active", "non-active", "total"]: 
+        data[name] = {"allowed":brandt.strXML(allowed), "used":brandt.strXML(used), "available":brandt.strXML(available)}
+      elif data.has_key("non-active"): 
+        data["non-active"].update({name:brandt.strXML(used)})
 
-    for line in out.split('\n')[3:]:
-      tmp = line.split('\t')
-      if line and len(tmp) > 5:
-        name = str(tmp[1]).strip().lower()
-        allowed = str(tmp[-4]).strip()
-        allowed = allowed.split()[0].lower() if allowed else "0"
-        used = str(tmp[-3]).strip()
-        used = used.split()[0].lower() if used else "0"
-        available = str(tmp[-2]).strip()
-        available = available.split()[0].lower() if available else "0"  
-        if name in ["active", "non-active", "total"]: 
-          data[name] = {"allowed":brandt.strXML(allowed), "used":brandt.strXML(used), "available":brandt.strXML(available)}
-        elif data.has_key("non-active"): 
-          data["non-active"].update({name:brandt.strXML(used)})
+
+
+
+
+  # if args['output'] == 'text': output +=  out + '\n'
+  # if args['output'] != 'xml':
+  #   if not args['delimiter']: args['delimiter'] = "\t"
+  #   output += args['delimiter'].join(headers) + '\n'
+  #   output += "\n".join( [ user.replace(";",args['delimiter']) for user in users ] )
+  # else:
+  #   data = {}
+  #   xml = ElementTree.Element('users')
+  #   today = datetime.datetime.today()
+
+  #   for line in out.split('\n')[3:]:
+  #     tmp = line.split('\t')
+  #     if line and len(tmp) > 5:
+  #       name = str(tmp[1]).strip().lower()
+  #       allowed = str(tmp[-4]).strip()
+  #       allowed = allowed.split()[0].lower() if allowed else "0"
+  #       used = str(tmp[-3]).strip()
+  #       used = used.split()[0].lower() if used else "0"
+  #       available = str(tmp[-2]).strip()
+  #       available = available.split()[0].lower() if available else "0"  
+  #       if name in ["active", "non-active", "total"]: 
+  #         data[name] = {"allowed":brandt.strXML(allowed), "used":brandt.strXML(used), "available":brandt.strXML(available)}
+  #       elif data.has_key("non-active"): 
+  #         data["non-active"].update({name:brandt.strXML(used)})
 
 
     # xmllic = ElementTree.SubElement(xml, 'licensed')
@@ -121,7 +141,7 @@ def get_data():
 
 # Start program
 if __name__ == "__main__":
-  try:
+  # try:
     output = ""
     error = ""
     xmldata = ""
@@ -130,28 +150,28 @@ if __name__ == "__main__":
     command_line_args()  
     license = get_data()
     print license
-  except SystemExit as err:
-    pass
-  except Exception as err:
-    try:
-      exitcode = int(err[0])
-      errmsg = str(" ".join(err[1:]))
-    except:
-      exitcode = -1
-      errmsg = str(err)
+  # except SystemExit as err:
+  #   pass
+  # except Exception as err:
+  #   try:
+  #     exitcode = int(err[0])
+  #     errmsg = str(" ".join(err[1:]))
+  #   except:
+  #     exitcode = -1
+  #     errmsg = str(err)
 
-    if args['output'] != 'xml': 
-      error = "(" + str(exitcode) + ") " + str(errmsg) + "\nCommand: " + " ".join(sys.argv)
-    else:
-      xmldata = ElementTree.Element('error', code=brandt.strXML(exitcode), 
-                                             msg=brandt.strXML(errmsg), 
-                                             cmd=brandt.strXML(" ".join(sys.argv)))
-  finally:
-    if args['output'] != 'xml': 
-      if output: print str(output)
-      if error:  sys.stderr.write( str(error) + "\n" )
-    else:
-      xml = ElementTree.Element('zarafaadmin')
-      if xmldata: xml.append(xmldata)
-      print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
-    sys.exit(exitcode)
+  #   if args['output'] != 'xml': 
+  #     error = "(" + str(exitcode) + ") " + str(errmsg) + "\nCommand: " + " ".join(sys.argv)
+  #   else:
+  #     xmldata = ElementTree.Element('error', code=brandt.strXML(exitcode), 
+  #                                            msg=brandt.strXML(errmsg), 
+  #                                            cmd=brandt.strXML(" ".join(sys.argv)))
+  # finally:
+  #   if args['output'] != 'xml': 
+  #     if output: print str(output)
+  #     if error:  sys.stderr.write( str(error) + "\n" )
+  #   else:
+  #     xml = ElementTree.Element('zarafaadmin')
+  #     if xmldata: xml.append(xmldata)
+  #     print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
+  #   sys.exit(exitcode)
