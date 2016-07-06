@@ -129,10 +129,7 @@ def get_data():
   #         data["non-active"].update({name:brandt.strXML(used)})
 
 
-    # xmllic = ElementTree.SubElement(xml, 'licensed')
-    # ElementTree.SubElement(xmllic, "active", **data["active"])
-    # ElementTree.SubElement(xmllic, "nonactive", **data["non-active"])
-    # ElementTree.SubElement(xmllic, "total", **data["total"])
+
 
 
 
@@ -168,11 +165,15 @@ if __name__ == "__main__":
     if args['output'] == 'json': 
       print json.dumps(license, indent=2, sort_keys=True)
       if error:  sys.stderr.write( str(error) + "\n" )
-    # elif args['output'] == 'xml': 
+    elif args['output'] == 'xml': 
+      xml = ElementTree.Element('zarafaadmin')
+      if xmldata: xml.append(xmldata)
+      xmllic = ElementTree.SubElement(xml, 'licensed')
+      ElementTree.SubElement(xmllic, "active", **data["active"])
+      ElementTree.SubElement(xmllic, "nonactive", **data["non-active"])
+      ElementTree.SubElement(xmllic, "total", **data["total"])      
+      print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
     #   if output: print str(output)
     #   if error:  sys.stderr.write( str(error) + "\n" )
     # else:
-    #   xml = ElementTree.Element('zarafaadmin')
-    #   if xmldata: xml.append(xmldata)
-    #   print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
     sys.exit(exitcode)
