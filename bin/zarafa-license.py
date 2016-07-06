@@ -138,7 +138,7 @@ def get_data():
 
 # Start program
 if __name__ == "__main__":
-  # try:
+  try:
     error = ""
     xmldata = ""
     exitcode = 0
@@ -146,24 +146,24 @@ if __name__ == "__main__":
     command_line_args()  
     license = get_data()
 
-  # except SystemExit as err:
-  #   pass
+  except SystemExit as err:
+    pass
 
-  # except Exception as err:
-  #   try:
-  #     exitcode = int(err[0])
-  #     errmsg = str(" ".join(err[1:]))
-  #   except:
-  #     exitcode = -1
-  #     errmsg = str(err)
+  except Exception as err:
+    try:
+      exitcode = int(err[0])
+      errmsg = str(" ".join(err[1:]))
+    except:
+      exitcode = -1
+      errmsg = str(err)
 
-  #   if args['output'] != 'xml': 
-  #     error = "(" + str(exitcode) + ") " + str(errmsg) + "\nCommand: " + " ".join(sys.argv)
-  #   else:
-  #     xmldata = ElementTree.Element('error', code=brandt.strXML(exitcode), 
-  #                                            msg=brandt.strXML(errmsg), 
-  #                                            cmd=brandt.strXML(" ".join(sys.argv)))
-  # finally:
+    if args['output'] != 'xml': 
+      error = "(" + str(exitcode) + ") " + str(errmsg) + "\nCommand: " + " ".join(sys.argv)
+    else:
+      xmldata = ElementTree.Element('error', code=brandt.strXML(exitcode), 
+                                             msg=brandt.strXML(errmsg), 
+                                             cmd=brandt.strXML(" ".join(sys.argv)))
+  finally:
     if args['output'] == 'xml': 
       xml = ElementTree.Element('zarafaadmin')
       if xmldata: xml.append(xmldata)
@@ -186,11 +186,11 @@ if __name__ == "__main__":
         print args['delimiter'].join(['total',license['total']['used'],license['total']['available'],license['total']['allowed'],
                                               license['total']['users'],license['total']['rooms'],license['total']['equipment']])
         if error:  sys.stderr.write( str(error) + "\n" )      
+
       else:
         allowed   = max([7, len(license['active']['allowed']), len(license['non-active']['allowed'])]) + 2
         used      = max([7, len(license['active']['used']), len(license['non-active']['used']), len(license['total']['used'])]) + 2
         available = max([9, len(license['active']['available']), len(license['non-active']['available'])]) + 2
-
         print "Zarafa Licensing Info:"
         print "           " + "Allowed".rjust(allowed) + "Used".rjust(used) + "Available".rjust(available)
         print "-----------" + "-" * (allowed + used + available + 2)
