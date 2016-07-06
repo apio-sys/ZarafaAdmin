@@ -2,7 +2,7 @@
 """
 Python wrapper for zarafa-admin --user-count
 """
-import argparse, textwrap, fnmatch, datetime
+import argparse, textwrap, fnmatch, datetime, json
 import xml.etree.cElementTree as ElementTree
 import subprocess
 
@@ -13,7 +13,6 @@ import brandt
 sys.path.pop()
 
 args = {}
-args['cache'] = 15
 args['output'] = 'text'
 args['delimiter'] = ""
 
@@ -51,8 +50,7 @@ class customUsageVersion(argparse.Action):
       options = []
       options.append(("-h, --help",              "Show this help message and exit"))
       options.append(("-v, --version",           "Show program's version number and exit"))
-      options.append(("-o, --output OUTPUT",     "Type of output {text | csv | xml}"))
-      options.append(("-c, --cache MINUTES",     "Cache time. (in minutes)"))
+      options.append(("-o, --output OUTPUT",     "Type of output {text | csv | xml | json}"))
       options.append(("-d, --delimiter DELIM",   "Character to use instead of TAB for field delimiter"))
       length = max( [ len(option[0]) for option in options ] )
       for option in options:
@@ -65,11 +63,6 @@ def command_line_args():
   parser = argparse.ArgumentParser(add_help=False)
   parser.add_argument('-v', '--version', action=customUsageVersion, version=version, max=80)
   parser.add_argument('-h', '--help', action=customUsageVersion)
-  parser.add_argument('-c', '--cache',
-          required=False,
-          default=args['cache'],
-          type=int,
-          help="Cache time. (in minutes)")
   parser.add_argument('-d', '--delimiter',
           required=False,
           default=args['delimiter'],
@@ -78,7 +71,7 @@ def command_line_args():
   parser.add_argument('-o', '--output',
           required=False,
           default=args['output'],
-          choices=['text', 'csv', 'xml'],
+          choices=['text', 'csv', 'xml', 'json'],
           help="Display output type.")
   args.update(vars(parser.parse_args()))
   if args['delimiter']: args['delimiter'] = args['delimiter'][0]
@@ -116,12 +109,14 @@ def get_data():
           data[name] = {"allowed":brandt.strXML(allowed), "used":brandt.strXML(used), "available":brandt.strXML(available)}
         elif data.has_key("non-active"): 
           data["non-active"].update({name:brandt.strXML(used)})
-    xmllic = ElementTree.SubElement(xml, 'licensed')
-    ElementTree.SubElement(xmllic, "active", **data["active"])
-    ElementTree.SubElement(xmllic, "nonactive", **data["non-active"])
-    ElementTree.SubElement(xmllic, "total", **data["total"])
 
-    return xml
+
+    # xmllic = ElementTree.SubElement(xml, 'licensed')
+    # ElementTree.SubElement(xmllic, "active", **data["active"])
+    # ElementTree.SubElement(xmllic, "nonactive", **data["non-active"])
+    # ElementTree.SubElement(xmllic, "total", **data["total"])
+
+    return data
 
 
 # Start program
@@ -134,7 +129,7 @@ if __name__ == "__main__":
 
     command_line_args()  
     license = get_data()
-
+    print license
   except SystemExit as err:
     pass
   except Exception as err:
