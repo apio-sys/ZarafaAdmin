@@ -138,7 +138,7 @@ def get_data():
 
 # Start program
 if __name__ == "__main__":
-  try:
+  # try:
     output = ""
     error = ""
     xmldata = ""
@@ -146,24 +146,25 @@ if __name__ == "__main__":
 
     command_line_args()  
     license = get_data()
-    print license
-  except SystemExit as err:
-    pass
-  except Exception as err:
-    try:
-      exitcode = int(err[0])
-      errmsg = str(" ".join(err[1:]))
-    except:
-      exitcode = -1
-      errmsg = str(err)
 
-    if args['output'] != 'xml': 
-      error = "(" + str(exitcode) + ") " + str(errmsg) + "\nCommand: " + " ".join(sys.argv)
-    else:
-      xmldata = ElementTree.Element('error', code=brandt.strXML(exitcode), 
-                                             msg=brandt.strXML(errmsg), 
-                                             cmd=brandt.strXML(" ".join(sys.argv)))
-  finally:
+  # except SystemExit as err:
+  #   pass
+
+  # except Exception as err:
+  #   try:
+  #     exitcode = int(err[0])
+  #     errmsg = str(" ".join(err[1:]))
+  #   except:
+  #     exitcode = -1
+  #     errmsg = str(err)
+
+  #   if args['output'] != 'xml': 
+  #     error = "(" + str(exitcode) + ") " + str(errmsg) + "\nCommand: " + " ".join(sys.argv)
+  #   else:
+  #     xmldata = ElementTree.Element('error', code=brandt.strXML(exitcode), 
+  #                                            msg=brandt.strXML(errmsg), 
+  #                                            cmd=brandt.strXML(" ".join(sys.argv)))
+  # finally:
     if args['output'] == 'json': 
       json.dumps(license, indent=2, sort_keys=True)
     # elif args['output'] == 'xml': 
