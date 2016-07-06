@@ -94,8 +94,18 @@ def get_data():
       print line
       line[0] = str(line[0]).strip().lower()
       if line[0] == 'active' and len(line) > 3:
-        data[line[0]] = {'allowed':line[1], 'used':line[2], 'available':line[3]}
-        
+        data['active'] = {'allowed':line[1], 'used':line[2], 'available':line[3]}
+      elif line[0] == 'non-active' and len(line) > 3:
+        data['non-active'] = {'allowed':line[1], 'used':line[2], 'available':line[3]}
+      elif line[0] == 'users' and len(line) > 1:
+        data['non-active'].update({'users':line[1]}
+      elif line[0] == 'rooms' and len(line) > 1:
+        data['non-active'].update({'rooms':line[1]}
+      elif line[0] == 'equipment' and len(line) > 1:
+        data['non-active'].update({'equipment':line[1]}
+      elif line[0] == 'total' and len(line) > 1:
+        data['total'] = {'used':line[1]}
+
   return data
 
       # print name, "-", line
