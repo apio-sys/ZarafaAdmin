@@ -166,7 +166,8 @@ if __name__ == "__main__":
   #                                            cmd=brandt.strXML(" ".join(sys.argv)))
   # finally:
     if args['output'] == 'json': 
-      json.dumps(license, indent=2, sort_keys=True)
+      print json.dumps(license, indent=2, sort_keys=True)
+      if error:  sys.stderr.write( str(error) + "\n" )
     # elif args['output'] == 'xml': 
     #   if output: print str(output)
     #   if error:  sys.stderr.write( str(error) + "\n" )
