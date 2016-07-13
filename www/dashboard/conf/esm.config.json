@@ -38,9 +38,9 @@
 				"protocol": "tcp"
 			},
 			{
-				"name": "SSH",
-				"host": "localhost",
-				"port": 22,
+				"name": "Zarafa Web",
+				"host": "10.200.200.25",
+				"port": 443,
 				"protocol": "tcp"
 			}
 		]
