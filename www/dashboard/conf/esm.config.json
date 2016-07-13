@@ -42,7 +42,26 @@
 				"host": "10.200.200.25",
 				"port": 443,
 				"protocol": "tcp"
+			},
+			{
+				"name": "Zarafa Activesync",
+				"host": "10.200.200.30",
+				"port": 443,
+				"protocol": "tcp"
+			},
+			{
+				"name": "Zarafa IMAP",
+				"host": "10.200.200.25",
+				"port": 443,
+				"protocol": "tcp"
+			},
+			{
+				"name": "Zarafa CalDAV",
+				"host": "zarafa-caldav",
+				"port": 8443,
+				"protocol": "tcp"
 			}
+
 		]
 	},
 	"disk": {
