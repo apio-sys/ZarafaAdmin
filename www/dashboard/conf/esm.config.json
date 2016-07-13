@@ -3,7 +3,7 @@
 		"version": "2.5",
 		"website": "http://www.ezservermonitor.com",
 		"check_updates": false,
-		"auto_refresh": 0,
+		"auto_refresh": 3,
 		"theme": "blue",
 		"custom_title": ""
 	},
