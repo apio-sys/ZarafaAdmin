@@ -10,20 +10,6 @@
 	"cpu": {
 		"enable_temperature": false
 	},
-	"disk": {
-		"show_tmpfs": false,
-		"show_filesystem": true
-	},
-	"ping": {
-		"hosts": [
-			"mail.i.opw.ie",
-			"activesync.opw.ie"
-		]
-	},
-	"last_login": {
-		"enable": false,
-		"max": 5
-	},
 	"services": {
 		"show_port": true,
 		"list": [
@@ -58,5 +44,19 @@
 				"protocol": "tcp"
 			}
 		]
+	},
+	"disk": {
+		"show_tmpfs": false,
+		"show_filesystem": true
+	},
+	"ping": {
+		"hosts": [
+			"mail.i.opw.ie",
+			"activesync.opw.ie"
+		]
+	},
+	"last_login": {
+		"enable": false,
+		"max": 5
 	}
 }
