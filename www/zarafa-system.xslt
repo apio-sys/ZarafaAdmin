@@ -34,6 +34,32 @@
       <tr class="hover"><td>Number of equipment</td><td><xsl:value-of select="@usercnt_equipment"/></td></tr>
       <tr class="hover"><td>Number of contacts</td><td><xsl:value-of select="@usercnt_contact"/></td></tr>      
       <tr class="hover"><td>Number of handled incoming connections</td><td><xsl:value-of select="@connections"/></td></tr>
+      <tr class="hover"><td><b>Number of sessions</b></td><td><b><xsl:value-of select="@sessions"/></b></td></tr>
+      <tr class="hover"><td>Memory usage of sessions</td><td><xsl:value-of select="@sessions_size"/></td></tr>
+      <tr class="hover"><td>Number of session groups</td><td><xsl:value-of select="@sessiongroups"/></td></tr>
+      <tr class="hover"><td>Memory usage of session groups</td><td><xsl:value-of select="@sessiongroups_size"/></td></tr>
+      <tr class="hover"><td>Persistent connections</td><td><xsl:value-of select="@persist_conn"/></td></tr>
+      <tr class="hover"><td>Memory usage of persistent connections</td><td><xsl:value-of select="@persist_conn_size"/></td></tr>
+      <tr class="hover"><td>Persistent sessions</td><td><xsl:value-of select="@persist_sess"/></td></tr>
+      <tr class="hover"><td>Memory usage of persistent sessions</td><td><xsl:value-of select="@persist_sess_size"/></td></tr>
+      <tr class="hover"><td>Tables subscribed</td><td><xsl:value-of select="@tables_subscr"/></td></tr>
+      <tr class="hover"><td>Memory usage of subscribed tables</td><td><xsl:value-of select="@tables_subscr_size"/></td></tr>
+      <tr class="hover"><td>Objects subscribed</td><td><xsl:value-of select="@object_subscr"/></td></tr>
+      <tr class="hover"><td>Memory usage of subscribed objects</td><td><xsl:value-of select="@object_subscr_size"/></td></tr>
+      <tr class="hover"><td>Number of stores in use by search folders</td><td><xsl:value-of select="@searchfld_stores"/></td></tr>
+      <tr class="hover"><td>Number of folders in use by search folders</td><td><xsl:value-of select="@searchfld_folders"/></td></tr>
+      <tr class="hover"><td>Number of events waiting for searchfolder updates</td><td><xsl:value-of select="@searchfld_events"/></td></tr>
+      <tr class="hover"><td>Memory usage of search folders</td><td><xsl:value-of select="@searchfld_size"/></td></tr>
+      <tr class="hover"><td>Current queue length</td><td><xsl:value-of select="@queuelen"/></td></tr>
+      <tr class="hover"><td>Age of the front queue item</td><td><xsl:value-of select="@queueage"/></td></tr>
+      <tr class="hover"><td><b>Number of threads running to process items</b></td><td><b><xsl:value-of select="@threads"/></b></td></tr>
+      <tr class="hover"><td>Number of idle threads</td><td><xsl:value-of select="@threads_idle"/></td></tr>
+      <tr class="hover"><td>Current allocated memory by TCMalloc</td><td><xsl:value-of select="@tc_allocated"/></td></tr>
+      <tr class="hover"><td>Bytes of system memory reserved by TCMalloc</td><td><xsl:value-of select="@tc_reserved"/></td></tr>
+      <tr class="hover"><td>Number of bytes in free mapped pages in page heap</td><td><xsl:value-of select="@tc_page_map_free"/></td></tr>
+      <tr class="hover"><td>Number of bytes in free unmapped pages in page heap (released to OS)</td><td><xsl:value-of select="@tc_page_unmap_free"/></td></tr>
+      <tr class="hover"><td>A limit to how much memory TCMalloc dedicates for small objects</td><td><xsl:value-of select="@tc_threadcache_max"/></td></tr>
+      <tr class="hover"><td>Current allocated memory in bytes for thread cache</td><td><xsl:value-of select="@tc_threadcache_cur"/></td></tr>      
       <tr class="hover"><td>Highest socket number used</td><td><xsl:value-of select="@max_socket"/></td></tr>
       <tr class="hover"><td>Number of redirected requests</td><td><xsl:value-of select="@redirections"/></td></tr>
       <tr class="hover"><td>Number of soap requests handled by server</td><td><xsl:value-of select="@soap_request"/></td></tr>
@@ -152,32 +178,6 @@
       <tr class="hover"><td>Cache index2 maximum size</td><td><xsl:value-of select="@cache_index2_maxsz"/></td></tr>
       <tr class="hover"><td>Cache index2 requests</td><td><xsl:value-of select="@cache_index2_req"/></td></tr>
       <tr class="hover"><td>Cache index2 hits</td><td><xsl:value-of select="@cache_index2_hit"/></td></tr>
-      <tr class="hover"><td><b>Number of sessions</b></td><td><b><xsl:value-of select="@sessions"/></b></td></tr>
-      <tr class="hover"><td>Memory usage of sessions</td><td><xsl:value-of select="@sessions_size"/></td></tr>
-      <tr class="hover"><td>Number of session groups</td><td><xsl:value-of select="@sessiongroups"/></td></tr>
-      <tr class="hover"><td>Memory usage of session groups</td><td><xsl:value-of select="@sessiongroups_size"/></td></tr>
-      <tr class="hover"><td>Persistent connections</td><td><xsl:value-of select="@persist_conn"/></td></tr>
-      <tr class="hover"><td>Memory usage of persistent connections</td><td><xsl:value-of select="@persist_conn_size"/></td></tr>
-      <tr class="hover"><td>Persistent sessions</td><td><xsl:value-of select="@persist_sess"/></td></tr>
-      <tr class="hover"><td>Memory usage of persistent sessions</td><td><xsl:value-of select="@persist_sess_size"/></td></tr>
-      <tr class="hover"><td>Tables subscribed</td><td><xsl:value-of select="@tables_subscr"/></td></tr>
-      <tr class="hover"><td>Memory usage of subscribed tables</td><td><xsl:value-of select="@tables_subscr_size"/></td></tr>
-      <tr class="hover"><td>Objects subscribed</td><td><xsl:value-of select="@object_subscr"/></td></tr>
-      <tr class="hover"><td>Memory usage of subscribed objects</td><td><xsl:value-of select="@object_subscr_size"/></td></tr>
-      <tr class="hover"><td>Number of stores in use by search folders</td><td><xsl:value-of select="@searchfld_stores"/></td></tr>
-      <tr class="hover"><td>Number of folders in use by search folders</td><td><xsl:value-of select="@searchfld_folders"/></td></tr>
-      <tr class="hover"><td>Number of events waiting for searchfolder updates</td><td><xsl:value-of select="@searchfld_events"/></td></tr>
-      <tr class="hover"><td>Memory usage of search folders</td><td><xsl:value-of select="@searchfld_size"/></td></tr>
-      <tr class="hover"><td>Current queue length</td><td><xsl:value-of select="@queuelen"/></td></tr>
-      <tr class="hover"><td>Age of the front queue item</td><td><xsl:value-of select="@queueage"/></td></tr>
-      <tr class="hover"><td><b>Number of threads running to process items</b></td><td><b><xsl:value-of select="@threads"/></b></td></tr>
-      <tr class="hover"><td>Number of idle threads</td><td><xsl:value-of select="@threads_idle"/></td></tr>
-      <tr class="hover"><td>Current allocated memory by TCMalloc</td><td><xsl:value-of select="@tc_allocated"/></td></tr>
-      <tr class="hover"><td>Bytes of system memory reserved by TCMalloc</td><td><xsl:value-of select="@tc_reserved"/></td></tr>
-      <tr class="hover"><td>Number of bytes in free mapped pages in page heap</td><td><xsl:value-of select="@tc_page_map_free"/></td></tr>
-      <tr class="hover"><td>Number of bytes in free unmapped pages in page heap (released to OS)</td><td><xsl:value-of select="@tc_page_unmap_free"/></td></tr>
-      <tr class="hover"><td>A limit to how much memory TCMalloc dedicates for small objects</td><td><xsl:value-of select="@tc_threadcache_max"/></td></tr>
-      <tr class="hover"><td>Current allocated memory in bytes for thread cache</td><td><xsl:value-of select="@tc_threadcache_cur"/></td></tr>
     </table>
   </pre>
 </xsl:template>
