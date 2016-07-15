@@ -26,6 +26,13 @@
       <tr class="hover"><td>Time when the server was started</td><td><xsl:value-of select="server_start_date/@date"/></td></tr>
       <tr class="hover"><td>Time when the cache was cleared</td><td><xsl:value-of select="cache_purge_date/@date"/></td></tr>
       <tr class="hover"><td>Time when the configuration file was reloaded / logrotation (SIGHUP)</td><td><xsl:value-of select="config_reload_date/@date"/></td></tr>
+      <tr class="hover"><td><b>Number of allowed users</b></td><td><b><xsl:value-of select="@usercnt_licensed"/></b></td></tr>
+      <tr class="hover"><td><b>Number of active users</b></td><td><b><xsl:value-of select="@usercnt_active"/></b></td></tr>
+      <tr class="hover"><td><b>Number of total non-active objects</b></td><td><b><xsl:value-of select="@usercnt_nonactive"/></b></td></tr>
+      <tr class="hover"><td>Number of non-active users</td><td><xsl:value-of select="@usercnt_na_user"/></td></tr>
+      <tr class="hover"><td>Number of rooms</td><td><xsl:value-of select="@usercnt_room"/></td></tr>
+      <tr class="hover"><td>Number of equipment</td><td><xsl:value-of select="@usercnt_equipment"/></td></tr>
+      <tr class="hover"><td>Number of contacts</td><td><xsl:value-of select="@usercnt_contact"/></td></tr>      
       <tr class="hover"><td>Number of handled incoming connections</td><td><xsl:value-of select="@connections"/></td></tr>
       <tr class="hover"><td>Highest socket number used</td><td><xsl:value-of select="@max_socket"/></td></tr>
       <tr class="hover"><td>Number of redirected requests</td><td><xsl:value-of select="@redirections"/></td></tr>
@@ -165,13 +172,6 @@
       <tr class="hover"><td>Age of the front queue item</td><td><xsl:value-of select="@queueage"/></td></tr>
       <tr class="hover"><td><b>Number of threads running to process items</b></td><td><b><xsl:value-of select="@threads"/></b></td></tr>
       <tr class="hover"><td>Number of idle threads</td><td><xsl:value-of select="@threads_idle"/></td></tr>
-      <tr class="hover"><td><b>Number of allowed users</b></td><td><b><xsl:value-of select="@usercnt_licensed"/></b></td></tr>
-      <tr class="hover"><td><b>Number of active users</b></td><td><b><xsl:value-of select="@usercnt_active"/></b></td></tr>
-      <tr class="hover"><td><b>Number of total non-active objects</b></td><td><b><xsl:value-of select="@usercnt_nonactive"/></b></td></tr>
-      <tr class="hover"><td>Number of non-active users</td><td><xsl:value-of select="@usercnt_na_user"/></td></tr>
-      <tr class="hover"><td>Number of rooms</td><td><xsl:value-of select="@usercnt_room"/></td></tr>
-      <tr class="hover"><td>Number of equipment</td><td><xsl:value-of select="@usercnt_equipment"/></td></tr>
-      <tr class="hover"><td>Number of contacts</td><td><xsl:value-of select="@usercnt_contact"/></td></tr>
       <tr class="hover"><td>Current allocated memory by TCMalloc</td><td><xsl:value-of select="@tc_allocated"/></td></tr>
       <tr class="hover"><td>Bytes of system memory reserved by TCMalloc</td><td><xsl:value-of select="@tc_reserved"/></td></tr>
       <tr class="hover"><td>Number of bytes in free mapped pages in page heap</td><td><xsl:value-of select="@tc_page_map_free"/></td></tr>
