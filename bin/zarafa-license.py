@@ -138,7 +138,7 @@ if __name__ == "__main__":
     if args['output'] == 'xml': 
       xml = ElementTree.Element('zarafaadmin')
       if xmldata: xml.append(xmldata)
-      xmllic = ElementTree.SubElement(xml, 'licensed')
+      xmllic = ElementTree.SubElement(xml, 'license')
       ElementTree.SubElement(xmllic, "active", **lic['active'])
       ElementTree.SubElement(xmllic, "nonactive", **lic['non-active'])
       ElementTree.SubElement(xmllic, "total", **lic['total'])
