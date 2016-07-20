@@ -44,7 +44,7 @@ class customUsageVersion(argparse.Action):
       print textwrap.fill(version, self.__row)
       print "\nWritten by Bob Brandt <projects@brandt.ie>."
     else:
-      print "Usage: " + self.__prog + " [options] [username]"
+      print "Usage: " + self.__prog + " [options]"
       print "Script used to find details about Zarafa licensing.\n"
       print "Options:"
       options = []
@@ -161,17 +161,16 @@ if __name__ == "__main__":
           if error:  sys.stderr.write( str(error) + "\n" )      
 
         else:
-          print lic
-          # allowed   = max([7, len(lic['active']['allowed']), len(lic['non-active']['allowed'])]) + 2
-          # used      = max([7, len(lic['active']['used']), len(lic['non-active']['used']), len(lic['total']['used'])]) + 2
-          # available = max([9, len(lic['active']['available']), len(lic['non-active']['available'])]) + 2
-          # print "Zarafa Licensing Info:"
-          # print "           " + "Allowed".rjust(allowed) + "Used".rjust(used) + "Available".rjust(available)
-          # print "-----------" + "-" * (allowed + used + available + 2)
-          # print "Active     " + str(lic['active']['allowed']).rjust(allowed) + str(lic['active']['used']).rjust(used) + str(lic['active']['available']).rjust(available)
-          # print "Non-active " + str(lic['non-active']['allowed']).rjust(allowed) + str(lic['non-active']['used']).rjust(used) + str(lic['non-active']['available']).rjust(available)
-          # print "  Users    " + str(lic['non-active']['users']).rjust(allowed + used)
-          # print "  Rooms    " + str(lic['non-active']['rooms']).rjust(allowed + used)
-          # print "  Equipment" + str(lic['non-active']['equipment']).rjust(allowed + used)
-          # print "Total      " + str(lic['total']['used']).rjust(allowed + used)
+          allowed   = max([7, len(lic['active']['allowed']), len(lic['non-active']['allowed'])]) + 2
+          used      = max([7, len(lic['active']['used']), len(lic['non-active']['used']), len(lic['total']['used'])]) + 2
+          available = max([9, len(lic['active']['available']), len(lic['non-active']['available'])]) + 2
+          print "Zarafa Licensing Info:"
+          print "           " + "Allowed".rjust(allowed) + "Used".rjust(used) + "Available".rjust(available)
+          print "-----------" + "-" * (allowed + used + available + 2)
+          print "Active     " + str(lic['active']['allowed']).rjust(allowed) + str(lic['active']['used']).rjust(used) + str(lic['active']['available']).rjust(available)
+          print "Non-active " + str(lic['non-active']['allowed']).rjust(allowed) + str(lic['non-active']['used']).rjust(used) + str(lic['non-active']['available']).rjust(available)
+          print "  Users    " + str(lic['non-active']['users']).rjust(allowed + used)
+          print "  Rooms    " + str(lic['non-active']['rooms']).rjust(allowed + used)
+          print "  Equipment" + str(lic['non-active']['equipment']).rjust(allowed + used)
+          print "Total      " + str(lic['total']['used']).rjust(allowed + used)
     sys.exit(exitcode)
