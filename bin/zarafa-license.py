@@ -113,7 +113,7 @@ if __name__ == "__main__":
     xmldata = ""
     exitcode = 0
 
-    command_line_args()  
+    command_line_args()
     license = get_data()
 
   except SystemExit as err:
@@ -158,6 +158,7 @@ if __name__ == "__main__":
         if error:  sys.stderr.write( str(error) + "\n" )      
 
       else:
+        print [7, len(license['active']['allowed']), len(license['non-active']['allowed'])]
         allowed   = max([7, len(license['active']['allowed']), len(license['non-active']['allowed'])]) + 2
         used      = max([7, len(license['active']['used']), len(license['non-active']['used']), len(license['total']['used'])]) + 2
         available = max([9, len(license['active']['available']), len(license['non-active']['available'])]) + 2

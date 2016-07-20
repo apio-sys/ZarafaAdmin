@@ -30,6 +30,7 @@
 						<li><a href="./zarafa-mdm.php" target="cmdiframe">Zarafa Devices</a></li>						
 						<li><a href="./zarafa-system.php" target="cmdiframe">Zarafa System</a></li>
 						<li><a href="./zarafa-session.php" target="cmdiframe">Zarafa Session</a></li>
+						<li><a href="./zarafa-license.php" target="cmdiframe">Zarafa License</a></li>
 					</ul></p>
 					<p>&nbsp;Zarafa Logs
 					<ul>
