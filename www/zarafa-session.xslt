@@ -30,7 +30,7 @@
 
         <xsl:if test="(boolean(@username) or boolean(@ip) or boolean(@version) or boolean(@program) or boolean(@pipe)) and @username != 'SYSTEM'">
           <tr class="hover">
-            <td><xsl:value-of select="count(@ip)"/></td>
+            <td><xsl:value-of select="count(key('session-data', concat(@username, @ip, @version, @program, @pipe)))"/></td>
             <td><a href="./zarafa-users.php?user={@username}"><xsl:value-of select="translate(@username,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')"/></a></td>
             <td><xsl:value-of select="@ip"/></td>
             <td><xsl:value-of select="@version"/></td>
