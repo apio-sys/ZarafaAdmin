@@ -40,7 +40,11 @@ ob_implicit_flush(); // implicitly calls flush() after every ob_flush()
 $buffer = ini_get('output_buffering'); // retrive the buffer size from the php.ini file
 if (!is_numeric($buffer)) $buffer = 8192;
 
-$usr = "";
+$sort = "";
+if (isset($_GET['sort']))    $sort = $_GET['sort'];
+if (isset($_POST['sort']))   $sort = $_POST['sort'];
+
+$user = "";
 if (isset($_GET['user']))   $user = $_GET['user'];
 if (isset($_POST['user']))  $user = $_POST['user'];
 
@@ -70,6 +74,7 @@ $xsl->load('zarafa-session.xslt');
 // Proc
 $proc = new XSLTProcessor();
 $proc->importStylesheet($xsl);
+if ( $sort !== "" ) $proc->setParameter( '', 'sort', $sort);
 
 $output = $proc->transformToDoc($outputxml)->saveXML(); 
 
