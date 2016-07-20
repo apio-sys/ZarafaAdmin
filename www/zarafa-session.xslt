@@ -29,37 +29,56 @@
       <xsl:for-each select="/zarafaadmin/sessions/session[generate-id() = generate-id(key('session-data', concat(@username, @ip, @version, @program, @pipe))[1])]">
         <xsl:choose>
           <xsl:when test="$sort = 'count'">
-            <xsl:sort select="count(key('session-data', concat(@username, @ip, @version, @program, @pipe)))" order="descending" />
+            <xsl:call-templates name="session">
+              <xsl:sort select="count(key('session-data', concat(@username, @ip, @version, @program, @pipe)))" order="descending" />
+              <xsl:sort select="translate(@username, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
+            </xsl:call-templates>
           </xsl:when>
           <xsl:when test="$sort = 'ip'">
-            <xsl:sort select="@ip" order="ascending" />
+            <xsl:call-templates name="session">            
+              <xsl:sort select="@ip" order="ascending" />
+            </xsl:call-templates>
           </xsl:when>
           <xsl:when test="$sort = 'version'">
-            <xsl:sort select="@version" order="descending" />
+            <xsl:call-templates name="session">            
+              <xsl:sort select="@version" order="descending" />
+              <xsl:sort select="translate(@username, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
+            </xsl:call-templates>              
           </xsl:when>
           <xsl:when test="$sort = 'program'">
-            <xsl:sort select="translate(@program, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
+            <xsl:call-templates name="session">
+              <xsl:sort select="translate(@program, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
+              <xsl:sort select="translate(@username, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
+            </xsl:call-templates>              
           </xsl:when>
           <xsl:when test="$sort = 'pipe'">
-            <xsl:sort select="translate(@pipe, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />            
+            <xsl:call-templates name="session">
+              <xsl:sort select="translate(@pipe, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
+              <xsl:sort select="translate(@username, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
+            </xsl:call-templates>              
           </xsl:when>
+          <xsl:otherwise>
+            <xsl:call-templates name="session">
+              <xsl:sort select="translate(@username, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
+            </xsl:call-templates>  
+          </xsl:otherwise>
         </xsl:choose>
-        <xsl:sort select="translate(@username, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
-
-        <xsl:if test="(boolean(@username) or boolean(@ip) or boolean(@version) or boolean(@program) or boolean(@pipe)) and @username != 'SYSTEM'">
-          <tr class="hover">
-            <td><xsl:value-of select="count(key('session-data', concat(@username, @ip, @version, @program, @pipe)))"/></td>
-            <td><a href="./zarafa-users.php?user={@username}"><xsl:value-of select="translate(@username,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')"/></a></td>
-            <td><xsl:value-of select="@ip"/></td>
-            <td><xsl:value-of select="@version"/></td>
-            <td><xsl:value-of select="@program"/></td>
-            <td><xsl:value-of select="@pipe"/></td>
-          </tr>
-        </xsl:if>
-
       </xsl:for-each>
     </table>
   </pre>
+</xsl:template>
+
+<xsl:template name="session">
+  <xsl:if test="(boolean(@username) or boolean(@ip) or boolean(@version) or boolean(@program) or boolean(@pipe)) and @username != 'SYSTEM'">
+    <tr class="hover">
+      <td><xsl:value-of select="count(key('session-data', concat(@username, @ip, @version, @program, @pipe)))"/></td>
+      <td><a href="./zarafa-users.php?user={@username}"><xsl:value-of select="translate(@username,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')"/></a></td>
+      <td><xsl:value-of select="@ip"/></td>
+      <td><xsl:value-of select="@version"/></td>
+      <td><xsl:value-of select="@program"/></td>
+      <td><xsl:value-of select="@pipe"/></td>
+    </tr>
+  </xsl:if>
 </xsl:template>
 
 </xsl:stylesheet>
