@@ -158,6 +158,7 @@ if __name__ == "__main__":
         if error:  sys.stderr.write( str(error) + "\n" )      
 
       else:
+        print license
         print [7, len(license['active']['allowed']), len(license['non-active']['allowed'])]
         allowed   = max([7, len(license['active']['allowed']), len(license['non-active']['allowed'])]) + 2
         used      = max([7, len(license['active']['used']), len(license['non-active']['used']), len(license['total']['used'])]) + 2
