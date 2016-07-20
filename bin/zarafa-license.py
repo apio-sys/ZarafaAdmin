@@ -143,32 +143,34 @@ if __name__ == "__main__":
       ElementTree.SubElement(xmllic, "total", **lic['total'])
       print '<?xml version="1.0" encoding="' + encoding + '"?>\n' + ElementTree.tostring(xml, encoding=encoding, method="xml")
     else:
-      if error:  sys.stderr.write( str(error) + "\n" )      
-      if args['output'] == 'json': 
-        print json.dumps(lic, indent=2, sort_keys=True)
+      if error:
+        sys.stderr.write( str(error) + "\n" )
+      elif lic:
+        if args['output'] == 'json': 
+          print json.dumps(lic, indent=2, sort_keys=True)
 
-      elif args['output'] == 'csv':
-        print args['delimiter'].join(['Type','Used','Available','Allowed','Users','Rooms','Equipment'])
-        print args['delimiter'].join(['active',lic['active']['used'],lic['active']['available'],lic['active']['allowed'],
-                                               lic['active']['users'],lic['active']['rooms'],lic['active']['equipment']])
-        print args['delimiter'].join(['non-active',lic['non-active']['used'],lic['non-active']['available'],lic['non-active']['allowed'],
-                                                   lic['non-active']['users'],lic['non-active']['rooms'],lic['non-active']['equipment']])
-        print args['delimiter'].join(['total',lic['total']['used'],lic['total']['available'],lic['total']['allowed'],
-                                              lic['total']['users'],lic['total']['rooms'],lic['total']['equipment']])
-        if error:  sys.stderr.write( str(error) + "\n" )      
+        elif args['output'] == 'csv':
+          print args['delimiter'].join(['Type','Used','Available','Allowed','Users','Rooms','Equipment'])
+          print args['delimiter'].join(['active',lic['active']['used'],lic['active']['available'],lic['active']['allowed'],
+                                                 lic['active']['users'],lic['active']['rooms'],lic['active']['equipment']])
+          print args['delimiter'].join(['non-active',lic['non-active']['used'],lic['non-active']['available'],lic['non-active']['allowed'],
+                                                     lic['non-active']['users'],lic['non-active']['rooms'],lic['non-active']['equipment']])
+          print args['delimiter'].join(['total',lic['total']['used'],lic['total']['available'],lic['total']['allowed'],
+                                                lic['total']['users'],lic['total']['rooms'],lic['total']['equipment']])
+          if error:  sys.stderr.write( str(error) + "\n" )      
 
-      elif args['output'] == 'text':
-        print lic
-        # allowed   = max([7, len(lic['active']['allowed']), len(lic['non-active']['allowed'])]) + 2
-        # used      = max([7, len(lic['active']['used']), len(lic['non-active']['used']), len(lic['total']['used'])]) + 2
-        # available = max([9, len(lic['active']['available']), len(lic['non-active']['available'])]) + 2
-        # print "Zarafa Licensing Info:"
-        # print "           " + "Allowed".rjust(allowed) + "Used".rjust(used) + "Available".rjust(available)
-        # print "-----------" + "-" * (allowed + used + available + 2)
-        # print "Active     " + str(lic['active']['allowed']).rjust(allowed) + str(lic['active']['used']).rjust(used) + str(lic['active']['available']).rjust(available)
-        # print "Non-active " + str(lic['non-active']['allowed']).rjust(allowed) + str(lic['non-active']['used']).rjust(used) + str(lic['non-active']['available']).rjust(available)
-        # print "  Users    " + str(lic['non-active']['users']).rjust(allowed + used)
-        # print "  Rooms    " + str(lic['non-active']['rooms']).rjust(allowed + used)
-        # print "  Equipment" + str(lic['non-active']['equipment']).rjust(allowed + used)
-        # print "Total      " + str(lic['total']['used']).rjust(allowed + used)
+        else:
+          print lic
+          # allowed   = max([7, len(lic['active']['allowed']), len(lic['non-active']['allowed'])]) + 2
+          # used      = max([7, len(lic['active']['used']), len(lic['non-active']['used']), len(lic['total']['used'])]) + 2
+          # available = max([9, len(lic['active']['available']), len(lic['non-active']['available'])]) + 2
+          # print "Zarafa Licensing Info:"
+          # print "           " + "Allowed".rjust(allowed) + "Used".rjust(used) + "Available".rjust(available)
+          # print "-----------" + "-" * (allowed + used + available + 2)
+          # print "Active     " + str(lic['active']['allowed']).rjust(allowed) + str(lic['active']['used']).rjust(used) + str(lic['active']['available']).rjust(available)
+          # print "Non-active " + str(lic['non-active']['allowed']).rjust(allowed) + str(lic['non-active']['used']).rjust(used) + str(lic['non-active']['available']).rjust(available)
+          # print "  Users    " + str(lic['non-active']['users']).rjust(allowed + used)
+          # print "  Rooms    " + str(lic['non-active']['rooms']).rjust(allowed + used)
+          # print "  Equipment" + str(lic['non-active']['equipment']).rjust(allowed + used)
+          # print "Total      " + str(lic['total']['used']).rjust(allowed + used)
     sys.exit(exitcode)
