@@ -112,6 +112,7 @@ if __name__ == "__main__":
     error = ""
     xmldata = ""
     exitcode = 0
+    lic = {}
 
     command_line_args()
     lic = get_data()
