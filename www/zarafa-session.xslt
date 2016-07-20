@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:output method="html" indent="yes" omit-xml-declaration="yes" />
+<xsl:param name="sort" select="'username'"/>
 
 <xsl:template match="/zarafaadmin/error">
   <table align="center">
@@ -26,6 +27,23 @@
     <table id="zarafa-session">
       <tr><th>Count</th><th>Username</th><th>IP</th><th>Version</th><th>Program</th><th>Pipe</th></tr>
       <xsl:for-each select="/zarafaadmin/sessions/session[generate-id() = generate-id(key('session-data', concat(@username, @ip, @version, @program, @pipe))[1])]">
+        <xsl:choose>
+          <xsl:when test="$sort = 'count'">
+            <xsl:sort select="count(key('session-data', concat(@username, @ip, @version, @program, @pipe)))" order="descending" />
+          </xsl:when>
+          <xsl:when test="$sort = 'ip'">
+            <xsl:sort select="@ip" order="ascending" />
+          </xsl:when>
+          <xsl:when test="$sort = 'version'">
+            <xsl:sort select="@version" order="descending" />
+          </xsl:when>
+          <xsl:when test="$sort = 'program'">
+            <xsl:sort select="translate(@program, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
+          </xsl:when>
+          <xsl:when test="$sort = 'pipe'">
+            <xsl:sort select="translate(@pipe, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />            
+          </xsl:when>
+        </xsl:choose>
         <xsl:sort select="translate(@username, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />
 
         <xsl:if test="(boolean(@username) or boolean(@ip) or boolean(@version) or boolean(@program) or boolean(@pipe)) and @username != 'SYSTEM'">
