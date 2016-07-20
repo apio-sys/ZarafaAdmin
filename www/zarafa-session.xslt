@@ -36,7 +36,7 @@
         <xsl:choose>
           <xsl:when test="$sort = 'count'">
             <xsl:for-each select="/zarafaadmin/sessions/session[generate-id() = generate-id(key('session-data', concat(@username, @ip, @version, @program, @pipe))[1])]">
-              <xsl:sort select="count(key('session-data', concat(@username, @ip, @version, @program, @pipe)))" order="descending" />
+              <xsl:sort select="count(key('session-data', concat(@username, @ip, @version, @program, @pipe)))" order="descending" data-type="number" />
               <xsl:sort select="translate(@username, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')" order="ascending" />              
               <xsl:if test="(boolean(@username) or boolean(@ip) or boolean(@version) or boolean(@program) or boolean(@pipe)) and @username != 'SYSTEM'">
                 <tr class="hover">
