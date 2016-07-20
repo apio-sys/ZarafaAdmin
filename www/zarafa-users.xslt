@@ -146,7 +146,7 @@
           <th colspan="3" align="center">Last Sync</th>
         </tr>
         <xsl:for-each select="user/devices/device">
-          <xsl:sort select="lastsync/@lag" order="decending" data-type="number"/>
+          <xsl:sort select="lastsync/@lag" order="descending" data-type="number"/>
           <tr class="hover">
             <td colspan="3" align="center"><a href="./zarafa-mdm.php?user={@username}&amp;device={@deviceid}"><xsl:value-of select="@deviceid"/></a></td>
             <td colspan="3" align="center">
@@ -174,56 +174,6 @@
 
     <xsl:otherwise>
       <table id="zarafa-users">
-      <tr>
-        <th colspan="8">
-          <table align="center" id="zarafa-users-totals">
-            <caption>License information</caption>
-            <tr>
-              <td align="center">&#160;</td>
-              <th align="right">Allowed</th>
-              <th align="right">&#160;&#160;Used</th>
-              <th align="right">&#160;&#160;Available</th>
-            </tr>
-            <tr class="entry">
-              <th align="left">Active:</th>
-              <td align="right"><xsl:value-of select="licensed/active/@allowed"/></td>
-              <td align="right"><xsl:value-of select="licensed/active/@used"/>&#160;</td>
-              <td align="right"><xsl:value-of select="licensed/active/@available"/></td>
-            </tr>
-            <tr class="entry">
-              <th align="left">Non-Active:</th>
-              <td align="right"><xsl:value-of select="licensed/nonactive/@allowed"/></td>
-              <td align="right"><xsl:value-of select="licensed/nonactive/@used"/>&#160;</td>
-              <td align="right"><xsl:value-of select="licensed/nonactive/@available"/></td>
-            </tr>
-            <tr class="entry">
-              <th align="left">&#160;&#160;Users:</th>
-              <td align="right">&#160;</td>
-              <td align="right"><xsl:value-of select="licensed/nonactive/@users"/>&#160;</td>
-              <td align="right">&#160;</td>
-            </tr>            
-            <tr class="entry">
-              <th align="left">&#160;&#160;Rooms:</th>
-              <td align="right">&#160;</td>
-              <td align="right"><xsl:value-of select="licensed/nonactive/@rooms"/>&#160;</td>
-              <td align="right">&#160;</td>
-            </tr>            
-            <tr class="entry">
-              <th align="left">&#160;&#160;Equipment:</th>
-              <td align="right">&#160;</td>
-              <td align="right"><xsl:value-of select="licensed/nonactive/@equipment"/>&#160;</td>
-              <td align="right">&#160;</td>
-            </tr>            
-            <tr class="entry">
-              <th align="left">Total:</th>
-              <td align="right">&#160;</td>
-              <td align="right"><xsl:value-of select="licensed/total/@used"/>&#160;</td>
-              <td align="right">&#160;</td>
-            </tr>
-          </table>
-        </th>
-      </tr>   
-
       <tr>
         <th align="left"><a href="./zarafa-users.php?sort=username">Username</a></th>
         <th align="left"><a href="./zarafa-users.php?sort=fullname">Full Name</a></th>
