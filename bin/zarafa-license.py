@@ -157,7 +157,7 @@ if __name__ == "__main__":
                                               lic['total']['users'],lic['total']['rooms'],lic['total']['equipment']])
         if error:  sys.stderr.write( str(error) + "\n" )      
 
-      else:
+      elif args['output'] == 'text':
         print lic
         # allowed   = max([7, len(lic['active']['allowed']), len(lic['non-active']['allowed'])]) + 2
         # used      = max([7, len(lic['active']['used']), len(lic['non-active']['used']), len(lic['total']['used'])]) + 2
