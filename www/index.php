@@ -48,6 +48,11 @@
 					<ul>
 						<li><a href="./zarafa-orphans.php" target="cmdiframe">Orphaned Stores</a></li>					
 					</ul></p>
+					<p>&nbsp;External Sites
+					<ul>
+						<li><a href="/dashboard/" target="cmdiframe">OPW Dashboard</a></li>
+						<li><a href="https://graf.kopano.io" target="cmdiframe">Kopano Dashboard</a></li>
+					</ul></p>					
 				</td>
 				<td id="table-results">
 					<iframe id="cmdiframe" src="blank.html" name="cmdiframe">Browser not compatible.</iframe>
