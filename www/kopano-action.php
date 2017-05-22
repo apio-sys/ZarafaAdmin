@@ -1,6 +1,6 @@
 <?php
 /*
- *    Zarafa Perform Action form
+ *    Kopano Perform Action form
  *
  *    Created by: Bob Brandt (http://brandt.ie)
  *    Created on: 2016-04-23

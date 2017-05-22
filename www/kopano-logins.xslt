@@ -25,15 +25,15 @@
   <pre>
     <table id="zarafa-login-errors">
       <tr>
-        <th><a href="./zarafa-logins.php?sort=username">Username</a></th>
-        <th><a href="./zarafa-logins.php?sort=m1">1 Min</a></th>
-        <th><a href="./zarafa-logins.php?sort=m5">5 Min</a></th>
-        <th><a href="./zarafa-logins.php?sort=m15">15 Min</a></th>
-        <th><a href="./zarafa-logins.php?sort=h1">1 Hour</a></th>
-        <th><a href="./zarafa-logins.php?sort=h4">4 Hour</a></th>
-        <th><a href="./zarafa-logins.php?sort=h8">8 Hour</a></th>
-        <th><a href="./zarafa-logins.php?sort=d1">1 Day</a></th>
-        <th><a href="./zarafa-logins.php?sort=d3">3 Day</a></th></tr>
+        <th><a href="./kopano-logins.php?sort=username">Username</a></th>
+        <th><a href="./kopano-logins.php?sort=m1">1 Min</a></th>
+        <th><a href="./kopano-logins.php?sort=m5">5 Min</a></th>
+        <th><a href="./kopano-logins.php?sort=m15">15 Min</a></th>
+        <th><a href="./kopano-logins.php?sort=h1">1 Hour</a></th>
+        <th><a href="./kopano-logins.php?sort=h4">4 Hour</a></th>
+        <th><a href="./kopano-logins.php?sort=h8">8 Hour</a></th>
+        <th><a href="./kopano-logins.php?sort=d1">1 Day</a></th>
+        <th><a href="./kopano-logins.php?sort=d3">3 Day</a></th></tr>
  
         <xsl:choose>
         <xsl:when test="$sort = 'm1'">
@@ -72,7 +72,7 @@
   <tr class="hover" id="{@user}-basic">
     <td>
       <img id="{@user}-img" src="/images/toggle-expand.png" onclick="toggle('{@user}');"/>&#xA0;
-      <a href="./zarafa-users.php?user={@user}"><xsl:value-of select="@user"/></a>
+      <a href="./kopano-users.php?user={@user}"><xsl:value-of select="@user"/></a>
     </td>
     <td class="number"><xsl:value-of select="@m1"/></td>
     <td class="number"><xsl:value-of select="@m5"/></td>

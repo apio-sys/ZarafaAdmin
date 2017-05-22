@@ -92,7 +92,7 @@
 
 <xsl:template match="user">
   <td align="center" class="hover">
-    <a href="./zarafa-users.php?user={@username}"><xsl:value-of select="@username"/></a>
+    <a href="./kopano-users.php?user={@username}"><xsl:value-of select="@username"/></a>
   </td>
 </xsl:template>
 
@@ -111,7 +111,7 @@
 
 <xsl:template match="group">
   <td align="center" class="hover">
-    <a href="./zarafa-groups.php?group={@groupname}"><xsl:value-of select="@groupname"/></a>
+    <a href="./kopano-groups.php?group={@groupname}"><xsl:value-of select="@groupname"/></a>
   </td>
 </xsl:template>
 

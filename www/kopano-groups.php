@@ -1,9 +1,9 @@
 <?php
 /*
- *    Zarafa Failed Login Errors
+ *    Kopano Group Details
  *
  *    Created by: Bob Brandt (http://brandt.ie)
- *    Created on: 2015-11-23
+ *    Created on: 2016-04-23
  *
  *                             GNU GENERAL PUBLIC LICENSE
  *                                Version 2, June 1991
@@ -40,29 +40,15 @@ ob_implicit_flush(); // implicitly calls flush() after every ob_flush()
 $buffer = ini_get('output_buffering'); // retrive the buffer size from the php.ini file
 if (!is_numeric($buffer)) $buffer = 8192;
 
-$sort = "";
-if (isset($_GET['sort']))    $sort = $_GET['sort'];
-if (isset($_POST['sort']))   $sort = $_POST['sort'];
+$group = "";
+if (isset($_GET['group']))   $group = $_GET['group'];
+if (isset($_POST['group']))  $group = $_POST['group'];
 
 echo '<html><head>';
 echo '<meta http-equiv="content-type" content="text/html; charset=UTF-8">';
 echo '<meta http-equiv="Content-Type" charset="utf-8">';
-echo '<link rel="stylesheet" href="zarafaadmin.css">';
-echo '<title>Zarafa Login Errors Result Page</title>';
-echo '<script>';
-echo 'function toggle(obj) {';
-echo '    var img = document.getElementById(obj+"-img");';
-echo '    var row = document.getElementById(obj+"-details");';
-echo '    if ( row.className == "hide" ) {';
-echo '        img.src = "/images/toggle-collapse.png";';
-echo '        row.className = "show";';
-echo '    }';
-echo '    else {';
-echo '        img.src = "/images/toggle-expand.png";';
-echo '        row.className = "hide";';
-echo '    }';
-echo '}';
-echo '</script>';
+echo '<link rel="stylesheet" href="kopanoadmin.css">';
+echo '<title>Kopano Group Details</title>';
 echo '<script src="loading.js"></script>';
 echo '</head><body onload="hide_loading();">';
 echo str_pad('',$buffer)."\n"; ob_flush();
@@ -71,24 +57,29 @@ echo '<div id="loading"><img src="loading.gif"/> Loading...</div>';
 echo str_pad('',$buffer)."\n"; ob_flush();
 
 // XML
-$command = "sudo /opt/brandt/ZarafaAdmin/bin/zarafa-logins.py --output xml";
+$command = "sudo /opt/brandt/ZarafaAdmin/bin/zarafa-groups.py --output xml";
+if ( $group !== "" ) $command = "$command ".escapeshellarg($group);
 $output = shell_exec($command);
 $outputxml = new DOMDocument();
 $outputxml->loadXML( $output );
 
 // XSL
 $xsl = new DOMDocument();
-$xsl->load('zarafa-logins.xslt');
-
+$xsl->load('zarafa-groups.xslt');
+	
 // Proc
 $proc = new XSLTProcessor();
 $proc->importStylesheet($xsl);
-if ( $sort !== "" ) $proc->setParameter( '', 'sort', $sort);    
 
-$output = $proc->transformToDoc($outputxml)->saveXML();
+$output = $proc->transformToDoc($outputxml)->saveXML(); 
 
 echo "$output";
 echo '</body></html>';
 ?>
+
+
+
+
+
 
 

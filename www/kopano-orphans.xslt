@@ -25,11 +25,11 @@
   <pre>
     <table id="zarafa-orphans">
     <tr>
-      <th align="left"><a href="./zarafa-orphans.php?sort=guid">Store GUID</a></th>
-      <th align="left"><a href="./zarafa-orphans.php?sort=user">Guessed Username</a></th>
-      <th align="right"><a href="./zarafa-orphans.php?sort=size">Size (MB)</a></th>
-      <th align="right"><a href="./zarafa-orphans.php?sort=type">Store Type</a></th>
-      <th align="center"><a href="./zarafa-orphans.php?sort=logon">Last Logon</a></th>      
+      <th align="left"><a href="./kopano-orphans.php?sort=guid">Store GUID</a></th>
+      <th align="left"><a href="./kopano-orphans.php?sort=user">Guessed Username</a></th>
+      <th align="right"><a href="./kopano-orphans.php?sort=size">Size (MB)</a></th>
+      <th align="right"><a href="./kopano-orphans.php?sort=type">Store Type</a></th>
+      <th align="center"><a href="./kopano-orphans.php?sort=logon">Last Logon</a></th>      
     </tr>
     <xsl:choose>
     <xsl:when test="$sort = 'guid'">
@@ -55,7 +55,7 @@
 <xsl:template match="orphan">
   <tr class="entry">
     <td><xsl:value-of select="@store"/></td>    
-    <td><a href="./zarafa-users.php?user={@username}"><xsl:value-of select="@username"/></a></td>
+    <td><a href="./kopano-users.php?user={@username}"><xsl:value-of select="@username"/></a></td>
     <td><xsl:value-of select="@size"/></td>
     <td><xsl:value-of select="@type"/></td>
     <td><xsl:value-of select="@logon"/></td>

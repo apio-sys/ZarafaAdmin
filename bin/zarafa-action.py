@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Python wrapper for zarafa-admin actions
+Python wrapper for kopano-admin actions
 """
 import argparse, textwrap, fnmatch, datetime, getpass
 import xml.etree.cElementTree as ElementTree

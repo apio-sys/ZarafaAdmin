@@ -56,11 +56,11 @@
         </th>
       </tr>          
       <tr>
-        <th align="left"><a href="./zarafa-emails.php?sort=mail">Email Address</a></th>
-        <th align="center"><a href="./zarafa-emails.php?sort=type">Account<br/>Type</a></th>
-        <th align="center"><a href="./zarafa-emails.php?sort=zarafa">Zarafa<br/>Account</a></th>
-        <th align="center"><a href="./zarafa-emails.php?sort=domino">Domino<br/>Account</a></th>
-        <th align="center"><a href="./zarafa-emails.php?sort=forward">Forwarding</a></th>
+        <th align="left"><a href="./kopano-emails.php?sort=mail">Email Address</a></th>
+        <th align="center"><a href="./kopano-emails.php?sort=type">Account<br/>Type</a></th>
+        <th align="center"><a href="./kopano-emails.php?sort=zarafa">Zarafa<br/>Account</a></th>
+        <th align="center"><a href="./kopano-emails.php?sort=domino">Domino<br/>Account</a></th>
+        <th align="center"><a href="./kopano-emails.php?sort=forward">Forwarding</a></th>
       </tr>
       <xsl:choose>
       <xsl:when test="$sort = 'type'">
@@ -111,7 +111,7 @@
           <xsl:value-of select="@mail"/>
         </xsl:when>
         <xsl:otherwise>
-          <a href="./zarafa-users.php?user={@username}"><xsl:value-of select="@mail"/></a>
+          <a href="./kopano-users.php?user={@username}"><xsl:value-of select="@mail"/></a>
         </xsl:otherwise>
       </xsl:choose>
     </td>

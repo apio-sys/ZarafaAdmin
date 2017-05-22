@@ -124,7 +124,7 @@ def command_line_args():
 def get_data():
   global args
   command = '/usr/share/z-push/z-push-admin.php -a lastsync'
-  cachefile = '/tmp/zarafa-mdm.cache'    
+  cachefile = '/tmp/kopano-mdm.cache'    
 
   args['cache'] *= 60
   age = args['cache'] + 1

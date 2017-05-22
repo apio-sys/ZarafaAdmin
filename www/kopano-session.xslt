@@ -26,12 +26,12 @@
   <pre>
     <table id="zarafa-session">
       <tr>
-        <th><a href="./zarafa-session.php?sort=count">Count</a></th>
-        <th><a href="./zarafa-session.php?sort=username">Username</a></th>
-        <th><a href="./zarafa-session.php?sort=ip">IP</a></th>
-        <th><a href="./zarafa-session.php?sort=version">Version</a></th>
-        <th><a href="./zarafa-session.php?sort=program">Program</a></th>
-        <th><a href="./zarafa-session.php?sort=pipe">Pipe</a></th>
+        <th><a href="./kopano-session.php?sort=count">Count</a></th>
+        <th><a href="./kopano-session.php?sort=username">Username</a></th>
+        <th><a href="./kopano-session.php?sort=ip">IP</a></th>
+        <th><a href="./kopano-session.php?sort=version">Version</a></th>
+        <th><a href="./kopano-session.php?sort=program">Program</a></th>
+        <th><a href="./kopano-session.php?sort=pipe">Pipe</a></th>
       </tr>
         <xsl:choose>
           <xsl:when test="$sort = 'count'">
@@ -41,7 +41,7 @@
               <xsl:if test="(boolean(@username) or boolean(@ip) or boolean(@version) or boolean(@program) or boolean(@pipe)) and @username != 'SYSTEM'">
                 <tr class="hover">
                   <td align="center"><xsl:value-of select="count(key('session-data', concat(@username, @ip, @version, @program, @pipe)))"/></td>
-                  <td><a href="./zarafa-users.php?user={@username}"><xsl:value-of select="translate(@username,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')"/></a></td>
+                  <td><a href="./kopano-users.php?user={@username}"><xsl:value-of select="translate(@username,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')"/></a></td>
                   <td><xsl:value-of select="@ip"/></td><td><xsl:value-of select="@version"/></td><td><xsl:value-of select="@program"/></td><td><xsl:value-of select="@pipe"/></td>
                 </tr>
               </xsl:if>
@@ -53,7 +53,7 @@
               <xsl:if test="(boolean(@username) or boolean(@ip) or boolean(@version) or boolean(@program) or boolean(@pipe)) and @username != 'SYSTEM'">
                 <tr class="hover">
                   <td align="center"><xsl:value-of select="count(key('session-data', concat(@username, @ip, @version, @program, @pipe)))"/></td>
-                  <td><a href="./zarafa-users.php?user={@username}"><xsl:value-of select="translate(@username,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')"/></a></td>
+                  <td><a href="./kopano-users.php?user={@username}"><xsl:value-of select="translate(@username,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')"/></a></td>
                   <td><xsl:value-of select="@ip"/></td><td><xsl:value-of select="@version"/></td><td><xsl:value-of select="@program"/></td><td><xsl:value-of select="@pipe"/></td>
                 </tr>
               </xsl:if>
@@ -66,7 +66,7 @@
               <xsl:if test="(boolean(@username) or boolean(@ip) or boolean(@version) or boolean(@program) or boolean(@pipe)) and @username != 'SYSTEM'">
                 <tr class="hover">
                   <td align="center"><xsl:value-of select="count(key('session-data', concat(@username, @ip, @version, @program, @pipe)))"/></td>
-                  <td><a href="./zarafa-users.php?user={@username}"><xsl:value-of select="translate(@username,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')"/></a></td>
+                  <td><a href="./kopano-users.php?user={@username}"><xsl:value-of select="translate(@username,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')"/></a></td>
                   <td><xsl:value-of select="@ip"/></td><td><xsl:value-of select="@version"/></td><td><xsl:value-of select="@program"/></td><td><xsl:value-of select="@pipe"/></td>
                 </tr>
               </xsl:if>
@@ -79,7 +79,7 @@
               <xsl:if test="(boolean(@username) or boolean(@ip) or boolean(@version) or boolean(@program) or boolean(@pipe)) and @username != 'SYSTEM'">
                 <tr class="hover">
                   <td align="center"><xsl:value-of select="count(key('session-data', concat(@username, @ip, @version, @program, @pipe)))"/></td>
-                  <td><a href="./zarafa-users.php?user={@username}"><xsl:value-of select="translate(@username,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')"/></a></td>
+                  <td><a href="./kopano-users.php?user={@username}"><xsl:value-of select="translate(@username,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')"/></a></td>
                   <td><xsl:value-of select="@ip"/></td><td><xsl:value-of select="@version"/></td><td><xsl:value-of select="@program"/></td><td><xsl:value-of select="@pipe"/></td>
                 </tr>
               </xsl:if>
@@ -92,7 +92,7 @@
               <xsl:if test="(boolean(@username) or boolean(@ip) or boolean(@version) or boolean(@program) or boolean(@pipe)) and @username != 'SYSTEM'">
                 <tr class="hover">
                   <td align="center"><xsl:value-of select="count(key('session-data', concat(@username, @ip, @version, @program, @pipe)))"/></td>
-                  <td><a href="./zarafa-users.php?user={@username}"><xsl:value-of select="translate(@username,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')"/></a></td>
+                  <td><a href="./kopano-users.php?user={@username}"><xsl:value-of select="translate(@username,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')"/></a></td>
                   <td><xsl:value-of select="@ip"/></td><td><xsl:value-of select="@version"/></td><td><xsl:value-of select="@program"/></td><td><xsl:value-of select="@pipe"/></td>
                 </tr>
               </xsl:if>
@@ -104,7 +104,7 @@
               <xsl:if test="(boolean(@username) or boolean(@ip) or boolean(@version) or boolean(@program) or boolean(@pipe)) and @username != 'SYSTEM'">
                 <tr class="hover">
                   <td align="center"><xsl:value-of select="count(key('session-data', concat(@username, @ip, @version, @program, @pipe)))"/></td>
-                  <td><a href="./zarafa-users.php?user={@username}"><xsl:value-of select="translate(@username,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')"/></a></td>
+                  <td><a href="./kopano-users.php?user={@username}"><xsl:value-of select="translate(@username,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')"/></a></td>
                   <td><xsl:value-of select="@ip"/></td><td><xsl:value-of select="@version"/></td><td><xsl:value-of select="@program"/></td><td><xsl:value-of select="@pipe"/></td>
                 </tr>
               </xsl:if>

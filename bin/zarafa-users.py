@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Python wrapper for zarafa-stats --users and zarafa-admin --details user
+Python wrapper for kopano-stats --users and kopano-admin --details user
 """
 import argparse, textwrap, fnmatch, datetime
 import xml.etree.cElementTree as ElementTree
@@ -142,8 +142,8 @@ def command_line_args():
 
 def get_data():
   global args
-  command = '/usr/bin/zarafa-stats --users --dump'
-  cachefile = '/tmp/zarafa-users.cache'    
+  command = '/usr/bin/kopano-stats --users --dump'
+  cachefile = '/tmp/kopano-users.cache'    
 
   args['cache'] *= 60
   age = args['cache'] + 1
@@ -222,7 +222,7 @@ def zarafa_users(users):
 
 def zarafa_user(username):
   global args, ldapmapping, output
-  command = '/usr/sbin/zarafa-admin --type user --details "' + str(username) + '"'
+  command = '/usr/sbin/kopano-admin --type user --details "' + str(username) + '"'
 
   p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   out, err = p.communicate()
@@ -288,7 +288,7 @@ def zarafa_user(username):
       data[good] = data[bad]
       del data[bad]
 
-  command = '/usr/sbin/zarafa-admin --type user --list-sendas "' + str(username) + '"'
+  command = '/usr/sbin/kopano-admin --type user --list-sendas "' + str(username) + '"'
   p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   out, err = p.communicate()
   if err: raise IOError(err)

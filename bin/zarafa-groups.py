@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Python wrapper for zarafa-admin --type group --details group
+Python wrapper for kopano-admin --type group --details group
 """
 import argparse, textwrap, fnmatch, datetime
 import xml.etree.cElementTree as ElementTree
@@ -99,8 +99,8 @@ def command_line_args():
 
 def get_data():
   global args
-  command = '/usr/sbin/zarafa-admin -L'
-  cachefile = '/tmp/zarafa-groups.cache'    
+  command = '/usr/sbin/kopano-admin -L'
+  cachefile = '/tmp/kopano-groups.cache'    
 
   args['cache'] *= 60
   age = args['cache'] + 1
@@ -156,7 +156,7 @@ def zarafa_groups(groups):
 
 def zarafa_group(groupname):
   global args, ldapmapping, output
-  command = '/usr/sbin/zarafa-admin --type group --details "' + str(groupname) + '"'
+  command = '/usr/sbin/kopano-admin --type group --details "' + str(groupname) + '"'
 
   p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   out, err = p.communicate()
@@ -187,7 +187,7 @@ def zarafa_group(groupname):
   data = { x[0]:x[1] for x in out }
   data.update(props)
 
-  command = '/usr/sbin/zarafa-admin --type group --list-sendas "' + str(groupname) +'"'
+  command = '/usr/sbin/kopano-admin --type group --list-sendas "' + str(groupname) +'"'
   p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   out, err = p.communicate()
   if err: raise IOError(err)

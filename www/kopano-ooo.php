@@ -1,6 +1,6 @@
 <?php
 /*
- *    Zarafa Out of Office form
+ *    Kopano Out of Office form
  *
  *    Created by: Bob Brandt (http://brandt.ie)
  *    Created on: 2016-04-23
@@ -104,7 +104,7 @@ if (isset($_POST['email']))   $email = $_POST['email'];
 			window.location.href = "<?=$_SERVER['HTTP_REFERER']?>";
 		}
 	</script>
-	<title>Zarafa (Un)Set Out of Office</title>
+	<title>Kopano (Un)Set Out of Office</title>
 </head>
 <body onload="setMode()">
 <form action="./zarafa-action.php" method="get">

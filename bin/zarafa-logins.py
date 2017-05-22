@@ -113,7 +113,7 @@ def command_line_args():
 
 def get_data():
   global args, attrsTime, attrsLDAP
-  cachefile = '/tmp/zarafa-logins.cache'
+  cachefile = '/tmp/kopano-logins.cache'
 
   args['cache'] *= 60
   age = args['cache'] + 1

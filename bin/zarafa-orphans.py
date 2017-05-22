@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Python wrapper for zarafa-admin --list-orphans
+Python wrapper for kopano-admin --list-orphans
 """
 import argparse, textwrap, fnmatch, datetime, re
 import xml.etree.cElementTree as ElementTree
@@ -80,7 +80,7 @@ def command_line_args():
 
 def get_data():
   global args
-  command = '/usr/sbin/zarafa-admin --list-orphans'
+  command = '/usr/sbin/kopano-admin --list-orphans'
   p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   out, err = p.communicate()
   if err: raise IOError(err)

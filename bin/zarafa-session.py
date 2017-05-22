@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Python wrapper for zarafa-stats --session
+Python wrapper for kopano-stats --session
 """
 import argparse, textwrap, fnmatch, datetime
 import xml.etree.cElementTree as ElementTree
@@ -95,8 +95,8 @@ def command_line_args():
 
 def get_data():
   global args
-  command = '/usr/bin/zarafa-stats --session --dump'
-  cachefile = '/tmp/zarafa-session.cache'    
+  command = '/usr/bin/kopano-stats --session --dump'
+  cachefile = '/tmp/kopano-session.cache'    
 
   args['cache'] *= 60
   age = args['cache'] + 1

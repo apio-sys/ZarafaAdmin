@@ -148,9 +148,9 @@
         <xsl:for-each select="user/devices/device">
           <xsl:sort select="lastsync/@lag" order="descending" data-type="number"/>
           <tr class="hover">
-            <td colspan="3" align="center"><a href="./zarafa-mdm.php?user={@username}&amp;device={@deviceid}"><xsl:value-of select="@deviceid"/></a></td>
+            <td colspan="3" align="center"><a href="./kopano-mdm.php?user={@username}&amp;device={@deviceid}"><xsl:value-of select="@deviceid"/></a></td>
             <td colspan="3" align="center">
-              <a href="./zarafa-mdm.php?user={@username}&amp;device={@deviceid}">
+              <a href="./kopano-mdm.php?user={@username}&amp;device={@deviceid}">
                 <xsl:if test="lastsync/@lag &gt;= 30">
                   <xsl:attribute name="class">red</xsl:attribute>
                 </xsl:if>          
@@ -163,7 +163,7 @@
         <tr><td colspan="6">&#xA0;</td></tr>
         <tr><th colspan="6" align="center">Actions</th></tr>
         <tr><td colspan="6" align="center">
-          <a href="./zarafa-ooo.php?username={user/@username}&amp;fullname={user/@fullname}&amp;email={user/@emailaddress}">(Un)Set Out of Office</a>
+          <a href="./kopano-ooo.php?username={user/@username}&amp;fullname={user/@fullname}&amp;email={user/@emailaddress}">(Un)Set Out of Office</a>
         </td></tr>
         <tr><td colspan="6">&#xA0;</td></tr>
         <tr><td colspan="6" align="center">
@@ -175,14 +175,14 @@
     <xsl:otherwise>
       <table id="zarafa-users">
       <tr>
-        <th align="left"><a href="./zarafa-users.php?sort=username">Username</a></th>
-        <th align="left"><a href="./zarafa-users.php?sort=fullname">Full Name</a></th>
-        <th align="left"><a href="./zarafa-users.php?sort=emailaddress">Email Address</a></th>
-        <th align="right"><a href="./zarafa-users.php?sort=quotawarn">Warning</a></th>
-        <th align="right"><a href="./zarafa-users.php?sort=quotasoft">Soft</a></th>
-        <th align="right"><a href="./zarafa-users.php?sort=quotahard">Hard</a></th>
-        <th align="right"><a href="./zarafa-users.php?sort=size">Size (MB)</a></th>
-        <th align="center"><a href="./zarafa-users.php?sort=logon">Last Logon</a></th>
+        <th align="left"><a href="./kopano-users.php?sort=username">Username</a></th>
+        <th align="left"><a href="./kopano-users.php?sort=fullname">Full Name</a></th>
+        <th align="left"><a href="./kopano-users.php?sort=emailaddress">Email Address</a></th>
+        <th align="right"><a href="./kopano-users.php?sort=quotawarn">Warning</a></th>
+        <th align="right"><a href="./kopano-users.php?sort=quotasoft">Soft</a></th>
+        <th align="right"><a href="./kopano-users.php?sort=quotahard">Hard</a></th>
+        <th align="right"><a href="./kopano-users.php?sort=size">Size (MB)</a></th>
+        <th align="center"><a href="./kopano-users.php?sort=logon">Last Logon</a></th>
       </tr>
       <xsl:choose>
       <xsl:when test="$sort = 'fullname'">
@@ -218,7 +218,7 @@
 
 <xsl:template match="user">
   <tr class="entry">
-  <td><a href="./zarafa-users.php?user={@username}"><xsl:value-of select="@username"/></a></td>
+  <td><a href="./kopano-users.php?user={@username}"><xsl:value-of select="@username"/></a></td>
   <td><xsl:value-of select="@fullname"/></td>
   <td><xsl:value-of select="@emailaddress"/></td>
   <td class="number"><xsl:value-of select="format-number(@quotawarn div 1024,'###,###,##0')"/></td>
@@ -265,7 +265,7 @@
 
 <xsl:template match="sendas">
   <td align="center" class="hover" colspan="3">
-    <a href="./zarafa-users.php?user={@username}"><xsl:value-of select="@username"/></a>
+    <a href="./kopano-users.php?user={@username}"><xsl:value-of select="@username"/></a>
   </td>
 </xsl:template>
 
@@ -285,7 +285,7 @@
 
 <xsl:template match="group">
   <td align="center" class="hover" colspan="3">
-    <a href="./zarafa-groups.php?group={@groupname}"><xsl:value-of select="@groupname"/></a>
+    <a href="./kopano-groups.php?group={@groupname}"><xsl:value-of select="@groupname"/></a>
   </td>
 </xsl:template>
 

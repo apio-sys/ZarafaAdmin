@@ -35,7 +35,7 @@
           <tr class="hover">
             <td>&#xA0;</td>
             <th align="right">User:&#xA0;</th>
-            <td><a href="./zarafa-users.php?user={device/@synchronizedbyuser}"><xsl:value-of select="device/@synchronizedbyuser"/></a></td>
+            <td><a href="./kopano-users.php?user={device/@synchronizedbyuser}"><xsl:value-of select="device/@synchronizedbyuser"/></a></td>
             <td>&#xA0;</td>
             <th align="right">Request On:&#xA0;</th>
             <td><xsl:value-of select="device/@wiperequeston"/></td>
@@ -43,7 +43,7 @@
           <tr class="hover">
             <td>&#xA0;</td>
             <th align="right">Device ID:&#xA0;</th>
-            <td><a href="./zarafa-mdm.php?device={device/@deviceid}"><xsl:value-of select="device/@deviceid"/></a></td>
+            <td><a href="./kopano-mdm.php?device={device/@deviceid}"><xsl:value-of select="device/@deviceid"/></a></td>
             <td>&#xA0;</td>
             <th align="right">Request By:&#xA0;</th>
             <td><xsl:value-of select="device/@wiperequestby"/></td>
@@ -195,9 +195,9 @@
       <xsl:otherwise>
         <table id="zarafa-devices">
           <tr>
-            <th align="left"><a href="./zarafa-mdm.php?user={$user}&amp;device={@device}&amp;sort=username">Username</a></th>
-            <th align="left"><a href="./zarafa-mdm.php?user={$user}&amp;device={@device}&amp;sort=device">Device ID</a></th>
-            <th align="left"><a href="./zarafa-mdm.php?user={$user}&amp;device={@device}&amp;sort=sync">Last Sync</a></th>
+            <th align="left"><a href="./kopano-mdm.php?user={$user}&amp;device={@device}&amp;sort=username">Username</a></th>
+            <th align="left"><a href="./kopano-mdm.php?user={$user}&amp;device={@device}&amp;sort=device">Device ID</a></th>
+            <th align="left"><a href="./kopano-mdm.php?user={$user}&amp;device={@device}&amp;sort=sync">Last Sync</a></th>
           </tr>
           <xsl:choose>
           <xsl:when test="$sort = 'device'">
@@ -226,10 +226,10 @@
 
 <xsl:template match="device">
   <tr class="hover">
-    <td><a href="./zarafa-users.php?user={@username}"><xsl:value-of select="@username"/></a></td>
-    <td><a href="./zarafa-mdm.php?user={@username}&amp;device={@deviceid}"><xsl:value-of select="@deviceid"/></a></td>
+    <td><a href="./kopano-users.php?user={@username}"><xsl:value-of select="@username"/></a></td>
+    <td><a href="./kopano-mdm.php?user={@username}&amp;device={@deviceid}"><xsl:value-of select="@deviceid"/></a></td>
     <td>       
-      <a href="./zarafa-mdm.php?user={@username}&amp;device={@deviceid}">
+      <a href="./kopano-mdm.php?user={@username}&amp;device={@deviceid}">
         <xsl:if test="lastsync/@lag &gt;= 30">
           <xsl:attribute name="class">red</xsl:attribute>
         </xsl:if>          
