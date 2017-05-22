@@ -50,8 +50,8 @@
 					</ul></p>
 					<p>&nbsp;External Sites
 					<ul>
-						<li><a href="/dashboard/" target="cmdiframe">OPW Dashboard</a></li>
-						<li><a href="https://graf.kopano.io" target="cmdiframe">Kopano Dashboard</a></li>
+						<li><a href="/dashboard/" target="_blank">OPW Dashboard</a></li>
+						<li><a href="https://graf.kopano.io" target="_blank">Kopano Dashboard</a></li>
                         <li><a href="http://kopano-core:8998/stats" target="_blank">HA Proxy Stats</a></li>
                         <li><a href="http:/kopano-activesync-seg/server-status" target="_blank">Apache Stats for SEG Activesync</a></li>
                         <li><a href="http:/kopano-activesync/server-status" target="_blank">Apache Stats for Main Activesync</a></li>
