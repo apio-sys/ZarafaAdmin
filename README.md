@@ -1,2 +1,2 @@
-# ZarafaAdmin
-Administrative Interface for Zarafa
+# kopano-admin
+Administrative Interface for Kopano Core Server
